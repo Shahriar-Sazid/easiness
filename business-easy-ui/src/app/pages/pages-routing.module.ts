@@ -5,9 +5,10 @@ import { DefaultComponent } from './dashboards/default/default.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
- 
+
   { path: 'dashboard', component: DefaultComponent },
-  { path: 'dashboards', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule) }
+  { path: 'dashboards', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule) },
+  { path: 'product', loadChildren: () => import('./product/product.module').then(m => m.ProductModule) },
 ];
 
 @NgModule({

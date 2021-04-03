@@ -2,23 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { NgbCollapseModule, NgbDatepickerModule, NgbTimepickerModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbDatepickerModule, NgbTimepickerModule, NgbDropdownModule, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClickOutsideModule } from 'ng-click-outside';
 
 import { PagetitleComponent } from './pagetitle/pagetitle.component';
 import { LoaderComponent } from './loader/loader.component';
+import { SearchOptionsComponent } from './search-options/search-options.component';
 
 @NgModule({
-  declarations: [PagetitleComponent, LoaderComponent],
+  declarations: [PagetitleComponent, LoaderComponent, SearchOptionsComponent],
   imports: [
     CommonModule,
-    FormsModule,
     ClickOutsideModule,
     NgbCollapseModule,
     NgbDatepickerModule,
     NgbTimepickerModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    NgbAccordionModule
   ],
-  exports: [PagetitleComponent, LoaderComponent]
+  exports: [PagetitleComponent, LoaderComponent, SearchOptionsComponent]
 })
 export class UIModule { }

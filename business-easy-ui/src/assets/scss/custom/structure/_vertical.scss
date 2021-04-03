@@ -1,6 +1,6 @@
 //
 // _menu.scss
-// 
+//
 
 .metismenu {
   margin: 0;
@@ -84,7 +84,8 @@
         padding: .625rem 1.5rem;
         color: $sidebar-menu-item-color;
         position: relative;
-        font-size: 13px;
+        font-size: 15px;
+        font-weight: 500;
         transition: all .4s;
 
         i {
@@ -118,8 +119,9 @@
 
           a {
             padding: .4rem 1.5rem .4rem 3.5rem;
-            font-size: 13px;
+            font-size: 14px;
             color: $sidebar-menu-sub-item-color;
+            font-weight: 400;
 
             &:hover {
               color: $sidebar-menu-item-hover-color;
@@ -133,6 +135,7 @@
               a {
                 padding: .4rem 1.5rem .4rem 4.5rem;
                 font-size: 13px;
+                font-weight: 400;
 
 
               }
@@ -150,7 +153,7 @@
   letter-spacing: .05em;
   pointer-events: none;
   cursor: default;
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   color: $sidebar-menu-item-icon-color;
   font-weight: $font-weight-semibold;

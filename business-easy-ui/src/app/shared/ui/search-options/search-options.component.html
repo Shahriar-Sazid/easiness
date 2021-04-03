@@ -1,0 +1,19 @@
+<div class="shadow">
+  <ngb-accordion #a="ngbAccordion" activeIds="search-panel">
+    <ngb-panel id="search-panel" [type]="'light'">
+      <ng-template ngbPanelHeader>
+        <div class="d-flex align-items-center justify-content-between">
+          <h6 class="m-0 text-uppercase">{{ panelTitle }}</h6>
+          <div>
+            <button ngbPanelToggle class="btn btn-light" (click)="onPanelToggle()">
+              <i [class]="panelClosed ? 'fa fa-chevron-down' : 'fa fa-chevron-up'"></i>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <ng-content></ng-content>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>

@@ -309,9 +309,10 @@
           }
         }
       }
-    },
-    "COMMONS": {
-      "INITIAL_SETUP": "Initial Setup"
     }
+  },
+  "COMMONS": {
+    "INITIAL_SETUP": "Initial Setup",
+    "PRODUCT_TITLE": "Product"
   }
 }
