@@ -12,14 +12,14 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "contact_no", uniqueConstraints = {@UniqueConstraint(columnNames = "contact_no")})
+@Table(name = "contact_no")
 public class ContactNoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     Integer id;
 
-    @Column(name = "contact_no", nullable = false)
+    @Column(name = "contact_no", nullable = false, unique = true)
     String contactNo;
 
     @Column(name = "owner_id")

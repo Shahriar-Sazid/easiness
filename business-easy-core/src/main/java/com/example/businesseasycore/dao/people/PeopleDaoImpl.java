@@ -100,7 +100,7 @@ public class PeopleDaoImpl implements PeopleDao {
         peopleEntity.setEmail(request.getEmail());
         peopleEntity.setBalance(request.getBalance());
         peopleEntity.setType(request.getType());
-        checkAndSaveContactNo(request.getContactNo(), request.getId());
+        checkAndSaveContactNo(request.getContactNo(), peopleEntity);
         peopleRepository.save(peopleEntity);
 
         return modelMapper
@@ -110,24 +110,27 @@ public class PeopleDaoImpl implements PeopleDao {
                 .map(peopleEntity);
     }
 
-    void checkAndSaveContactNo(List<String> contactNoList, Integer ownerId) {
+    void checkAndSaveContactNo(List<String> contactNoList, PeopleEntity owner) {
         for (String contactNo : contactNoList) {
             var contactNoEntity = contactNoRepository.findByContactNo(contactNo);
             if (contactNoEntity.isPresent()) {
-                if (!contactNoEntity.get().getOwnerId().equals(ownerId)) {
+                if (!contactNoEntity.get().getOwnerId().equals(owner.getId())) {
                     throw new UniqueConstraintsViolationException(ReasonCode.DUPLICATE_CONTACT_NO_FOUND.getMessage());
                 }
             } else {
-                contactNoRepository.save(ContactNoEntity.builder().contactNo(contactNo).ownerId(ownerId).build());
+//                contactNoRepository.save(ContactNoEntity.builder().contactNo(contactNo).ownerId(owner.getId()).build());
+                owner.getContactNoList().add(ContactNoEntity.builder().contactNo(contactNo).ownerId(owner.getId()).build());
             }
         }
-        var ownerContactNoList = contactNoRepository.findAllByOwnerId(ownerId);
+        var ownerContactNoList = contactNoRepository.findAllByOwnerId(owner.getId());
         for(ContactNoEntity contactNoEntity: ownerContactNoList) {
-            List<String> result = contactNoList.stream()
+            String result = contactNoList.stream()
                     .filter(item -> item.equals(contactNoEntity.getContactNo()))
-                    .collect(Collectors.toList());
-            if(result.size() == 0) {
-               contactNoRepository.delete(contactNoEntity);
+                    .findAny()
+                    .orElse(null);
+            if(result == null) {
+                owner.getContactNoList().remove(contactNoEntity);
+//               contactNoRepository.delete(contactNoEntity);
             }
         }
     }

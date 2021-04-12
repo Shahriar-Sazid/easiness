@@ -25,7 +25,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   declarations: [],
   imports: [
     CommonModule,
-    PagesRoutingModule,
+    PagesRoutingModule
   ],
   providers: [
     LoaderService,

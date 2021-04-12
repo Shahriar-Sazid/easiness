@@ -14,7 +14,6 @@ import {
   NgbAccordionModule,
   NgbTooltipModule,
 } from "@ng-bootstrap/ng-bootstrap";
-import { CarouselModule } from "ngx-owl-carousel-o";
 import { ScrollToModule } from "@nicky-lenaers/ngx-scroll-to";
 
 import { LayoutsModule } from "./layouts/layouts.module";
@@ -28,7 +27,8 @@ import { JwtInterceptor } from "./core/services/interceptors/jwt.interceptor";
 import { FakeBackendInterceptor } from "./core/services/interceptors/fake-backend";
 import { ApiInterceptor } from "./core/services/interceptors/api-interceptor";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { LoaderInterceptorService } from "./core/services/interceptors/loader-interceptor.service";
+import { PhoneNoValidator } from "./core/helpers/validation/custom-validator/phone-no-validator";
 
 if (environment.defaultauth === "firebase") {
   initFirebaseBackend(environment.firebaseConfig);
@@ -42,7 +42,7 @@ export function createTranslateLoader(http: HttpClient): any {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PhoneNoValidator],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -74,6 +74,11 @@ export function createTranslateLoader(http: HttpClient): any {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptorService,
       multi: true,
     },
   ],

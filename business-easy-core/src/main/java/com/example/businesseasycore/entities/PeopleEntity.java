@@ -40,7 +40,7 @@ public class PeopleEntity {
     @Column(name = "balance")
     Double balance;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = { CascadeType.ALL}, orphanRemoval = true)
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     List<ContactNoEntity> contactNoList;
 }

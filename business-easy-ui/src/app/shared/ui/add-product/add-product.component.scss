@@ -1,0 +1,11 @@
+.product-size-token i {
+  opacity: 0;
+}
+
+.product-size-token:hover i {
+  opacity: 1;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}

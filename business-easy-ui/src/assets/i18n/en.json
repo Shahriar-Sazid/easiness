@@ -313,6 +313,7 @@
   },
   "COMMONS": {
     "INITIAL_SETUP": "Initial Setup",
-    "PRODUCT_TITLE": "Product"
+    "PRODUCT_TITLE": "Product",
+    "PEOPLE_TITLE": "People"
   }
 }
