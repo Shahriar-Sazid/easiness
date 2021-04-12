@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/business-easy.iml" filepath="$PROJECT_DIR$/.idea/business-easy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/business-easy-core/business-easy-core.iml" filepath="$PROJECT_DIR$/business-easy-core/business-easy-core.iml" />
     </modules>
   </component>
 </project>
