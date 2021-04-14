@@ -6,11 +6,11 @@ import { UtilService } from 'src/app/core/services/util.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-add-product',
-  templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.scss']
+  selector: 'app-save-product',
+  templateUrl: './save-product.component.html',
+  styleUrls: ['./save-product.component.scss']
 })
-export class AddProductComponent implements OnInit {
+export class SaveProductComponent implements OnInit {
   @ViewChild('productModal') addProductModal: any;
   updateMode: boolean;
   productForm: FormGroup;

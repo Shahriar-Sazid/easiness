@@ -313,7 +313,11 @@
   },
   "COMMONS": {
     "INITIAL_SETUP": "Initial Setup",
-    "PRODUCT_TITLE": "Product",
-    "PEOPLE_TITLE": "People"
+    "PRODUCT": "Product",
+    "PEOPLE": "People",
+    "ACCOUNT": "Account",
+    "BUSINESS": "Business",
+    "BUY": "Buy",
+    "SELL": "Sell"
   }
 }

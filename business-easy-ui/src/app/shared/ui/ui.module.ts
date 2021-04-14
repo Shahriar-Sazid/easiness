@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { NgbCollapseModule, NgbDatepickerModule, NgbTimepickerModule, NgbDropdownModule, NgbAccordionModule, NgbTooltipModule, NgbButtonsModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbDatepickerModule, NgbTimepickerModule, NgbDropdownModule, NgbAccordionModule, NgbTooltipModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClickOutsideModule } from 'ng-click-outside';
 
 import { PagetitleComponent } from './pagetitle/pagetitle.component';
 import { LoaderComponent } from './loader/loader.component';
 import { SearchOptionsComponent } from './search-options/search-options.component';
-import { AddProductComponent } from './add-product/add-product.component';
-import { AddPeopleComponent } from './add-people/add-people.component';
+import { SaveProductComponent } from './save-product/save-product.component';
+import { SavePeopleComponent } from './save-people/save-people.component';
+import { SaveAccountComponent } from './save-account/save-account.component';
 
 @NgModule({
-  declarations: [PagetitleComponent, LoaderComponent, SearchOptionsComponent, AddProductComponent, AddPeopleComponent],
+  declarations: [PagetitleComponent, LoaderComponent, SearchOptionsComponent, SaveProductComponent, SavePeopleComponent, SaveAccountComponent],
   imports: [
     CommonModule,
     ClickOutsideModule,
@@ -25,6 +26,6 @@ import { AddPeopleComponent } from './add-people/add-people.component';
     NgbTooltipModule,
     NgbModule
   ],
-  exports: [PagetitleComponent, LoaderComponent, SearchOptionsComponent, AddProductComponent, AddPeopleComponent]
+  exports: [PagetitleComponent, LoaderComponent, SearchOptionsComponent, SaveProductComponent, SavePeopleComponent, SaveAccountComponent]
 })
 export class UIModule { }

@@ -1,0 +1,105 @@
+<app-search-options panelTitle="Search Account">
+  <form (ngSubmit)="searchAccount()" #fr="ngForm">
+    <div class="row">
+      <div class="form-group col-md-6 col-lg-4 col-xl-3">
+        <label for="accountName">Account Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="accountName"
+          id="accountName"
+          maxlength="30"
+          placeholder="Enter account name.."
+          [(ngModel)]="searchOptions.accountName"
+        />
+      </div>
+      <div class="form-group col-md-6 col-lg-4 col-xl-3">
+        <label for="accountNo">Account No</label>
+        <input
+          type="text"
+          class="form-control"
+          name="accountNo"
+          id="accountNo"
+          placeholder="Enter account no.."
+          [(ngModel)]="searchOptions.accountNo"
+          #contactNo="ngModel"
+        />
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary mx-1" [disabled]="!fr.valid">
+        Search
+      </button>
+      <button class="btn btn-secondary ml-1 mr-3" (click)="resetForm()">
+        Reset
+      </button>
+    </div>
+  </form>
+</app-search-options>
+
+<br />
+
+<div class="shadow bg-white">
+  <div
+    class="d-flex bg-white align-items-baseline justify-content-end"
+    role="group"
+  >
+    <button
+      type="button"
+      class="btn btn-outline-primary mx-1"
+      ngbTooltip="Add Account"
+      (click)="accountModal.openAccountModal(false)"
+    >
+      <i class="fa fa-plus"></i>
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      ngbTooltip="Download Report"
+      placement="left"
+      (click)="downloadAsReport()"
+    >
+      <i class="fas fa-file-pdf"></i>
+    </button>
+  </div>
+  <ngx-datatable
+    class="material"
+    [rows]="accountPage.content"
+    [columns]="columns"
+    [columnMode]="columnMode.force"
+    footerHeight="auto"
+    headerHeight="auto"
+    rowHeight="auto"
+    [externalPaging]="true"
+    [count]="accountPage.totalElements"
+    [offset]="accountPage.number"
+    [limit]="accountPage.size"
+    (activate)="onActivate($event)"
+    (page)="changePage($event)"
+  >
+    <ngx-datatable-column name="Options" maxWidth="100" minWidth="80">
+      <ng-template ngx-datatable-cell-template>
+        <button
+          class="btn btn-outline-secondary"
+          (click)="accountModal.openAccountModal(true)"
+        >
+          <i class="fa fa-edit"></i>
+        </button>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column
+      *ngFor="let column of columns"
+      [name]="column.name"
+    ></ngx-datatable-column>
+  </ngx-datatable>
+</div>
+
+<app-save-account
+  #accountModal
+  [selectedAccount]="selectedAccount"
+  (onAccountSaved)="search()"
+>
+</app-save-account>

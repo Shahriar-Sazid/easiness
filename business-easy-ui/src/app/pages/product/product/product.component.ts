@@ -9,7 +9,7 @@ import { Product } from "src/app/core/models/product.model";
 import { ProductService } from "src/app/core/services/product.service";
 import { UtilService } from "src/app/core/services/util.service";
 import { validationMessages } from "src/app/core/helpers/validation/validation-message";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-product",
@@ -47,8 +47,6 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
     this.searchOptions = {
       name: "",
       type: "",
@@ -113,7 +111,10 @@ export class ProductComponent implements OnInit {
     };
     let reportOptions = {
       ...this.searchedOptions,
-      activeFilters: this.util.buildActiveFilters(this.searchedOptions, keyNameMap),
+      activeFilters: this.util.buildActiveFilters(
+        this.searchedOptions,
+        keyNameMap
+      ),
     };
     reportOptions.page = 1;
     reportOptions.pageSize = 10000000;
@@ -135,5 +136,4 @@ export class ProductComponent implements OnInit {
     console.log(event.row);
     this.updatingProduct = event.row;
   }
-
 }

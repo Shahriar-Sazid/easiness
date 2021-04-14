@@ -7,11 +7,11 @@ import { UtilService } from "src/app/core/services/util.service";
 import Swal from "sweetalert2";
 
 @Component({
-  selector: "app-add-people",
-  templateUrl: "./add-people.component.html",
-  styleUrls: ["./add-people.component.scss"],
+  selector: "app-save-people",
+  templateUrl: "./save-people.component.html",
+  styleUrls: ["./save-people.component.scss"],
 })
-export class AddPeopleComponent implements OnInit {
+export class SavePeopleComponent implements OnInit {
   @ViewChild('peopleModal') content: any;
   updateMode: boolean;
   peopleForm: FormGroup;
