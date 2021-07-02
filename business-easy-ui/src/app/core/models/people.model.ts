@@ -1,6 +1,6 @@
 import { ContactNo } from "./contact-no.model";
 
-export class People {
+export interface People {
   id: number;
   name: string;
   companyName: string;

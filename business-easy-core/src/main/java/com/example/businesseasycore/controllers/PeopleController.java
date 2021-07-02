@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -40,5 +41,15 @@ public class PeopleController {
     @RequestMapping(value = "/report", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, method = RequestMethod.GET)
     public ResponseEntity<ByteArrayResource> downloadProductReport(@RequestParam Map<String, String> parameterMap) throws FileNotFoundException, JRException {
         return peopleService.downloadPeopleReport(parameterMap);
+    }
+
+    @GetMapping("/customer")
+    List<PeopleEntity> getAllCustomer() {
+        return peopleService.getAllCustomer();
+    }
+
+    @GetMapping("/supplier")
+    List<PeopleEntity> getAllSupplier() {
+        return peopleService.getAllSupplier();
     }
 }

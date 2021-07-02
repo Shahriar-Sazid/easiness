@@ -44,7 +44,7 @@ export class SaveAccountComponent implements OnInit {
             },
             (err) => {
               console.log(err);
-              Swal.fire('Failed!', 'err.error.message', 'error');
+              Swal.fire('Failed!', err.error.message, 'error');
             }
           )
           .add(() => {
@@ -63,7 +63,7 @@ export class SaveAccountComponent implements OnInit {
             },
             (err) => {
               console.log(err);
-              Swal.fire('Failed!', 'err.error.message', 'error');
+              Swal.fire('Failed!', err.error.message, 'error');
             }
           )
           .add(() => {

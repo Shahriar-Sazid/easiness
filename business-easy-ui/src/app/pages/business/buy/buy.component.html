@@ -1,0 +1,213 @@
+<div class="container-fluid">
+  <app-page-title title="Buy Product"></app-page-title>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <aw-wizard [navBarLayout]="'large-empty'">
+            <aw-wizard-step stepTitle="Basic Info">
+              <ng-template awWizardStepSymbol>
+                <i class="fas fa-user fa-lg"></i>
+              </ng-template>
+              <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <form #fr="ngForm">
+                        <div class="mb-3 row">
+                          <label for="dateTime" class="col-md-3 col-form-label">Date <span
+                              class="text-danger">*</span></label>
+
+                          <div class="col-md-9">
+                            <div class="input-group">
+                              <input required ngModel name="dateTime" class="form-control" (click)="d.toggle()"
+                                placeholder="yyyy-mm-dd" id="dateTime" [(ngModel)]="date" ngbDatepicker
+                                #d="ngbDatepicker" [maxDate]="today" />
+                              <div class="input-group-append">
+                                <button class="btn btn-secondary" (click)="d.toggle()" type="button">
+                                  <i class="fas fa-calendar"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                          <label for="supplierOption" class="col-md-3 col-form-label">Supplier <span
+                              class="text-danger">*</span></label>
+                          <div class="col-md-9">
+                            <div class="input-group">
+                              <select required id="supplierOption" name="supplierOption" class="form-select" ngModel>
+                                <option hidden [ngValue]="null">
+                                  Please select
+                                </option>
+                                <option *ngFor="let supplier of supplierList">
+                                  {{ supplier.name }}
+                                </option>
+                              </select>
+                              <div class="input-group-append">
+                                <button class="btn btn-secondary" [ngbTooltip]="'Add People'"
+                                  (click)="peopleModal.openPeopleModal(false)" type="button">
+                                  <i class="fas fa-user"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                          <label for="placeOption" class="col-md-3 col-form-label">Place <span
+                              class="text-danger">*</span></label>
+                          <div class="col-md-9">
+                            <div class="input-group">
+                              <select required id="placeOption" name="placeOption" class="form-select" ngModel>
+                                <option hidden [ngValue]="null">
+                                  Please select
+                                </option>
+                                <option *ngFor="let place of placeList">
+                                  {{ place.name }}
+                                </option>
+                              </select>
+                              <div class="input-group-append">
+                                <button class="btn btn-secondary" [ngbTooltip]="'Add Place'"
+                                  (click)="placeModal.openPlaceModal(false)" type="button">
+                                  <i class="fas fa-warehouse"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul class="list-inline wizard mb-0">
+                <li class="next list-inline-item float-end">
+                  <button [disabled]="!fr.valid" class="btn btn-primary" awNextStep>Next</button>
+                </li>
+              </ul>
+            </aw-wizard-step>
+
+            <aw-wizard-step stepTitle="Product Selection">
+              <ng-template awWizardStepSymbol>
+                <i class="fas fa-wrench fa-lg"></i>
+              </ng-template>
+              <div class="row">
+                <div class="col-12">
+                  <div class="row mb-3">
+                    <label class="col-md-3 col-form-label">First name</label>
+                    <div class="col-md-9">
+                      <input class="form-control" name="email" type="text" placeholder="Enter email" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-md-3 col-form-label">Last name</label>
+                    <div class="col-md-9">
+                      <input class="form-control" name="username" type="text" placeholder="Enter Username" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-md-3 col-form-label">Password</label>
+                    <div class="col-md-9">
+                      <input class="form-control" name="password" type="password" placeholder="Enter Password" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul class="list-inline wizard mb-0">
+                <li class="previous list-inline-item">
+                  <button class="btn btn-primary" awPreviousStep>
+                    Previous
+                  </button>
+                </li>
+                <li class="next list-inline-item float-end">
+                  <button class="btn btn-primary" awNextStep>Next</button>
+                </li>
+              </ul>
+            </aw-wizard-step>
+
+            <aw-wizard-step stepTitle="Invoice Preparation">
+              <ng-template awWizardStepSymbol>
+                <i class="fas fa-file-invoice fa-lg"></i>
+              </ng-template>
+              <div class="row justify-content-center">
+                <div class="col-lg-6">
+                  <div class="text-center">
+                    <div class="mb-4">
+                      <i class="
+                          mdi mdi-check-circle-outline
+                          text-success
+                          display-4
+                        "></i>
+                    </div>
+                    <div>
+                      <h5>Confirm Detail</h5>
+                      <p class="text-muted">
+                        If several languages coalesce, the grammar of the
+                        resulting
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul class="list-inline wizard mb-0">
+                <ul class="list-inline wizard mb-0">
+                  <li class="previous list-inline-item">
+                    <button class="btn btn-primary" awPreviousStep>
+                      Previous
+                    </button>
+                  </li>
+                  <li class="next list-inline-item float-end">
+                    <button class="btn btn-primary" awNextStep>Next</button>
+                  </li>
+                </ul>
+              </ul>
+            </aw-wizard-step>
+
+            <aw-wizard-step stepTitle="Payment">
+              <ng-template awWizardStepSymbol>
+                <i class="fas fa-money-check-alt fa-lg"></i>
+              </ng-template>
+              <div class="row justify-content-center">
+                <div class="col-lg-6">
+                  <div class="text-center">
+                    <div class="mb-4">
+                      <i class="
+                          mdi mdi-check-circle-outline
+                          text-success
+                          display-4
+                        "></i>
+                    </div>
+                    <div>
+                      <h5>Confirm Detail</h5>
+                      <p class="text-muted">
+                        If several languages coalesce, the grammar of the
+                        resulting
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul class="list-inline wizard mb-0">
+                <li class="previous list-inline-item">
+                  <button class="btn btn-primary" awPreviousStep>
+                    Previous
+                  </button>
+                </li>
+              </ul>
+            </aw-wizard-step>
+          </aw-wizard>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-save-people #peopleModal [callback]="getAllSupplier"></app-save-people>
+
+<app-save-place #placeModal [callback]="getAllPlace"> </app-save-place>

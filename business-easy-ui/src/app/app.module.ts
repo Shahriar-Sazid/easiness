@@ -13,6 +13,8 @@ import {
   NgbNavModule,
   NgbAccordionModule,
   NgbTooltipModule,
+  NgbDateAdapter,
+  NgbDateNativeAdapter,
 } from "@ng-bootstrap/ng-bootstrap";
 import { ScrollToModule } from "@nicky-lenaers/ngx-scroll-to";
 
@@ -81,6 +83,7 @@ export function createTranslateLoader(http: HttpClient): any {
       useClass: LoaderInterceptorService,
       multi: true,
     },
+    { provide: NgbDateAdapter, useClass: NgbDateNativeAdapter },
   ],
 })
 export class AppModule {}

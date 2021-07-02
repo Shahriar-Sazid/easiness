@@ -4,6 +4,7 @@ import com.example.businesseasycore.common.model.Account;
 import com.example.businesseasycore.common.model.Place;
 import com.example.businesseasycore.dao.place.PlaceDao;
 import com.example.businesseasycore.entities.PlaceEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.Map;
 
 @Service
 public class PlaceServiceImpl implements PlaceService{
+    @Autowired
     PlaceDao placeDao;
 
     @Override

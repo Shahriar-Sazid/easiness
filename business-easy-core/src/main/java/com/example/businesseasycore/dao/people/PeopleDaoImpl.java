@@ -2,6 +2,7 @@ package com.example.businesseasycore.dao.people;
 
 import com.example.businesseasycore.common.SearchCriteria;
 import com.example.businesseasycore.common.SearchOperation;
+import com.example.businesseasycore.common.enums.PeopleType;
 import com.example.businesseasycore.common.model.People;
 import com.example.businesseasycore.entities.ContactNoEntity;
 import com.example.businesseasycore.entities.PeopleEntity;
@@ -24,6 +25,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.print.attribute.standard.Destination;
 import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -108,6 +111,16 @@ public class PeopleDaoImpl implements PeopleDao {
                 .addMappings(mapper -> mapper.skip(People::setId))
                 .addMappings(mapper -> mapper.skip(People::setBalance))
                 .map(peopleEntity);
+    }
+
+    @Override
+    public List<PeopleEntity> getAllCustomer() {
+        return peopleRepository.findByTypeNotIn(Collections.singletonList(PeopleType.SUPPLIER));
+    }
+
+    @Override
+    public List<PeopleEntity> getAllSupplier() {
+        return peopleRepository.findByTypeNotIn(Collections.singletonList(PeopleType.CUSTOMER));
     }
 
     void checkAndSaveContactNo(List<String> contactNoList, PeopleEntity owner) {

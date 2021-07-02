@@ -69,4 +69,14 @@ public class PeopleServiceImpl implements PeopleService {
         return reportService.createPeopleReport(peopleList,
                 Optional.ofNullable(parameterMap.get("activeFilters")).orElse("<NO FILTER>"));
     }
+
+    @Override
+    public List<PeopleEntity> getAllCustomer() {
+        return peopleDao.getAllCustomer();
+    }
+
+    @Override
+    public List<PeopleEntity> getAllSupplier() {
+        return peopleDao.getAllSupplier();
+    }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FormGroup } from "@angular/forms";
+import { NgbDate } from "@ng-bootstrap/ng-bootstrap";
 import { validationMessages } from "../helpers/validation/validation-message";
 
 @Injectable({
@@ -86,5 +87,11 @@ export class UtilService {
     }
     return isValidForm;
   }
+
+  getNgbToday() {
+    let now = new Date();
+    return new NgbDate(now.getFullYear(), now.getMonth() + 1, now.getDate())
+  }
+
   constructor() {}
 }
