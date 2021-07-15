@@ -1,0 +1,72 @@
+<form #basicInfoForm="ngForm">
+
+  <div class="mb-3 row">
+    <label for="dateTime" class="col-md-3 col-form-label">Date <span
+        class="text-danger">*</span></label>
+
+    <div class="col-md-9">
+      <div class="input-group">
+        <input required ngModel name="dateTime" class="form-control" (click)="d.toggle()"
+          placeholder="yyyy-mm-dd" id="dateTime" [(ngModel)]="purchase.date" ngbDatepicker
+          #d="ngbDatepicker" [maxDate]="util.getNgbToday()" />
+        <div class="input-group-append">
+          <button class="btn btn-secondary" (click)="d.toggle()" type="button">
+            <i class="fas fa-calendar"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="supplierOption" class="col-md-3 col-form-label">Supplier <span
+        class="text-danger">*</span></label>
+    <div class="col-md-9">
+      <div class="input-group">
+        <select required id="supplierOption" name="supplierOption" class="form-select"
+          [(ngModel)]="purchase.supplier">
+          <option hidden [ngValue]="undefined">
+            Please select
+          </option>
+          <option [value]="supplier.value.id" *ngFor="let supplier of peopleService.supplierRecord | keyvalue">
+            {{ supplier.value.name }}
+          </option>
+        </select>
+        <div class="input-group-append">
+          <button class="btn btn-secondary" [ngbTooltip]="'Add People'"
+            (click)="peopleModal.openPeopleModal(false)" type="button">
+            <i class="fas fa-user"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="placeOption" class="col-md-3 col-form-label">Place <span
+        class="text-danger">*</span></label>
+    <div class="col-md-9">
+      <div class="input-group">
+        <select required id="placeOption" name="placeOption" class="form-select" >
+          <option hidden [ngValue]="undefined">
+            Please select
+          </option>
+          <option *ngFor="let place of placeService.placeRecord | keyvalue" [value]="place.value.id">
+            {{ place.value.name }}
+          </option>
+        </select>
+        <div class="input-group-append">
+          <button class="btn btn-secondary" [ngbTooltip]="'Add Place'"
+            (click)="placeModal.openPlaceModal(false)" type="button">
+            <i class="fas fa-warehouse"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+<app-save-people #peopleModal [callback]="peopleService.getAllSupplier"></app-save-people>
+
+<app-save-place #placeModal [callback]="placeService.getAllPlace"> </app-save-place>

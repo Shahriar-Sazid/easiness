@@ -11,11 +11,18 @@ import { People } from "../models/people.model";
 export class PeopleService {
   env = environment;
 
+  customerRecord: Record<string, People>;
+  supplierRecord: Record<string, People>;
+
   peopleUrl = "api/people";
   peopleReportUrl = this.peopleUrl + "/report";
   allCustomerUrl = this.peopleUrl + "/customer";
   allSupplierUrl = this.peopleUrl + "/supplier";
-  constructor(private http: HttpClient, private util: UtilService) {}
+
+  constructor(private http: HttpClient, private util: UtilService) {
+    this.getAllSupplier = this.getAllSupplier.bind(this);
+    this.getAllCustomer = this.getAllCustomer.bind(this);
+  }
 
   getPeople(searchOptions: { name: string; contactNo: string; page: number; pageSize: number }): Observable<any> {
     this.util.deepTrim(searchOptions);
@@ -55,15 +62,23 @@ export class PeopleService {
   }
 
 
-  getAllCustomer(): Observable<People[]>{
+  getAllCustomer() {
     console.log("----------Get All Customer Url-----------");
     console.log(this.allCustomerUrl);
-    return this.http.get<People[]>(this.allCustomerUrl);
+    this.http.get<People[]>(this.allCustomerUrl).subscribe(
+      data => {
+        this.supplierRecord = this.util.convertArrayToObject(data, 'id');
+      }
+    );
   }
 
-  getAllSupplier():  Observable<People[]> {
+  getAllSupplier() {
     console.log("----------Get All Supplier Url-----------");
     console.log(this.allSupplierUrl);
-    return this.http.get<People[]>(this.allSupplierUrl);
+    this.http.get<People[]>(this.allSupplierUrl).subscribe(
+      data => {
+        this.supplierRecord = this.util.convertArrayToObject(data, 'id');
+      }
+    );
   }
 }

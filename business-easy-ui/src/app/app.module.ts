@@ -31,6 +31,7 @@ import { ApiInterceptor } from "./core/services/interceptors/api-interceptor";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { LoaderInterceptorService } from "./core/services/interceptors/loader-interceptor.service";
 import { PhoneNoValidator } from "./core/helpers/validation/custom-validator/phone-no-validator";
+import { BasicInfoComponent } from './pages/business/basic-info/basic-info.component';
 
 if (environment.defaultauth === "firebase") {
   initFirebaseBackend(environment.firebaseConfig);

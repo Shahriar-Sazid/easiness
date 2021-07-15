@@ -70,8 +70,8 @@
     [rows]="accountPage.content"
     [columns]="columns"
     [columnMode]="columnMode.force"
-    footerHeight="auto"
-    headerHeight="auto"
+    [footerHeight]="-1"
+    [headerHeight]="-1"
     rowHeight="auto"
     [externalPaging]="true"
     [count]="accountPage.totalElements"
@@ -80,7 +80,7 @@
     (activate)="onActivate($event)"
     (page)="changePage($event)"
   >
-    <ngx-datatable-column name="Options" maxWidth="100" minWidth="80">
+    <ngx-datatable-column name="Options" [maxWidth]="100" [minWidth]="80">
       <ng-template ngx-datatable-cell-template>
         <button
           class="btn btn-outline-secondary"

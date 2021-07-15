@@ -1,0 +1,21 @@
+package com.businesseasy.core.controllers;
+
+import com.businesseasy.core.services.unit.UnitService;
+import com.businesseasy.core.common.model.UnitData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/unit")
+public class UnitController {
+    @Autowired
+    UnitService unitService;
+
+
+    @GetMapping("/all")
+    UnitData getUnitData() {
+        return unitService.getAllUnitData();
+    }
+}

@@ -7,8 +7,11 @@ import { Page } from "../models/page.model";
 
 @Injectable({ providedIn: "root" })
 export class PlaceService {
-  constructor(private http: HttpClient, private util: UtilService) {}
+  constructor(private http: HttpClient, private util: UtilService) {
+    this.getAllPlace = this.getAllPlace.bind(this);
+  }
 
+  placeRecord: Record<string, Place>;
   placeUrl = "api/place";
 
   getPlace(searchOptions: {
@@ -22,6 +25,21 @@ export class PlaceService {
     console.log("----------Get Place Url-----------");
     console.log(url);
     return this.http.get<Page<Place>>(url);
+  }
+
+  getAllPlace() {
+    let queryString = this.util.convertObjToQueryString({
+      page: 1,
+      pageSize: 9999999
+    });
+    let url = `${this.placeUrl}${queryString}`;
+    console.log("----------Get Place Url-----------");
+    console.log(url);
+    this.http.get<Page<Place>>(url).subscribe(
+      data => {
+        this.placeRecord = this.util.convertArrayToObject(data.content, 'id');
+      }
+    );
   }
 
   addPlace(place): Observable<any> {

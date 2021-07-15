@@ -7,10 +7,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { UIModule } from 'src/app/shared/ui/ui.module';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { CostingComponent } from '../business/costing/costing.component';
 
 
 @NgModule({
-  declarations: [ProductComponent],
+  declarations: [
+    ProductComponent
+  ],
   imports: [
     CommonModule,
     ProductRoutingModule,
@@ -19,6 +22,9 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
     NgxDatatableModule,
     NgbTooltipModule,
     UIModule
+  ],
+  exports: [
+    ProductComponent
   ]
 })
 export class ProductModule { }

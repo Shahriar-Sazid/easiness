@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { NgbDate } from "@ng-bootstrap/ng-bootstrap";
-import { People } from "src/app/core/models/people.model";
-import { Place } from "src/app/core/models/place.model";
+import { Purchase } from "src/app/core/models/purchase.model";
 import { PeopleService } from "src/app/core/services/people.service";
 import { PlaceService } from "src/app/core/services/place.service";
 import { UtilService } from "src/app/core/services/util.service";
@@ -12,40 +10,22 @@ import { UtilService } from "src/app/core/services/util.service";
   styleUrls: ["./buy.component.scss"],
 })
 export class BuyComponent implements OnInit {
-  date: Date;
-  today: NgbDate;
+  purchase = {
+    date: new Date()
+  } as Purchase;
 
-  supplierList: People[];
-  placeList: Place[];
+  defaultPlace: number;
+
   constructor(
-    private peopleService: PeopleService,
-    private placeService: PlaceService,
-    private util: UtilService
+    public peopleService: PeopleService,
+    public placeService: PlaceService,
+    public util: UtilService
   ) {
-    this.getAllSupplier = this.getAllSupplier.bind(this);
-    this.getAllPlace = this.getAllPlace.bind(this);
   }
 
   ngOnInit(): void {
-    this.date = new Date();
-    this.today = this.util.getNgbToday();
-
-    this.getAllSupplier();
-    this.getAllPlace();
+    this.peopleService.getAllSupplier();
+    this.placeService.getAllPlace();
   }
 
-  getAllSupplier() {
-    this.peopleService
-      .getAllSupplier()
-      .subscribe((arg) => (this.supplierList = arg));
-  }
-
-  getAllPlace() {
-    this.placeService
-      .getPlace({
-        page: 1,
-        pageSize: 99999999,
-      })
-      .subscribe((arg) => (this.placeList = arg.content));
-  }
 }

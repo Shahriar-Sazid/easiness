@@ -1,0 +1,55 @@
+package com.businesseasy.core.controllers;
+
+import com.businesseasy.core.common.model.People;
+import com.businesseasy.core.entities.PeopleEntity;
+import com.businesseasy.core.services.people.PeopleService;
+import net.sf.jasperreports.engine.JRException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/people")
+public class PeopleController {
+    @Autowired
+    PeopleService peopleService;
+
+
+    @GetMapping("")
+    Page<PeopleEntity> getPeople(@RequestParam Map<String, String> parameterMap) {
+        return peopleService.getPeople(parameterMap);
+    }
+
+    @PostMapping("")
+    Integer insertPeople(@Valid @RequestBody People request) {
+        return peopleService.insertPeople(request);
+    }
+
+    @PutMapping("")
+    People updatePeople(@Valid @RequestBody People request) {
+        return peopleService.updatePeople(request);
+    }
+
+    @RequestMapping(value = "/report", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<ByteArrayResource> downloadProductReport(@RequestParam Map<String, String> parameterMap) {
+        return peopleService.downloadPeopleReport(parameterMap);
+    }
+
+    @GetMapping("/customer")
+    Map<Integer, PeopleEntity> getAllCustomer() {
+        return peopleService.getAllCustomer();
+    }
+
+    @GetMapping("/supplier")
+    List<PeopleEntity> getAllSupplier() {
+        return peopleService.getAllSupplier();
+    }
+}

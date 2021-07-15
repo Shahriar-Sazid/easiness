@@ -1,0 +1,60 @@
+<ng-template #costingModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id='modal-basic-title'>Add to Purchase List</h4>
+    <button type="button" class="btn btn-outline-secondary" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="costingForm">
+
+      <div class="form-group my-3">
+        <label for="place">Place </label>
+        <div class="input-group">
+          <select id="place" formControlName="place" class="form-select">
+            <option *ngFor="let place of placeService.placeRecord | keyvalue" [value]="place.value.id">
+              {{ place.value.name }}
+            </option>
+          </select>
+
+          <div class="input-group-append">
+            <button class="btn btn-secondary" [ngbTooltip]="'Refresh'"
+              (click)="placeService.getAllPlace()" type="button">
+              <i class="fa fa-refresh" aria-hidden="true"></i>
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+        </div>
+        <span class="text-monospace text-danger"> {{ util.getValidationError(costingForm, "place") }} </span>
+      </div>
+
+
+      <div class="form-group my-3">
+        <label for="quantity">Quantity </label>
+        <input type="number" class="form-control" id="quantity" formControlName="quantity" />
+        <span class="text-monospace text-danger"> {{ util.getValidationError(costingForm, "quantity") }} </span>
+      </div>
+
+      <div class="form-group my-3">
+        <label for="unit">Unit </label>
+        <select class="form-control" id="unit" formControlName="unit">
+          <option hidden [ngValue]="null"> Please select </option>
+          <option *ngFor="let unit of unitService.unitData.unitList" [value]="unit.id">{{unit.name}}</option>
+        </select>
+        <span class="text-monospace text-danger"> {{ util.getValidationError(costingForm, "unit") }} </span>
+      </div>
+      <div class="form-group my-3">
+        <label for="cost">Cost/unit (&#2547;)</label>
+        <input type="number" class="form-control" id="cost" formControlName="cost" />
+        <span class="text-monospace text-danger"> {{ util.getValidationError(costingForm, "cost") }} </span>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="addToPurchaseList()">
+      Add
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cancel click')">Close</button>
+  </div>
+</ng-template>

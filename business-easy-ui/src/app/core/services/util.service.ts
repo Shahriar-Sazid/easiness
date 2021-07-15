@@ -13,7 +13,7 @@ export class UtilService {
     var str = [];
     for (var p in obj) {
       if (obj.hasOwnProperty(p)) {
-        if (!this.isNullOrUndefinedOrEmpty(obj[p])) {
+        if (obj[p]) {
           str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
         }
       }
@@ -21,19 +21,11 @@ export class UtilService {
     return str.length > 0 ? "?" + str.join("&") : "";
   }
 
-  isNullOrUndefinedOrEmpty(prop: any): boolean {
-    if (prop === null || prop === undefined) return true;
-    if (typeof prop === "string") {
-      return prop === "";
-    }
-    return false;
-  }
-
-  deepTrim(obj) {
+  deepTrim(obj: object) {
     for (let prop in obj) {
       let value = obj[prop],
         type = typeof value;
-      if (!this.isNullOrUndefinedOrEmpty(value) && (type == "string" || type == "object") && obj.hasOwnProperty(prop)) {
+      if (value && (type == "string" || type == "object") && obj.hasOwnProperty(prop)) {
         if (type == "object") {
           this.deepTrim(obj[prop]);
         } else {
@@ -48,7 +40,7 @@ export class UtilService {
     for (let key in keyNameMap) {
       let value = obj[key],
         type = typeof value;
-      if (!this.isNullOrUndefinedOrEmpty(value) && type == "string" && keyNameMap.hasOwnProperty(key)) {
+      if (value && type == "string" && keyNameMap.hasOwnProperty(key)) {
         activeFilters += `${keyNameMap[key]}: ${value}; `;
       }
     }
@@ -93,5 +85,13 @@ export class UtilService {
     return new NgbDate(now.getFullYear(), now.getMonth() + 1, now.getDate())
   }
 
-  constructor() {}
+  convertArrayToObject<Type>(arr: Type[], key: string) : Record<string, Type> {
+    return arr.reduce((acc, curr) => (acc[curr[key]] = curr, acc), {});
+  }
+
+  convertObjectToArray(obj: object): any[] {
+    return Object.values(obj);
+  }
+
+  constructor() { }
 }

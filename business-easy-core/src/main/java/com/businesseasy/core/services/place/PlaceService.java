@@ -1,0 +1,15 @@
+package com.businesseasy.core.services.place;
+
+import com.businesseasy.core.common.model.Place;
+import com.businesseasy.core.entities.PlaceEntity;
+import org.springframework.data.domain.Page;
+
+import java.util.Map;
+
+public interface PlaceService {
+    Page<PlaceEntity> getPlace(Map<String, String> parameterMap);
+
+    Integer createPlace(Place request);
+
+    PlaceEntity updatePlace(Place request);
+}

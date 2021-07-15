@@ -8,13 +8,18 @@ import { ArchwizardModule } from 'angular-archwizard';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UIModule } from 'src/app/shared/ui/ui.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProductModule } from '../product/product.module';
+import { CostingComponent } from './costing/costing.component';
+import { BasicInfoComponent } from 'src/app/pages/business/basic-info/basic-info.component';
 
 
 @NgModule({
   declarations: [
     BuyComponent,
-    SellComponent
+    SellComponent,
+    CostingComponent,
+    BasicInfoComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +29,8 @@ import { NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BusinessRoutingModule,
     ArchwizardModule,
     SharedModule,
-    UIModule
+    UIModule,
+    ProductModule
   ]
 })
 export class BusinessModule { }
