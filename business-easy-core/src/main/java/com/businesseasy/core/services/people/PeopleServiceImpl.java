@@ -92,25 +92,8 @@ public class PeopleServiceImpl implements PeopleService {
     }
 
     @Override
-    public Map<Integer, PeopleEntity> getAllCustomer() {
-        List<PeoplePojo> peoplePojoList = peopleDao.getAllCustomer();
-        Map<Integer, PeopleEntity> peopleEntityMap = new HashMap<>();
-        for(PeoplePojo peoplePojo: peoplePojoList) {
-            if(peopleEntityMap.containsKey(peoplePojo.getId())) {
-                PeopleEntity peopleEntity = peopleEntityMap.get(peoplePojo.getId());
-
-                ContactNoEntity contactNoEntity = ContactNoEntity.builder()
-                        .contactNo(peoplePojo.getContactNo())
-                        .ownerId(peoplePojo.getId())
-                        .id(peoplePojo.getContactNoId())
-                        .build();
-
-                peopleEntity.getContactNoList().add(contactNoEntity);
-            } else {
-                peopleEntityMap.put(peoplePojo.getId(), toPeopleEntity(peoplePojo));
-            }
-        }
-        return peopleEntityMap;
+    public List<PeopleEntity> getAllCustomer() {
+        return peopleDao.getAllCustomer();
     }
 
     @Override

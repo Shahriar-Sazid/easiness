@@ -4,7 +4,6 @@ import com.businesseasy.core.common.model.ProductCreationRequest;
 import com.businesseasy.core.common.model.ProductUpdateRequest;
 import com.businesseasy.core.entities.ProductEntity;
 import com.businesseasy.core.services.product.ProductService;
-import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 

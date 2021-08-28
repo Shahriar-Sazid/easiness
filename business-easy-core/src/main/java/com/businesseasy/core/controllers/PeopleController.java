@@ -3,7 +3,6 @@ package com.businesseasy.core.controllers;
 import com.businesseasy.core.common.model.People;
 import com.businesseasy.core.entities.PeopleEntity;
 import com.businesseasy.core.services.people.PeopleService;
-import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +42,7 @@ public class PeopleController {
     }
 
     @GetMapping("/customer")
-    Map<Integer, PeopleEntity> getAllCustomer() {
+    List<PeopleEntity> getAllCustomer() {
         return peopleService.getAllCustomer();
     }
 

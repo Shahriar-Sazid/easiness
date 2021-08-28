@@ -26,7 +26,9 @@ export class CostingComponent implements OnInit {
     public util: UtilService,
     public placeService: PlaceService,
     public unitService: UnitService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal) {
+      unitService.fetchUnitData().subscribe();
+     }
 
   ngOnInit(): void { }
   openCostingModal(product: Product) {

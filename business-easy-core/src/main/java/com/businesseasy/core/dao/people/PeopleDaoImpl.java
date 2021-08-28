@@ -3,7 +3,6 @@ package com.businesseasy.core.dao.people;
 import com.businesseasy.core.common.SearchCriteria;
 import com.businesseasy.core.common.SearchOperation;
 import com.businesseasy.core.common.enums.PeopleType;
-import com.businesseasy.core.common.model.PeoplePojo;
 import com.businesseasy.core.entities.PeopleEntity;
 import com.businesseasy.core.exception_handler.ReasonCode;
 import com.businesseasy.core.repositories.ContactNoRepository;
@@ -117,14 +116,13 @@ public class PeopleDaoImpl implements PeopleDao {
 
 
     @Override
-    public List<PeoplePojo> getAllCustomer() {
-//        return peopleRepository.findByTypeNotIn(Collections.singletonList(PeopleType.SUPPLIER));
+    public List<PeopleEntity> getAllCustomer() {
         return peopleRepository.findAllCustomer();
     }
 
     @Override
     public List<PeopleEntity> getAllSupplier() {
-        return peopleRepository.findByTypeNotIn(Collections.singletonList(PeopleType.CUSTOMER));
+        return peopleRepository.findAllSupplier();
     }
 
     void checkAndSaveContactNo(List<String> contactNoList, PeopleEntity owner) {

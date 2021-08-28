@@ -3,7 +3,6 @@ package com.businesseasy.core.controllers;
 import com.businesseasy.core.common.model.Account;
 import com.businesseasy.core.entities.AccountEntity;
 import com.businesseasy.core.services.account.AccountService;
-import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.FileNotFoundException;
 import java.util.Map;
 
 @RestController

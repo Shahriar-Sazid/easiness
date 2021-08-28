@@ -14,12 +14,12 @@ public interface PeopleRepository extends JpaRepository<PeopleEntity, Integer>, 
     PeopleEntity findByName(String name);
     Optional<PeopleEntity> findById(Integer id);
 
-    List<PeopleEntity> findByTypeNotIn(List<PeopleType> typeList);
+    @Query(value = "SELECT p FROM PeopleEntity p JOIN FETCH p.contactNoList c " +
+            " where p.type in ('BOTH', 'SUPPLIER')")
+    List<PeopleEntity> findAllSupplier();
 
-    @Query(value = "SELECT new com.businesseasy.core.common.model.PeoplePojo( " +
-            " p.id, p.name, p.companyName, " +
-            " p.address, p.email, p.type, p.balance, cn.contactNo, cn.id) " +
-            " from PeopleEntity p inner join ContactNoEntity cn on p.id = cn.ownerId " +
+
+    @Query(value = "SELECT p FROM PeopleEntity p JOIN FETCH p.contactNoList c " +
             " where p.type in ('BOTH', 'CUSTOMER')")
-    List<PeoplePojo> findAllCustomer();
+    List<PeopleEntity> findAllCustomer();
 }

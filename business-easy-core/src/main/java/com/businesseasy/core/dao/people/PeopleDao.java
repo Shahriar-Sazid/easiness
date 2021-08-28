@@ -1,7 +1,6 @@
 package com.businesseasy.core.dao.people;
 
 import com.businesseasy.core.common.model.People;
-import com.businesseasy.core.common.model.PeoplePojo;
 import com.businesseasy.core.entities.PeopleEntity;
 import org.springframework.data.domain.Page;
 
@@ -15,7 +14,7 @@ public interface PeopleDao {
 
     People updatePeople(People request);
 
-    List<PeoplePojo> getAllCustomer();
+    List<PeopleEntity> getAllCustomer();
 
     List<PeopleEntity> getAllSupplier();
 }

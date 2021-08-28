@@ -3,10 +3,10 @@ import { Product } from "./product.model";
 export interface Purchase {
   date: Date;
   supplier: number;
-  products: PurchasedProduct[];
+  products: InvoiceItem[];
 }
 
-export interface PurchasedProduct {
+export interface InvoiceItem {
   product: Product;
   place: number;
   quantity: number;

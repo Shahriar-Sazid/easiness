@@ -12,6 +12,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductModule } from '../product/product.module';
 import { CostingComponent } from './costing/costing.component';
 import { BasicInfoComponent } from 'src/app/pages/business/basic-info/basic-info.component';
+import { InvoiceItemComponent } from './invoice-item/invoice-item.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { UnitPipe } from 'src/app/core/pipes/unit.pipe';
+import { PlacePipe } from 'src/app/core/pipes/place.pipe';
+import { OnlyNumber } from 'src/app/core/directives/only-number.directive';
+import { PhoneNoValidator } from 'src/app/core/helpers/validation/custom-validator/phone-no-validator';
 
 
 @NgModule({
@@ -19,12 +25,16 @@ import { BasicInfoComponent } from 'src/app/pages/business/basic-info/basic-info
     BuyComponent,
     SellComponent,
     CostingComponent,
-    BasicInfoComponent
+    BasicInfoComponent,
+    InvoiceItemComponent,
+    UnitPipe,
+    PlacePipe,
   ],
   imports: [
     CommonModule,
     FormsModule,
     NgbModule,
+    NgxDatatableModule,
     ReactiveFormsModule,
     BusinessRoutingModule,
     ArchwizardModule,

@@ -15,6 +15,8 @@ export class BuyComponent implements OnInit {
   } as Purchase;
 
   defaultPlace: number;
+  items = [1, 2, 3, 4, 5];
+
 
   constructor(
     public peopleService: PeopleService,

@@ -18,7 +18,7 @@ public interface PeopleService {
 
     ResponseEntity<ByteArrayResource> downloadPeopleReport(Map<String, String> parameterMap);
 
-    Map<Integer, PeopleEntity> getAllCustomer();
+    List<PeopleEntity> getAllCustomer();
 
     List<PeopleEntity> getAllSupplier();
 }
