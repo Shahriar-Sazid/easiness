@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>business-easy-core</artifactId>
+	<artifactId>easy-business-core</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>business-easy-core</name>
-	<description>Business Easy Core</description>
+	<name>easy-business-core</name>
+	<description>Easy Business Core</description>
 
 	<properties>
 		<java.version>1.8</java.version>
