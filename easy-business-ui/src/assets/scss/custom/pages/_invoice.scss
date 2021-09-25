@@ -1,0 +1,21 @@
+@include media-breakpoint-up(xxl) {
+  .large-screen-view {
+    display: flex;
+  }
+  .small-screen-view {
+    display: none;
+  }
+}
+
+@include media-breakpoint-down(xxl) {
+  .large-screen-view {
+    display: none;
+  }
+  .small-screen-view {
+    display: block;
+  }
+}
+
+.item-total {
+  color: $primary;
+}

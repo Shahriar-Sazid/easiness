@@ -1,0 +1,106 @@
+<div class="shadow bg-white invoice-item">
+  <div class="d-flex">
+
+    <button type="button" (click)="cancel()"
+      class="close-btn btn btn-sm btn-outline-danger rounded-circle my-auto ms-2">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+    <!-- <div class="d-flex align-items-stretch">
+      <div class="d-flex align-items-center px-2">
+        <button type="button" class="close-btn btn btn-sm btn-outline-secondary rounded-circle">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div> -->
+    <div class="flex-grow-1 p-3">
+      <div class="row">
+        <div class="col-xxl-5">
+          <div class="row large-screen-view">
+            <div class="col-3">
+              <span>{{item.product.name}}</span>
+            </div>
+            <div class="col-3">
+              <span>{{item.product.type}}</span>
+            </div>
+            <div class="col-2">
+              <span>{{item.product.brand}}</span>
+            </div>
+            <div class="col-2">
+              <span>{{item.product.country}}</span>
+            </div>
+            <div class="col-2">
+              <span>{{item.product.size}}</span>
+            </div>
+          </div>
+          <div class="small-screen-view">
+            <span>
+              <strong>
+                {{ getJoinedText() }}
+
+              </strong>
+            </span>
+          </div>
+        </div>
+        <!-- <hr class="small-screen-view my-1" > -->
+        <br class="small-screen-view">
+        <div class="col-xxl-7">
+          <div class="row">
+            <div class="col-2 hover-border">
+              <div class="form-group">
+                <select class="form-control p-0 border-0 full-text" name="place" id="place" [(ngModel)]="item.place">
+                  <option [ngValue]="null" disabled>Select place</option>
+                  <option *ngFor="let place of placeRecord | keyvalue" [value]="place.value.id">
+                    {{ place.value.name }}
+                </select>
+              </div>
+            </div>
+            <div class="col-3 hover-border">
+              <div [hidden]="!editCost" class="input-group">
+                <input #costInput [(ngModel)]="item.cost" (focusout)="editCost=!editCost" type="number" onlyNumber
+                  autocomplete="off" (keydown.enter)="costInput.blur();quantityInput.focus()"
+                  class="form-control p-0 border-0" name="cost" id="cost" required>
+              </div>
+              <div class="full-text" [hidden]="editCost" (click)="editCost=!editCost;delayedFocus(costInput)"
+                *ngIf="!editCost">
+                {{item?.cost | currency : 'BDT' : 'symbol-narrow': '1.2-2' : 'en-IN' | placeholder: 'Enter cost'}}/unit
+              </div>
+            </div>
+
+            <div class="col-4 hover-border">
+              <div class="d-flex">
+                <div class="flex-even">
+                  <div class="form-group">
+                    <input #quantityInput type="text" [(ngModel)]="item.quantity" onlyNumber autocomplete="off"
+                      placeholder="Enter quantity" (keydown.enter)="quantityInput.blur();unitSelect.focus()"
+                      class="form-control p-0 border-0 full-text text-end px-1" name="cost" required>
+                  </div>
+                </div>
+                <div class="flex-even">
+                  <div class="form-group">
+                    <select #unitSelect class="form-control p-0 border-0 full-text" name="place" id="place"
+                      [(ngModel)]="item.unit">
+                      <option [ngValue]="null" disabled>Select unit</option>
+                      <option *ngFor="let unit of unitService.unitData.unitList" [value]="unit.id">
+                        {{ unit.name }}
+                    </select>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <div class="item-total">
+                <strong>
+                  {{ (item.quantity * item.cost) | currency : 'BDT' : 'symbol-narrow': '1.2-2' :'en-IN'}}
+                </strong>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
