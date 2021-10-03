@@ -1,17 +1,6 @@
 $border-color: #eff2f7;
 
-@media (hover: hover) {
-  .invoice-item:hover .close-btn {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.2s linear;
-  }
 
-  .invoice-item .close-btn {
-    visibility: hidden;
-    opacity: 0;
-  }
-}
 
 .hover-border {
   & input:focus {

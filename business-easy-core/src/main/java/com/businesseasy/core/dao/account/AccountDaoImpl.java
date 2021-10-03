@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -61,6 +62,11 @@ public class AccountDaoImpl implements AccountDao {
         validateAccountUpdateRequest(request);
 
         return accountRepository.save(modelMapper.map(request, AccountEntity.class));
+    }
+
+    @Override
+    public List<AccountEntity> getAllAccount() {
+        return accountRepository.findAll();
     }
 
     void validateAccountUpdateRequest(Account request) {

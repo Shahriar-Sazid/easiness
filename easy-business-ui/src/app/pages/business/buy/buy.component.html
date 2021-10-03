@@ -12,19 +12,8 @@
                 <i class="fas fa-user fa-lg"></i>
               </ng-template>
 
-              <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6">
-                  <div class="card">
-                    <div class="card-body">
-
-                      <app-basic-info #basicInfo [purchase]="purchase" (onPlaceSelection)="selectPlace($event)">
-
-                      </app-basic-info>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <app-basic-info #basicInfo [purchase]="purchase" (onPlaceSelection)="selectPlace($event)">
+              </app-basic-info>
 
               <ul class="list-inline wizard mb-0">
                 <li class="next list-inline-item float-end">
@@ -62,8 +51,8 @@
                 <i class="fas fa-file-invoice fa-lg"></i>
               </ng-template>
 
-                <app-invoice [purchase]="purchase"></app-invoice>
-                <br>
+              <app-invoice [purchase]="purchase"></app-invoice>
+              <br>
               <ul class="list-inline wizard mb-0">
                 <ul class="list-inline wizard mb-0">
                   <li class="previous list-inline-item">
@@ -82,26 +71,10 @@
               <ng-template awWizardStepSymbol>
                 <i class="fas fa-money-check-alt fa-lg"></i>
               </ng-template>
-              <div class="row justify-content-center">
-                <div class="col-lg-6">
-                  <div class="text-center">
-                    <div class="mb-4">
-                      <i class="
-                          mdi mdi-check-circle-outline
-                          text-success
-                          display-4
-                        "></i>
-                    </div>
-                    <div>
-                      <h5>Confirm Detail</h5>
-                      <p class="text-muted">
-                        If several languages coalesce, the grammar of the
-                        resulting
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
+              <app-confirm-payment [mode]="'from'">
+              </app-confirm-payment>
+
               <ul class="list-inline wizard mb-0">
                 <li class="previous list-inline-item">
                   <button class="btn btn-primary" awPreviousStep>

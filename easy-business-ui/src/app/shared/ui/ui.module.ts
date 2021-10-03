@@ -20,7 +20,6 @@ import { SaveProductComponent } from "./save-product/save-product.component";
 import { SavePeopleComponent } from "./save-people/save-people.component";
 import { SaveAccountComponent } from "./save-account/save-account.component";
 import { SavePlaceComponent } from "./save-place/save-place.component";
-import { ToggleButtonComponent } from './toggle-button/toggle-button.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,6 @@ import { ToggleButtonComponent } from './toggle-button/toggle-button.component';
     SavePeopleComponent,
     SaveAccountComponent,
     SavePlaceComponent,
-    ToggleButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -53,7 +51,6 @@ import { ToggleButtonComponent } from './toggle-button/toggle-button.component';
     SavePeopleComponent,
     SaveAccountComponent,
     SavePlaceComponent,
-    ToggleButtonComponent
   ],
 })
 export class UIModule {}

@@ -1,0 +1,11 @@
+.close-button-container {
+  position: relative;
+  z-index: 1;
+  button {
+    position: absolute;
+    top: -30px;
+    right: -20px;
+  }
+}
+
+

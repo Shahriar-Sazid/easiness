@@ -9,10 +9,12 @@ import { PhoneNoValidator } from '../core/helpers/validation/custom-validator/ph
 import { UnitPipe } from '../core/pipes/unit.pipe';
 import { PlacePipe } from '../core/pipes/place.pipe';
 import { EmptyPlaceHolderPipe } from '../core/pipes/empty-placeholder.pipe';
+import { NumberCommaDirective } from '../core/directives/input-with-comma.directive';
 
 @NgModule({
   declarations: [
     OnlyNumber,
+    NumberCommaDirective,
     PhoneNoValidator,
     UnitPipe,
     PlacePipe,
@@ -20,6 +22,7 @@ import { EmptyPlaceHolderPipe } from '../core/pipes/empty-placeholder.pipe';
   ],
   exports: [
     OnlyNumber,
+    NumberCommaDirective,
     PhoneNoValidator,
     UnitPipe,
     PlacePipe,

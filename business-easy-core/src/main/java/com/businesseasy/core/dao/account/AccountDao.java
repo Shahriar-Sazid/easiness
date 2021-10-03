@@ -4,6 +4,7 @@ import com.businesseasy.core.common.model.Account;
 import com.businesseasy.core.entities.AccountEntity;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.Map;
 
 public interface AccountDao {
@@ -12,4 +13,6 @@ public interface AccountDao {
     AccountEntity createAccount(Account request);
 
     AccountEntity updateAccount(Account request);
+
+    List<AccountEntity> getAllAccount();
 }

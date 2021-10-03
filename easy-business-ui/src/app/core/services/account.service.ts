@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { Account } from "../models/account.model";
 import { UtilService } from "./util.service";
 
 @Injectable({
@@ -8,7 +9,10 @@ import { UtilService } from "./util.service";
 })
 export class AccountService {
   accountApi = "api/account";
-  accountReportApi = "api/account/report";
+  accountReportApi = `${this.accountApi}/report`;
+  allAccountReportApi = `${this.accountApi}/all`;
+
+  accountRecord: Record<string, Account>
   constructor(private http: HttpClient, private util: UtilService) {}
 
   getAccount(searchOptions: { name: string; contactNo: string; page: number; pageSize: number }): Observable<any> {
@@ -46,5 +50,16 @@ export class AccountService {
     console.log("----------Get Account Url-----------");
     console.log(url);
     return this.http.get(url, { responseType: "arraybuffer", headers: headers });
+  }
+
+  getAllAccount() {
+    console.log("----------Get All Account Url-----------");
+    console.log(this.allAccountReportApi);
+
+    this.http.get<Account[]>(this.allAccountReportApi).subscribe(
+      data => {
+        this.accountRecord = this.util.convertArrayToObject(data, 'id');
+      }
+    );
   }
 }

@@ -6,6 +6,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
 import java.util.Map;
 
 public interface AccountService {
@@ -16,4 +17,6 @@ public interface AccountService {
     AccountEntity updateAccount(Account request);
 
     ResponseEntity<ByteArrayResource> downloadAccountReport(Map<String, String> parameterMap);
+
+    List<AccountEntity> getAllAccount();
 }

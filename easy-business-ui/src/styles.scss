@@ -39,3 +39,15 @@ input[type="number"]::-webkit-outer-spin-button {
 .flex-even {
   flex: 1;
 }
+
+@media (hover: hover) {
+  .hover-target {
+    visibility: hidden;
+    opacity: 0;
+  }
+  .hover-host:hover .hover-target {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s linear;
+  }
+}

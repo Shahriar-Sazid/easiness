@@ -47,4 +47,9 @@ public class AccountServiceImpl implements AccountService{
         return reportService.createAccountReport(accountEntityList,
                 Optional.ofNullable(parameterMap.get("activeFilters")).orElse("<NO FILTER>"));
     }
+
+    @Override
+    public List<AccountEntity> getAllAccount() {
+        return accountDao.getAllAccount();
+    }
 }

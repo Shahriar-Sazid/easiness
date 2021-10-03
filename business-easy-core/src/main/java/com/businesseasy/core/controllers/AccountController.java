@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,6 +24,11 @@ public class AccountController {
     @GetMapping("")
     Page<AccountEntity> getAccount(@RequestParam Map<String, String> parameterMap) {
         return accountService.getAccount(parameterMap);
+    }
+
+    @GetMapping("/all")
+    List<AccountEntity> getAllAccount() {
+        return accountService.getAllAccount();
     }
 
     @PostMapping("")
