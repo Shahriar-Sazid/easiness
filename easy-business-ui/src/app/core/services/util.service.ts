@@ -69,15 +69,15 @@ export class UtilService {
   }
 
   validateForm(form: FormGroup): boolean {
-    let isValidForm = true;
+    let validForm = true;
     for (let [control] of Object.entries(form.controls)) {
       if (form.get(control).invalid) {
         form.get(control).markAsTouched();
-        this.getValidationError(form, control);
-        isValidForm = false;
+        // this.getValidationError(form, control);
+        validForm = false;
       }
     }
-    return isValidForm;
+    return validForm;
   }
 
   getNgbToday() {
@@ -91,6 +91,10 @@ export class UtilService {
 
   convertObjectToArray(obj: object): any[] {
     return Object.values(obj);
+  }
+
+  getNumberFromLocalString(str: string) {
+    return parseFloat(str.split(",").join(""));
   }
 
   constructor() { }

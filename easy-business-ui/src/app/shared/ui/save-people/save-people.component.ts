@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { Validators, FormArray, FormControl, FormBuilder, FormGroup } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { ValidatePhoneNo } from "src/app/core/helpers/validation/custom-validator/phone-no-validator";
+import { ValidatePhoneNo } from "src/app/core/directives/phone-no-validator";
 import { PeopleService } from "src/app/core/services/people.service";
 import { UtilService } from "src/app/core/services/util.service";
 import Swal from "sweetalert2";

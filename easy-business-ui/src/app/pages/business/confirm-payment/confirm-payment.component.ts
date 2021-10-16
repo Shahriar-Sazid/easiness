@@ -1,27 +1,21 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { smoothExpandCollapse } from 'src/app/core/animations/animations';
+import { Payment } from 'src/app/core/models/purchase.model';
 import { AccountService } from 'src/app/core/services/account.service';
+import { UtilService } from 'src/app/core/services/util.service';
 
 @Component({
   selector: 'app-confirm-payment',
   templateUrl: './confirm-payment.component.html',
   styleUrls: ['./confirm-payment.component.scss'],
   animations: [
-    trigger("fadeInOut", [
-      state(
-        "void",
-        style({
-          opacity: 0
-        })
-      ),
-      transition("void <=> *", animate(200))
-    ])
+    smoothExpandCollapse(0, 0, 100, 'payInOut')
   ]
 })
 export class ConfirmPaymentComponent implements OnInit {
   @Input() mode: 'from'| 'to' = 'to';
-  form: FormGroup;
+  paymentForm: FormGroup;
   comma = ',';
 
   modeOptions = {
@@ -35,8 +29,10 @@ export class ConfirmPaymentComponent implements OnInit {
     }
   }
 
-  constructor(private fb: FormBuilder, public accountService: AccountService) {
-    this.form = this.fb.group({
+  constructor(private fb: FormBuilder,
+    public accountService: AccountService,
+    public util: UtilService) {
+    this.paymentForm = this.fb.group({
       formlist: this.fb.array([]),
     })
   }
@@ -47,7 +43,7 @@ export class ConfirmPaymentComponent implements OnInit {
   }
 
   formData(): FormArray {
-    return this.form.get('formlist') as FormArray;
+    return this.paymentForm.get('formlist') as FormArray;
   }
 
   field(): FormGroup {
@@ -63,6 +59,26 @@ export class ConfirmPaymentComponent implements OnInit {
 
   addField() {
     this.formData().push(this.field());
+  }
+
+  getPaymentData() {
+    let payments: Payment[] = [];
+    let validForm = true;
+    for (let form of this.formData().controls) {
+      // console.log(form);
+      validForm = this.util.validateForm(form as FormGroup) && validForm;
+    }
+    if(validForm) {
+      this.formData().controls.forEach(element => {
+        let payment: Payment = {
+          targetAccount: element.value.targetAccount,
+          amount: this.mode == 'from'? -this.util.getNumberFromLocalString(element.value.amount):
+          this.util.getNumberFromLocalString(element.value.amount)
+        }
+        payments.push(payment);
+      });
+      console.log(payments);
+    }
   }
 
 }

@@ -1,4 +1,4 @@
-$border-color: #eff2f7;
+$border-color: #061e4767;
 
 
 
@@ -6,7 +6,7 @@ $border-color: #eff2f7;
   & input:focus {
     border: 1px solid $border-color !important;
   }
-  & select:active {
+  & select:focus {
     border: 1px solid $border-color !important;
   }
 }

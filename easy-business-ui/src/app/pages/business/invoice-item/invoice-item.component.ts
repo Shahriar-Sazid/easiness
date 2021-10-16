@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { smoothExpandCollapse } from 'src/app/core/animations/animations';
 import { Place } from 'src/app/core/models/place.model';
 import { InvoiceItem } from 'src/app/core/models/purchase.model';
 import { UnitService } from 'src/app/core/services/unit.service';
@@ -38,5 +39,9 @@ export class InvoiceItemComponent implements OnInit {
   }
   cancel() {
     this.onCancel.emit(this.index);
+  }
+
+  isComplete() {
+    return this.item.cost && this.item.place && this.item.quantity && this.item.unit;
   }
 }

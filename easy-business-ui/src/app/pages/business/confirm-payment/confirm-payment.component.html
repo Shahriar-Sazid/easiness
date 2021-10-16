@@ -2,15 +2,16 @@
   <div class="col-md-8 col-lg-6">
     <div class="card">
       <div class="card-body">
-        <form [formGroup]="form">
+        <form [formGroup]="paymentForm">
           <div formArrayName="formlist">
-            <div class="hover-host" [@fadeInOut] *ngFor="let data1 of formData().controls; let i=index;">
+            <div class="hover-host" [@payInOut] *ngFor="let data1 of formData().controls; let i=index;">
               <div [formGroupName]="i" class="row mx-2 my-3 border p-3">
                 <div class="rounded-circle close-button-container hover-target">
                   <button class="btn btn-danger rounded-circle" (click)="removeField(i)"><i
                       class="fas fa-times"></i></button>
                 </div>
-                <label for="targetAccount" class="col-md-3 col-form-label "> {{modeOptions[mode].label }} <span class="text-danger">*</span></label>
+                <label for="targetAccount" class="col-md-3 col-form-label "> {{modeOptions[mode].label }} <span
+                    class="text-danger">*</span></label>
 
                 <div class="col-md-9">
                   <select formControlName="targetAccount" id="targetAccount" class="form-control">
@@ -20,6 +21,8 @@
                     <option *ngFor="let account of accountService.accountRecord | keyvalue" [value]="account.key">
                       {{account.value.accountName}}</option>
                   </select>
+                  <span class="text-monospace text-danger">
+                    {{ util.getValidationError(paymentForm, "formlist." + i +".targetAccount") }} </span>
                 </div>
                 <br>
                 <br>
@@ -29,14 +32,20 @@
 
                 <div class="col-md-9">
                   <input onlyNumber [ignoreChar]="','" inputWithComma type="text" for="amount" formControlName="amount"
-                    [ngClass]="['form-control', 'fs-5', 'fw-bold', 'font-monospace', modeOptions[mode].cssClass]" >
+                    [ngClass]="['form-control', 'fs-5', 'fw-bold', 'font-monospace', modeOptions[mode].cssClass]">
+                  <span class="text-monospace text-danger">
+                    {{ util.getValidationError(paymentForm, "formlist." + i +".amount") }} </span>
                 </div>
-
               </div>
             </div>
-            <input type="button" class="btn btn-success mt-3 mt-lg-0" value="Add" (click)="addField()">
+            <input type="button" class="btn btn-success mt-3 mt-lg-0" value="Add Payment" (click)="addField()">
           </div>
         </form>
+
+        <div class="d-flex justify-content-center">
+          <ng-content></ng-content>
+
+        </div>
       </div>
     </div>
   </div>

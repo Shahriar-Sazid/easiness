@@ -4,6 +4,7 @@ export interface Purchase {
   date: Date;
   supplier: number;
   items: InvoiceItem[];
+  payments: Payment[];
 }
 
 export interface InvoiceItem {
@@ -12,4 +13,9 @@ export interface InvoiceItem {
   quantity: number;
   unit: number;
   cost: number;
+}
+
+export interface Payment {
+  targetAccount: number;
+  amount: number;
 }
