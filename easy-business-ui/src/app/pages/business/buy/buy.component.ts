@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { InvoiceItem, Purchase } from "src/app/core/models/purchase.model";
 import { PeopleService } from "src/app/core/services/people.service";
 import { PlaceService } from "src/app/core/services/place.service";
 import { UtilService } from "src/app/core/services/util.service";
+import { InvoiceComponent } from "../invoice/invoice.component";
 
 @Component({
   selector: "app-buy",

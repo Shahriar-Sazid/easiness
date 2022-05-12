@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { smoothExpandCollapse } from 'src/app/core/animations/animations';
 import { Purchase } from 'src/app/core/models/purchase.model';
 import { PlaceService } from 'src/app/core/services/place.service';
+import { InvoiceItemComponent } from '../invoice-item/invoice-item.component';
 
 @Component({
   selector: 'app-invoice',
@@ -12,6 +13,7 @@ import { PlaceService } from 'src/app/core/services/place.service';
   ]
 })
 export class InvoiceComponent implements OnInit {
+  @ViewChildren(InvoiceItemComponent) invCompList: QueryList<InvoiceItemComponent>;
   @Input() purchase: Purchase;
   constructor(public placeService: PlaceService) { }
 
@@ -20,5 +22,13 @@ export class InvoiceComponent implements OnInit {
 
   cancelItem(index: number) {
     this.purchase.items.splice(index, 1);
+  }
+
+  isValid() {
+    let valid = true;
+    this.invCompList?.forEach(item => {
+      valid &&= item.isValid();
+    })
+    return valid;
   }
 }

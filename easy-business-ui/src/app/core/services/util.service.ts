@@ -85,7 +85,7 @@ export class UtilService {
     return new NgbDate(now.getFullYear(), now.getMonth() + 1, now.getDate())
   }
 
-  convertArrayToObject<Type>(arr: Type[], key: string) : Record<string, Type> {
+  convertArrayToObject<Type>(arr: Type[], key: string): Record<string, Type> {
     return arr.reduce((acc, curr) => (acc[curr[key]] = curr, acc), {});
   }
 
@@ -97,5 +97,26 @@ export class UtilService {
     return parseFloat(str.split(",").join(""));
   }
 
+  mdiv(dividend: number, divisor: number) {
+    return [Math.floor(dividend / divisor), dividend % divisor];
+  }
+
+  readablePeriod(ms: number, max_units = 2) {
+    let [yy, yr] = this.mdiv(ms, 3.154e10);
+    let [mm, mr] = this.mdiv(yr, 2.628e9);
+    let [dd, dr] = this.mdiv(mr, 8.64e7);
+    let [hh, hr] = this.mdiv(dr, 3.6e6);
+    let [tt, ss] = this.mdiv(hr, 6e4);
+
+    var ymdht = ['year', 'month', 'day', 'hour', 'minute'];
+    let res = [];
+    [yy, mm, dd, hh, tt].forEach((tis, ii) => {
+      if (res.length === max_units) { return };
+      if (tis !== 0) {
+        res.push(tis === 1 ? `${tis}${ymdht[ii]}` : `${tis}${ymdht[ii]}s`);
+      }
+    });
+    return res.length === 0 ? '' : res.join(' ') + ' ago';
+  }
   constructor() { }
 }

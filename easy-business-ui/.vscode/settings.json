@@ -1,3 +1,4 @@
 {
-    "favorites.sortOrder": "ASC"
+    "favorites.sortOrder": "ASC",
+    "npm-scripts.showStartNotification": false
 }

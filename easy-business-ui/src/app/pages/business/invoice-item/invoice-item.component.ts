@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { smoothExpandCollapse } from 'src/app/core/animations/animations';
+import { NgForm } from '@angular/forms';
 import { Place } from 'src/app/core/models/place.model';
 import { InvoiceItem } from 'src/app/core/models/purchase.model';
 import { UnitService } from 'src/app/core/services/unit.service';
@@ -10,6 +10,7 @@ import { UnitService } from 'src/app/core/services/unit.service';
   styleUrls: ['./invoice-item.component.scss']
 })
 export class InvoiceItemComponent implements OnInit {
+  @ViewChild('fr') invoiceForm!: NgForm;
   editCost = false;
   @Input() placeRecord: Record<string, Place>;
   @Input() item: InvoiceItem;
@@ -37,11 +38,13 @@ export class InvoiceItemComponent implements OnInit {
     ].filter(el => el);
     return arr.join(", ");
   }
+
   cancel() {
     this.onCancel.emit(this.index);
   }
 
-  isComplete() {
-    return this.item.cost && this.item.place && this.item.quantity && this.item.unit;
+  isValid() {
+    return this.invoiceForm.valid;
   }
+
 }

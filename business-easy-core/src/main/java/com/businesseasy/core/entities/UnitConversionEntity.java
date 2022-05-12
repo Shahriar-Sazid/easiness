@@ -21,10 +21,10 @@ public class UnitConversionEntity {
     @Column(name = "id")
     Integer id;
 
-    @Column(name = "from")
+    @Column(name = "fromUnit")
     Integer from;
 
-    @Column(name = "to")
+    @Column(name = "toUnit")
     Integer to;
 
     @Column(name = "cal_step")
