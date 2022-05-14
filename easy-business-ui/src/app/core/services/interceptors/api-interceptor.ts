@@ -7,7 +7,7 @@ export class ApiInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let apiReq = req;
     if(req.url.includes("api/")) {
-      apiReq = req.clone({ url: `http://192.168.31.219:8080/${req.url}` });
+      apiReq = req.clone({ url: `http://localhost:8080/${req.url}` });
     }
     return next.handle(apiReq);
   }

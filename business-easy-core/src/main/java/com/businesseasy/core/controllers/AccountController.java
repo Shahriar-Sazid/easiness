@@ -32,7 +32,7 @@ public class AccountController {
     }
 
     @PostMapping("")
-    Integer createAccount(@Valid @RequestBody Account request) {
+    Long createAccount(@Valid @RequestBody Account request) {
         return accountService.createAccount(request);
     }
 

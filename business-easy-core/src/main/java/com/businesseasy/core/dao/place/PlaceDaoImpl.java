@@ -60,7 +60,7 @@ public class PlaceDaoImpl implements PlaceDao {
     }
 
     @Override
-    public Integer createPlace(Place request) {
+    public Long createPlace(Place request) {
         Optional<PlaceEntity> entity = placeRepository.findByName(request.getName());
 
         if (entity.isPresent()) {

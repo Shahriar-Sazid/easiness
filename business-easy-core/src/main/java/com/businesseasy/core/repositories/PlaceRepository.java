@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.Optional;
 
 public interface PlaceRepository extends JpaRepository<PlaceEntity, Integer>, JpaSpecificationExecutor<PlaceEntity> {
-    Optional<PlaceEntity> findById(Integer id);
+    Optional<PlaceEntity> findById(Long id);
     Optional<PlaceEntity> findByName(String name);
 }

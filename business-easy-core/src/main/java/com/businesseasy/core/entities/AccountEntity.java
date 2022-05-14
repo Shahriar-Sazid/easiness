@@ -16,9 +16,9 @@ import java.math.BigDecimal;
 @Table(name = "account", uniqueConstraints = {@UniqueConstraint(columnNames = {"bank", "account_no"})})
 public class AccountEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    Integer id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", updatable = false, nullable = false)
+    Long id;
 
     @Column(name = "account_name")
     String accountName;

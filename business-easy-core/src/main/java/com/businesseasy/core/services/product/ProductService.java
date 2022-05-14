@@ -1,7 +1,7 @@
 package com.businesseasy.core.services.product;
 
 import com.businesseasy.core.common.model.ProductCreationRequest;
-import com.businesseasy.core.common.model.ProductUpdateRequest;
+import com.businesseasy.core.common.model.Product;
 import com.businesseasy.core.entities.ProductEntity;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
@@ -13,9 +13,9 @@ import java.util.Map;
 public interface ProductService {
     Page<ProductEntity> getAllProduct(Map<String, String> parameterMap);
 
-    List<Integer> createProduct(ProductCreationRequest request);
+    List<Long> createProduct(ProductCreationRequest request);
 
-    ProductEntity updateProduct(ProductUpdateRequest request);
+    ProductEntity updateProduct(Product request);
 
     ResponseEntity<ByteArrayResource> downloadProductReport(Map<String, String> parameterMap);
 }

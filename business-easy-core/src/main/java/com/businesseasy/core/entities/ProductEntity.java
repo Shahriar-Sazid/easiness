@@ -16,9 +16,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class ProductEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    Integer id;
+    Long id;
 
     @Column(name = "name")
     String name;

@@ -11,5 +11,5 @@ public interface PlaceDao {
 
     PlaceEntity updatePlace(Place request);
 
-    Integer createPlace(Place request);
+    Long createPlace(Place request);
 }

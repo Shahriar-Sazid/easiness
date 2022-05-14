@@ -15,13 +15,13 @@ import javax.persistence.*;
 @Table(name = "contact_no")
 public class ContactNoEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    Integer id;
+    Long id;
 
     @Column(name = "contact_no", nullable = false, unique = true)
     String contactNo;
 
     @Column(name = "owner_id")
-    Integer ownerId;
+    Long ownerId;
 }

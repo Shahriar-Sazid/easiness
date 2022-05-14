@@ -12,7 +12,7 @@ import java.util.Map;
 public interface AccountService {
     Page<AccountEntity> getAccount(Map<String, String> parameterMap);
 
-    Integer createAccount(Account request);
+    Long createAccount(Account request);
 
     AccountEntity updateAccount(Account request);
 

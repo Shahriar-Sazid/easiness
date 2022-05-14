@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Place {
-    Integer id;
+    Long id;
 
     @NotNull(message = "Place name must not be null")
     @NotBlank(message = "Place name must not be blank")

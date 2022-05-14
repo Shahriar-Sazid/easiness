@@ -20,7 +20,7 @@ public class PlaceServiceImpl implements PlaceService{
     }
 
     @Override
-    public Integer createPlace(Place request) {
+    public Long createPlace(Place request) {
         return placeDao.createPlace(request);
     }
 

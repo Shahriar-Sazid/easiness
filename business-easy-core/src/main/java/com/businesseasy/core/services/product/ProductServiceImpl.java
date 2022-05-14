@@ -1,7 +1,7 @@
 package com.businesseasy.core.services.product;
 
 import com.businesseasy.core.common.model.ProductCreationRequest;
-import com.businesseasy.core.common.model.ProductUpdateRequest;
+import com.businesseasy.core.common.model.Product;
 import com.businesseasy.core.dao.product.ProductDao;
 import com.businesseasy.core.entities.ProductEntity;
 import com.businesseasy.core.services.report.ReportService;
@@ -29,12 +29,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Integer> createProduct(ProductCreationRequest request) {
+    public List<Long> createProduct(ProductCreationRequest request) {
         return productDao.createProduct(request);
     }
 
     @Override
-    public ProductEntity updateProduct(ProductUpdateRequest request) {
+    public ProductEntity updateProduct(Product request) {
         ProductEntity entity = ProductEntity.builder()
                 .id(request.getId())
                 .name(request.getName())

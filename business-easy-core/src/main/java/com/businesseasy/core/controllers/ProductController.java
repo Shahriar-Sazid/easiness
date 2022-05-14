@@ -1,7 +1,7 @@
 package com.businesseasy.core.controllers;
 
 import com.businesseasy.core.common.model.ProductCreationRequest;
-import com.businesseasy.core.common.model.ProductUpdateRequest;
+import com.businesseasy.core.common.model.Product;
 import com.businesseasy.core.entities.ProductEntity;
 import com.businesseasy.core.services.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +28,12 @@ public class ProductController {
     }
 
     @PostMapping("")
-    List<Integer> createProduct(@Valid @RequestBody ProductCreationRequest request) {
+    List<Long> createProduct(@Valid @RequestBody ProductCreationRequest request) {
         return productService.createProduct(request);
     }
 
     @PutMapping("")
-    ProductEntity updateProduct(@Valid @RequestBody ProductUpdateRequest request) {
+    ProductEntity updateProduct(@Valid @RequestBody Product request) {
         return productService.updateProduct(request);
     }
 

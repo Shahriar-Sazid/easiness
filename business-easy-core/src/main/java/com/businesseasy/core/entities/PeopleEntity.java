@@ -18,9 +18,9 @@ import java.util.List;
 @Table(name = "people", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "company_name"})})
 public class PeopleEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    Integer id;
+    Long id;
 
     @Column(name = "name")
     String name;

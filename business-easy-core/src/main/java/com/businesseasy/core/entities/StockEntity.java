@@ -16,9 +16,9 @@ import java.math.BigDecimal;
 @Table(name = "stock")
 public class StockEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    Integer id;
+    Long id;
 
     @Column(name = "cost")
     BigDecimal cost;

@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface PeopleDao {
     Page<PeopleEntity> getPeople(Map<String, String> parameterMap);
 
-    Integer insertPeople(People request);
+    Long insertPeople(People request);
 
     People updatePeople(People request);
 

@@ -41,7 +41,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public List<Integer> createProduct(ProductCreationRequest request) {
+    public List<Long> createProduct(ProductCreationRequest request) {
         List<ProductEntity> entityList = new ArrayList<>();
         if (request.getSizes() == null || request.getSizes().size() == 0) {
             ProductEntity entity = new ProductEntity();

@@ -6,9 +6,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class ProductUpdateRequest {
+public class Product {
     @NotNull(message = "Product Id must not be null")
-    private Integer id;
+    private Long id;
 
     @NotNull(message = "Product name must not be null")
     @NotBlank(message = "Product name must not be blank")

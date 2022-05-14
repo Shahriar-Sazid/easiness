@@ -32,7 +32,7 @@ public class PeopleController {
     }
 
     @PostMapping("")
-    Integer insertPeople(@Valid @RequestBody People request) {
+    Long insertPeople(@Valid @RequestBody People request) {
         return peopleService.insertPeople(request);
     }
 

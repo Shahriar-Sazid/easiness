@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface ContactNoRepository extends JpaRepository<ContactNoEntity, Integer> {
     Optional<ContactNoEntity> findByContactNo(String contactNo);
-    List<ContactNoEntity> findAllByOwnerId(Integer ownerId);
+    List<ContactNoEntity> findAllByOwnerId(Long ownerId);
 }

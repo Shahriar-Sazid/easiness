@@ -22,7 +22,7 @@ public class PlaceController {
     }
 
     @PostMapping("")
-    Integer createAccount(@Valid @RequestBody Place request) {
+    Long createAccount(@Valid @RequestBody Place request) {
         return placeService.createPlace(request);
     }
 

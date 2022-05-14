@@ -9,7 +9,7 @@ import java.util.Map;
 public interface PlaceService {
     Page<PlaceEntity> getPlace(Map<String, String> parameterMap);
 
-    Integer createPlace(Place request);
+    Long createPlace(Place request);
 
     PlaceEntity updatePlace(Place request);
 }

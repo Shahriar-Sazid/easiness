@@ -34,7 +34,7 @@ public class PeopleServiceImpl implements PeopleService {
     }
 
     @Override
-    public Integer insertPeople(People request) {
+    public Long insertPeople(People request) {
         return peopleDao.insertPeople(request);
     }
 

@@ -53,7 +53,7 @@ public class PeopleDaoImpl implements PeopleDao {
         return peopleRepository.findAll(entitySpecification, pageable);
     }
 
-    private List<ContactNoEntity> toContactNoList(List<String> contactNoList, Integer ownerId) {
+    private List<ContactNoEntity> toContactNoList(List<String> contactNoList, Long ownerId) {
         return contactNoList.stream()
                 .map(contactNo -> ContactNoEntity
                         .builder()
@@ -64,8 +64,8 @@ public class PeopleDaoImpl implements PeopleDao {
     }
 
     @Override
-    public Integer insertPeople(People request) {
-        Integer peopleId;
+    public Long insertPeople(People request) {
+        Long peopleId;
         try {
             peopleId = peopleRepository.save(
                     PeopleEntity

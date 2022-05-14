@@ -28,7 +28,7 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public Integer createAccount(Account request) {
+    public Long createAccount(Account request) {
         AccountEntity accountEntity = accountDao.createAccount(request);
 
         return accountEntity.getId();

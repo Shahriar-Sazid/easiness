@@ -11,7 +11,7 @@ import java.util.Map;
 public interface ProductDao {
     Page<ProductEntity> getAllProduct(Map<String, String> parameterMap);
 
-    List<Integer> createProduct(ProductCreationRequest request);
+    List<Long> createProduct(ProductCreationRequest request);
 
     ProductEntity updateProduct(ProductEntity request);
 }
