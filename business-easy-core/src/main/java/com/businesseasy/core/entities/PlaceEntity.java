@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class PlaceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, updatable = false)
     Long id;
 
     @Column(name = "name", unique = true)

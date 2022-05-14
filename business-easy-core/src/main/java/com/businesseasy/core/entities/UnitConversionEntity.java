@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 public class UnitConversionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, updatable = false)
     Integer id;
 
     @Column(name = "fromUnit")

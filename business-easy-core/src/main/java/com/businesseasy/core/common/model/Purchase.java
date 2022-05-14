@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -14,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Purchase {
     private Date date;
-    private Integer supplier;
-    private InvoiceItem[] items;
-    private Payment[] payments;
+    private Long supplier;
+    private List<InvoiceItem> items;
+    private List<Payment> payments;
 }

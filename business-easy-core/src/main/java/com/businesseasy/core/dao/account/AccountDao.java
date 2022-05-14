@@ -15,4 +15,6 @@ public interface AccountDao {
     AccountEntity updateAccount(Account request);
 
     List<AccountEntity> getAllAccount();
+
+    List<AccountEntity> getAccountByIds(List<Long> idList);
 }

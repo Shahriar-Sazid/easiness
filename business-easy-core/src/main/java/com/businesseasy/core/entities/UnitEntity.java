@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class UnitEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, updatable = false)
     Integer id;
 
     @Column(name= "name", unique = true)

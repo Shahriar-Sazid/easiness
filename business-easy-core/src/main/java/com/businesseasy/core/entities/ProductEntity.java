@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class ProductEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, updatable = false)
     Long id;
 
     @Column(name = "name")

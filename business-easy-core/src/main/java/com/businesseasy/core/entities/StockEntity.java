@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 public class StockEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, updatable = false)
     Long id;
 
     @Column(name = "cost")

@@ -69,6 +69,11 @@ public class AccountDaoImpl implements AccountDao {
         return accountRepository.findAll();
     }
 
+    @Override
+    public List<AccountEntity> getAccountByIds(List<Long> idList) {
+        return accountRepository.findByIdIn(idList);
+    }
+
     void validateAccountUpdateRequest(Account request) {
         Optional<AccountEntity> entity = accountRepository.findById(request.getId());
         if(!entity.isPresent()) {
