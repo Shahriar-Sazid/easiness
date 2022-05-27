@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class People {
-    Integer id;
+    Long id;
 
     @NotNull(message = "People name must not be null")
     @NotBlank(message = "People name must not be blank")

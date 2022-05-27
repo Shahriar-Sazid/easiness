@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { smoothExpandCollapse } from 'src/app/core/animations/animations';
 import { Payment } from 'src/app/core/models/purchase.model';
@@ -16,6 +16,7 @@ import { UtilService } from 'src/app/core/services/util.service';
 export class ConfirmPaymentComponent implements OnInit {
   @Input() mode: 'from'| 'to' = 'to';
   paymentForm: FormGroup;
+  @Output() onPaymentProcessed = new EventEmitter();
   comma = ',';
 
   modeOptions = {
@@ -77,6 +78,7 @@ export class ConfirmPaymentComponent implements OnInit {
         }
         payments.push(payment);
       });
+      this.onPaymentProcessed.emit(payments);
       console.log(payments);
     }
   }

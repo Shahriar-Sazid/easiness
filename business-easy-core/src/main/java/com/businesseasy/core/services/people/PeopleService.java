@@ -22,5 +22,5 @@ public interface PeopleService {
 
     List<PeopleEntity> getAllSupplier();
 
-    People getPeopleById(Integer id);
+    People getPeopleById(Long id);
 }

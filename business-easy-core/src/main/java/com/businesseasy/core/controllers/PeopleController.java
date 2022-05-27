@@ -27,7 +27,7 @@ public class PeopleController {
     }
 
     @RequestMapping(value = "id", method = RequestMethod.GET)
-    People getById(@RequestParam Integer id) {
+    People getById(@RequestParam Long id) {
         return peopleService.getPeopleById(id);
     }
 

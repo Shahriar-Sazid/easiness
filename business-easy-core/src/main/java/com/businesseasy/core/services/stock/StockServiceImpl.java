@@ -1,11 +1,12 @@
 package com.businesseasy.core.services.stock;
 
-import com.businesseasy.core.dao.stock.StockDao;
+import com.businesseasy.core.repositories.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StockServiceImpl {
+public class StockServiceImpl implements StockService {
+
     @Autowired
-    private StockDao stockDao;
+    private StockRepository stockRepository;
 }

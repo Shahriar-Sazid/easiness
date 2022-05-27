@@ -12,6 +12,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Payment {
-    Integer targetAccount;
+    Long targetAccount;
     BigDecimal amount;
 }
