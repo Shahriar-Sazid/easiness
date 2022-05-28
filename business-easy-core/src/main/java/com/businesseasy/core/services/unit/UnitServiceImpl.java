@@ -1,16 +1,16 @@
 package com.businesseasy.core.services.unit;
 
-import com.businesseasy.core.common.enums.Operator;
+import com.businesseasy.core.common.model.UnitData;
 import com.businesseasy.core.entities.UnitConversionEntity;
 import com.businesseasy.core.entities.UnitEntity;
 import com.businesseasy.core.repositories.UnitConversionRepository;
 import com.businesseasy.core.repositories.UnitRepository;
-import com.businesseasy.core.common.model.UnitData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Comparator;
@@ -25,8 +25,17 @@ public class UnitServiceImpl implements UnitService{
     @Autowired
     UnitConversionRepository unitConversionRepository;
 
+    List<UnitEntity> unitList;
+    List<UnitConversionEntity> unitConversions;
+
     @Value( "${precision.digit-count:6}" )
     private Integer precision;
+
+    @PostConstruct
+    private void didInitialize() {
+        unitList = getUnits();
+        unitConversions = getUnitConversions();
+    }
 
     public List<UnitEntity> getUnits() {
         return unitRepository.findAll();
@@ -40,15 +49,15 @@ public class UnitServiceImpl implements UnitService{
     @Cacheable("unitData")
     public UnitData getAllUnitData() {
         return UnitData.builder()
-                .unitList(getUnits())
-                .unitConversionList(getUnitConversions())
+                .unitList(unitList)
+                .unitConversionList(unitConversions)
                 .build();
     }
 
     @Override
     @Cacheable("conversion")
     public BigDecimal convert(Long from, Long to, BigDecimal value) {
-        List<UnitConversionEntity> conversions = getUnitConversions().stream()
+        List<UnitConversionEntity> conversions = unitConversions.stream()
                 .filter(conversion -> conversion.getFrom().equals(from) && conversion.getTo().equals(to))
                 .sorted(Comparator.comparing(UnitConversionEntity::getCalStep))
                 .collect(Collectors.toList());

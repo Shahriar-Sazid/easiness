@@ -19,9 +19,12 @@ public class DocumentItemEntity implements Serializable {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
+    @Column(name = "document_id")
+    private Long documentId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "document_id", nullable = false)
-    private DocumentEntity document;
+    @JoinColumn(name = "product_id", nullable = false)
+    private ProductEntity product;
 
     @Column(name = "quantity")
     private BigDecimal quantity;

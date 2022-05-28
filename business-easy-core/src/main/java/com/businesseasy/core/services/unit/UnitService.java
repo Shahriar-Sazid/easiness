@@ -7,5 +7,5 @@ import java.math.BigDecimal;
 public interface UnitService {
     UnitData getAllUnitData();
 
-    BigDecimal convert(Long from, Long to, BigDecimal amount);
+    BigDecimal convert(Long from, Long to, BigDecimal value);
 }

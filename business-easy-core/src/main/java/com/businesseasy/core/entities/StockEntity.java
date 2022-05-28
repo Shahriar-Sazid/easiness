@@ -18,7 +18,7 @@ public class StockEntity extends BaseEntity {
     @Column(name = "id", nullable = false, updatable = false)
     Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     ProductEntity product;
 
@@ -32,7 +32,7 @@ public class StockEntity extends BaseEntity {
     @JoinColumn(name = "unit_id")
     UnitEntity unitEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
     PlaceEntity place;
 

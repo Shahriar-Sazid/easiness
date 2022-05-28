@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,10 +45,24 @@ public class StockServiceImpl implements StockService {
     private Integer precision;
 
     @Override
-    public void saveItemsInStock(List<InvoiceItem> items) {
-        Map<String, InvoiceItem> itemMap = items.stream().collect(
-                Collectors.toMap(item -> Util.concatWith(item.getProduct(), item.getPlace(), "_"),
-                        item -> item));
+    public List<StockEntity> saveItemsInStock(List<InvoiceItem> items) {
+        Map<String, InvoiceItem> itemMap = new HashMap<>();
+
+        for(InvoiceItem item: items) {
+            String key = Util.concatWith(item.getProduct(), item.getPlace(), "_");
+
+            if(itemMap.get(key) == null) {
+                itemMap.put(key, item);
+            } else {
+                InvoiceItem prevItem = itemMap.get(key);
+                BigDecimal[] qtyAntCost = calculateCostAndQuantity(
+                        prevItem.getQuantity(), prevItem.getCost(), prevItem.getUnit(),
+                        item.getQuantity(), item.getCost(), item.getUnit());
+                prevItem.setQuantity(qtyAntCost[0]);
+                prevItem.setCost(qtyAntCost[1]);
+            }
+        }
+        items = new ArrayList<>(itemMap.values());
 
         List<StockEntity> stockList = stockRepository.findByProduct_IdIn(items.stream()
                 .map(InvoiceItem::getProduct)
@@ -73,8 +88,7 @@ public class StockServiceImpl implements StockService {
         List<StockEntity> newStocks = addNewStock(newItems);
 
 
-        stockRepository.saveAll(Stream.concat(updatedStocks.stream(), newStocks.stream()).collect(Collectors.toList()));
-
+        return stockRepository.saveAll(Stream.concat(updatedStocks.stream(), newStocks.stream()).collect(Collectors.toList()));
     }
 
     private List<StockEntity> updateExistingStock(Map<String, StockEntity> stockMap, List<InvoiceItem> items) {
@@ -82,19 +96,13 @@ public class StockServiceImpl implements StockService {
         for (InvoiceItem item : items) {
             StockEntity stock = stockMap.get(Util.concatWith(item.getProduct(), item.getPlace(), "_"));
 
-            if(!stock.getUnitEntity().getId().equals(item.getUnit())) {
-                BigDecimal quantity = unitService.convert(item.getUnit(), stock.getUnitEntity().getId(), item.getQuantity());
-                log.info("Quantity: {}", quantity);
-                stock.setCost(
-                        ((stock.getCost().multiply(stock.getQuantity())).add((quantity.multiply(item.getCost()))))
-                                .divide(stock.getQuantity().add(quantity), precision, RoundingMode.HALF_EVEN));
-                stock.setQuantity(stock.getQuantity().add(quantity));
-            } else {
-                stock.setCost(
-                        ((stock.getCost().multiply(stock.getQuantity())).add((item.getQuantity().multiply(item.getCost()))))
-                                .divide(stock.getQuantity().add(item.getQuantity()), precision, RoundingMode.HALF_EVEN));
-                stock.setQuantity(stock.getQuantity().add(item.getQuantity()));
-            }
+            BigDecimal[] qtyAndCost = calculateCostAndQuantity(
+                    stock.getQuantity(), stock.getCost(), stock.getUnitEntity().getId()
+                    ,item.getQuantity(), item.getCost(), item.getUnit());
+
+            stock.setQuantity(qtyAndCost[0]);
+            stock.setCost(qtyAndCost[1]);
+            stockList.add(stock);
         }
         return stockList;
     }
@@ -111,5 +119,17 @@ public class StockServiceImpl implements StockService {
                     .build());
         }
         return stockList;
+    }
+
+    public BigDecimal[] calculateCostAndQuantity(BigDecimal toQty, BigDecimal toCost, Long toUnit,
+                                                 BigDecimal qty, BigDecimal cost, Long unit) {
+
+        qty = toUnit.equals(unit)? qty : unitService.convert(unit, toUnit, qty);
+
+        BigDecimal newQty = toQty.add(qty);
+        BigDecimal newCost = (toCost.multiply(toQty).add((cost.multiply(qty))))
+                .divide(toQty.add(qty), precision, RoundingMode.HALF_EVEN);
+
+        return new BigDecimal[]{newQty, newCost};
     }
 }

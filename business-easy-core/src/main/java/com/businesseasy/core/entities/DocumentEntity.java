@@ -1,11 +1,9 @@
 package com.businesseasy.core.entities;
 
 import com.businesseasy.core.common.enums.DocumentType;
-import com.businesseasy.core.common.model.People;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -29,7 +27,8 @@ public class DocumentEntity extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private DocumentType type;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "document_id", referencedColumnName = "id")
     private List<DocumentItemEntity> documentItems;
 
 }
