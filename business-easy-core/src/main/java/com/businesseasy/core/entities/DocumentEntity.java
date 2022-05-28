@@ -2,22 +2,20 @@ package com.businesseasy.core.entities;
 
 import com.businesseasy.core.common.enums.DocumentType;
 import com.businesseasy.core.common.model.People;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "document")
-public class DocumentEntity {
+public class DocumentEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false, updatable = false)
@@ -27,14 +25,11 @@ public class DocumentEntity {
     @JoinColumn(name = "people_id")
     private PeopleEntity people;
 
-    @Column(name = "created_at")
-    private Date createdAt;
-
     @Column(name="type")
     @Enumerated(value = EnumType.STRING)
     private DocumentType type;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "document")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DocumentItemEntity> documentItems;
 
 }

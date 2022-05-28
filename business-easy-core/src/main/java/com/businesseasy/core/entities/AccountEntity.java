@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "account", uniqueConstraints = {@UniqueConstraint(columnNames = {"bank", "account_no"})})
-public class AccountEntity {
+public class AccountEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", updatable = false, nullable = false)

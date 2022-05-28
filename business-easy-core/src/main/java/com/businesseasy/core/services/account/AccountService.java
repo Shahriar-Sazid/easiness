@@ -1,5 +1,6 @@
 package com.businesseasy.core.services.account;
 
+import com.businesseasy.core.common.model.Payment;
 import com.businesseasy.core.entities.AccountEntity;
 import com.businesseasy.core.common.model.Account;
 import org.springframework.core.io.ByteArrayResource;
@@ -19,4 +20,6 @@ public interface AccountService {
     ResponseEntity<ByteArrayResource> downloadAccountReport(Map<String, String> parameterMap);
 
     List<AccountEntity> getAllAccount();
+
+    void updateAccountBalance(List<Payment> payments);
 }

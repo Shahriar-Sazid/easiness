@@ -1,22 +1,20 @@
 package com.businesseasy.core.entities;
 
 import com.businesseasy.core.common.enums.PeopleType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "people", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "company_name"})})
-public class PeopleEntity {
+public class PeopleEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false, updatable = false)

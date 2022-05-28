@@ -6,6 +6,7 @@ import com.businesseasy.core.common.model.Purchase;
 import com.businesseasy.core.entities.AccountEntity;
 import com.businesseasy.core.repositories.AccountRepository;
 import com.businesseasy.core.services.account.AccountService;
+import com.businesseasy.core.services.document.DocumentService;
 import com.businesseasy.core.services.stock.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,36 +22,21 @@ import java.util.stream.Collectors;
 public class BusinessServiceImpl implements BusinessService {
 
     @Autowired
-    private AccountRepository accountRepository;
+    AccountService accountService;
 
     @Autowired
-    private StockService stockService;
+    StockService stockService;
+
+    @Autowired
+    DocumentService documentService;
 
     @Override
     @Transactional
     public void purchase(Purchase purchaseObj) {
-
-        storeProduct(purchaseObj.getItems());
-        updateAccountBalance(purchaseObj.getPayments());
-
+        stockService.saveItemsInStock(purchaseObj.getItems());
+        documentService.savePurchaseDocument(purchaseObj);
+        accountService.updateAccountBalance(purchaseObj.getPayments());
     }
 
-    private void updateAccountBalance(List<Payment> payments) {
-        if (payments != null) {
-            List<AccountEntity> accountEntities = accountRepository.findByIdIn(
-                    payments.stream().map(Payment::getTargetAccount).collect(Collectors.toList()));
 
-            Map<Long, AccountEntity> accountMap = accountEntities.stream().collect(Collectors.toMap(AccountEntity::getId, item -> item));
-
-            for(Payment payment : payments) {
-                AccountEntity account = accountMap.get(payment.getTargetAccount());
-                account.setBalance(account.getBalance().add(payment.getAmount()));
-                accountRepository.save(account);
-            }
-        }
-    }
-
-    private void storeProduct(List<InvoiceItem> items) {
-        stockService.saveItemsInStock(items);
-    }
 }

@@ -2,6 +2,7 @@ package com.businesseasy.core.services.account;
 
 import com.businesseasy.core.common.SearchCriteria;
 import com.businesseasy.core.common.SearchOperation;
+import com.businesseasy.core.common.model.Payment;
 import com.businesseasy.core.exception_handler.InvalidRequestException;
 import com.businesseasy.core.exception_handler.ReasonCode;
 import com.businesseasy.core.repositories.AccountRepository;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountServiceImpl implements AccountService{
@@ -83,6 +85,22 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public List<AccountEntity> getAllAccount() {
         return accountRepository.findAll();
+    }
+
+    @Override
+    public void updateAccountBalance(List<Payment> payments) {
+        if (payments != null) {
+            List<AccountEntity> accountEntities = accountRepository.findByIdIn(
+                    payments.stream().map(Payment::getTargetAccount).collect(Collectors.toList()));
+
+            Map<Long, AccountEntity> accountMap = accountEntities.stream().collect(Collectors.toMap(AccountEntity::getId, item -> item));
+
+            for(Payment payment : payments) {
+                AccountEntity account = accountMap.get(payment.getTargetAccount());
+                account.setBalance(account.getBalance().add(payment.getAmount()));
+                accountRepository.save(account);
+            }
+        }
     }
 
     void validateAccountCreationRequest(Account request) {
