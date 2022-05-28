@@ -52,7 +52,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" [disabled]="!costingForm.valid" (click)="addToPurchaseList()">
+    <button type="button" class="btn btn-primary" autofocus [disabled]="!costingForm.valid" (click)="addToPurchaseList()">
       Add
     </button>
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cancel click')">Close</button>

@@ -118,5 +118,74 @@ export class UtilService {
     });
     return res.length === 0 ? '' : res.join(' ') + ' ago';
   }
+
+
+  clone(target, map = new WeakMap()) {
+
+    // clone primitive types
+    if (typeof target != "object" || target == null) {
+      return target;
+    }
+
+    const type = this.toRawType(target);
+    let cloneTarget = null;
+
+
+    if (map.get(target)) {
+      return map.get(target);
+    }
+    map.set(target, cloneTarget);
+
+    // clone Set
+    if (type == "Set") {
+      cloneTarget = new Set();
+      target.forEach(value => {
+        cloneTarget.add(this.clone(value, map));
+      });
+      return cloneTarget;
+    }
+
+    // clone Map
+    if (type == "Map") {
+      cloneTarget = new Map();
+      target.forEach((value, key) => {
+        cloneTarget.set(key, this.clone(value, map));
+      });
+      return cloneTarget;
+    }
+
+    // clone Array
+    if (type == "Array") {
+      cloneTarget = new Array();
+      this.forEach(target, (value, index) => {
+        cloneTarget[index] = this.clone(value, map);
+      })
+    }
+
+    // clone normal Object
+    if (type == "Object") {
+      cloneTarget = new Object();
+      this.forEach(Object.keys(target), (key, index) => {
+        cloneTarget[key] = this.clone(target[key], map);
+      })
+    }
+
+    return cloneTarget;
+  }
+
+  forEach(array, iteratee) {
+    let index = -1;
+    const length = array.length;
+    while (++index < length) {
+      iteratee(array[index], index);
+    }
+    return array;
+  }
+
+  toRawType(value) {
+    let _toString = Object.prototype.toString;
+    let str = _toString.call(value)
+    return str.slice(8, -1)
+  }
   constructor() { }
 }

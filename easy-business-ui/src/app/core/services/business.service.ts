@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { UtilService } from './util.service';
 import { Observable } from 'rxjs';
 import { Purchase } from '../models/purchase.model';
+import { Product } from '../models/product.model';
 
 @Injectable({ providedIn: 'root' })
 export class BusinessService {
@@ -12,8 +13,13 @@ export class BusinessService {
     constructor(private http: HttpClient, private util: UtilService) { }
 
 
-    buy(purchase: Purchase): Observable<any> {
+    buy(purchase: any): Observable<any> {
         this.util.deepTrim(purchase);
+        purchase = this.util.clone(purchase);
+        purchase.items.map((item) => {
+            item.product = item.product.id;
+            return item;
+        })
         return this.http.post(this.purchaseApi, purchase);
     }
 

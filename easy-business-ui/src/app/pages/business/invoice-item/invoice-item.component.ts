@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Place } from 'src/app/core/models/place.model';
+import { Product } from 'src/app/core/models/product.model';
 import { InvoiceItem } from 'src/app/core/models/purchase.model';
 import { UnitService } from 'src/app/core/services/unit.service';
 

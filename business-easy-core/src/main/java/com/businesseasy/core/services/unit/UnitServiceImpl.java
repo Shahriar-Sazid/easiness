@@ -1,10 +1,21 @@
 package com.businesseasy.core.services.unit;
 
+import com.businesseasy.core.common.enums.Operator;
+import com.businesseasy.core.entities.UnitConversionEntity;
+import com.businesseasy.core.entities.UnitEntity;
 import com.businesseasy.core.repositories.UnitConversionRepository;
 import com.businesseasy.core.repositories.UnitRepository;
 import com.businesseasy.core.common.model.UnitData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UnitServiceImpl implements UnitService{
@@ -14,11 +25,51 @@ public class UnitServiceImpl implements UnitService{
     @Autowired
     UnitConversionRepository unitConversionRepository;
 
+    @Value( "${precision.digit-count:6}" )
+    private Integer precision;
+
+    public List<UnitEntity> getUnits() {
+        return unitRepository.findAll();
+    }
+
+    public List<UnitConversionEntity> getUnitConversions() {
+        return unitConversionRepository.findAll();
+    }
+
     @Override
+    @Cacheable("unitData")
     public UnitData getAllUnitData() {
         return UnitData.builder()
-                .unitList(unitRepository.findAll())
-                .unitConversionList(unitConversionRepository.findAll())
+                .unitList(getUnits())
+                .unitConversionList(getUnitConversions())
                 .build();
     }
+
+    @Override
+    @Cacheable("conversion")
+    public BigDecimal convert(Long from, Long to, BigDecimal value) {
+        List<UnitConversionEntity> conversions = getUnitConversions().stream()
+                .filter(conversion -> conversion.getFrom().equals(from) && conversion.getTo().equals(to))
+                .sorted(Comparator.comparing(UnitConversionEntity::getCalStep))
+                .collect(Collectors.toList());
+        for(UnitConversionEntity conversion: conversions) {
+            switch (conversion.getOperator()){
+                case PLUS:
+                    value = value.add(conversion.getConstant());
+                    break;
+                case MINUS:
+                    value = value.add(conversion.getConstant().negate());
+                    break;
+                case MULTIPLY:
+                    value = value.multiply(conversion.getConstant());
+                    break;
+                case DIVIDE:
+                    value = value.divide(conversion.getConstant(), precision, RoundingMode.HALF_EVEN);
+                    break;
+            }
+
+        }
+        return value;
+    }
+
 }

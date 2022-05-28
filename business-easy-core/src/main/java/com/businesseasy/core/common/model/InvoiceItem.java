@@ -14,9 +14,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class InvoiceItem {
 
-    private Product product;
-    private Integer place;
+    private Long product;
+    private Long place;
     private BigDecimal quantity;
-    private Integer unit;
+    private Long unit;
     private BigDecimal cost;
 }

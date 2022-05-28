@@ -1,31 +1,29 @@
 package com.businesseasy.core.entities;
 
 import com.businesseasy.core.common.enums.Operator;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "unit_conversion")
 public class UnitConversionEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false, updatable = false)
-    Integer id;
+    Long id;
 
     @Column(name = "fromUnit")
-    Integer from;
+    Long from;
 
     @Column(name = "toUnit")
-    Integer to;
+    Long to;
 
     @Column(name = "cal_step")
     Integer calStep;

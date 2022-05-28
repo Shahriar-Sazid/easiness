@@ -1,5 +1,6 @@
 package com.businesseasy.core.services.business;
 
+import com.businesseasy.core.common.model.InvoiceItem;
 import com.businesseasy.core.common.model.Payment;
 import com.businesseasy.core.common.model.Purchase;
 import com.businesseasy.core.entities.AccountEntity;
@@ -25,7 +26,16 @@ public class BusinessServiceImpl implements BusinessService {
     @Autowired
     private StockService stockService;
 
-    void updateAccountBalance(List<Payment> payments) {
+    @Override
+    @Transactional
+    public void purchase(Purchase purchaseObj) {
+
+        storeProduct(purchaseObj.getItems());
+        updateAccountBalance(purchaseObj.getPayments());
+
+    }
+
+    private void updateAccountBalance(List<Payment> payments) {
         if (payments != null) {
             List<AccountEntity> accountEntities = accountRepository.findByIdIn(
                     payments.stream().map(Payment::getTargetAccount).collect(Collectors.toList()));
@@ -40,10 +50,7 @@ public class BusinessServiceImpl implements BusinessService {
         }
     }
 
-    @Override
-    @Transactional
-    public void purchase(Purchase purchaseObj) {
-        updateAccountBalance(purchaseObj.getPayments());
-
+    private void storeProduct(List<InvoiceItem> items) {
+        stockService.saveItemsInStock(items);
     }
 }

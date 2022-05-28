@@ -15,4 +15,8 @@ public class Util {
             return null;
         }
     }
+    
+    public static String concatWith(Object a, Object b, String delimiter) {
+        return a.toString().concat(delimiter).concat(b.toString());
+    }
 }

@@ -1,15 +1,13 @@
 package com.businesseasy.core.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,21 +18,22 @@ public class StockEntity {
     @Column(name = "id", nullable = false, updatable = false)
     Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    ProductEntity product;
+
     @Column(name = "cost")
     BigDecimal cost;
 
     @Column(name = "quantity")
     BigDecimal quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    ProductEntity productEntity;
-
-    @ManyToOne
-    @JoinColumn(name = "place")
-    PlaceEntity placeEntity;
-
-    @ManyToOne
-    @JoinColumn(name = "unit")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "unit_id")
     UnitEntity unitEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "place_id")
+    PlaceEntity place;
+
 }
