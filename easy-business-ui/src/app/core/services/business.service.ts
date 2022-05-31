@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UtilService } from './util.service';
 import { Observable } from 'rxjs';
-import { Purchase } from '../models/purchase.model';
+import { InvoiceItem, Purchase } from '../models/purchase.model';
 import { Product } from '../models/product.model';
 
 @Injectable({ providedIn: 'root' })
@@ -20,6 +20,13 @@ export class BusinessService {
             item.product = item.product.id;
             return item;
         })
+        // this.util.convertArrayToObject(purchase.items, 'id')
+
+        purchase.items.reduce((cur: any, acc: any) => {
+            acc[`${cur.product.toString()}_${cur.place}`] = cur
+            return cur;
+        }, {});
+
         return this.http.post(this.purchaseApi, purchase);
     }
 

@@ -2,7 +2,10 @@ package com.businesseasy.core.services.people;
 
 import com.businesseasy.core.common.SearchCriteria;
 import com.businesseasy.core.common.SearchOperation;
+import com.businesseasy.core.common.model.InvoiceItem;
+import com.businesseasy.core.common.model.Payment;
 import com.businesseasy.core.common.model.People;
+import com.businesseasy.core.common.model.Purchase;
 import com.businesseasy.core.entities.ContactNoEntity;
 import com.businesseasy.core.entities.PeopleEntity;
 import com.businesseasy.core.exception_handler.InvalidRequestException;
@@ -24,6 +27,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -161,6 +165,31 @@ public class PeopleServiceImpl implements PeopleService {
     public People getPeopleById(Long id) {
         Optional<PeopleEntity> peopleEntity = peopleRepository.findById(id);
         return peopleEntity.map(this::toPeople).orElse(null);
+    }
+
+    @Override
+    public void updateSupplierBalance(Purchase purchaseObj) {
+        BigDecimal totalCost = new BigDecimal("0");
+        for (InvoiceItem item: purchaseObj.getItems()) {
+            totalCost = totalCost.add(item.getQuantity().multiply(item.getCost()));
+        }
+        for(Payment payment: purchaseObj.getPayments()) {
+            totalCost = totalCost.add(payment.getAmount());
+        }
+
+        updatePeopleBalance(purchaseObj.getSupplier(), totalCost.negate());
+    }
+
+    void updatePeopleBalance(Long id, BigDecimal value) {
+        Optional<PeopleEntity> peopleEntity = peopleRepository.findById(id);
+        PeopleEntity people;
+        if (peopleEntity.isPresent()) {
+            people = peopleEntity.get();
+            people.setBalance(people.getBalance().add(value));
+            peopleRepository.save(people);
+        } else {
+            throw new InvalidRequestException(ReasonCode.PEOPLE_NOT_FOUND.getMessage());
+        }
     }
 
     void checkAndSaveContactNo(List<String> contactNoList, PeopleEntity owner) {

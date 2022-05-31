@@ -10,9 +10,10 @@ public enum ReasonCode {
     DUPLICATE_PLACE_NAME_FOUND("Duplicate place name found"),
     ACCOUNT_NOT_FOUND("Account not found"),
     PLACE_NOT_FOUND("Place not found"),
+    PEOPLE_NOT_FOUND("Supplier/Customer not found"),
     PEOPLE_WITH_ID_NOT_FOUND("People with given id not found");
 
-    private String message;
+    private final String message;
 
     public String getMessage() {
         return message;

@@ -1,6 +1,7 @@
 package com.businesseasy.core.services.people;
 
 import com.businesseasy.core.common.model.People;
+import com.businesseasy.core.common.model.Purchase;
 import com.businesseasy.core.entities.PeopleEntity;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
@@ -23,4 +24,6 @@ public interface PeopleService {
     List<PeopleEntity> getAllSupplier();
 
     People getPeopleById(Long id);
+
+    void updateSupplierBalance(Purchase purchaseObj);
 }
