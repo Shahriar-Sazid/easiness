@@ -2,6 +2,7 @@ package com.businesseasy.core.services.stock;
 
 import com.businesseasy.core.common.Util;
 import com.businesseasy.core.common.model.InvoiceItem;
+import com.businesseasy.core.common.model.Stock;
 import com.businesseasy.core.entities.StockEntity;
 import com.businesseasy.core.repositories.PlaceRepository;
 import com.businesseasy.core.repositories.ProductRepository;
@@ -11,6 +12,9 @@ import com.businesseasy.core.services.unit.UnitService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -91,13 +95,24 @@ public class StockServiceImpl implements StockService {
         return stockRepository.saveAll(Stream.concat(updatedStocks.stream(), newStocks.stream()).collect(Collectors.toList()));
     }
 
+    @Override
+    public Page<Stock> searchStock(Map<String, String> params) {
+        Pageable pageable = PageRequest.of(0, 5);
+        return stockRepository.searchStock(
+                params.get("name"),
+                params.get("type"),
+                params.get("brand"),
+                params.get("placeId") != null? Long.parseLong(params.get("placeId")): null,
+                pageable);
+    }
+
     private List<StockEntity> updateExistingStock(Map<String, StockEntity> stockMap, List<InvoiceItem> items) {
         List<StockEntity> stockList = new ArrayList<>();
         for (InvoiceItem item : items) {
             StockEntity stock = stockMap.get(Util.concatWith(item.getProduct(), item.getPlace(), "_"));
 
             BigDecimal[] qtyAndCost = calculateCostAndQuantity(
-                    stock.getQuantity(), stock.getCost(), stock.getUnitEntity().getId()
+                    stock.getQuantity(), stock.getCost(), stock.getUnit().getId()
                     ,item.getQuantity(), item.getCost(), item.getUnit());
 
             stock.setQuantity(qtyAndCost[0]);
@@ -114,7 +129,7 @@ public class StockServiceImpl implements StockService {
                     .product(productRepository.getOne(item.getProduct()))
                     .place(placeRepository.getOne(item.getPlace()))
                     .quantity(item.getQuantity())
-                    .unitEntity(unitRepository.getOne(item.getUnit()))
+                    .unit(unitRepository.getOne(item.getUnit()))
                     .cost(item.getCost())
                     .build());
         }
