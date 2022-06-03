@@ -318,6 +318,7 @@
     "ACCOUNT": "Account",
     "BUSINESS": "Business",
     "BUY": "Buy",
-    "SELL": "Sell"
+    "SELL": "Sell",
+    "STOCK": "Stock"
   }
 }

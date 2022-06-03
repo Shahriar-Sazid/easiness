@@ -22,10 +22,6 @@ export class BusinessService {
         })
         // this.util.convertArrayToObject(purchase.items, 'id')
 
-        purchase.items.reduce((cur: any, acc: any) => {
-            acc[`${cur.product.toString()}_${cur.place}`] = cur
-            return cur;
-        }, {});
 
         return this.http.post(this.purchaseApi, purchase);
     }

@@ -19,6 +19,7 @@ import { InvoiceItemHeaderComponent } from './invoice-item-header/invoice-item-h
 import { InvoiceHeaderComponent } from './invoice-header/invoice-header.component';
 import { InvoiceItemFooterComponent } from './invoice-item-footer/invoice-item-footer.component';
 import { ConfirmPaymentComponent } from './confirm-payment/confirm-payment.component';
+import { StockComponent } from './stock/stock.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { ConfirmPaymentComponent } from './confirm-payment/confirm-payment.compo
     InvoiceHeaderComponent,
     InvoiceItemFooterComponent,
     ConfirmPaymentComponent,
+    StockComponent,
   ],
   imports: [
     CommonModule,

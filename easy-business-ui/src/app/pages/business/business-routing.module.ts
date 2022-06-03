@@ -4,6 +4,7 @@ import { UnitResolver } from "src/app/core/services/resolvers/unit-resolver.serv
 import { BuyComponent } from "./buy/buy.component";
 import { ConfirmPaymentComponent } from "./confirm-payment/confirm-payment.component";
 import { SellComponent } from "./sell/sell.component";
+import { StockComponent } from "./stock/stock.component";
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: "sell",
     component: ConfirmPaymentComponent,
+  },
+  {
+    path: "stock",
+    component: StockComponent
   }
 
 ];
