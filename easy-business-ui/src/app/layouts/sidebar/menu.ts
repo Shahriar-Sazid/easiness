@@ -44,7 +44,7 @@ export const MENU: MenuItem[] = [
   {
     id: 5,
     label: "COMMONS.STOCK",
-    icon: "fas fa-warehouse",
+    icon: "fas fa-border-all",
     link: "/business/stock",
   },
 ];

@@ -97,7 +97,8 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public Page<Stock> searchStock(Map<String, String> params) {
-        Pageable pageable = PageRequest.of(0, 5);
+        Pageable pageable = PageRequest.of(Integer.parseInt(params.getOrDefault("page", "1"))-1,
+                Integer.parseInt(params.getOrDefault("pageSize", "10")));
         return stockRepository.searchStock(
                 params.get("name"),
                 params.get("type"),

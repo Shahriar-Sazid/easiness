@@ -1,65 +1,66 @@
-<app-search-options panelTitle="Search Product">
-    <form (ngSubmit)="resetForm()" #fr="ngForm">
-      <div class="row">
-        <div class="form-group col-md-6 col-lg-4 col-xl-3">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" name="name" id="name" maxlength="30" placeholder="Enter product name.."
-            [(ngModel)]="searchOptions.name" />
-        </div>
-        <div class="form-group col-md-6 col-lg-4 col-xl-3">
-          <label for="type">Type</label>
-          <input type="text" class="form-control" name="type" id="type" maxlength="30" placeholder="Enter product type.."
-            [(ngModel)]="searchOptions.type" />
-        </div>
-        <div class="form-group col-md-6 col-lg-4 col-xl-3">
-          <label for="brand">Brand</label>
-          <input type="text" class="form-control" name="brand" id="brand" maxlength="30"
-            placeholder="Enter product brand.." [(ngModel)]="searchOptions.brand" />
-        </div>
+<app-search-options panelTitle="Search Stock">
+  <form (ngSubmit)="searchStock()" #fr="ngForm">
+    <div class="row">
+      <div class="form-group col-md-6 col-lg-4 col-xl-3">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" name="name" id="name" maxlength="30" placeholder="Enter product name.."
+          [(ngModel)]="searchOptions.name" />
       </div>
-  
-      <hr />
-  
-      <div class="d-flex justify-content-end">
-        <div>
-          <button type="submit" class="btn btn-primary mx-1" [disabled]="!fr.valid">
-            Search
-          </button>
-          <button class="btn btn-secondary ml-1 mr-3" (click)="resetForm()">
-            Reset
-          </button>
-        </div>
+      <div class="form-group col-md-6 col-lg-4 col-xl-3">
+        <label for="type">Type</label>
+        <input type="text" class="form-control" name="type" id="type" maxlength="30" placeholder="Enter product type.."
+          [(ngModel)]="searchOptions.type" />
       </div>
-    </form>
-  </app-search-options>
-  <br />
-  <div class="d-flex bg-white justify-content-end" role="group">
-    <!-- <button *ngIf="currentMode['add']" type="button" class="btn btn-outline-primary mx-1" [ngbTooltip]="'Add Product'"
-      (click)="addProduct.openProductModal(false)">
-      <i class="fa fa-plus"></i>
-    </button>
+      <div class="form-group col-md-6 col-lg-4 col-xl-3">
+        <label for="brand">Brand</label>
+        <input type="text" class="form-control" name="brand" id="brand" maxlength="30"
+          placeholder="Enter product brand.." [(ngModel)]="searchOptions.brand" />
+      </div>
+      <div class="form-group col-md-6 col-lg-4 col-xl-3">
+        <label for="place">Place</label>
+        <select id="place" name="placeOption" class="form-select" [(ngModel)]="searchOptions.place">
+          <option hidden [ngValue]=" undefined">
+            Please select
+          </option>
+          <option *ngFor="let place of placeService.placeRecord | keyvalue" [value]="place.value.id">
+            {{ place.value.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="d-flex justify-content-end">
+      <div>
+        <button type="submit" class="btn btn-primary mx-1" [disabled]="!fr.valid">
+          Search
+        </button>
+        <button class="btn btn-secondary ml-1 mr-3" (click)="resetForm()">
+          Reset
+        </button>
+      </div>
+    </div>
+  </form>
+</app-search-options>
+<br />
+<div class="d-flex bg-white justify-content-end" role="group">
     <button *ngIf="currentMode['report']" type="button" class="btn btn-outline-secondary" [ngbTooltip]="'Download Report'"
-      (click)="downloadAsReport()">
+      (click)="null">
       <i class="fa fa-download" aria-hidden="true"></i>
-    </button> -->
-  </div>
-  <!-- <ngx-datatable class="material" [rows]="productPage.content" [columns]="columns" [columnMode]="columnMode.force"
-    rowHeight="auto" [externalPaging]="true" [count]="productPage.totalElements" [offset]="productPage.number"
-    [footerHeight]="-1" [headerHeight]="-1" [limit]="productPage.size" (activate)="onActivate($event)"
+    </button>
+</div>
+<ngx-datatable class="material" [rows]="stockPage.content" [columns]="columns" [columnMode]="columnMode.force"
+    rowHeight="auto" [externalPaging]="true" [count]="stockPage.totalElements" [offset]="stockPage.number"
+    [footerHeight]="-1" [headerHeight]="-1" [limit]="stockPage.size" (activate)="onActivate($event)"
     (page)="changePage($event)">
     <ngx-datatable-column name="Options" [maxWidth]="100" [minWidth]="80">
       <ng-template ngx-datatable-cell-template>
-        <button *ngIf="currentMode['update']" [ngbTooltip]="'Update product'" placement="right"
-          class="btn btn-outline-secondary" (click)="addProduct.openProductModal(true)">
-          <i class="fa fa-edit"></i>
-        </button>
-        <button *ngIf="currentMode['select']" [ngbTooltip]="'Select for purchase'" placement="right"
-          class="btn btn-outline-secondary" (click)="selectProduct()">
-          <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+        <button *ngIf="currentMode.move" [ngbTooltip]="'Move to another place'" placement="right"
+          class="btn btn-outline-secondary" (click)="null">
+          <i class="fas fa-route" aria-hidden="true"></i>
         </button>
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column *ngFor="let column of columns" [name]="column.name"></ngx-datatable-column>
-  </ngx-datatable> -->
-  
-  
+  </ngx-datatable>

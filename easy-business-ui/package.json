@@ -35,7 +35,7 @@
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "@nicky-lenaers/ngx-scroll-to": "^9.0.0",
-    "@swimlane/ngx-datatable": "^19.0.0",
+    "@swimlane/ngx-datatable": "^20.0.0",
     "@types/chartist": "^0.11.0",
     "angular-archwizard": "^7.0.0",
     "apexcharts": "^3.25.0",

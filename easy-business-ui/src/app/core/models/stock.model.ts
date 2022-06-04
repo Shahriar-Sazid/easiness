@@ -6,7 +6,7 @@ export interface Stock {
     country: string;
     size: string;
     place: string;
-    quantity: string;
+    quantity: number;
     unit: string;
     cost: number;
 }
