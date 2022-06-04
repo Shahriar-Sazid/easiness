@@ -1,21 +1,24 @@
 import { Product } from "./product.model";
+import { Stock } from "./stock.model";
 
-export interface Purchase {
+export interface Document {
+  type: 'PURCHASE_ORDER' | 'INVOICE';
   date: Date;
-  supplier: number;
-  items: InvoiceItem[];
+  people: number;
+  items: DocumentItem[];
   payments: Payment[];
 }
 
-export interface InvoiceItem {
-  product: Product;
+export type DocumentItem = {
+  entity: Product & Stock;
   place: number;
   quantity: number;
   unit: number;
   cost: number;
+  price: number;
 }
 
-export interface Payment {
+export type Payment = {
   targetAccount: number;
   amount: number;
 }

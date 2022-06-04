@@ -35,6 +35,10 @@ export class StockComponent implements OnInit {
     report: false,
     select: true 
   }
+  defaultSearchOptions = {
+    page: 1,
+    pageSize: environment.pageSize,
+  } as SearchOptions;
 
   currentMode: ViewMode;
   ngOnInit(): void {
@@ -47,10 +51,7 @@ export class StockComponent implements OnInit {
     if(!this.placeService.placeRecord) {
       this.placeService.getAllPlace();
     }
-    this.searchOptions = {
-      page: 1,
-      pageSize: environment.pageSize,
-    } as SearchOptions;
+    this.searchOptions = this.defaultSearchOptions;
 
     this.columns = [
       {
@@ -94,11 +95,7 @@ export class StockComponent implements OnInit {
   }
 
   resetForm() {
-    this.searchOptions.name = "";
-    this.searchOptions.type = "";
-    this.searchOptions.brand = "";
-    this.searchOptions.page = 1;
-    this.searchOptions.pageSize = 10;
+    this.searchOptions = this.defaultSearchOptions;
     this.search();
   }
 
@@ -107,7 +104,7 @@ export class StockComponent implements OnInit {
     this.selectedStock = event.row;
   }
 
-  changePage(event) {
+  changePage(event: { offset: number; }) {
     this.searchedOptions.page = event.offset + 1;
     this.search();
   }

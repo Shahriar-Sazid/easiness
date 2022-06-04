@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { People } from 'src/app/core/models/people.model';
-import { Purchase } from 'src/app/core/models/purchase.model';
+import { Document } from 'src/app/core/models/purchase.model';
 import { PeopleService } from 'src/app/core/services/people.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { PeopleService } from 'src/app/core/services/people.service';
   styleUrls: ['./invoice-header.component.scss']
 })
 export class InvoiceHeaderComponent implements OnInit {
-  @Input() purchase: Purchase;
+  @Input() purchase: Document;
   people: People = {} as People;
   constructor(private peopleService: PeopleService) { }
 

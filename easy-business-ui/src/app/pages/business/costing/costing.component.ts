@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Product } from 'src/app/core/models/product.model';
-import { InvoiceItem } from 'src/app/core/models/purchase.model';
+import { DocumentItem } from 'src/app/core/models/purchase.model';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { UnitService } from 'src/app/core/services/unit.service';
 import { UtilService } from 'src/app/core/services/util.service';
@@ -18,7 +18,7 @@ export class CostingComponent implements OnInit {
   costingForm: FormGroup;
   selectedProduct: Product;
   @Input('selectedPlace') selectedPlace: any;
-  @Output() onAdded: EventEmitter<InvoiceItem> = new EventEmitter();
+  @Output() onAdded: EventEmitter<DocumentItem> = new EventEmitter();
   modalRef: NgbModalRef;
 
   constructor(private fb: FormBuilder,
@@ -66,9 +66,9 @@ export class CostingComponent implements OnInit {
   addToPurchaseList() {
     if (this.util.validateForm(this.costingForm)) {
       console.log(this.costingForm.value);
-      let invoiceItem: InvoiceItem = {
-        product: { ...this.selectedProduct },
-      } as InvoiceItem;
+      let invoiceItem: DocumentItem = {
+        entity: { ...this.selectedProduct },
+      } as DocumentItem;
 
       for (let [key, value] of Object.entries(this.costingForm.value)) {
         invoiceItem[key] = value;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { InvoiceItem, Payment, Purchase } from "src/app/core/models/purchase.model";
+import { DocumentItem, Payment, Document } from "src/app/core/models/purchase.model";
 import { BusinessService } from "src/app/core/services/business.service";
 import { PeopleService } from "src/app/core/services/people.service";
 import { PlaceService } from "src/app/core/services/place.service";
@@ -13,7 +13,7 @@ import { UtilService } from "src/app/core/services/util.service";
 export class BuyComponent implements OnInit {
   purchase = {
     date: new Date()
-  } as Purchase;
+  } as Document;
 
   defaultPlace: number;
   constructor(
@@ -30,7 +30,7 @@ export class BuyComponent implements OnInit {
   }
 
 
-  addToPurchaseList(item: InvoiceItem) {
+  addToPurchaseList(item: DocumentItem) {
     if(!this.purchase.items) {
       this.purchase.items = [];
     }

@@ -27,7 +27,7 @@
             <div class="col-md-9">
               <div class="input-group">
                 <select required id="supplierOption" name="supplierOption" class="form-select"
-                  [(ngModel)]="purchase.supplier" (ngModelChange)="peopleService.onSupplierSelect($event)">
+                  [(ngModel)]="purchase.people" (ngModelChange)="peopleService.onSupplierSelect($event)">
                   <option hidden [ngValue]="undefined">
                     Please select
                   </option>

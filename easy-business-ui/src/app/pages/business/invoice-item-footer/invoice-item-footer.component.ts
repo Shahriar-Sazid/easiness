@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Purchase } from 'src/app/core/models/purchase.model';
+import { Document } from 'src/app/core/models/purchase.model';
 
 @Component({
   selector: 'app-invoice-item-footer',
@@ -7,7 +7,7 @@ import { Purchase } from 'src/app/core/models/purchase.model';
   styleUrls: ['./invoice-item-footer.component.scss']
 })
 export class InvoiceItemFooterComponent implements OnInit {
-  @Input() purchase: Purchase;
+  @Input() purchase: Document;
   constructor() { }
 
   ngOnInit(): void {

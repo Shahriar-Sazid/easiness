@@ -1,4 +1,4 @@
-export interface Stock {
+export type Stock = {
     id: number;
     name: string;
     type: string;

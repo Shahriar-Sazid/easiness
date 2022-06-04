@@ -4,6 +4,7 @@ import { UtilService } from './util.service';
 import { Observable } from 'rxjs';
 import { Stock } from '../models/stock.model';
 import { Page } from '../models/page.model';
+import { Document } from '../models/purchase.model';
 
 @Injectable({ providedIn: 'root' })
 export class BusinessService {
@@ -18,15 +19,16 @@ export class BusinessService {
         return <Observable<Page<Stock>>>this.http.get(this.stockApi, {params});
     }
 
-    buy(purchase: any): Observable<any> {
+    buy(purchase: Document): Observable<any> {
         this.util.deepTrim(purchase);
         purchase = this.util.clone(purchase);
-        purchase.items.map((item) => {
-            item.product = item.product.id;
+        purchase['supplier'] = purchase.people;
+        purchase.people = undefined;
+        purchase.items.forEach((item) => {
+            item['product'] = item.entity.id;
+            item.entity = undefined;
             return item;
         })
-        // this.util.convertArrayToObject(purchase.items, 'id')
-
 
         return this.http.post(this.purchaseApi, purchase);
     }

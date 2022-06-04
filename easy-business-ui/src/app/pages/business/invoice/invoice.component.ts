@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { smoothExpandCollapse } from 'src/app/core/animations/animations';
-import { Purchase } from 'src/app/core/models/purchase.model';
+import { Document } from 'src/app/core/models/purchase.model';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { InvoiceItemComponent } from '../invoice-item/invoice-item.component';
 
@@ -14,7 +14,7 @@ import { InvoiceItemComponent } from '../invoice-item/invoice-item.component';
 })
 export class InvoiceComponent implements OnInit {
   @ViewChildren(InvoiceItemComponent) invCompList: QueryList<InvoiceItemComponent>;
-  @Input() purchase: Purchase;
+  @Input() purchase: Document;
   constructor(public placeService: PlaceService) { }
 
   ngOnInit(): void {
