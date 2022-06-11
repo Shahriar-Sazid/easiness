@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: "sell",
-    component: ConfirmPaymentComponent,
+    component: SellComponent,
   },
   {
     path: "stock",

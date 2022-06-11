@@ -35,6 +35,8 @@ export class ProductComponent implements OnInit {
 
   currentMode: ViewMode;
 
+  isLoading = false;
+
   searchOptions: {
     name: string;
     type: string;
@@ -112,6 +114,7 @@ export class ProductComponent implements OnInit {
   }
 
   search() {
+    this.isLoading = true;
     this.productService.getProduct(this.searchedOptions).subscribe(
       (data) => {
         console.log(data);
@@ -119,6 +122,8 @@ export class ProductComponent implements OnInit {
       },
       (err) => {
         console.error(err);
+      }, () => {
+        this.isLoading = false;
       }
     );
   }

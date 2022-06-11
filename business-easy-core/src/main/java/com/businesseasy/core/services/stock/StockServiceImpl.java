@@ -100,9 +100,9 @@ public class StockServiceImpl implements StockService {
         Pageable pageable = PageRequest.of(Integer.parseInt(params.getOrDefault("page", "1"))-1,
                 Integer.parseInt(params.getOrDefault("pageSize", "10")));
         return stockRepository.searchStock(
-                params.get("name"),
-                params.get("type"),
-                params.get("brand"),
+                params.getOrDefault("name", ""),
+                params.getOrDefault("type", ""),
+                params.getOrDefault("brand", ""),
                 params.get("placeId") != null? Long.parseLong(params.get("placeId")): null,
                 pageable);
     }

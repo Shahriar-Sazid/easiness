@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { People } from 'src/app/core/models/people.model';
 import { Document } from 'src/app/core/models/purchase.model';
 import { PeopleService } from 'src/app/core/services/people.service';
@@ -8,12 +8,17 @@ import { PeopleService } from 'src/app/core/services/people.service';
   templateUrl: './invoice-header.component.html',
   styleUrls: ['./invoice-header.component.scss']
 })
-export class InvoiceHeaderComponent implements OnInit {
+export class InvoiceHeaderComponent implements OnInit, OnDestroy {
   @Input() purchase: Document;
   people: People = {} as People;
   constructor(private peopleService: PeopleService) { }
 
+  ngOnDestroy(): void {
+    this.peopleService.supplierSelected.unsubscribe();
+  }
+
   ngOnInit(): void {
+    this.peopleService.initSupplierSelectedSubject();
     this.peopleService.supplierSelected.subscribe(
       res => {
         this.peopleService.getPeopleById(+res).subscribe(

@@ -14,7 +14,7 @@ export class PeopleService {
   customerRecord: Record<string, People>;
   supplierRecord: Record<string, People>;
 
-  public supplierSelected = new Subject<string>();
+  public supplierSelected;
 
   peopleUrl = "api/people";
   peopleReportUrl = this.peopleUrl + "/report";
@@ -90,6 +90,9 @@ export class PeopleService {
     return this.http.get<People>(this.peopleByIdUrl+queryString);
   }
 
+  initSupplierSelectedSubject() {
+    this.supplierSelected = new Subject<string>();
+  }
   onSupplierSelect(value: string) {
     this.supplierSelected.next(value);
   }

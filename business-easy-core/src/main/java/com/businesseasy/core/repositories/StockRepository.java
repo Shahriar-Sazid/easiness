@@ -18,10 +18,10 @@ public interface StockRepository extends JpaRepository<StockEntity, Long> {
             "StockEntity s LEFT JOIN s.product p on s.product = p.id " +
             "LEFT JOIN s.place pl on s.place = pl.id " +
             "LEFT JOIN s.unit un on s.unit = un.id where " +
-            "p.name LIKE %:name% or :name IS NULL AND " +
-            "p.type LIKE %:type% or :type IS NULL AND " +
-            "p.brand LIKE %:brand% or :brand IS NULL AND " +
-            "pl.id = :placeId or :placeId IS NULL")
+            "(:name = ''  OR UPPER(p.name) LIKE '%'||UPPER(:name)||'%') AND " +
+            "(:type = '' OR UPPER(p.type) LIKE '%'||UPPER(:type)||'%') AND " +
+            "(:brand = '' OR UPPER(p.brand) LIKE '%'||UPPER(:brand)||'%') AND " +
+            "(pl.id = :placeId or :placeId IS NULL)")
     Page<Stock> searchStock(@Param("name") String name,
                             @Param("type") String type,
                             @Param("brand") String brand,

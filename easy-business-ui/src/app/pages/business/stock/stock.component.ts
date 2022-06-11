@@ -17,6 +17,8 @@ export class StockComponent implements OnInit {
   columns: TableColumn[];
   columnMode = ColumnMode;
   selectedStock: number;
+
+  isLoading = false;
   constructor(private businessService: BusinessService, public placeService: PlaceService) { }
 
 
@@ -33,7 +35,7 @@ export class StockComponent implements OnInit {
   sellMode: ViewMode = {
     move: false,
     report: false,
-    select: true 
+    select: true
   }
   defaultSearchOptions = {
     page: 1,
@@ -48,10 +50,10 @@ export class StockComponent implements OnInit {
       this.currentMode = this.dedicatedMode;
     }
 
-    if(!this.placeService.placeRecord) {
+    if (!this.placeService.placeRecord) {
       this.placeService.getAllPlace();
     }
-    this.searchOptions = this.defaultSearchOptions;
+    this.searchOptions = JSON.parse(JSON.stringify(this.defaultSearchOptions));
 
     this.columns = [
       {
@@ -95,7 +97,7 @@ export class StockComponent implements OnInit {
   }
 
   resetForm() {
-    this.searchOptions = this.defaultSearchOptions;
+    this.searchOptions = JSON.parse(JSON.stringify(this.defaultSearchOptions));
     this.search();
   }
 
@@ -116,20 +118,23 @@ export class StockComponent implements OnInit {
   }
 
   search() {
+    this.isLoading = true;
     this.businessService.getStock(this.searchedOptions)
-    .subscribe(
-      (data) => {
-        data.content.forEach(el => {
-          el['quantityUnit'] = `${el.quantity} ${el.unit}`
-          el['unitCost'] = el.cost;
-          el['totalCost'] = (el.cost * el.quantity).toFixed(2)
-        })
-        this.stockPage = data;
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
+      .subscribe(
+        (data) => {
+          data.content.forEach(el => {
+            el['quantityUnit'] = `${el.quantity} ${el.unit}`
+            el['unitCost'] = el.cost;
+            el['totalCost'] = (el.cost * el.quantity).toFixed(2)
+          })
+          this.stockPage = data;
+        },
+        (err) => {
+          console.error(err);
+        }, () => {
+          this.isLoading = false;
+        }
+      );
   }
 }
 
@@ -143,7 +148,7 @@ type SearchOptions = {
   name: string;
   type: string;
   brand: string;
-  place: string;
+  placeId: string;
   page: number;
   pageSize: number;
 }

@@ -35,6 +35,15 @@ export class UtilService {
     }
   }
 
+  removeEmpty(obj: object) {
+    return Object.entries(obj)
+      .filter(([_, v]) => v)
+      .reduce(
+        (acc, [k, v]) => ({ ...acc, [k]: v === Object(v) ? this.removeEmpty(v) : v }),
+        {}
+      );
+  }
+
   buildActiveFilters(obj: any, keyNameMap: any): string {
     let activeFilters = "";
     for (let key in keyNameMap) {

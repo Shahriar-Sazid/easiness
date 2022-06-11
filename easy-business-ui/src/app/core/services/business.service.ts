@@ -16,21 +16,25 @@ export class BusinessService {
 
     getStock(params: any): Observable<Page<Stock>> {
         this.util.deepTrim(params);
+        params = this.util.removeEmpty(params);
         return <Observable<Page<Stock>>>this.http.get(this.stockApi, {params});
     }
 
-    buy(purchase: Document): Observable<any> {
-        this.util.deepTrim(purchase);
-        purchase = this.util.clone(purchase);
-        purchase['supplier'] = purchase.people;
-        purchase.people = undefined;
-        purchase.items.forEach((item) => {
+    buy(purchaseOrder: Document): Observable<any> {
+        this.util.deepTrim(purchaseOrder);
+        purchaseOrder = this.util.clone(purchaseOrder);
+        purchaseOrder['supplier'] = purchaseOrder.people;
+        purchaseOrder.people = undefined;
+        purchaseOrder.items.forEach((item) => {
             item['product'] = item.entity.id;
             item.entity = undefined;
             return item;
         })
 
-        return this.http.post(this.purchaseApi, purchase);
+        return this.http.post(this.purchaseApi, purchaseOrder);
     }
 
+    sell(invoice: Document): Observable<any> {
+        throw new Error('Method not implemented.');
+      }
 }

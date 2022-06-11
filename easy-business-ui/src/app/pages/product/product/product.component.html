@@ -44,6 +44,7 @@
   </button>
 </div>
 <ngx-datatable class="material" [rows]="productPage.content" [columns]="columns" [columnMode]="columnMode.force"
+  [loadingIndicator]="isLoading"
   rowHeight="auto" [externalPaging]="true" [count]="productPage.totalElements" [offset]="productPage.number"
   [footerHeight]="-1" [headerHeight]="-1" [limit]="productPage.size" (activate)="onActivate($event)"
   (page)="changePage($event)">
