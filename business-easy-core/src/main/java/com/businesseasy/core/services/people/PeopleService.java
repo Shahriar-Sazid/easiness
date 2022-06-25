@@ -1,5 +1,6 @@
 package com.businesseasy.core.services.people;
 
+import com.businesseasy.core.common.model.Invoice;
 import com.businesseasy.core.common.model.People;
 import com.businesseasy.core.common.model.PurchaseOrder;
 import com.businesseasy.core.entities.PeopleEntity;
@@ -26,4 +27,6 @@ public interface PeopleService {
     People getPeopleById(Long id);
 
     void updateSupplierBalance(PurchaseOrder purchaseOrder);
+
+    void updateCustomerBalance(Invoice invoice);
 }

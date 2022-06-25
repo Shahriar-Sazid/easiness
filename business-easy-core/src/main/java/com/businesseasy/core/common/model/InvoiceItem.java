@@ -1,6 +1,5 @@
 package com.businesseasy.core.common.model;
 
-
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -10,11 +9,9 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PurchaseOrderItem {
-
-    private Long product;
-    private Long place;
+public class InvoiceItem {
+    private Long stock;
     private BigDecimal quantity;
     private Long unit;
-    private BigDecimal cost;
+    private BigDecimal price;
 }

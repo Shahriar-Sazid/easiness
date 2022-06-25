@@ -1,5 +1,6 @@
 package com.businesseasy.core.controllers;
 
+import com.businesseasy.core.common.model.Invoice;
 import com.businesseasy.core.common.model.PurchaseOrder;
 import com.businesseasy.core.common.model.Stock;
 import com.businesseasy.core.services.business.BusinessService;
@@ -27,8 +28,8 @@ public class BusinessController {
     }
 
     @PostMapping("sell")
-    void sellProduct(@Valid @RequestBody PurchaseOrder purchaseOrderObj) {
-        businessService.purchase(purchaseOrderObj);
+    void sellProduct(@Valid @RequestBody Invoice invoice) {
+        businessService.sell(invoice);
     }
 
     @GetMapping("stock")

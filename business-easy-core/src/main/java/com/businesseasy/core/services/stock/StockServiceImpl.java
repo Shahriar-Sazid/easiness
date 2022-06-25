@@ -1,6 +1,7 @@
 package com.businesseasy.core.services.stock;
 
 import com.businesseasy.core.common.Util;
+import com.businesseasy.core.common.model.InvoiceItem;
 import com.businesseasy.core.common.model.PurchaseOrderItem;
 import com.businesseasy.core.common.model.Stock;
 import com.businesseasy.core.entities.StockEntity;
@@ -49,7 +50,7 @@ public class StockServiceImpl implements StockService {
     private Integer precision;
 
     @Override
-    public List<StockEntity> saveItemsInStock(List<PurchaseOrderItem> items) {
+    public List<StockEntity> storeProduct(List<PurchaseOrderItem> items) {
         Map<String, PurchaseOrderItem> itemMap = new HashMap<>();
 
         for(PurchaseOrderItem item: items) {
@@ -93,6 +94,11 @@ public class StockServiceImpl implements StockService {
 
 
         return stockRepository.saveAll(Stream.concat(updatedStocks.stream(), newStocks.stream()).collect(Collectors.toList()));
+    }
+
+    @Override
+    public List<StockEntity> sellProduct(List<InvoiceItem> items) {
+        return null;
     }
 
     @Override
