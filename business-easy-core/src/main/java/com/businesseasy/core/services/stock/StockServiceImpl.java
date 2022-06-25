@@ -1,7 +1,7 @@
 package com.businesseasy.core.services.stock;
 
 import com.businesseasy.core.common.Util;
-import com.businesseasy.core.common.model.InvoiceItem;
+import com.businesseasy.core.common.model.PurchaseOrderItem;
 import com.businesseasy.core.common.model.Stock;
 import com.businesseasy.core.entities.StockEntity;
 import com.businesseasy.core.repositories.PlaceRepository;
@@ -49,16 +49,16 @@ public class StockServiceImpl implements StockService {
     private Integer precision;
 
     @Override
-    public List<StockEntity> saveItemsInStock(List<InvoiceItem> items) {
-        Map<String, InvoiceItem> itemMap = new HashMap<>();
+    public List<StockEntity> saveItemsInStock(List<PurchaseOrderItem> items) {
+        Map<String, PurchaseOrderItem> itemMap = new HashMap<>();
 
-        for(InvoiceItem item: items) {
+        for(PurchaseOrderItem item: items) {
             String key = Util.concatWith(item.getProduct(), item.getPlace(), "_");
 
             if(itemMap.get(key) == null) {
                 itemMap.put(key, item);
             } else {
-                InvoiceItem prevItem = itemMap.get(key);
+                PurchaseOrderItem prevItem = itemMap.get(key);
                 BigDecimal[] qtyAntCost = calculateCostAndQuantity(
                         prevItem.getQuantity(), prevItem.getCost(), prevItem.getUnit(),
                         item.getQuantity(), item.getCost(), item.getUnit());
@@ -69,7 +69,7 @@ public class StockServiceImpl implements StockService {
         items = new ArrayList<>(itemMap.values());
 
         List<StockEntity> stockList = stockRepository.findByProduct_IdIn(items.stream()
-                .map(InvoiceItem::getProduct)
+                .map(PurchaseOrderItem::getProduct)
                 .collect(Collectors.toList()));
 
         // filtering out the impurity
@@ -81,10 +81,10 @@ public class StockServiceImpl implements StockService {
                 Collectors.toMap(stock -> Util.concatWith(stock.getProduct().getId(), stock.getPlace().getId(), "_"),
                         stock -> stock));
 
-        List<InvoiceItem> existingItems = items.stream().filter(
+        List<PurchaseOrderItem> existingItems = items.stream().filter(
                         item -> stockMap.get(Util.concatWith(item.getProduct(), item.getPlace(), "_")) != null)
                 .collect(Collectors.toList());
-        List<InvoiceItem> newItems = items.stream().filter(
+        List<PurchaseOrderItem> newItems = items.stream().filter(
                         item -> stockMap.get(Util.concatWith(item.getProduct(), item.getPlace(), "_")) == null)
                 .collect(Collectors.toList());
 
@@ -107,9 +107,9 @@ public class StockServiceImpl implements StockService {
                 pageable);
     }
 
-    private List<StockEntity> updateExistingStock(Map<String, StockEntity> stockMap, List<InvoiceItem> items) {
+    private List<StockEntity> updateExistingStock(Map<String, StockEntity> stockMap, List<PurchaseOrderItem> items) {
         List<StockEntity> stockList = new ArrayList<>();
-        for (InvoiceItem item : items) {
+        for (PurchaseOrderItem item : items) {
             StockEntity stock = stockMap.get(Util.concatWith(item.getProduct(), item.getPlace(), "_"));
 
             BigDecimal[] qtyAndCost = calculateCostAndQuantity(
@@ -123,9 +123,9 @@ public class StockServiceImpl implements StockService {
         return stockList;
     }
 
-    private List<StockEntity> addNewStock(List<InvoiceItem> items) {
+    private List<StockEntity> addNewStock(List<PurchaseOrderItem> items) {
         List<StockEntity> stockList = new ArrayList<>();
-        for (InvoiceItem item : items) {
+        for (PurchaseOrderItem item : items) {
             stockList.add(StockEntity.builder()
                     .product(productRepository.getOne(item.getProduct()))
                     .place(placeRepository.getOne(item.getPlace()))

@@ -1,6 +1,6 @@
 package com.businesseasy.core.services.business;
 
-import com.businesseasy.core.common.model.Purchase;
+import com.businesseasy.core.common.model.PurchaseOrder;
 import com.businesseasy.core.entities.StockEntity;
 import com.businesseasy.core.services.account.AccountService;
 import com.businesseasy.core.services.document.DocumentService;
@@ -31,11 +31,11 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     @Transactional
-    public void purchase(Purchase purchaseObj) {
-        List<StockEntity> stockList = stockService.saveItemsInStock(purchaseObj.getItems());
-        documentService.savePurchaseDocument(purchaseObj, stockList);
-        accountService.updateAccountBalance(purchaseObj.getPayments());
-        peopleService.updateSupplierBalance(purchaseObj);
+    public void purchase(PurchaseOrder purchaseOrder) {
+        List<StockEntity> stockList = stockService.saveItemsInStock(purchaseOrder.getItems());
+        documentService.savePurchaseDocument(purchaseOrder, stockList);
+        accountService.updateAccountBalance(purchaseOrder.getPayments());
+        peopleService.updateSupplierBalance(purchaseOrder);
 
     }
 

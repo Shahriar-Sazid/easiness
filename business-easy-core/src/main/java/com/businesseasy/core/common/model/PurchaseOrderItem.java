@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class InvoiceItem {
+public class PurchaseOrderItem {
 
     private Long product;
     private Long place;

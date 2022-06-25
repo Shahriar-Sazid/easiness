@@ -1,8 +1,8 @@
 package com.businesseasy.core.services.document;
 
 import com.businesseasy.core.common.enums.DocumentType;
-import com.businesseasy.core.common.model.InvoiceItem;
-import com.businesseasy.core.common.model.Purchase;
+import com.businesseasy.core.common.model.PurchaseOrder;
+import com.businesseasy.core.common.model.PurchaseOrderItem;
 import com.businesseasy.core.entities.DocumentEntity;
 import com.businesseasy.core.entities.DocumentItemEntity;
 import com.businesseasy.core.entities.StockEntity;
@@ -34,12 +34,12 @@ public class DocumentServiceImpl implements DocumentService {
     ProductRepository productRepository;
 
     @Override
-    public void savePurchaseDocument(Purchase purchaseObj, List<StockEntity> stockList) {
+    public void savePurchaseDocument(PurchaseOrder purchaseOrder, List<StockEntity> stockList) {
 
         DocumentEntity document = DocumentEntity.builder()
-                .people(peopleRepository.getOne(purchaseObj.getSupplier()))
+                .people(peopleRepository.getOne(purchaseOrder.getSupplier()))
                 .type(DocumentType.PURCHASE_ORDER)
-                .documentItems(purchaseObj.getItems().stream()
+                .documentItems(purchaseOrder.getItems().stream()
                         .map(item -> toDocumentItem(item, stockList)).collect(Collectors.toList()))
                 .build();
 
@@ -48,7 +48,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
 
-    DocumentItemEntity toDocumentItem(InvoiceItem item, List<StockEntity> stockList) {
+    DocumentItemEntity toDocumentItem(PurchaseOrderItem item, List<StockEntity> stockList) {
         DocumentItemEntity documentItem = DocumentItemEntity.builder()
                 .costOrPrice(item.getCost())
                 .place(placeRepository.getOne(item.getPlace()))

@@ -1,8 +1,8 @@
 package com.businesseasy.core.services.business;
 
-import com.businesseasy.core.common.model.Purchase;
+import com.businesseasy.core.common.model.PurchaseOrder;
 
 public interface BusinessService {
 
-    void purchase(Purchase purchase);
+    void purchase(PurchaseOrder purchaseOrder);
 }

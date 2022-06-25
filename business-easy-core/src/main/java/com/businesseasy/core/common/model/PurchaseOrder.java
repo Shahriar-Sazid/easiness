@@ -13,9 +13,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Purchase {
+public class PurchaseOrder {
     private Date date;
     private Long supplier;
-    private List<InvoiceItem> items;
+    private List<PurchaseOrderItem> items;
     private List<Payment> payments;
 }

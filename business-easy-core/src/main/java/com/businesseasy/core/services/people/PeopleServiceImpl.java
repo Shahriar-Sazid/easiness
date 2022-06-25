@@ -2,10 +2,10 @@ package com.businesseasy.core.services.people;
 
 import com.businesseasy.core.common.SearchCriteria;
 import com.businesseasy.core.common.SearchOperation;
-import com.businesseasy.core.common.model.InvoiceItem;
 import com.businesseasy.core.common.model.Payment;
 import com.businesseasy.core.common.model.People;
-import com.businesseasy.core.common.model.Purchase;
+import com.businesseasy.core.common.model.PurchaseOrder;
+import com.businesseasy.core.common.model.PurchaseOrderItem;
 import com.businesseasy.core.entities.ContactNoEntity;
 import com.businesseasy.core.entities.PeopleEntity;
 import com.businesseasy.core.exception_handler.InvalidRequestException;
@@ -168,16 +168,16 @@ public class PeopleServiceImpl implements PeopleService {
     }
 
     @Override
-    public void updateSupplierBalance(Purchase purchaseObj) {
+    public void updateSupplierBalance(PurchaseOrder purchaseOrder) {
         BigDecimal totalCost = new BigDecimal("0");
-        for (InvoiceItem item: purchaseObj.getItems()) {
+        for (PurchaseOrderItem item: purchaseOrder.getItems()) {
             totalCost = totalCost.add(item.getQuantity().multiply(item.getCost()));
         }
-        for(Payment payment: purchaseObj.getPayments()) {
+        for(Payment payment: purchaseOrder.getPayments()) {
             totalCost = totalCost.add(payment.getAmount());
         }
 
-        updatePeopleBalance(purchaseObj.getSupplier(), totalCost.negate());
+        updatePeopleBalance(purchaseOrder.getSupplier(), totalCost.negate());
     }
 
     void updatePeopleBalance(Long id, BigDecimal value) {
