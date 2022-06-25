@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DocumentOptions } from 'src/app/core/models/purchase.model';
 
 @Component({
-  selector: 'app-invoice-item-header',
-  templateUrl: './invoice-item-header.component.html',
-  styleUrls: ['./invoice-item-header.component.scss']
+  selector: 'app-document-item-header',
+  templateUrl: './document-item-header.component.html',
+  styleUrls: ['./document-item-header.component.scss']
 })
 export class InvoiceItemHeaderComponent implements OnInit {
   @Input() viewOptions: DocumentOptions;

@@ -4,9 +4,9 @@ import { Document, DocumentOptions } from 'src/app/core/models/purchase.model';
 import { PeopleService } from 'src/app/core/services/people.service';
 
 @Component({
-  selector: 'app-invoice-header',
-  templateUrl: './invoice-header.component.html',
-  styleUrls: ['./invoice-header.component.scss']
+  selector: 'app-document-header',
+  templateUrl: './document-header.component.html',
+  styleUrls: ['./document-header.component.scss']
 })
 export class InvoiceHeaderComponent implements OnInit, OnDestroy {
   @Input() viewOptions: DocumentOptions;

@@ -1,9 +1,0 @@
-<app-invoice-header [viewOptions]="viewOptions" [doc]="document"></app-invoice-header>
-<br>
-<app-invoice-item-header [viewOptions]="viewOptions"></app-invoice-item-header>
-<div [@fadeInOut] *ngFor="let item of document.items; let i = index">
-  <app-invoice-item [viewOptions]="viewOptions" [placeRecord]="placeService.placeRecord" [item]="item" [index]="i" (onCancel)="cancelItem($event)">
-  </app-invoice-item>
-  <hr class="m-0 bg-primary">
-</div>
-<app-invoice-item-footer [viewOptions]="viewOptions" [document]="document"></app-invoice-item-footer>

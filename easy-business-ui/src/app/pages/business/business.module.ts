@@ -12,12 +12,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductModule } from '../product/product.module';
 import { CostingComponent } from './costing/costing.component';
 import { BasicInfoComponent } from 'src/app/pages/business/basic-info/basic-info.component';
-import { InvoiceItemComponent } from './invoice-item/invoice-item.component';
+import { InvoiceItemComponent } from './document-item/document-item.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { InvoiceComponent } from './invoice/invoice.component';
-import { InvoiceItemHeaderComponent } from './invoice-item-header/invoice-item-header.component';
-import { InvoiceHeaderComponent } from './invoice-header/invoice-header.component';
-import { InvoiceItemFooterComponent } from './invoice-item-footer/invoice-item-footer.component';
+import { InvoiceComponent } from './document/document.component';
+import { InvoiceItemHeaderComponent } from './document-item-header/document-item-header.component';
+import { InvoiceHeaderComponent } from './document-header/document-header.component';
+import { InvoiceItemFooterComponent } from './document-item-footer/document-item-footer.component';
 import { ConfirmPaymentComponent } from './confirm-payment/confirm-payment.component';
 import { StockComponent } from './stock/stock.component';
 

@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Document, DocumentOptions, DocumentType } from 'src/app/core/models/purchase.model';
 
 @Component({
-  selector: 'app-invoice-item-footer',
-  templateUrl: './invoice-item-footer.component.html',
-  styleUrls: ['./invoice-item-footer.component.scss']
+  selector: 'app-document-item-footer',
+  templateUrl: './document-item-footer.component.html',
+  styleUrls: ['./document-item-footer.component.scss']
 })
 export class InvoiceItemFooterComponent implements OnInit {
   @Input() document: Document;

@@ -1,0 +1,9 @@
+<app-document-header [viewOptions]="viewOptions" [doc]="document"></app-document-header>
+<br>
+<app-document-item-header [viewOptions]="viewOptions"></app-document-item-header>
+<div [@fadeInOut] *ngFor="let item of document.items; let i = index">
+  <app-document-item [viewOptions]="viewOptions" [placeRecord]="placeService.placeRecord" [item]="item" [index]="i" (onCancel)="cancelItem($event)">
+  </app-document-item>
+  <hr class="m-0 bg-primary">
+</div>
+<app-document-item-footer [viewOptions]="viewOptions" [document]="document"></app-document-item-footer>

@@ -2,12 +2,12 @@ import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core
 import { smoothExpandCollapse } from 'src/app/core/animations/animations';
 import { Document, DocumentOptions, DocumentType } from 'src/app/core/models/purchase.model';
 import { PlaceService } from 'src/app/core/services/place.service';
-import { InvoiceItemComponent } from '../invoice-item/invoice-item.component';
+import { InvoiceItemComponent } from '../document-item/document-item.component';
 
 @Component({
-  selector: 'app-invoice',
-  templateUrl: './invoice.component.html',
-  styleUrls: ['./invoice.component.scss'],
+  selector: 'app-document',
+  templateUrl: './document.component.html',
+  styleUrls: ['./document.component.scss'],
   animations: [
     smoothExpandCollapse(0, 0, 100)
   ]

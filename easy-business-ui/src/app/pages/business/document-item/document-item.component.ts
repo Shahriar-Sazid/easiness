@@ -6,9 +6,9 @@ import { UnitService } from 'src/app/core/services/unit.service';
 import { calcQuantityUnitError } from 'src/app/core/validation/custom-validation';
 
 @Component({
-  selector: 'app-invoice-item',
-  templateUrl: './invoice-item.component.html',
-  styleUrls: ['./invoice-item.component.scss']
+  selector: 'app-document-item',
+  templateUrl: './document-item.component.html',
+  styleUrls: ['./document-item.component.scss']
 })
 export class InvoiceItemComponent implements OnInit {
   document = document;
