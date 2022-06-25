@@ -50,15 +50,19 @@
     <i class="fa fa-download" aria-hidden="true"></i>
   </button>
 </div>
-<ngx-datatable class="material" [rows]="stockPage.content" [columns]="columns" [columnMode]="columnMode.force"
-  rowHeight="auto" [externalPaging]="true" [count]="stockPage.totalElements" [offset]="stockPage.number"
+<ngx-datatable ngx-resize-watcher class="material" [rows]="stockPage.content" [columns]="columns" [columnMode]="columnMode.force"
+  rowHeight="auto" [externalPaging]="true" [count]="stockPage.totalElements" [offset]="stockPage.number" [scrollbarH]="false"
   [loadingIndicator]="isLoading" [footerHeight]="-1" [headerHeight]="-1" [limit]="stockPage.size"
   (activate)="onActivate($event)" (page)="changePage($event)">
-  <ngx-datatable-column name="Options" [maxWidth]="100" [minWidth]="80">
+  <ngx-datatable-column name="Options">
     <ng-template ngx-datatable-cell-template>
       <button *ngIf="currentMode.move" [ngbTooltip]="'Move to another place'" placement="right"
         class="btn btn-outline-secondary" (click)="null">
         <i class="fas fa-route" aria-hidden="true"></i>
+      </button>
+      <button *ngIf="currentMode.select" [ngbTooltip]="'Select for sale'" placement="right"
+        class="btn btn-outline-secondary" (click)="selectStock()">
+        <i class="fas fa-plus-square" aria-hidden="true"></i>
       </button>
     </ng-template>
   </ngx-datatable-column>

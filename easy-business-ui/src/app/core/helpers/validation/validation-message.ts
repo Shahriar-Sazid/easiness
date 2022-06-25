@@ -5,7 +5,7 @@ export const validationMessages: ErrorMessage[] = [
   },
   {
     type: "minlength",
-    message: "Input is shorter than reqired",
+    message: "Input is shorter than required",
   },
   {
     type: "maxlength",
@@ -18,6 +18,14 @@ export const validationMessages: ErrorMessage[] = [
   {
     type: "phoneNumberInvalid",
     message: "Invalid phone no",
+  },
+  {
+    type: "invalidQty",
+    message: "Sale quantity must be less than or equal to available quantity",
+  },
+  {
+    type: "invalidUnit",
+    message: "This unit is not allowed",
   },
   {
     type: "min",

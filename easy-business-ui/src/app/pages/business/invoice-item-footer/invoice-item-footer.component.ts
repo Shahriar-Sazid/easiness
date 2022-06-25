@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Document } from 'src/app/core/models/purchase.model';
+import { Document, DocumentOptions, DocumentType } from 'src/app/core/models/purchase.model';
 
 @Component({
   selector: 'app-invoice-item-footer',
@@ -7,16 +7,26 @@ import { Document } from 'src/app/core/models/purchase.model';
   styleUrls: ['./invoice-item-footer.component.scss']
 })
 export class InvoiceItemFooterComponent implements OnInit {
-  @Input() purchase: Document;
+  @Input() document: Document;
+  @Input() viewOptions: DocumentOptions;
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  isInvoice(): boolean {
+    return this.document.type === DocumentType.INVOICE
+  }
+
   calculateToatalCost(): number {
-    return this.purchase.items?.reduce((prev, cur) => {
+    return this.document.items?.reduce((prev, cur) => {
       return prev + cur?.cost * cur?.quantity;
     }, 0);
   }
 
+  calculateToatalPrice(): number {
+    return this.document.items?.reduce((prev, cur) => {
+      return prev + cur?.price * cur?.quantity;
+    }, 0);
+  }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { People } from 'src/app/core/models/people.model';
-import { Document } from 'src/app/core/models/purchase.model';
+import { Document, DocumentOptions } from 'src/app/core/models/purchase.model';
 import { PeopleService } from 'src/app/core/services/people.service';
 
 @Component({
@@ -9,17 +9,18 @@ import { PeopleService } from 'src/app/core/services/people.service';
   styleUrls: ['./invoice-header.component.scss']
 })
 export class InvoiceHeaderComponent implements OnInit, OnDestroy {
-  @Input() purchase: Document;
+  @Input() viewOptions: DocumentOptions;
+  @Input() doc: Document;
   people: People = {} as People;
   constructor(private peopleService: PeopleService) { }
 
   ngOnDestroy(): void {
-    this.peopleService.supplierSelected.unsubscribe();
+    this.peopleService.peopleSelected.unsubscribe();
   }
 
   ngOnInit(): void {
     this.peopleService.initSupplierSelectedSubject();
-    this.peopleService.supplierSelected.subscribe(
+    this.peopleService.peopleSelected.subscribe(
       res => {
         this.peopleService.getPeopleById(+res).subscribe(
           data => {

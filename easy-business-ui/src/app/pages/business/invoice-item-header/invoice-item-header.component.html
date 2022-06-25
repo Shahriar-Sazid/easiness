@@ -1,4 +1,4 @@
-<div class="shadow bg-primary bg-gradient" style="--bs-bg-opacity: .1;">
+<div [ngClass]="['shadow', viewOptions.theme.bg, 'bg-gradient']" style="--bs-bg-opacity: .1;">
   <div class="d-flex">
 
     <button type="button" class="invisible close-btn btn btn-sm btn-outline-danger rounded-circle my-auto ms-2">
@@ -9,23 +9,23 @@
       <div class="row">
         <div class="col-xxl-5">
           <div class="row large-screen-view">
-            <div class="col-3">
+            <div *ngIf="display('name')" [ngClass]="['col-'+col('name'), viewOptions.theme.text]">
               <div><strong>Name</strong></div>
             </div>
-            <div class="col-3">
+            <div *ngIf="display('type')" [ngClass]="['col-'+col('type'), viewOptions.theme.text]">
               <div><strong>Type</strong></div>
             </div>
-            <div class="col-2">
+            <div *ngIf="display('brand')" [ngClass]="['col-'+col('brand'), viewOptions.theme.text]">
               <div><strong>Brand</strong></div>
             </div>
-            <div class="col-2">
+            <div *ngIf="display('country')" [ngClass]="['col-'+col('country'), viewOptions.theme.text]">
               <div><strong>Country</strong></div>
             </div>
-            <div class="col-2">
+            <div *ngIf="display('size')" [ngClass]="['col-'+col('size'), viewOptions.theme.text]">
               <div><strong>Size</strong></div>
             </div>
           </div>
-          <div class="small-screen-view">
+          <div [ngClass]="['small-screen-view', viewOptions.theme.text]">
             <div>
               <strong>
                 Product Details
@@ -37,14 +37,16 @@
         <br class="small-screen-view">
         <div class="col-xxl-7">
           <div class="row">
-            <div class="col-2 hover-border">
+            <div [hidden]="!display('place')" [ngClass]="['col-'+ col('place'), viewOptions.theme.text]">
               <div><strong>Place</strong></div>
             </div>
-            <div class="col-3 hover-border">
+            <div [hidden]="!display('cost')" [ngClass]="['col-'+ col('cost'), viewOptions.theme.text]">
               <div><strong>Cost/unit</strong></div>
             </div>
-
-            <div class="col-4 hover-border">
+            <div [hidden]="!display('price')" [ngClass]="['col-'+ col('price'), viewOptions.theme.text]">
+              <div><strong>Price/unit</strong></div>
+            </div>
+            <div [hidden]="!display('quantity')" [ngClass]="['col-'+ col('quantity'), viewOptions.theme.text]">
               <div class="d-flex">
                 <div class="flex-even">
                   <div class="text-end"><strong>Quantity and&nbsp; </strong></div>
@@ -58,13 +60,19 @@
               </div>
             </div>
 
-            <div class="col-3">
+            <div [hidden]="!display('totalCost')" [ngClass]="['col-'+ col('totalCost'), viewOptions.theme.text]">
               <div>
                 <strong>
                   Item Total
                 </strong>
               </div>
-
+            </div>
+            <div [hidden]="!display('totalPrice')" [ngClass]="['col-'+ col('totalPrice'), viewOptions.theme.text]">
+              <div>
+                <strong>
+                  Item Total
+                </strong>
+              </div>
             </div>
           </div>
         </div>
@@ -73,4 +81,4 @@
   </div>
 
 </div>
-<hr class="m-0 bg-primary" style="height: 2px;">
+<hr [ngClass]="['m-0', viewOptions.theme.bg]" style="height: 2px;">

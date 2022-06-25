@@ -1,16 +1,8 @@
 import { Directive } from "@angular/core";
 import { Validator, AbstractControl, NG_VALIDATORS } from "@angular/forms";
+import { ValidatePhoneNo } from "../validation/custom-validation";
 
-export function ValidatePhoneNo(control: AbstractControl): { [key: string]: any } | null {
-  if (control.value) {
-    let mobileNoExp = /^01[3456789]\d{8}$/;
-    let telephoneNoExp = /^02\d{7}$/;
-    if (mobileNoExp.test(control.value) == false && telephoneNoExp.test(control.value) == false) {
-      return { phoneNumberInvalid: true };
-    }
-  }
-  return null;
-}
+
 
 @Directive({
   selector: "[validPhoneNoDirective]",

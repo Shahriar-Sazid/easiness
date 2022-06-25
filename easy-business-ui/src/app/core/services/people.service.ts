@@ -14,7 +14,7 @@ export class PeopleService {
   customerRecord: Record<string, People>;
   supplierRecord: Record<string, People>;
 
-  public supplierSelected;
+  public peopleSelected;
 
   peopleUrl = "api/people";
   peopleReportUrl = this.peopleUrl + "/report";
@@ -69,7 +69,7 @@ export class PeopleService {
     console.log(this.allCustomerUrl);
     this.http.get<People[]>(this.allCustomerUrl).subscribe(
       data => {
-        this.supplierRecord = this.util.convertArrayToObject(data, 'id');
+        this.customerRecord = this.util.convertArrayToObject(data, 'id');
       }
     );
   }
@@ -91,10 +91,10 @@ export class PeopleService {
   }
 
   initSupplierSelectedSubject() {
-    this.supplierSelected = new Subject<string>();
+    this.peopleSelected = new Subject<string>();
   }
-  onSupplierSelect(value: string) {
-    this.supplierSelected.next(value);
+  onPeopleSelect(value: string) {
+    this.peopleSelected.next(value);
   }
 
 }

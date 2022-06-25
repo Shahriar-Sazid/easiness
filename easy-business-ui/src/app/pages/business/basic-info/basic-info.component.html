@@ -10,7 +10,7 @@
             <div class="col-md-9">
               <div class="input-group">
                 <input required ngModel name="dateTime" class="form-control" (click)="d.toggle()"
-                  placeholder="yyyy-mm-dd" id="dateTime" [(ngModel)]="purchase.date" ngbDatepicker #d="ngbDatepicker"
+                  placeholder="yyyy-mm-dd" id="dateTime" [(ngModel)]="document.date" ngbDatepicker #d="ngbDatepicker"
                   [maxDate]="util.getNgbToday()" />
                 <div class="input-group-append">
                   <button class="btn btn-secondary" (click)="d.toggle()" type="button">
@@ -22,18 +22,26 @@
           </div>
 
           <div class="mb-3 row">
-            <label for="supplierOption" class="col-md-3 col-form-label">Supplier <span
+            <label for="supplierOption" class="col-md-3 col-form-label"> {{ document.type == 'INVOICE'? 'Customer': 'Supplier' }} <span
                 class="text-danger">*</span></label>
             <div class="col-md-9">
               <div class="input-group">
                 <select required id="supplierOption" name="supplierOption" class="form-select"
-                  [(ngModel)]="purchase.people" (ngModelChange)="peopleService.onSupplierSelect($event)">
+                  [(ngModel)]="document.people" (ngModelChange)="peopleService.onPeopleSelect($event)">
                   <option hidden [ngValue]="undefined">
                     Please select
                   </option>
-                  <option [value]="supplier.value.id" *ngFor="let supplier of peopleService.supplierRecord | keyvalue">
-                    {{ supplier.value.name }}
-                  </option>
+                  <ng-container  *ngIf="document.type == 'PURCHASE_ORDER'" >
+                    <option [value]="supplier.value.id" *ngFor="let supplier of peopleService.supplierRecord | keyvalue">
+                      {{ supplier.value.name }}
+                    </option>
+                  </ng-container>
+                  <ng-container  *ngIf="document.type == 'INVOICE'" >
+                    <option [value]="customer.value.id" *ngFor="let customer of peopleService.customerRecord | keyvalue">
+                      {{ customer.value.name }}
+                    </option>
+                  </ng-container>
+                  
                 </select>
                 <div class="input-group-append">
                   <button class="btn btn-secondary" [ngbTooltip]="'Add People'"
@@ -45,7 +53,7 @@
             </div>
           </div>
 
-          <div class="mb-3 row">
+          <div *ngIf="document.type == 'PURCHASE_ORDER'" class="mb-3 row">
             <label for="placeOption" class="col-md-3 col-form-label">Place <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <div class="input-group">

@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { TableColumn, ColumnMode } from "@swimlane/ngx-datatable";
 import * as _ from "lodash";
-import { ValidatePhoneNo } from "src/app/core/directives/phone-no-validator";
 import { validationMessages } from "src/app/core/helpers/validation/validation-message";
 import { Page } from "src/app/core/models/page.model";
 import { People } from "src/app/core/models/people.model";

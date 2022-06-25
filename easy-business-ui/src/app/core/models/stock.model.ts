@@ -5,8 +5,10 @@ export type Stock = {
     brand: string;
     country: string;
     size: string;
-    place: string;
+    placeTxt: string;
+    place: number;
     quantity: number;
-    unit: string;
+    unitTxt: string;
+    unit: number;
     cost: number;
 }

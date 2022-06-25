@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { smoothExpandCollapse } from 'src/app/core/animations/animations';
-import { Document } from 'src/app/core/models/purchase.model';
+import { Document, DocumentOptions, DocumentType } from 'src/app/core/models/purchase.model';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { InvoiceItemComponent } from '../invoice-item/invoice-item.component';
 
@@ -13,15 +13,69 @@ import { InvoiceItemComponent } from '../invoice-item/invoice-item.component';
   ]
 })
 export class InvoiceComponent implements OnInit {
+  @Input() mode: DocumentType;
   @ViewChildren(InvoiceItemComponent) invCompList: QueryList<InvoiceItemComponent>;
-  @Input() purchase: Document;
+  @Input() document: Document;
+  viewOptions: any;
   constructor(public placeService: PlaceService) { }
 
+  getViewOptions(col: number) {
+    return {
+      show: col ? { col } : undefined
+    }
+  }
+
+  options = {
+    [DocumentType.INVOICE]: {
+      name: this.getViewOptions(3),
+      type: this.getViewOptions(3),
+      brand: this.getViewOptions(2),
+      country: this.getViewOptions(2),
+      size: this.getViewOptions(2),
+      place: this.getViewOptions(undefined),
+      quantity: this.getViewOptions(5),
+      cost: this.getViewOptions(undefined),
+      price: this.getViewOptions(4),
+      totalCost: this.getViewOptions(undefined),
+      totalPrice: this.getViewOptions(3),
+      availableQty: true,
+      validateQty: true,
+      validateUnit: true,
+      theme: {
+        bg: 'bg-success',
+        text: 'text-success'
+      },
+      key: DocumentType.INVOICE,
+    } as DocumentOptions,
+    [DocumentType.PURCHASE_ORDER]: {
+      name: this.getViewOptions(3),
+      type: this.getViewOptions(3),
+      brand: this.getViewOptions(2),
+      country: this.getViewOptions(2),
+      size: this.getViewOptions(2),
+      place: this.getViewOptions(2),
+      quantity: this.getViewOptions(3),
+      cost: this.getViewOptions(3),
+      price: this.getViewOptions(undefined),
+      totalCost: this.getViewOptions(4),
+      totalPrice: this.getViewOptions(undefined),
+      availableQty: false,
+      validateQty: false,
+      validateUnit: false,
+      theme: {
+        bg: 'bg-danger',
+        text: 'text-danger'
+      },
+      key: DocumentType.PURCHASE_ORDER,
+    } as DocumentOptions,
+  }
+
   ngOnInit(): void {
+    this.viewOptions = this.options[this.mode]
   }
 
   cancelItem(index: number) {
-    this.purchase.items.splice(index, 1);
+    this.document.items.splice(index, 1);
   }
 
   isValid() {
@@ -32,3 +86,4 @@ export class InvoiceComponent implements OnInit {
     return valid;
   }
 }
+

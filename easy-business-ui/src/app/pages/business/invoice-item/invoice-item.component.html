@@ -10,19 +10,19 @@
       <div class="row">
         <div class="col-xxl-5">
           <div class="row large-screen-view">
-            <div class="col-3">
+            <div *ngIf="display('name')" [class]="'col-'+col('name')">
               <span>{{item.entity.name}}</span>
             </div>
-            <div class="col-3">
+            <div *ngIf="display('type')" [class]="'col-'+col('type')">
               <span>{{item.entity.type}}</span>
             </div>
-            <div class="col-2">
+            <div *ngIf="display('brand')" [class]="'col-'+col('brand')">
               <span>{{item.entity.brand}}</span>
             </div>
-            <div class="col-2">
+            <div *ngIf="display('country')" [class]="'col-'+col('country')">
               <span>{{item.entity.country}}</span>
             </div>
-            <div class="col-2">
+            <div *ngIf="display('size')" [class]="'col-'+col('size')">
               <span>{{item.entity.size}}</span>
             </div>
           </div>
@@ -41,64 +41,99 @@
           <form #fr="ngForm">
 
             <div class="row">
-              <div class="col-2 hover-border">
+              <div [hidden]="!display('place')" [ngClass]="['col-'+ col('place'), 'hover-border']">
                 <div class="form-group">
                   <select
                     [ngClass]="['form-control p-0', placeModel.invalid && placeModel.touched? 'border border-danger': 'border-0']"
-                    name="placeControl" #placeModel="ngModel" required [(ngModel)]="item.place">
+                    name="place" #placeModel="ngModel" [required]="display('place')" [(ngModel)]="item.place">
                     <option [ngValue]="null" disabled>Select place</option>
                     <option *ngFor="let place of placeRecord | keyvalue" [value]="place.value.id">
                       {{ place.value.name }}
                   </select>
                 </div>
               </div>
-              <div class="col-3 hover-border">
+              <div [hidden]="!display('cost')" [ngClass]="['col-'+ col('cost'), 'hover-border']">
                 <div [hidden]="!editCost" class="input-group">
                   <input #costInput #costModel="ngModel" [(ngModel)]="item.cost" (focusout)="editCost=!editCost"
                     required type="text" onlyNumber autocomplete="off"
                     (keydown.enter)="costInput.blur();quantityInput.focus()"
                     [ngClass]="['form-control p-0', costModel.invalid && costModel.touched? 'border border-danger': 'border-0']"
-                    name="costControl" required>
+                    name="cost" [required]="display('cost')">
                 </div>
-                <div [ngClass]="['full-text', costModel.invalid && costModel.touched? 'border border-danger': 'border-0']"
+                <div
+                  [ngClass]="['full-text', costModel.invalid && costModel.touched? 'border border-danger': 'border-0']"
                   [hidden]="editCost" *ngIf="!editCost" (click)="editCost=!editCost;delayedFocus(costInput)">
                   {{item?.cost | currency : 'BDT' : 'symbol-narrow': '1.2-2' : 'en-IN' |
                   placeholder: 'Enter cost'}}/unit
                 </div>
               </div>
-
-              <div class="col-4 hover-border">
-                <div class="d-flex">
-                  <div class="flex-even">
-                    <div class="form-group">
-                      <input #quantityInput #quantityModel="ngModel" name="quantityControl" type="text"
-                        [(ngModel)]="item.quantity" onlyNumber required autocomplete="off" placeholder="Enter quantity"
-                        (keydown.enter)="quantityInput.blur();unitSelect.focus()" [ngClass]="[quantityModel.invalid && quantityModel.touched? 'border border-danger': 'border-0',
-                        'form-control py-0 px-1 full-text text-end']" name="cost" required>
-                    </div>
-                  </div>
-                  <div class="flex-even">
-                    <div class="form-group">
-                      <select #unitSelect #unitModel="ngModel" name="unitControl" required
-                        [ngClass]="['form-control p-0 full-text', unitModel.invalid && unitModel.touched? 'border border-danger': 'border-0']"
-                        name="place" id="place" [(ngModel)]="item.unit">
-                        <option [ngValue]="null" disabled>Select unit</option>
-                        <option *ngFor="let unit of unitService.unitData.unitList" [value]="unit.id">
-                          {{ unit.name }}
-                      </select>
-                    </div>
-
-                  </div>
+              <div [hidden]="!display('price')" [ngClass]="['col-'+ col('price'), 'hover-border']">
+                <div [hidden]="!editCost" class="input-group">
+                  <input #priceInput #priceModel="ngModel" [(ngModel)]="item.price" (focusout)="editCost=!editCost"
+                    [required]="display('price')" type="text" onlyNumber autocomplete="off"
+                    (keydown.enter)="priceInput.blur();quantityInput.focus()"
+                    [ngClass]="['form-control p-0', priceModel.invalid && priceModel.touched? 'border border-danger': 'border-0']"
+                    name="price">
+                  <span class="mx-1 border border-info rounded-pill bg-info bg-soft"> Cost/Unit:
+                    {{item.entity?.cost?.toFixed(2)}}
+                    (&#2547;)</span>
+                </div>
+                <div
+                  [ngClass]="['full-text', priceModel.invalid && priceModel.touched? 'border border-danger': 'border-0']"
+                  [hidden]="editCost" *ngIf="!editCost" (click)="editCost=!editCost;delayedFocus(priceInput)">
+                  {{item?.price | currency : 'BDT' : 'symbol-narrow': '1.2-2' : 'en-IN' |
+                  placeholder: 'Enter price'}}/unit
                 </div>
               </div>
 
-              <div class="col-3">
+              <div [hidden]="!display('quantity')" [ngClass]="['col-'+ col('quantity'), 'hover-border']">
+                <div class="d-flex flex-column">
+                  <div class="d-flex">
+                    <div class="flex-even">
+                      <div class="form-group">
+                        <input #quantityInput #quantityModel="ngModel" name="quantityControl" type="text"
+                          (ngModelChange)="validateQuantity($event)" [(ngModel)]="item.quantity" onlyNumber required
+                          autocomplete="off" placeholder="Enter quantity"
+                          (keydown.enter)="quantityInput.blur();unitSelect.focus()" [ngClass]="[quantityModel.invalid && quantityModel.touched? 'border border-danger': 'border-0',
+                          'form-control py-0 px-1 full-text text-end']" name="quantity" required>
+                      </div>
+                    </div>
+                    <div class="flex-even">
+                      <div class="form-group">
+                        <select #unitSelect #unitModel="ngModel" name="unitControl" required
+                          [ngClass]="['form-control p-0 full-text', unitModel.invalid && unitModel.touched? 'border border-danger': 'border-0']"
+                          name="unit" id="place" [(ngModel)]="item.unit" (ngModelChange)="validateUnit($event)">
+                          <option [ngValue]="null" disabled>Select unit</option>
+                          <option *ngFor="let unit of unitService.unitData.unitList" [value]="unit.id">
+                            {{ unit.name }}
+                        </select>
+                      </div>
+
+                    </div>
+                  </div>
+                  <span
+                    *ngIf="viewOptions.availableQty && (quantityInput == document.activeElement || unitSelect == document.activeElement)"
+                    type="button" class="border border-info rounded-pill bg-info bg-soft text-center">
+                    Available: {{item.entity.quantity?.toFixed(2).concat(' ').concat(item.entity.unitTxt)}}
+                  </span>
+                </div>
+
+              </div>
+
+              <div [hidden]="!display('totalCost')" [ngClass]="['col-'+ col('totalCost'), 'hover-border']">
                 <div class="item-total">
                   <strong>
                     {{ (item.quantity * item.cost) | currency : 'BDT' : 'symbol-narrow': '1.2-2' :'en-IN'}}
                   </strong>
                 </div>
 
+              </div>
+              <div [hidden]="!display('totalPrice')" [ngClass]="['col-'+ col('totalPrice'), 'hover-border', viewOptions.theme.text]">
+                <div class="item-total">
+                  <strong>
+                    {{ (item.quantity * item.price) | currency : 'BDT' : 'symbol-narrow': '1.2-2' :'en-IN'}}
+                  </strong>
+                </div>
               </div>
             </div>
           </form>

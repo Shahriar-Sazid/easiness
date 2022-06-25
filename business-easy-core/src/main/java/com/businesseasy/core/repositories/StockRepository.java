@@ -14,7 +14,7 @@ public interface StockRepository extends JpaRepository<StockEntity, Long> {
     List<StockEntity> findByProduct_IdIn(List<Long> productId);
 
     @Query(value = "select new com.businesseasy.core.common.model.Stock" +
-            "(s.id, p.name, p.type, p.brand, p.country, p.size, pl.name, s.cost, s.quantity, un.name) from " +
+            "(s.id, p.name, p.type, p.brand, p.country, p.size, pl.name, pl.id, s.cost, s.quantity, un.name, un.id) from " +
             "StockEntity s LEFT JOIN s.product p on s.product = p.id " +
             "LEFT JOIN s.place pl on s.place = pl.id " +
             "LEFT JOIN s.unit un on s.unit = un.id where " +

@@ -13,7 +13,7 @@ import { UtilService } from "src/app/core/services/util.service";
   styleUrls: ["./product.component.scss"],
 })
 export class ProductComponent implements OnInit {
-  @Output() onProductSelected: EventEmitter<Product> = new EventEmitter();
+  @Output() onProductSelected: EventEmitter<any> = new EventEmitter();
   @Input() viewMode: 'dedicated' | 'buy' = 'dedicated';
   productPage: Page<Product> = new Page<Product>();
   columns: TableColumn[];

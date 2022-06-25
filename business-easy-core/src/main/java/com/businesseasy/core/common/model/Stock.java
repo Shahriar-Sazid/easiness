@@ -17,8 +17,10 @@ public class Stock {
     String brand;
     String country;
     String size;
-    String place;
+    String placeTxt;
+    Long place;
     BigDecimal cost;
     BigDecimal quantity;
-    String unit;
+    String unitTxt;
+    Long unit;
 }

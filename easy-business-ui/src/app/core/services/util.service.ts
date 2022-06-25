@@ -71,7 +71,7 @@ export class UtilService {
   getValidationError(form: FormGroup, control: string) {
     let formControl = form.get(control);
     for (let msg of this.validationMessage) {
-      if (formControl.hasError(msg.type) && formControl.touched === true) {
+      if (formControl?.hasError(msg.type) && formControl?.touched === true) {
         return msg.message;
       }
     }

@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TableColumn, ColumnMode } from '@swimlane/ngx-datatable';
 import { Page } from 'src/app/core/models/page.model';
+import { Product } from 'src/app/core/models/product.model';
 import { Stock } from 'src/app/core/models/stock.model';
 import { BusinessService } from 'src/app/core/services/business.service';
 import { PlaceService } from 'src/app/core/services/place.service';
@@ -12,11 +13,12 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./stock.component.scss']
 })
 export class StockComponent implements OnInit {
+  @Output() onStockSelected: EventEmitter<any> = new EventEmitter();
   @Input() viewMode: 'dedicated' | 'sell' = 'dedicated';
   stockPage: Page<Stock> = new Page<Stock>();
   columns: TableColumn[];
   columnMode = ColumnMode;
-  selectedStock: number;
+  selectedStock: Stock;
 
   isLoading = false;
   constructor(private businessService: BusinessService, public placeService: PlaceService) { }
@@ -37,6 +39,7 @@ export class StockComponent implements OnInit {
     report: false,
     select: true
   }
+  
   defaultSearchOptions = {
     page: 1,
     pageSize: environment.pageSize,
@@ -77,7 +80,7 @@ export class StockComponent implements OnInit {
         cellClass: "text-center",
       },
       {
-        name: "Place",
+        name: "Stock Place",
         cellClass: "text-center",
       },
       {
@@ -123,7 +126,8 @@ export class StockComponent implements OnInit {
       .subscribe(
         (data) => {
           data.content.forEach(el => {
-            el['quantityUnit'] = `${el.quantity} ${el.unit}`
+            el['quantityUnit'] = `${el.quantity} ${el.unitTxt}`
+            el['stockPlace'] = el.placeTxt;
             el['unitCost'] = el.cost;
             el['totalCost'] = (el.cost * el.quantity).toFixed(2)
           })
@@ -135,6 +139,10 @@ export class StockComponent implements OnInit {
           this.isLoading = false;
         }
       );
+  }
+
+  selectStock() {
+    this.onStockSelected.emit(this.selectedStock);
   }
 }
 

@@ -12,12 +12,12 @@
                 <i class="fas fa-user fa-lg"></i>
               </ng-template>
 
-              <app-basic-info #basicInfo [purchase]="purchase" (onPlaceSelection)="selectPlace($event)">
+              <app-basic-info #basicInfo [document]="purchase" (onPlaceSelection)="selectPlace($event)">
               </app-basic-info>
 
               <ul class="list-inline wizard mb-0">
                 <li class="next list-inline-item float-end">
-                  <button [disabled]="!basicInfo.basicInfoForm.valid" class="btn btn-primary" awNextStep>Next</button>
+                  <button [disabled]="!basicInfo?.basicInfoForm?.valid" class="btn btn-primary" awNextStep>Next</button>
                 </li>
               </ul>
             </aw-wizard-step>
@@ -51,7 +51,7 @@
                 <i class="fas fa-file-invoice fa-lg"></i>
               </ng-template>
 
-              <app-invoice #inv [purchase]="purchase"></app-invoice>
+              <app-invoice [mode]="purchase.type" #inv [document]="purchase"></app-invoice>
               <br>
               <ul class="list-inline wizard mb-0">
                 <ul class="list-inline wizard mb-0">
@@ -94,4 +94,4 @@
 
 
 
-<app-costing [defaultPlace]="defaultPlace" #costingModal (onAdded)="addToPurchaseList($event)"></app-costing>
+<app-costing [mode]="'buy'" [defaultPlace]="defaultPlace" #costingModal (onAdded)="addToPurchaseList($event)"></app-costing>

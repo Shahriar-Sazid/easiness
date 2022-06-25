@@ -1,8 +1,13 @@
 import { Product } from "./product.model";
 import { Stock } from "./stock.model";
 
-export interface Document {
-  type: 'PURCHASE_ORDER' | 'INVOICE';
+export enum DocumentType {
+  PURCHASE_ORDER = 'PURCHASE_ORDER',
+  INVOICE = 'INVOICE'
+}
+
+export type Document = {
+  type: DocumentType;
   date: Date;
   people: number;
   items: DocumentItem[];
@@ -21,4 +26,26 @@ export type DocumentItem = {
 export type Payment = {
   targetAccount: number;
   amount: number;
+}
+
+export type DocumentOptions = {
+  name: any;
+  type: any;
+  brand: any;
+  country: any;
+  size: any;
+  place: any;
+  quantity: any;
+  cost: any;
+  price: any;
+  totalCost: any;
+  totalPrice: any;
+  availableQty: boolean;
+  validateQty: boolean;
+  validateUnit: boolean;
+  theme: {
+    bg: string;
+    text: string;
+  };
+  key: DocumentType;
 }

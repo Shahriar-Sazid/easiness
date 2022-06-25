@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Document } from 'src/app/core/models/purchase.model';
+import { Document, DocumentType } from 'src/app/core/models/purchase.model';
 import { PeopleService } from 'src/app/core/services/people.service';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { UtilService } from 'src/app/core/services/util.service';
@@ -12,7 +12,7 @@ import { UtilService } from 'src/app/core/services/util.service';
 })
 export class BasicInfoComponent implements OnInit {
   @ViewChild('basicInfoForm', {static: true}) basicInfoForm: NgForm;
-  @Input() purchase: Document;
+  @Input() document: Document;
   @Output() onPlaceSelection: EventEmitter<number> = new EventEmitter();
   defaultPlace: number;
   constructor(public peopleService: PeopleService,

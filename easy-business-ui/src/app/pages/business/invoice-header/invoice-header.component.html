@@ -1,17 +1,29 @@
-<div class="shadow bg-primary bg-gradient p-3" style="--bs-bg-opacity: .1;">
+<div [ngClass]="['shadow', viewOptions.theme.bg, 'bg-gradient', 'p-3']" style="--bs-bg-opacity: .1;">
   <div class="invoice-from">
     <small>from</small>
-    <address>
-      <strong> {{people.name}} </strong> <br *ngIf="people.name">
+    <address *ngIf="viewOptions.key === 'PURCHASE_ORDER'" >
+      <strong [ngClass]="[viewOptions.theme.text]"> {{people.name}} </strong> <br *ngIf="people.name">
       {{ people.companyName }} <br *ngIf="people.companyName">
       {{ people.address }} <br *ngIf="people.address">
       Phone: {{ people.contactNumber }} <br *ngIf="people.contactNumber">
     </address>
+    <address *ngIf="viewOptions.key === 'INVOICE'" >
+      <strong [ngClass]="[viewOptions.theme.text]" >ABDULLAH TOOLS</strong><br>
+      Nawabpur, Dhaka Tower<br>
+      Dhaka, 1000<br>
+      Phone: 01704882270
+    </address>
   </div>
   <div class="invoice-to">
     <small>to</small>
-    <address>
-      <strong>ABDULLAH TOOLS</strong><br>
+    <address *ngIf="viewOptions.key === 'INVOICE'" >
+      <strong [ngClass]="[viewOptions.theme.text]"> {{people.name}} </strong> <br *ngIf="people.name">
+      {{ people.companyName }} <br *ngIf="people.companyName">
+      {{ people.address }} <br *ngIf="people.address">
+      Phone: {{ people.contactNumber }} <br *ngIf="people.contactNumber">
+    </address>
+    <address *ngIf="viewOptions.key === 'PURCHASE_ORDER'" >
+      <strong [ngClass]="[viewOptions.theme.text]">ABDULLAH TOOLS</strong><br>
       Nawabpur, Dhaka Tower<br>
       Dhaka, 1000<br>
       Phone: 01704882270
@@ -19,7 +31,7 @@
   </div>
   <div class="invoice-date">
     <small>Invoice / Buy</small>
-    <div class="date">{{purchase.date | date: 'MMM dd, yyyy'}}</div>
+    <div [ngClass]="[viewOptions.theme.text, 'date']">{{doc.date | date: 'MMM dd, yyyy'}}</div>
     <div>
       #0000123DSS<br>
     </div>

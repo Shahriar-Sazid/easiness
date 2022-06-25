@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { DocumentItem, Payment, Document } from "src/app/core/models/purchase.model";
+import { DocumentItem, Payment, Document, DocumentType } from "src/app/core/models/purchase.model";
 import { BusinessService } from "src/app/core/services/business.service";
 import { PeopleService } from "src/app/core/services/people.service";
 import { PlaceService } from "src/app/core/services/place.service";
@@ -12,6 +12,7 @@ import { UtilService } from "src/app/core/services/util.service";
 })
 export class BuyComponent implements OnInit {
   purchase = {
+    type: DocumentType.PURCHASE_ORDER,
     date: new Date()
   } as Document;
 

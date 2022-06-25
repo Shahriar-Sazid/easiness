@@ -13,6 +13,7 @@ import { UtilService } from 'src/app/core/services/util.service';
 export class SellComponent implements OnInit {
 
   invoice = {
+    type: 'INVOICE',
     date: new Date()
   } as Document;
 
@@ -21,7 +22,7 @@ export class SellComponent implements OnInit {
     public peopleService: PeopleService,
     public placeService: PlaceService,
     public util: UtilService,
-    private businessSevice: BusinessService
+    private businessService: BusinessService
   ) {
   }
 
@@ -31,19 +32,16 @@ export class SellComponent implements OnInit {
   }
 
 
-  addToSalesList(item: DocumentItem) {
+  addToSalesList(item: any) {
     if(!this.invoice.items) {
       this.invoice.items = [];
     }
     this.invoice.items.push(item);
   }
 
-  selectPlace(place: number) {
-    this.defaultPlace = place;
-  }
 
-  buy(payments: Payment[]) {
-    this.businessSevice.sell({ ...this.invoice, payments}).subscribe(
+  sell(payments: Payment[]) {
+    this.businessService.sell({ ...this.invoice, payments}).subscribe(
       data => {
 
       },

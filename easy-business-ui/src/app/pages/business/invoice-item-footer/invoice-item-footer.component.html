@@ -4,11 +4,12 @@
     <div class="row">
       <div class="col-8"></div>
       <div class="col-4">
-        <div class="shadow bg-primary bg-gradient p-3" style="--bs-bg-opacity: .1;">
+        <div [ngClass]="['shadow', viewOptions.theme.bg, 'bg-gradient', 'p-3']" style="--bs-bg-opacity: .1;">
           <div class="invoice-price-right">
             <small>TOTAL</small>
             <br>
-            <h4> {{ calculateToatalCost() | currency : 'BDT' : 'symbol-narrow': '1.2-2' :'en-IN'}}</h4>
+            <h4 [ngClass]="[viewOptions.theme.text]" *ngIf="!isInvoice()"> {{ calculateToatalCost() | currency : 'BDT' : 'symbol-narrow': '1.2-2' :'en-IN'}}</h4>
+            <h4 [ngClass]="[viewOptions.theme.text]" *ngIf="isInvoice()"> {{ calculateToatalPrice() | currency : 'BDT' : 'symbol-narrow': '1.2-2' :'en-IN'}}</h4>
           </div>
         </div>
 

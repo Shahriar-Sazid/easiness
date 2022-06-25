@@ -3,9 +3,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Product } from 'src/app/core/models/product.model';
 import { DocumentItem } from 'src/app/core/models/purchase.model';
+import { Stock } from 'src/app/core/models/stock.model';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { UnitService } from 'src/app/core/services/unit.service';
 import { UtilService } from 'src/app/core/services/util.service';
+import { ValidateSaleQuantityUnit } from 'src/app/core/validation/custom-validation';
 
 @Component({
   selector: 'app-costing',
@@ -13,10 +15,11 @@ import { UtilService } from 'src/app/core/services/util.service';
   styleUrls: ['./costing.component.scss']
 })
 export class CostingComponent implements OnInit {
+  @Input() mode: 'buy' | 'sell';
   @Input() defaultPlace: number;
   @ViewChild('costingModal') content: any;
   costingForm: FormGroup;
-  selectedProduct: Product;
+  selectedEntity: Product & Stock;
   @Input('selectedPlace') selectedPlace: any;
   @Output() onAdded: EventEmitter<DocumentItem> = new EventEmitter();
   modalRef: NgbModalRef;
@@ -33,48 +36,96 @@ export class CostingComponent implements OnInit {
     console.log('ng on init called');
   }
 
-  openCostingModal(product: Product) {
+  openCostingModal(entity: Product & Stock) {
     this.modalRef = this.modalService
       .open(this.content, { ariaLabelledBy: 'modal-basic-title' });
     this.modalRef.result.then((result) => {
       console.log(`Closed with: ${result}`);
       this.costingForm.reset();
-      this.selectedProduct = null;
+      // this.selectedEntity = null;
     }, (reason) => { });
-    this.selectedProduct = product;
+    this.selectedEntity = entity;
+    console.log(this.selectedEntity);
 
-    this.costingForm = this.fb.group({
-      cost: [
-        undefined,
-        [
-          Validators.min(-100000000),
-          Validators.max(100000000),
+
+    if (this.mode == 'buy') {
+      this.costingForm = this.fb.group({
+        cost: [
+          undefined,
+          [
+            Validators.min(-100000000),
+            Validators.max(100000000),
+          ],
         ],
-      ],
-      quantity: [
-        undefined,
-        [
-          Validators.min(-100000000),
-          Validators.max(100000000),
+        quantity: [
+          undefined,
+          [
+            Validators.min(-100000000),
+            Validators.max(100000000),
+          ],
         ],
-      ],
-      unit: [undefined],
-      place: [this.defaultPlace]
-    });
+        unit: [undefined],
+        place: [this.defaultPlace],
+
+      });
+    } else {
+      this.costingForm = this.fb.group({
+        price: [
+          undefined,
+          [
+            Validators.min(-100000000),
+            Validators.max(100000000),
+          ],
+        ],
+        quantity: [
+          undefined,
+          [
+            Validators.min(-100000000),
+            Validators.max(100000000),
+          ],
+        ],
+        unit: [this.selectedEntity.unit],
+      }, { validators: ValidateSaleQuantityUnit(this.selectedEntity.quantity, this.selectedEntity.unit, this.unitService) });
+    }
+
+
   }
 
   addToPurchaseList() {
     if (this.util.validateForm(this.costingForm)) {
       console.log(this.costingForm.value);
-      let invoiceItem: DocumentItem = {
-        entity: { ...this.selectedProduct },
+      let purchaseOrderItem: DocumentItem = {
+        entity: { ...this.selectedEntity },
       } as DocumentItem;
 
-      for (let [key, value] of Object.entries(this.costingForm.value)) {
-        invoiceItem[key] = value;
-      }
-      this.onAdded.emit(invoiceItem);
+      ['cost', 'quantity', 'unit', 'place'].forEach(el => {
+        purchaseOrderItem[el] = this.costingForm.value[el]
+      })
+
+      this.onAdded.emit(purchaseOrderItem);
       this.modalRef.close();
     }
+  }
+  addToSalesList() {
+    if (this.util.validateForm(this.costingForm)) {
+      console.log(this.costingForm.value);
+      let documentItem: DocumentItem = {
+        entity: { ...this.selectedEntity },
+      } as DocumentItem;
+
+      ['price', 'quantity', 'unit'].forEach(el => {
+        documentItem[el] = this.costingForm.value[el]
+      })
+
+      this.onAdded.emit(documentItem);
+      this.modalRef.close();
+    }
+  }
+
+  getProfitPercentage(): number {
+    if (this.costingForm.value.price > 0) {
+      return (((this.costingForm.value.price - this.selectedEntity.cost) / this.selectedEntity.cost) * 100)
+    }
+    return undefined;
   }
 }

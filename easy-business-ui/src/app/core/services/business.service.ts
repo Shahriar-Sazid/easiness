@@ -10,6 +10,7 @@ import { Document } from '../models/purchase.model';
 export class BusinessService {
     private businessApi = 'api/business/'
     private purchaseApi = `${this.businessApi}purchase`
+    private sellApi = `${this.businessApi}sell`
     private stockApi = `${this.businessApi}stock`
 
     constructor(private http: HttpClient, private util: UtilService) { }
@@ -17,7 +18,7 @@ export class BusinessService {
     getStock(params: any): Observable<Page<Stock>> {
         this.util.deepTrim(params);
         params = this.util.removeEmpty(params);
-        return <Observable<Page<Stock>>>this.http.get(this.stockApi, {params});
+        return <Observable<Page<Stock>>>this.http.get(this.stockApi, { params });
     }
 
     buy(purchaseOrder: Document): Observable<any> {
@@ -35,6 +36,16 @@ export class BusinessService {
     }
 
     sell(invoice: Document): Observable<any> {
-        throw new Error('Method not implemented.');
-      }
+        this.util.deepTrim(invoice);
+        invoice = this.util.clone(invoice);
+        invoice['customer'] = invoice.people;
+        invoice.people = undefined;
+        invoice.items.forEach((item) => {
+            item['stock'] = item.entity.id;
+            item.entity = undefined;
+            return item;
+        })
+        
+        return this.http.post(this.sellApi, invoice);
+    }
 }
