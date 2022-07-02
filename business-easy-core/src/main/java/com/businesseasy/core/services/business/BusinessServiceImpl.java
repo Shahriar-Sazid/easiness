@@ -37,7 +37,6 @@ public class BusinessServiceImpl implements BusinessService {
         documentService.savePurchaseOrder(purchaseOrder, stockList);
         accountService.updateAccountBalance(purchaseOrder.getPayments());
         peopleService.updateSupplierBalance(purchaseOrder);
-
     }
 
     @Override

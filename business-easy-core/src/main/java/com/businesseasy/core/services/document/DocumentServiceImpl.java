@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,11 +52,13 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public void saveInvoice(Invoice invoice, List<StockEntity> stockList) {
+        Map<Long, StockEntity> stockMap = stockList.stream().collect(Collectors.toMap(StockEntity::getId, stockEntity -> stockEntity));
+
         DocumentEntity document = DocumentEntity.builder()
                 .people(peopleRepository.getOne(invoice.getCustomer()))
                 .type(DocumentType.INVOICE)
                 .documentItems(invoice.getItems().stream()
-                        .map(item -> toDocumentItem(item, stockList)).collect(Collectors.toList()))
+                        .map(item -> toDocumentItem(item, stockMap)).collect(Collectors.toList()))
                 .build();
 
         documentRepository.save(document);
@@ -80,20 +83,14 @@ public class DocumentServiceImpl implements DocumentService {
         return documentItem;
     }
 
-    DocumentItemEntity toDocumentItem(InvoiceItem item, List<StockEntity> stockList) {
-        DocumentItemEntity documentItem = DocumentItemEntity.builder()
+    DocumentItemEntity toDocumentItem(InvoiceItem item, Map<Long, StockEntity> stockMap) {
+
+        return DocumentItemEntity.builder()
                 .costOrPrice(item.getPrice())
                 .quantity(item.getQuantity())
                 .unit(unitRepository.getOne(item.getUnit()))
-//                .product(stockRepository.getOne(item.getProduct()))
+                .affectedStock(stockRepository.getOne(item.getStock()))
+                .product(stockMap.get(item.getStock()).getProduct())
                 .build();
-
-//        for (StockEntity stock : stockList) {
-//            if (stock.getPlace().getId().equals(item.getPlace()) && stock.getProduct().getId().equals(item.getProduct())) {
-//                documentItem.setAffectedStock(stockRepository.getOne(stock.getId()));
-//            }
-//        }
-
-        return documentItem;
     }
 }

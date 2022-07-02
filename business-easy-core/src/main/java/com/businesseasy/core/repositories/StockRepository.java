@@ -12,6 +12,7 @@ import java.util.List;
 
 public interface StockRepository extends JpaRepository<StockEntity, Long> {
     List<StockEntity> findByProduct_IdIn(List<Long> productId);
+    List<StockEntity> findByIdIn(List<Long> idList);
 
     @Query(value = "select new com.businesseasy.core.common.model.Stock" +
             "(s.id, p.name, p.type, p.brand, p.country, p.size, pl.name, pl.id, s.cost, s.quantity, un.name, un.id) from " +

@@ -25,6 +25,9 @@ public class StockEntity extends BaseEntity {
     @Column(name = "cost")
     BigDecimal cost;
 
+    @Column(name = "latest_price")
+    BigDecimal latestPrice;
+
     @Column(name = "quantity")
     BigDecimal quantity;
 

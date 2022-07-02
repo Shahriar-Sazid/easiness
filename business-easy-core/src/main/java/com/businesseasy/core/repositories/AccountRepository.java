@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface AccountRepository extends JpaRepository<AccountEntity, Integer>, JpaSpecificationExecutor<AccountEntity> {
     Optional<AccountEntity> findByAccountNo(String accountNo);
-    Optional<AccountEntity> findById(Integer id);
+    Optional<AccountEntity> findById(Long id);
     Optional<AccountEntity> findByAccountName(String accountName);
     List<AccountEntity> findByIdIn(List<Long> idList);
 }

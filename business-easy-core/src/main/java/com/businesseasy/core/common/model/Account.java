@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Account {
-    Integer id;
+    Long id;
 
     @NotNull(message = "Account name must not be null")
     @NotBlank(message = "Account name must not be blank")

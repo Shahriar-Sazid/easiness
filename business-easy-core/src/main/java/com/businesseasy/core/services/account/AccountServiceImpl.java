@@ -2,13 +2,13 @@ package com.businesseasy.core.services.account;
 
 import com.businesseasy.core.common.SearchCriteria;
 import com.businesseasy.core.common.SearchOperation;
+import com.businesseasy.core.common.model.Account;
 import com.businesseasy.core.common.model.Payment;
+import com.businesseasy.core.entities.AccountEntity;
 import com.businesseasy.core.exception_handler.InvalidRequestException;
 import com.businesseasy.core.exception_handler.ReasonCode;
 import com.businesseasy.core.repositories.AccountRepository;
 import com.businesseasy.core.services.report.ReportService;
-import com.businesseasy.core.common.model.Account;
-import com.businesseasy.core.entities.AccountEntity;
 import com.businesseasy.core.specification.EntitySpecification;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,8 +98,9 @@ public class AccountServiceImpl implements AccountService{
             for(Payment payment : payments) {
                 AccountEntity account = accountMap.get(payment.getTargetAccount());
                 account.setBalance(account.getBalance().add(payment.getAmount()));
-                accountRepository.save(account);
             }
+
+            accountRepository.saveAll(accountEntities);
         }
     }
 

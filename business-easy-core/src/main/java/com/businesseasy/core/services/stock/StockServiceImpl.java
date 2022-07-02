@@ -46,17 +46,17 @@ public class StockServiceImpl implements StockService {
     @Autowired
     UnitService unitService;
 
-    @Value( "${precision.digit-count:6}" )
+    @Value("${precision.digit-count:6}")
     private Integer precision;
 
     @Override
     public List<StockEntity> storeProduct(List<PurchaseOrderItem> items) {
         Map<String, PurchaseOrderItem> itemMap = new HashMap<>();
 
-        for(PurchaseOrderItem item: items) {
+        for (PurchaseOrderItem item : items) {
             String key = Util.concatWith(item.getProduct(), item.getPlace(), "_");
 
-            if(itemMap.get(key) == null) {
+            if (itemMap.get(key) == null) {
                 itemMap.put(key, item);
             } else {
                 PurchaseOrderItem prevItem = itemMap.get(key);
@@ -98,18 +98,30 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public List<StockEntity> sellProduct(List<InvoiceItem> items) {
-        return null;
+        List<StockEntity> stockList = stockRepository.findByIdIn(items.stream().map(InvoiceItem::getStock).collect(Collectors.toList()));
+
+        Map<Long, StockEntity> stockMap = stockList.stream().collect(Collectors.toMap(StockEntity::getId, stockEntity -> stockEntity));
+
+        for (InvoiceItem item : items) {
+            StockEntity stock = stockMap.get(item.getStock());
+
+            BigDecimal convertedQty = convertQty(stock.getUnit().getId(), item.getQuantity(), item.getUnit());
+            stock.setQuantity(stock.getQuantity().add(convertedQty.negate()));
+            stock.setLatestPrice(item.getPrice());
+        }
+
+        return stockRepository.saveAll(stockList);
     }
 
     @Override
     public Page<Stock> searchStock(Map<String, String> params) {
-        Pageable pageable = PageRequest.of(Integer.parseInt(params.getOrDefault("page", "1"))-1,
+        Pageable pageable = PageRequest.of(Integer.parseInt(params.getOrDefault("page", "1")) - 1,
                 Integer.parseInt(params.getOrDefault("pageSize", "10")));
         return stockRepository.searchStock(
                 params.getOrDefault("name", ""),
                 params.getOrDefault("type", ""),
                 params.getOrDefault("brand", ""),
-                params.get("placeId") != null? Long.parseLong(params.get("placeId")): null,
+                params.get("placeId") != null ? Long.parseLong(params.get("placeId")) : null,
                 pageable);
     }
 
@@ -120,7 +132,7 @@ public class StockServiceImpl implements StockService {
 
             BigDecimal[] qtyAndCost = calculateCostAndQuantity(
                     stock.getQuantity(), stock.getCost(), stock.getUnit().getId()
-                    ,item.getQuantity(), item.getCost(), item.getUnit());
+                    , item.getQuantity(), item.getCost(), item.getUnit());
 
             stock.setQuantity(qtyAndCost[0]);
             stock.setCost(qtyAndCost[1]);
@@ -143,15 +155,16 @@ public class StockServiceImpl implements StockService {
         return stockList;
     }
 
-    public BigDecimal[] calculateCostAndQuantity(BigDecimal toQty, BigDecimal toCost, Long toUnit,
-                                                 BigDecimal qty, BigDecimal cost, Long unit) {
-
-        qty = toUnit.equals(unit)? qty : unitService.convert(unit, toUnit, qty);
-
-        BigDecimal newQty = toQty.add(qty);
+    public BigDecimal[] calculateCostAndQuantity(final BigDecimal toQty, final BigDecimal toCost, final Long toUnit,
+                                                 final BigDecimal qty, final BigDecimal cost, final Long unit) {
+        BigDecimal newQty = toQty.add(convertQty(toUnit, qty, unit));
         BigDecimal newCost = (toCost.multiply(toQty).add((cost.multiply(qty))))
                 .divide(toQty.add(qty), precision, RoundingMode.HALF_EVEN);
 
         return new BigDecimal[]{newQty, newCost};
+    }
+
+    public BigDecimal convertQty(Long toUnit, BigDecimal qty, Long unit) {
+        return toUnit.equals(unit) ? qty : unitService.convert(unit, toUnit, qty);
     }
 }
