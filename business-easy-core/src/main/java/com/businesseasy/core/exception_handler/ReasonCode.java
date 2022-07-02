@@ -11,7 +11,10 @@ public enum ReasonCode {
     ACCOUNT_NOT_FOUND("Account not found"),
     PLACE_NOT_FOUND("Place not found"),
     PEOPLE_NOT_FOUND("Supplier/Customer not found"),
-    PEOPLE_WITH_ID_NOT_FOUND("People with given id not found");
+    PEOPLE_WITH_ID_NOT_FOUND("People with given id not found"),
+
+
+    USER_NOT_FOUND("User not fond");
 
     private final String message;
 
