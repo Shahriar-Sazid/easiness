@@ -42,7 +42,7 @@ export class BusinessService {
         invoice.people = undefined;
         invoice.items.forEach((item) => {
             item['stock'] = item.entity.id;
-            item.entity = undefined;
+            item.cost = item.entity.cost;
             return item;
         })
         

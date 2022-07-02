@@ -43,7 +43,7 @@ export class SellComponent implements OnInit {
   sell(payments: Payment[]) {
     this.businessService.sell({ ...this.invoice, payments}).subscribe(
       data => {
-
+        window.location.reload();
       },
       err => {
         

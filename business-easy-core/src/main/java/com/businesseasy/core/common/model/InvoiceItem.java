@@ -14,4 +14,5 @@ public class InvoiceItem {
     private BigDecimal quantity;
     private Long unit;
     private BigDecimal price;
+    private BigDecimal cost;
 }
