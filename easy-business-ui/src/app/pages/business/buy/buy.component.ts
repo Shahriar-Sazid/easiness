@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { DocumentItem, Payment, Document, DocumentType } from "src/app/core/models/purchase.model";
 import { BusinessService } from "src/app/core/services/business.service";
 import { PeopleService } from "src/app/core/services/people.service";
@@ -19,6 +20,7 @@ export class BuyComponent implements OnInit {
   defaultPlace: number;
   constructor(
     public peopleService: PeopleService,
+    private router: Router,
     public placeService: PlaceService,
     public util: UtilService,
     private businessSevice: BusinessService
@@ -45,7 +47,7 @@ export class BuyComponent implements OnInit {
   buy(payments: Payment[]) {
     this.businessSevice.buy({ ...this.purchase, payments}).subscribe(
       data => {
-
+        window.location.reload();
       },
       err => {
         

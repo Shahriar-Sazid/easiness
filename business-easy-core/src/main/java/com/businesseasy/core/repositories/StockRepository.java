@@ -22,7 +22,8 @@ public interface StockRepository extends JpaRepository<StockEntity, Long> {
             "(:name = ''  OR UPPER(p.name) LIKE '%'||UPPER(:name)||'%') AND " +
             "(:type = '' OR UPPER(p.type) LIKE '%'||UPPER(:type)||'%') AND " +
             "(:brand = '' OR UPPER(p.brand) LIKE '%'||UPPER(:brand)||'%') AND " +
-            "(pl.id = :placeId or :placeId IS NULL)")
+            "(pl.id = :placeId or :placeId IS NULL) AND " +
+            "s.quantity > 0")
     Page<Stock> searchStock(@Param("name") String name,
                             @Param("type") String type,
                             @Param("brand") String brand,

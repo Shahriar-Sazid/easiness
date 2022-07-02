@@ -184,7 +184,7 @@ public class PeopleServiceImpl implements PeopleService {
             totalPrice = totalPrice.add(item.getQuantity().multiply(item.getPrice()));
         }
         for(Payment payment: invoice.getPayments()) {
-            totalPrice = totalPrice.add(payment.getAmount());
+            totalPrice = totalPrice.add(payment.getAmount().negate());
         }
 
         updatePeopleBalance(invoice.getCustomer(), totalPrice);
