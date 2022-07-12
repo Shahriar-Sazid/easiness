@@ -2,6 +2,10 @@ package com.businesseasy.core.common;
 
 import com.google.gson.Gson;
 
+import java.text.ParseException;
+import java.time.Instant;
+import java.util.Date;
+
 public class Util {
 
     public static String parseObjectToString(Object object) {
@@ -18,5 +22,9 @@ public class Util {
     
     public static String concatWith(Object a, Object b, String delimiter) {
         return a.toString().concat(delimiter).concat(b.toString());
+    }
+
+    public static Date parseDate(String dateStr) throws ParseException {
+        return Date.from(Instant.parse(dateStr));
     }
 }

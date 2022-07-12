@@ -1,18 +1,21 @@
 package com.businesseasy.core.services.document;
 
+import com.businesseasy.core.common.Util;
 import com.businesseasy.core.common.enums.DocumentType;
-import com.businesseasy.core.common.model.Invoice;
-import com.businesseasy.core.common.model.InvoiceItem;
-import com.businesseasy.core.common.model.PurchaseOrder;
-import com.businesseasy.core.common.model.PurchaseOrderItem;
+import com.businesseasy.core.common.model.*;
 import com.businesseasy.core.entities.DocumentEntity;
 import com.businesseasy.core.entities.DocumentItemEntity;
 import com.businesseasy.core.entities.StockEntity;
 import com.businesseasy.core.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -82,6 +85,27 @@ public class DocumentServiceImpl implements DocumentService {
                 .build();
 
         documentRepository.save(document);
+    }
+
+    @Override
+    public Page<Document> searchDocument(Map<String, String> params) {
+        Pageable pageable = PageRequest.of(Integer.parseInt(params.getOrDefault("page", "1")) - 1,
+                Integer.parseInt(params.getOrDefault("pageSize", "10")));
+
+        Date from = null, to = null;
+        try {
+            from = Util.parseDate(params.getOrDefault("from", "2022-01-01T00:00:00.000Z"));
+            to = Util.parseDate(params.getOrDefault("to", "2099-01-01T00:00:00.000Z"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return documentRepository.searchDocument(
+                from,
+                to,
+                params.getOrDefault("peopleName", ""),
+                params.getOrDefault("type", ""),
+                pageable);
     }
 
 

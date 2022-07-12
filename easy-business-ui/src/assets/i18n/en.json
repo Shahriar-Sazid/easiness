@@ -319,6 +319,9 @@
     "BUSINESS": "Business",
     "BUY": "Buy",
     "SELL": "Sell",
-    "STOCK": "Stock"
+    "STOCK": "Stock",
+    "DOCUMENT": "Document",
+    "INVOICE": "Invoice",
+    "PURCHASE_ORDER": "Purchase Order"
   }
 }

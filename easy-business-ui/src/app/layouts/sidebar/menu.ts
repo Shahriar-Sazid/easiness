@@ -36,15 +36,32 @@ export const MENU: MenuItem[] = [
     link: "/business/buy",
   },
   {
-    id: 5,
+    id: 6,
     label: "COMMONS.SELL",
     icon: "fas fa-box-open",
     link: "/business/sell",
   },
   {
-    id: 5,
+    id: 7,
     label: "COMMONS.STOCK",
     icon: "fas fa-border-all",
     link: "/business/stock",
+  },
+  {
+    id: 8,
+    label: "COMMONS.DOCUMENT",
+    isTitle: true,
+  },
+  {
+    id: 9,
+    label: "COMMONS.INVOICE",
+    icon: "fas fa-file-invoice-dollar",
+    link: "/document/invoice",
+  },
+  {
+    id: 10,
+    label: "COMMONS.PURCHASE_ORDER",
+    icon: "fas fa-file-invoice",
+    link: "/document/purchase-order",
   },
 ];
