@@ -14,7 +14,7 @@
     "eslint.lintTask.enable": true,
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "[typescript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"

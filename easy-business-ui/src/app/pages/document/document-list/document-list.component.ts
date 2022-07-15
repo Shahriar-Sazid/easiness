@@ -102,12 +102,12 @@ export class DocumentListComponent implements OnInit {
   }
 
   downloadAsReport() {
-    let keyNameMap = {
+    const keyNameMap = {
       name: "Name",
       type: "Type",
       brand: "Brand",
     };
-    let reportOptions = {
+    const reportOptions = {
       ...this.searchedOptions,
       activeFilters: this.util.buildActiveFilters(
         this.searchedOptions,

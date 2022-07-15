@@ -99,16 +99,16 @@ export class PeopleComponent implements OnInit {
     });
   }
 
-  resetForm() {}
+  resetForm() { }
 
 
 
   downloadAsReport() {
-    let keyNameMap = {
+    const keyNameMap = {
       name: "Name",
       contactNo: "Contact No",
     };
-    let reportOptions = {
+    const reportOptions = {
       ...this.searchedOptions,
       activeFilters: this.util.buildActiveFilters(this.searchedOptions, keyNameMap),
     };
@@ -133,7 +133,7 @@ export class PeopleComponent implements OnInit {
     this.peopleService.getPeople(this.searchedOptions).subscribe(
       (data: Page<People>) => {
         console.log(data);
-        for (let people of data.content) {
+        for (const people of data.content) {
           people.contactNumber = people.contactNoList.map((contactNo) => contactNo.contactNo).join(",\n");
         }
         this.peoplePage = data;
