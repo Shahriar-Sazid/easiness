@@ -2,7 +2,7 @@
     <form (ngSubmit)="searchDocument()" #fr="ngForm">
         <div class="row">
             <div class="form-group col-md-6 col-lg-4 col-xl-3">
-                <app-date-range (dateSelected)="selectDate($event)"></app-date-range>
+                <app-date-range #dr (dateSelected)="selectDate($event)"></app-date-range>
             </div>
             <div class="form-group col-md-6 col-lg-4 col-xl-3">
                 <label for="name">People Name</label>
@@ -39,14 +39,21 @@
     (activate)="onActivate($event)" (page)="changePage($event)">
     <ngx-datatable-column *ngFor="let column of columns" [name]="column.name"></ngx-datatable-column>
 
-    <ngx-datatable-column name="Options">
+    <ngx-datatable-column name="Options" [headerClass]="'text-center'">
         <ng-template ngx-datatable-cell-template>
-            <button *ngIf="searchOptions.type == 'PURCHASE_ORDER'" type="button" class="btn btn-danger">
-                Make Payment
-            </button>
-            <button *ngIf="searchOptions.type == 'INVOICE'" type="button" class="btn btn-success">
-                Receive Payment
-            </button>
+            <div class="d-flex justify-content-center align-items-center">
+                <button type="button" class="btn btn-sm btn-primary mx-1">
+                    Details
+                </button>
+                <button *ngIf="searchOptions.type == 'PURCHASE_ORDER'" type="button" class="btn btn-sm btn-danger mx-1">
+                    <i class="fas fa-minus-circle"></i>
+                    Make Payment
+                </button>
+                <button *ngIf="searchOptions.type == 'INVOICE'" type="button" class="btn btn-sm btn-success mx-1">
+                    <i class="fas fa-plus-circle"></i>
+                    Receive Payment
+                </button>
+            </div>
         </ng-template>
     </ngx-datatable-column>
 </ngx-datatable>

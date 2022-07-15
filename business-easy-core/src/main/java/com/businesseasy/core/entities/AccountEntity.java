@@ -1,5 +1,6 @@
 package com.businesseasy.core.entities;
 
+import com.businesseasy.core.common.enums.AccountType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,10 @@ public class AccountEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", updatable = false, nullable = false)
     Long id;
+
+    @Column(name="type")
+    @Enumerated(EnumType.STRING)
+    AccountType type;
 
     @Column(name = "account_name")
     String accountName;

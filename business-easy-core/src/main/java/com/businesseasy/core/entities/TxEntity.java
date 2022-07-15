@@ -1,5 +1,6 @@
 package com.businesseasy.core.entities;
 
+import com.businesseasy.core.common.enums.TxType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,8 +23,12 @@ public class TxEntity extends BaseEntity {
     BigDecimal amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id")
-    AccountEntity accountEntity;
+    @JoinColumn(name = "from_account_id")
+    AccountEntity fromAccount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "to_account_id")
+    AccountEntity toAccount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "people_id")
@@ -32,6 +37,13 @@ public class TxEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id")
     DocumentEntity documentEntity;
+
+    @Column(name = "ref")
+    String ref;
+
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    TxType type;
 
     @Column(name = "meta")
     String meta;

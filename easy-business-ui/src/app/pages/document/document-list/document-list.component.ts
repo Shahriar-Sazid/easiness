@@ -1,16 +1,13 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { TableColumn, ColumnMode } from '@swimlane/ngx-datatable';
+import { ColumnMode, TableColumn } from '@swimlane/ngx-datatable';
 import { map } from 'rxjs/operators';
 import { DateRange, DocumentSearchRes, DocumentType } from 'src/app/core/models/document.model';
 import { Page } from 'src/app/core/models/page.model';
-import { Product } from 'src/app/core/models/product.model';
 import { DocumentService } from 'src/app/core/services/document.service';
-import { ProductService } from 'src/app/core/services/product.service';
 import { UtilService } from 'src/app/core/services/util.service';
-import { environment } from 'src/environments/environment';
+import { DateRangeComponent } from 'src/app/shared/ui/date-range/date-range.component';
 
 @Component({
   selector: 'app-document-list',
@@ -18,7 +15,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./document-list.component.scss']
 })
 export class DocumentListComponent implements OnInit {
-
+  @ViewChild('dr', { static: true }) dateRangeComponent: DateRangeComponent;
   @Output() onDocumentSelected: EventEmitter<any> = new EventEmitter();
   @Input() viewMode: 'dedicated' | 'buy' = 'dedicated';
   documentPage: Page<DocumentSearchRes> = new Page<DocumentSearchRes>();
@@ -37,11 +34,16 @@ export class DocumentListComponent implements OnInit {
     private route: ActivatedRoute,
     public util: UtilService,
     private datePipe: DatePipe,
-  ) {
-    this.search = this.search.bind(this);
-  }
+  ) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.searchOptions.type = params['type'] === 'invoice' ? DocumentType.INVOICE : DocumentType.PURCHASE_ORDER;
+      this.initializeState();
+    });
+  }
+
+  initializeState() {
     this.columns = [
       {
         name: "Date",
@@ -59,7 +61,7 @@ export class DocumentListComponent implements OnInit {
 
     this.resetForm();
 
-    if (this.searchOptions.type == DocumentType.INVOICE) {
+    if (this.searchOptions.type === DocumentType.INVOICE) {
       this.columns.push({
         name: "Profit",
         cellClass: "text-center",
@@ -120,12 +122,12 @@ export class DocumentListComponent implements OnInit {
   }
 
   resetForm() {
-    this.route.params.subscribe(params => {
-      if (params.type == 'invoice') {
-        this.searchOptions.type = DocumentType.INVOICE;
-      } else this.searchOptions.type = DocumentType.PURCHASE_ORDER;
-      this.searchDocument();
-    });
+    this.searchOptions = {} as SearchOptions;
+    this.dateRangeComponent.reset();
+    this.searchOptions.type =
+      this.route.snapshot.paramMap.get('type') === 'invoice' ?
+        DocumentType.INVOICE : DocumentType.PURCHASE_ORDER;
+    this.searchDocument();
   }
 
   onActivate(event: any) {

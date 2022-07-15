@@ -21,6 +21,10 @@ export class DateRangeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.reset();
+  }
+
+  reset() {
     this.fromDate = this.calendar.getNext(this.today, 'm', -1);
     this.toDate = this.today;
     this.dateSelected.emit(this.toDateRange())
