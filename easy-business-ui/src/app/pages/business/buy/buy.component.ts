@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { DocumentItem, Payment, Document, DocumentType } from "src/app/core/models/purchase.model";
+import { DocumentItem, Payment, Document, DocumentType } from "src/app/core/models/document.model";
 import { BusinessService } from "src/app/core/services/business.service";
 import { PeopleService } from "src/app/core/services/people.service";
 import { PlaceService } from "src/app/core/services/place.service";

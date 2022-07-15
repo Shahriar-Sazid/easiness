@@ -12,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Document {
+    private Long id;
     private Date date;
     private String peopleName;
     private DocumentType documentType;

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DocumentOptions } from 'src/app/core/models/purchase.model';
+import { DocumentOptions } from 'src/app/core/models/document.model';
 
 @Component({
   selector: 'app-document-item-header',

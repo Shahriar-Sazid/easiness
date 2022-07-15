@@ -69,7 +69,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         BigDecimal totalCost = BigDecimal.ZERO;
         for (InvoiceItem item : invoice.getItems()) {
-            totalCost = totalCost.add(item.getPrice().multiply(item.getQuantity()));
+            totalCost = totalCost.add(item.getCost().multiply(item.getQuantity()));
         }
 
 

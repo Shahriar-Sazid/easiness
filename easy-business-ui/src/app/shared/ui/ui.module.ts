@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import {
   NgbCollapseModule,
@@ -20,6 +20,7 @@ import { SaveProductComponent } from "./save-product/save-product.component";
 import { SavePeopleComponent } from "./save-people/save-people.component";
 import { SaveAccountComponent } from "./save-account/save-account.component";
 import { SavePlaceComponent } from "./save-place/save-place.component";
+import { DateRangeComponent } from './date-range/date-range.component';
 
 @NgModule({
   declarations: [
@@ -30,10 +31,12 @@ import { SavePlaceComponent } from "./save-place/save-place.component";
     SavePeopleComponent,
     SaveAccountComponent,
     SavePlaceComponent,
+    DateRangeComponent,
   ],
   imports: [
     CommonModule,
     ClickOutsideModule,
+    FormsModule,
     ReactiveFormsModule,
     NgbCollapseModule,
     NgbDatepickerModule,
@@ -51,6 +54,7 @@ import { SavePlaceComponent } from "./save-place/save-place.component";
     SavePeopleComponent,
     SaveAccountComponent,
     SavePlaceComponent,
+    DateRangeComponent
   ],
 })
 export class UIModule {}

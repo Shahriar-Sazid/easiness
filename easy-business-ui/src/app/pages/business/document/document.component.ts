@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { smoothExpandCollapse } from 'src/app/core/animations/animations';
-import { Document, DocumentOptions, DocumentType } from 'src/app/core/models/purchase.model';
+import { Document, DocumentOptions, DocumentType } from 'src/app/core/models/document.model';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { InvoiceItemComponent } from '../document-item/document-item.component';
 

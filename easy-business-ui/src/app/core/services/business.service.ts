@@ -4,7 +4,7 @@ import { UtilService } from './util.service';
 import { Observable } from 'rxjs';
 import { Stock } from '../models/stock.model';
 import { Page } from '../models/page.model';
-import { Document } from '../models/purchase.model';
+import { Document } from '../models/document.model';
 
 @Injectable({ providedIn: 'root' })
 export class BusinessService {

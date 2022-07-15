@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Place } from 'src/app/core/models/place.model';
-import { DocumentItem, DocumentOptions } from 'src/app/core/models/purchase.model';
+import { DocumentItem, DocumentOptions } from 'src/app/core/models/document.model';
 import { UnitService } from 'src/app/core/services/unit.service';
 import { calcQuantityUnitError } from 'src/app/core/validation/custom-validation';
 

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Document, DocumentOptions, DocumentType } from 'src/app/core/models/purchase.model';
+import { Document, DocumentOptions, DocumentType } from 'src/app/core/models/document.model';
 
 @Component({
   selector: 'app-document-item-footer',

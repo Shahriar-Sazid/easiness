@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DocumentListComponent } from './document-list/document-list.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: ':type',
+    component: DocumentListComponent,
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

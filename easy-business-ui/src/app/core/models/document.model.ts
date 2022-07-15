@@ -49,3 +49,18 @@ export type DocumentOptions = {
   };
   key: DocumentType;
 }
+
+
+export type DocumentSearchRes = {
+  id: number;
+  type: DocumentType;
+  date: string;
+  peopleName: string;
+  total: string;
+  profit: string;
+}
+
+export type DateRange = {
+  from: Date;
+  to: Date;
+}

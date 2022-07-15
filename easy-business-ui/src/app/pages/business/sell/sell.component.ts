@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Document, DocumentItem, Payment } from 'src/app/core/models/purchase.model';
+import { Document, DocumentItem, Payment } from 'src/app/core/models/document.model';
 import { BusinessService } from 'src/app/core/services/business.service';
 import { PeopleService } from 'src/app/core/services/people.service';
 import { PlaceService } from 'src/app/core/services/place.service';

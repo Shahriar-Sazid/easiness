@@ -30,7 +30,7 @@ import { FakeBackendInterceptor } from "./core/services/interceptors/fake-backen
 import { ApiInterceptor } from "./core/services/interceptors/api-interceptor";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { LoaderInterceptorService } from "./core/services/interceptors/loader-interceptor.service";
-import { registerLocaleData } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import localeIn from '@angular/common/locales/en-IN';
 
 if (environment.defaultauth === "firebase") {
@@ -88,6 +88,7 @@ export function createTranslateLoader(http: HttpClient): any {
       multi: true,
     },
     { provide: NgbDateAdapter, useClass: NgbDateNativeAdapter },
+    DatePipe
   ],
 })
 export class AppModule {}

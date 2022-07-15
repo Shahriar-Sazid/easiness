@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { smoothExpandCollapse } from 'src/app/core/animations/animations';
-import { Payment } from 'src/app/core/models/purchase.model';
+import { Payment } from 'src/app/core/models/document.model';
 import { AccountService } from 'src/app/core/services/account.service';
 import { UtilService } from 'src/app/core/services/util.service';
 

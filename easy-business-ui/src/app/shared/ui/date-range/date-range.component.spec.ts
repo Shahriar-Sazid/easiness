@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InvoiceComponent } from './invoice.component';
+import { DateRangeComponent } from './date-range.component';
 
-describe('InvoiceComponent', () => {
-  let component: InvoiceComponent;
-  let fixture: ComponentFixture<InvoiceComponent>;
+describe('DateRangeComponent', () => {
+  let component: DateRangeComponent;
+  let fixture: ComponentFixture<DateRangeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InvoiceComponent ]
+      declarations: [ DateRangeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InvoiceComponent);
+    fixture = TestBed.createComponent(DateRangeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

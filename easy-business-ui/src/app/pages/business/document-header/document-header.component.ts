@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { People } from 'src/app/core/models/people.model';
-import { Document, DocumentOptions } from 'src/app/core/models/purchase.model';
+import { Document, DocumentOptions } from 'src/app/core/models/document.model';
 import { PeopleService } from 'src/app/core/services/people.service';
 
 @Component({

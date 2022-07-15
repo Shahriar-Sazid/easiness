@@ -12,7 +12,7 @@ import java.util.Date;
 
 public interface DocumentRepository extends JpaRepository<DocumentEntity, Long> {
     @Query(value = "SELECT NEW com.businesseasy.core.common.model.Document" +
-            "(d.createdAt, p.name, d.type, d.total, d.profit) FROM " +
+            "(d.id, d.createdAt, p.name, d.type, d.total, d.profit) FROM " +
             "DocumentEntity d LEFT JOIN d.people p ON d.people = p.id WHERE" +
             "(:peopleName = ''  OR UPPER(p.name) LIKE '%'||UPPER(:peopleName)||'%') AND " +
             "(:type = '' OR d.type = :type) AND " +
