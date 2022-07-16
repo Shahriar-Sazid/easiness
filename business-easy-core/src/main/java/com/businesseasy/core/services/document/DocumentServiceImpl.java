@@ -6,7 +6,10 @@ import com.businesseasy.core.common.model.*;
 import com.businesseasy.core.entities.DocumentEntity;
 import com.businesseasy.core.entities.DocumentItemEntity;
 import com.businesseasy.core.entities.StockEntity;
+import com.businesseasy.core.exception_handler.InvalidRequestException;
+import com.businesseasy.core.exception_handler.ReasonCode;
 import com.businesseasy.core.repositories.*;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +29,9 @@ public class DocumentServiceImpl implements DocumentService {
     DocumentRepository documentRepository;
 
     @Autowired
+    DocumentItemRepository documentItemRepository;
+
+    @Autowired
     PeopleRepository peopleRepository;
 
     @Autowired
@@ -39,6 +45,9 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
     public void savePurchaseOrder(PurchaseOrder purchaseOrder, List<StockEntity> stockList) {
@@ -106,6 +115,22 @@ public class DocumentServiceImpl implements DocumentService {
                 params.getOrDefault("peopleName", ""),
                 params.getOrDefault("type", ""),
                 pageable);
+    }
+
+    @Override
+    public DocumentDTO findDocumentById(Long id) {
+        DocumentMeta documentMeta = documentRepository.findDocumentMetaById(id);
+        if (documentMeta == null) {
+            throw new InvalidRequestException(ReasonCode.DOCUMENT_NOT_FOUND.getMessage());
+        }
+
+        DocumentDTO documentDTO = modelMapper
+                .typeMap(DocumentMeta.class, DocumentDTO.class)
+                .map(documentMeta);
+
+        documentDTO.setItems(documentItemRepository.findItemByDocumentId(id));
+
+        return documentDTO;
     }
 
 

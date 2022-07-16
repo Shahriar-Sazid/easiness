@@ -16,7 +16,7 @@ import { DateRangeComponent } from 'src/app/shared/ui/date-range/date-range.comp
 })
 export class DocumentListComponent implements OnInit {
   @ViewChild('dr', { static: true }) dateRangeComponent: DateRangeComponent;
-  @Output() onDocumentSelected: EventEmitter<any> = new EventEmitter();
+  @Output() onDocumentSelected: EventEmitter<DocumentSearchRes> = new EventEmitter();
   @Input() viewMode: 'dedicated' | 'buy' = 'dedicated';
   documentPage: Page<DocumentSearchRes> = new Page<DocumentSearchRes>();
   columns: TableColumn[];
@@ -130,7 +130,7 @@ export class DocumentListComponent implements OnInit {
     this.searchDocument();
   }
 
-  onActivate(event: any) {
+  onActivate(event: {row: DocumentSearchRes}) {
     // console.log(event.row);
     this.selectedDocument = event.row;
   }

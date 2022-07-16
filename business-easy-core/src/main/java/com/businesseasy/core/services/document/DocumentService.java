@@ -1,6 +1,7 @@
 package com.businesseasy.core.services.document;
 
 import com.businesseasy.core.common.model.Document;
+import com.businesseasy.core.common.model.DocumentDTO;
 import com.businesseasy.core.common.model.Invoice;
 import com.businesseasy.core.common.model.PurchaseOrder;
 import com.businesseasy.core.entities.StockEntity;
@@ -15,4 +16,6 @@ public interface DocumentService {
     void saveInvoice(Invoice invoice, List<StockEntity> stockList);
 
     Page<Document> searchDocument(Map<String, String> params);
+
+    DocumentDTO findDocumentById(Long id);
 }

@@ -22,7 +22,9 @@ export class InvoiceItemComponent implements OnInit {
   constructor(public unitService: UnitService) {
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    //TODO: implement me!
+  }
 
   display(prop: string) {
     return this.viewOptions[prop]?.show
@@ -39,7 +41,7 @@ export class InvoiceItemComponent implements OnInit {
   }
 
   getJoinedText() {
-    let arr = [
+    const arr = [
       this.item.entity.name,
       this.item.entity.type,
       this.item.entity.brand,
@@ -59,7 +61,7 @@ export class InvoiceItemComponent implements OnInit {
 
   validateQuantity(quantity: string | number) {
     if (this.viewOptions.validateQty) {
-      let errors = calcQuantityUnitError(
+      const errors = calcQuantityUnitError(
         this.item.unit, this.item.entity.unit,
         quantity, this.item.entity.quantity,
         this.unitService);
@@ -70,7 +72,7 @@ export class InvoiceItemComponent implements OnInit {
 
   validateUnit(unit: string | number) {
     if (this.viewOptions.validateUnit) {
-      let errors = calcQuantityUnitError(
+      const errors = calcQuantityUnitError(
         unit, this.item.entity.unit,
         this.item.quantity, this.item.entity.quantity,
         this.unitService);

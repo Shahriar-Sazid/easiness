@@ -43,7 +43,9 @@ export class CostingComponent implements OnInit {
       console.log(`Closed with: ${result}`);
       this.costingForm.reset();
       // this.selectedEntity = null;
-    }, (reason) => { });
+    }, (reason) => { 
+      console.log(reason);
+    });
     this.selectedEntity = entity;
     console.log(this.selectedEntity);
 
@@ -94,7 +96,7 @@ export class CostingComponent implements OnInit {
   addToPurchaseList() {
     if (this.util.validateForm(this.costingForm)) {
       console.log(this.costingForm.value);
-      let purchaseOrderItem: DocumentItem = {
+      const purchaseOrderItem: DocumentItem = {
         entity: { ...this.selectedEntity },
       } as DocumentItem;
 
@@ -109,7 +111,7 @@ export class CostingComponent implements OnInit {
   addToSalesList() {
     if (this.util.validateForm(this.costingForm)) {
       console.log(this.costingForm.value);
-      let documentItem: DocumentItem = {
+      const documentItem: DocumentItem = {
         entity: { ...this.selectedEntity },
       } as DocumentItem;
 

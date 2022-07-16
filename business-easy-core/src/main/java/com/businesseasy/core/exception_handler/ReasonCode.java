@@ -12,9 +12,8 @@ public enum ReasonCode {
     PLACE_NOT_FOUND("Place not found"),
     PEOPLE_NOT_FOUND("Supplier/Customer not found"),
     PEOPLE_WITH_ID_NOT_FOUND("People with given id not found"),
-
-
-    USER_NOT_FOUND("User not fond");
+    USER_NOT_FOUND("User not fond"),
+    DOCUMENT_NOT_FOUND("Document not found by given ID");
 
     private final String message;
 

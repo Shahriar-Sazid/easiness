@@ -99,7 +99,9 @@ export class PeopleComponent implements OnInit {
     });
   }
 
-  resetForm() { }
+  resetForm() { 
+    //TODO: implement me!!
+  }
 
 
 

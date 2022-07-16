@@ -1,5 +1,6 @@
 package com.businesseasy.core.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "document_item")
+@Table(name = "document_item", indexes = @Index(name = "document_id_index", columnList = "document_id"))
 public class DocumentItemEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -24,6 +25,7 @@ public class DocumentItemEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ProductEntity product;
 
     @Column(name = "quantity")
@@ -31,6 +33,7 @@ public class DocumentItemEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "unit_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private UnitEntity unit;
 
     @Column(name = "cost_or_price")
@@ -38,10 +41,12 @@ public class DocumentItemEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private PlaceEntity place;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "affected_stock_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private StockEntity affectedStock;
 
 

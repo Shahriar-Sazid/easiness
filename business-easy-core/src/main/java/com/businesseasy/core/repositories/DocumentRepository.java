@@ -1,6 +1,7 @@
 package com.businesseasy.core.repositories;
 
 import com.businesseasy.core.common.model.Document;
+import com.businesseasy.core.common.model.DocumentMeta;
 import com.businesseasy.core.entities.DocumentEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,4 +23,11 @@ public interface DocumentRepository extends JpaRepository<DocumentEntity, Long> 
                                   @Param("peopleName") String peopleName,
                                   @Param("type") String type,
                                   Pageable pageable);
+
+    @Query(value ="SELECT NEW com.businesseasy.core.common.model.DocumentMeta" +
+            "(d.createdAt, d.people, d.type, d.total, d.profit)" +
+            " FROM DocumentEntity d" +
+            " WHERE d.id = :id")
+    DocumentMeta findDocumentMetaById(@Param("id") Long id);
+
 }

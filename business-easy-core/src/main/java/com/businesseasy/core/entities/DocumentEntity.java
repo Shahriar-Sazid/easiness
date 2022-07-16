@@ -1,6 +1,7 @@
 package com.businesseasy.core.entities;
 
 import com.businesseasy.core.common.enums.DocumentType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class DocumentEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "people_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private PeopleEntity people;
 
     @Column(name="type")
@@ -36,6 +38,7 @@ public class DocumentEntity extends BaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "document_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<DocumentItemEntity> documentItems;
 
 }

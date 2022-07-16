@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PeopleRepository extends JpaRepository<PeopleEntity, Long>, JpaSpecificationExecutor<PeopleEntity> {
-    PeopleEntity findByName(String name);
     Optional<PeopleEntity> findById(Long id);
 
     @Query(value = "SELECT p FROM PeopleEntity p JOIN FETCH p.contactNoList c " +

@@ -68,16 +68,19 @@
                 </div>
               </div>
               <div [hidden]="!display('price')" [ngClass]="['col-'+ col('price'), 'hover-border']">
-                <div [hidden]="!editCost" class="input-group">
-                  <input #priceInput #priceModel="ngModel" [(ngModel)]="item.price" (focusout)="editCost=!editCost"
-                    [required]="display('price')" type="text" onlyNumber autocomplete="off"
-                    (keydown.enter)="priceInput.blur();quantityInput.focus()"
-                    [ngClass]="['form-control p-0', priceModel.invalid && priceModel.touched? 'border border-danger': 'border-0']"
-                    name="price">
-                  <span class="mx-1 border border-info rounded-pill bg-info bg-soft"> Cost/Unit:
+                <div [hidden]="!editCost" class="d-flex flex-column">
+                  <div  class="input-group mb-1">
+                    <input #priceInput #priceModel="ngModel" [(ngModel)]="item.price" (focusout)="editCost=!editCost"
+                      [required]="display('price')" type="text" onlyNumber autocomplete="off"
+                      (keydown.enter)="priceInput.blur();quantityInput.focus()"
+                      [ngClass]="['form-control p-0', priceModel.invalid && priceModel.touched? 'border border-danger': 'border-0']"
+                      name="price">
+                  </div>
+                  <span class="mx-1 border border-info rounded-pill bg-info bg-soft"> Cost/{{item.entity.unitTxt}}:
                     {{item.entity?.cost?.toFixed(2)}}
                     (&#2547;)</span>
                 </div>
+                
                 <div
                   [ngClass]="['full-text', priceModel.invalid && priceModel.touched? 'border border-danger': 'border-0']"
                   [hidden]="editCost" *ngIf="!editCost" (click)="editCost=!editCost;delayedFocus(priceInput)">
@@ -88,7 +91,7 @@
 
               <div [hidden]="!display('quantity')" [ngClass]="['col-'+ col('quantity'), 'hover-border']">
                 <div class="d-flex flex-column">
-                  <div class="d-flex">
+                  <div class="d-flex mb-1">
                     <div class="flex-even">
                       <div class="form-group">
                         <input #quantityInput #quantityModel="ngModel" name="quantityControl" type="text"
@@ -128,7 +131,8 @@
                 </div>
 
               </div>
-              <div [hidden]="!display('totalPrice')" [ngClass]="['col-'+ col('totalPrice'), 'hover-border', viewOptions.theme.text]">
+              <div [hidden]="!display('totalPrice')"
+                [ngClass]="['col-'+ col('totalPrice'), 'hover-border', viewOptions.theme.text]">
                 <div class="item-total">
                   <strong>
                     {{ (item.quantity * item.price) | currency : 'BDT' : 'symbol-narrow': '1.2-2' :'en-IN'}}

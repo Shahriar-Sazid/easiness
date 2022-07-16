@@ -1,5 +1,8 @@
+import { People } from "./people.model";
+import { Place } from "./place.model";
 import { Product } from "./product.model";
 import { Stock } from "./stock.model";
+import { Unit } from "./unit-data.model";
 
 export enum DocumentType {
   PURCHASE_ORDER = 'PURCHASE_ORDER',
@@ -63,4 +66,24 @@ export type DocumentSearchRes = {
 export type DateRange = {
   from: Date;
   to: Date;
+}
+
+export type DocumentResponse = {
+  id: number;
+  createdAt: Date;
+  people: People;
+  type: DocumentType;
+  total: number;
+  profit: number;
+  documentItems: DocumentItemResponse
+}
+
+export type DocumentItemResponse = {
+  id: number;
+  documentId: number;
+  product: Product;
+  quantity: number;
+  unit: Unit;
+  costOrPrice: number;
+  place: Place;
 }
