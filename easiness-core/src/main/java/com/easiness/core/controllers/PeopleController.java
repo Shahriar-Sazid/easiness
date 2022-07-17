@@ -1,0 +1,58 @@
+package com.easiness.core.controllers;
+
+import com.easiness.core.common.model.People;
+import com.easiness.core.entities.PeopleEntity;
+import com.easiness.core.services.people.PeopleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/people")
+public class PeopleController {
+    @Autowired
+    PeopleService peopleService;
+
+
+    @GetMapping("")
+    Page<PeopleEntity> getPeople(@RequestParam Map<String, String> parameterMap) {
+        return peopleService.getPeople(parameterMap);
+    }
+
+    @RequestMapping(value = "id", method = RequestMethod.GET)
+    People getById(@RequestParam Long id) {
+        return peopleService.getPeopleById(id);
+    }
+
+    @PostMapping("")
+    Long insertPeople(@Valid @RequestBody People request) {
+        return peopleService.insertPeople(request);
+    }
+
+    @PutMapping("")
+    People updatePeople(@Valid @RequestBody People request) {
+        return peopleService.updatePeople(request);
+    }
+
+    @RequestMapping(value = "/report", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<ByteArrayResource> downloadProductReport(@RequestParam Map<String, String> parameterMap) {
+        return peopleService.downloadPeopleReport(parameterMap);
+    }
+
+    @GetMapping("/customer")
+    List<PeopleEntity> getAllCustomer() {
+        return peopleService.getAllCustomer();
+    }
+
+    @GetMapping("/supplier")
+    List<PeopleEntity> getAllSupplier() {
+        return peopleService.getAllSupplier();
+    }
+}
