@@ -8,7 +8,7 @@ import { PeopleService } from 'src/app/core/services/people.service';
   templateUrl: './document-header.component.html',
   styleUrls: ['./document-header.component.scss']
 })
-export class InvoiceHeaderComponent implements OnInit, OnDestroy {
+export class DocumentHeaderComponent implements OnInit, OnDestroy {
   @Input() viewOptions: DocumentOptions;
   @Input() doc: Document;
   people: People = {} as People;

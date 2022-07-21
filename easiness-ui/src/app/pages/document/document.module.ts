@@ -8,11 +8,21 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UIModule } from 'src/app/shared/ui/ui.module';
+import { DocumentComponent } from './document/document.component';
+import { DocumentItemComponent } from './document-item/document-item.component';
+import { DocumentHeaderComponent } from './document-header/document-header.component';
+import { DocumentItemFooterComponent } from './document-item-footer/document-item-footer.component';
+import { DocumentItemHeaderComponent } from './document-item-header/document-item-header.component';
 
 
 @NgModule({
   declarations: [
-    DocumentListComponent
+    DocumentListComponent,
+    DocumentComponent,
+    DocumentItemComponent,
+    DocumentHeaderComponent,
+    DocumentItemFooterComponent,
+    DocumentItemHeaderComponent
   ],
   imports: [
     CommonModule,
@@ -23,6 +33,9 @@ import { UIModule } from 'src/app/shared/ui/ui.module';
     ReactiveFormsModule,
     SharedModule,
     UIModule,
+  ],
+  exports: [
+    DocumentComponent
   ]
 })
 export class DocumentModule { }

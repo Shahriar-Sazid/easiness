@@ -68,19 +68,19 @@
                 </div>
               </div>
               <div [hidden]="!display('price')" [ngClass]="['col-'+ col('price'), 'hover-border']">
-                <div [hidden]="!editCost" class="d-flex flex-column">
-                  <div  class="input-group mb-1">
+                <div class="d-flex flex-column">
+                  <div [hidden]="!editCost" class="input-group mb-1">
                     <input #priceInput #priceModel="ngModel" [(ngModel)]="item.price" (focusout)="editCost=!editCost"
                       [required]="display('price')" type="text" onlyNumber autocomplete="off"
                       (keydown.enter)="priceInput.blur();quantityInput.focus()"
                       [ngClass]="['form-control p-0', priceModel.invalid && priceModel.touched? 'border border-danger': 'border-0']"
                       name="price">
                   </div>
-                  <span class="mx-1 border border-info rounded-pill bg-info bg-soft"> Cost/{{item.entity.unitTxt}}:
+                  <span [hidden]="!editCost" class="mx-1 border border-info rounded-pill bg-info bg-soft"> Cost/{{item.entity.unitTxt}}:
                     {{item.entity?.cost?.toFixed(2)}}
                     (&#2547;)</span>
                 </div>
-                
+
                 <div
                   [ngClass]="['full-text', priceModel.invalid && priceModel.touched? 'border border-danger': 'border-0']"
                   [hidden]="editCost" *ngIf="!editCost" (click)="editCost=!editCost;delayedFocus(priceInput)">

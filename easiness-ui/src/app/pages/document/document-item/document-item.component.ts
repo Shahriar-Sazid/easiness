@@ -10,7 +10,7 @@ import { calcQuantityUnitError } from 'src/app/core/validation/custom-validation
   templateUrl: './document-item.component.html',
   styleUrls: ['./document-item.component.scss']
 })
-export class InvoiceItemComponent implements OnInit {
+export class DocumentItemComponent implements OnInit {
   document = document;
   @Input() viewOptions: DocumentOptions;
   @ViewChild('fr') itemForm!: NgForm;

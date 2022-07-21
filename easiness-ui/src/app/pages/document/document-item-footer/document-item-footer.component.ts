@@ -6,7 +6,7 @@ import { Document, DocumentOptions, DocumentType } from 'src/app/core/models/doc
   templateUrl: './document-item-footer.component.html',
   styleUrls: ['./document-item-footer.component.scss']
 })
-export class InvoiceItemFooterComponent implements OnInit {
+export class DocumentItemFooterComponent implements OnInit {
   @Input() document: Document;
   @Input() viewOptions: DocumentOptions;
   constructor() { }

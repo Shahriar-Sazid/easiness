@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InvoiceItemComponent } from './document-item.component';
+import { DocumentItemHeaderComponent } from './document-item-header.component';
 
-describe('InvoiceItemComponent', () => {
-  let component: InvoiceItemComponent;
-  let fixture: ComponentFixture<InvoiceItemComponent>;
+describe('InvoiceItemHeaderComponent', () => {
+  let component: DocumentItemHeaderComponent;
+  let fixture: ComponentFixture<DocumentItemHeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InvoiceItemComponent ]
+      declarations: [ DocumentItemHeaderComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InvoiceItemComponent);
+    fixture = TestBed.createComponent(DocumentItemHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

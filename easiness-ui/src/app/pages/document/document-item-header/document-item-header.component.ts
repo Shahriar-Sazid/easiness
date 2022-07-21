@@ -6,7 +6,7 @@ import { DocumentOptions } from 'src/app/core/models/document.model';
   templateUrl: './document-item-header.component.html',
   styleUrls: ['./document-item-header.component.scss']
 })
-export class InvoiceItemHeaderComponent implements OnInit {
+export class DocumentItemHeaderComponent implements OnInit {
   @Input() viewOptions: DocumentOptions;
   constructor() { }
 
