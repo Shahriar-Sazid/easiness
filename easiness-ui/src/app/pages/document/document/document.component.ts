@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { smoothExpandCollapse } from 'src/app/core/animations/animations';
-import { Document, DocumentOptions, DocumentType, toDocument } from 'src/app/core/models/document.model';
+import { Document, DocumentOptions, DocumentResponse, DocumentType, toDocument } from 'src/app/core/models/document.model';
+import { People } from 'src/app/core/models/people.model';
 import { DocumentService } from 'src/app/core/services/document.service';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { DocumentItemComponent } from '../document-item/document-item.component';
@@ -18,7 +19,9 @@ export class DocumentComponent implements OnInit {
   @Input() mode: DocumentType;
   @ViewChildren(DocumentItemComponent) invCompList: QueryList<DocumentItemComponent>;
   @Input() document: Document;
-  viewOptions: any;
+  viewOptions: DocumentOptions;
+  people: People = {} as People;
+
   constructor(public placeService: PlaceService, private documentService: DocumentService, private route: ActivatedRoute) { }
 
   getViewOptions(col: number) {
@@ -71,19 +74,19 @@ export class DocumentComponent implements OnInit {
       key: DocumentType.PURCHASE_ORDER,
     } as DocumentOptions,
   }
+  editPermission: boolean;
 
   ngOnInit(): void {
     if (!this.mode && !this.document) {
-      this.route.params.subscribe(params => {
-        this.documentService.getDocumentById(params['id']).subscribe(
-          data => {
-            this.document = toDocument(data);
-            this.mode = this.document.type;
-            this.viewOptions = this.options[this.mode]
-          },
-        )
-      })
+      this.route.data.subscribe((response: { document: DocumentResponse }) => {
+        this.editPermission = false;
+        this.people = response.document.people;
+        this.document = toDocument(response.document);
+        this.mode = this.document.type;
+        this.viewOptions = this.options[this.mode]
+      });
     } else {
+      this.editPermission = true;
       this.viewOptions = this.options[this.mode]
     }
   }

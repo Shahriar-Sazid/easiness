@@ -12,4 +12,6 @@ public interface PlaceService {
     Long createPlace(Place request);
 
     PlaceEntity updatePlace(Place request);
+
+    Map<Long, PlaceEntity> getAllPlace();
 }

@@ -6,9 +6,9 @@ import { DocumentOptions } from 'src/app/core/models/document.model';
   templateUrl: './document-item-header.component.html',
   styleUrls: ['./document-item-header.component.scss']
 })
-export class DocumentItemHeaderComponent implements OnInit {
+export class DocumentItemHeaderComponent {
+  @Input() editPermission: boolean;
   @Input() viewOptions: DocumentOptions;
-  constructor() { }
 
   display(prop: string) {
     return this.viewOptions[prop]?.show
@@ -18,7 +18,5 @@ export class DocumentItemHeaderComponent implements OnInit {
     return this.viewOptions[prop]?.show?.col
   }
   
-  ngOnInit(): void {
-  }
 
 }

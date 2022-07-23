@@ -17,8 +17,13 @@ public class PlaceController {
     PlaceService placeService;
 
     @GetMapping("")
-    Page<PlaceEntity> getPeople(@RequestParam Map<String, String> parameterMap) {
+    Page<PlaceEntity> getPlace(@RequestParam Map<String, String> parameterMap) {
         return placeService.getPlace(parameterMap);
+    }
+
+    @GetMapping("/all")
+    Map<Long, PlaceEntity> getAllPlace() {
+        return placeService.getAllPlace();
     }
 
     @PostMapping("")

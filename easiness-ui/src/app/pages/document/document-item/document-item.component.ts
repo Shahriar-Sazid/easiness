@@ -14,11 +14,13 @@ export class DocumentItemComponent implements OnInit {
   document = document;
   @Input() viewOptions: DocumentOptions;
   @ViewChild('fr') itemForm!: NgForm;
-  editCost = false;
+  @Input() editPermission: boolean;
+  editMode = false;
   @Input() placeRecord: Record<string, Place>;
   @Input() item: DocumentItem;
   @Input() index: number;
   @Output() onCancel: EventEmitter<number> = new EventEmitter();
+  
   constructor(public unitService: UnitService) {
   }
 
@@ -35,9 +37,11 @@ export class DocumentItemComponent implements OnInit {
   }
 
   delayedFocus(inp: HTMLInputElement) {
-    setTimeout(() => { // this will make the execution after the above boolean has changed
-      inp.focus();
-    }, 0);
+    if(this.editPermission) {
+      setTimeout(() => { // this will make the execution after the above boolean has changed
+        inp.focus();
+      }, 0);
+    }
   }
 
   getJoinedText() {

@@ -11,25 +11,30 @@ import { PeopleService } from 'src/app/core/services/people.service';
 export class DocumentHeaderComponent implements OnInit, OnDestroy {
   @Input() viewOptions: DocumentOptions;
   @Input() doc: Document;
-  people: People = {} as People;
-  constructor(private peopleService: PeopleService) { }
+  @Input() people: People;
+  constructor(private peopleService: PeopleService) { 
+    if (!this.people) {
+      this.peopleService.initSupplierSelectedSubject();
+      this.peopleService.peopleSelected.subscribe(
+        res => {
+          this.peopleService.getPeopleById(+res).subscribe(
+            data => {
+              this.people = data;
+            }
+          )
+        }
+      )
+    } else {
+      this.people = {} as People;
+    }
+  }
 
   ngOnDestroy(): void {
-    this.peopleService.peopleSelected.unsubscribe();
+    this.peopleService.peopleSelected?.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.peopleService.initSupplierSelectedSubject();
-    this.peopleService.peopleSelected.subscribe(
-      res => {
-        this.peopleService.getPeopleById(+res).subscribe(
-          data => {
-            this.people = data;
-          }
-        )
-      }
-    )
-
+    //
   }
 
 

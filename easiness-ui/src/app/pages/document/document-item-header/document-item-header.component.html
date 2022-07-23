@@ -1,7 +1,7 @@
 <div [ngClass]="['shadow', viewOptions.theme.bg, 'bg-gradient']" style="--bs-bg-opacity: .1;">
   <div class="d-flex">
 
-    <button type="button" class="invisible close-btn btn btn-sm btn-outline-danger rounded-circle my-auto ms-2">
+    <button [hidden]="!editPermission" type="button" class="invisible close-btn btn btn-sm btn-outline-danger rounded-circle my-auto ms-2">
       <i class="fa fa-times" aria-hidden="true"></i>
     </button>
 

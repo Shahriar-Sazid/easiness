@@ -49,7 +49,7 @@ export class UtilService {
     for (const key in keyNameMap) {
       const value = obj[key],
         type = typeof value;
-      if (value && type == "string" && keyNameMap.hasOwnProperty(key)) {
+      if (value && type == "string" && Object.prototype.hasOwnProperty.call(keyNameMap, key)) {
         activeFilters += `${keyNameMap[key]}: ${value}; `;
       }
     }
@@ -196,5 +196,7 @@ export class UtilService {
     const str = _toString.call(value)
     return str.slice(8, -1)
   }
-  constructor() { }
+  constructor() {
+    //implement me
+   }
 }

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DocumentResolver } from 'src/app/core/services/resolvers/document-resolver.service';
+import { PlaceResolver } from 'src/app/core/services/resolvers/place-resolver.service';
 import { UnitResolver } from 'src/app/core/services/resolvers/unit-resolver.service';
 import { DocumentListComponent } from './document-list/document-list.component';
 import { DocumentComponent } from './document/document.component';
@@ -13,7 +15,9 @@ const routes: Routes = [
     path: 'details/:id',
     component: DocumentComponent,
     resolve: {
-      units: UnitResolver
+      units: UnitResolver,
+      document: DocumentResolver,
+      place: PlaceResolver
     }
   },
 ];

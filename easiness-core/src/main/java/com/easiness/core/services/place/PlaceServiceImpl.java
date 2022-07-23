@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -72,5 +73,11 @@ public class PlaceServiceImpl implements PlaceService{
                 .address(request.getAddress())
                 .id(request.getId())
                 .build());
+    }
+
+    @Override
+    public Map<Long, PlaceEntity> getAllPlace() {
+        return placeRepository.findAll().stream()
+                .collect(Collectors.toMap(PlaceEntity::getId, placeEntity -> placeEntity));
     }
 }
