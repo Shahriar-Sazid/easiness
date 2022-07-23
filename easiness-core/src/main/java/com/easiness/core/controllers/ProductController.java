@@ -1,9 +1,11 @@
 package com.easiness.core.controllers;
 
+import com.easiness.core.common.model.MoveProductData;
 import com.easiness.core.common.model.ProductCreationRequest;
 import com.easiness.core.common.model.Product;
 import com.easiness.core.entities.ProductEntity;
 import com.easiness.core.services.product.ProductService;
+import com.easiness.core.services.stock.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,9 @@ import java.util.Map;
 public class ProductController {
     @Autowired
     ProductService productService;
+
+    @Autowired
+    StockService stockService;
 
     @GetMapping("")
     Page<ProductEntity> getAllProduct(@RequestParam Map<String, String> parameterMap) {
@@ -41,5 +46,12 @@ public class ProductController {
     public ResponseEntity<ByteArrayResource> downloadProductReport(@RequestParam Map<String, String> parameterMap) {
         return productService.downloadProductReport(parameterMap);
     }
+
+    @PostMapping("")
+    void moveProduct(@Valid @RequestBody List<MoveProductData> request) {
+        stockService.moveProduct(request);
+    }
+
+
 
 }

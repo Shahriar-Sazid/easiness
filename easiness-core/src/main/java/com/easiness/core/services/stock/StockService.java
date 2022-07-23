@@ -1,6 +1,7 @@
 package com.easiness.core.services.stock;
 
 import com.easiness.core.common.model.InvoiceItem;
+import com.easiness.core.common.model.MoveProductData;
 import com.easiness.core.common.model.PurchaseOrderItem;
 import com.easiness.core.common.model.Stock;
 import com.easiness.core.entities.StockEntity;
@@ -14,4 +15,6 @@ public interface StockService {
     List<StockEntity> sellProduct(List<InvoiceItem> items);
 
     Page<Stock> searchStock(Map<String, String> params);
+
+    void moveProduct(List<MoveProductData> request);
 }

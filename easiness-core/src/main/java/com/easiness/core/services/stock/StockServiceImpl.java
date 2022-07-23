@@ -2,6 +2,7 @@ package com.easiness.core.services.stock;
 
 import com.easiness.core.common.Util;
 import com.easiness.core.common.model.InvoiceItem;
+import com.easiness.core.common.model.MoveProductData;
 import com.easiness.core.common.model.PurchaseOrderItem;
 import com.easiness.core.common.model.Stock;
 import com.easiness.core.entities.StockEntity;
@@ -123,6 +124,11 @@ public class StockServiceImpl implements StockService {
                 params.getOrDefault("brand", ""),
                 params.get("placeId") != null ? Long.parseLong(params.get("placeId")) : null,
                 pageable);
+    }
+
+    @Override
+    public void moveProduct(List<MoveProductData> request) {
+
     }
 
     private List<StockEntity> updateExistingStock(Map<String, StockEntity> stockMap, List<PurchaseOrderItem> items) {
