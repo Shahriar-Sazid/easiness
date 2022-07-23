@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { smoothExpandCollapse } from 'src/app/core/animations/animations';
-import { Document, DocumentOptions, DocumentType } from 'src/app/core/models/document.model';
+import { Document, DocumentOptions, DocumentType, toDocument } from 'src/app/core/models/document.model';
+import { DocumentService } from 'src/app/core/services/document.service';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { DocumentItemComponent } from '../document-item/document-item.component';
 
@@ -17,7 +19,7 @@ export class DocumentComponent implements OnInit {
   @ViewChildren(DocumentItemComponent) invCompList: QueryList<DocumentItemComponent>;
   @Input() document: Document;
   viewOptions: any;
-  constructor(public placeService: PlaceService) { }
+  constructor(public placeService: PlaceService, private documentService: DocumentService, private route: ActivatedRoute) { }
 
   getViewOptions(col: number) {
     return {
@@ -71,7 +73,19 @@ export class DocumentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.viewOptions = this.options[this.mode]
+    if (!this.mode && !this.document) {
+      this.route.params.subscribe(params => {
+        this.documentService.getDocumentById(params['id']).subscribe(
+          data => {
+            this.document = toDocument(data);
+            this.mode = this.document.type;
+            this.viewOptions = this.options[this.mode]
+          },
+        )
+      })
+    } else {
+      this.viewOptions = this.options[this.mode]
+    }
   }
 
   cancelItem(index: number) {

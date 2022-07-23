@@ -70,20 +70,69 @@ export type DateRange = {
 
 export type DocumentResponse = {
   id: number;
-  createdAt: Date;
+  date: Date;
   people: People;
   type: DocumentType;
   total: number;
   profit: number;
-  documentItems: DocumentItemResponse
+  items: DocumentItemResponse[]
 }
 
 export type DocumentItemResponse = {
   id: number;
   documentId: number;
-  product: Product;
+  name: string;
+  type: string;
+  brand: string;
+  country: string;
+  size: string;
   quantity: number;
-  unit: Unit;
+  unit: number;
   costOrPrice: number;
-  place: Place;
+  place: number;
+}
+
+export function toDocument(documentRes: DocumentResponse): Document {
+  const doc: Document = {
+    type: documentRes.type,
+    date: documentRes.date,
+    people: documentRes.people.id,
+    items: [],
+  } as Document;
+
+  documentRes.items.forEach(item => {
+    if (doc.type === DocumentType.INVOICE) {
+      doc.items.push({
+        entity: {
+          name: item.name,
+          type: item.type,
+          brand: item.brand,
+          country: item.country,
+          size: item.size,
+          place: item.place,
+        } as Stock,
+        price: item.costOrPrice,
+        quantity: item.quantity,
+        unit: item.unit,
+      } as DocumentItem)
+    }
+    else if (doc.type === DocumentType.PURCHASE_ORDER) {
+      doc.items.push({
+        entity: {
+          name: item.name,
+          type: item.type,
+          brand: item.brand,
+          country: item.country,
+          size: item.size,
+        } as Product,
+        cost: item.costOrPrice,
+        quantity: item.quantity,
+        place: item.place,
+        unit: item.unit,
+      } as DocumentItem)
+    }
+  });
+
+
+  return doc;
 }

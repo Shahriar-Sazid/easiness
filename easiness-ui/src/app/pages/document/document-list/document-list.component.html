@@ -42,7 +42,7 @@
     <ngx-datatable-column name="Options" [headerClass]="'text-center'">
         <ng-template ngx-datatable-cell-template>
             <div class="d-flex justify-content-center align-items-center">
-                <button type="button" class="btn btn-sm btn-primary mx-1">
+                <button type="button" class="btn btn-sm btn-primary mx-1" (click)="goToDetails()" >
                     Details
                 </button>
                 <button *ngIf="searchOptions.type == 'PURCHASE_ORDER'" type="button" class="btn btn-sm btn-danger mx-1">

@@ -56,12 +56,12 @@ export const MENU: MenuItem[] = [
     id: 9,
     label: "COMMONS.INVOICE",
     icon: "fas fa-file-invoice-dollar",
-    link: "/document/invoice",
+    link: "/document/list/invoice",
   },
   {
     id: 10,
     label: "COMMONS.PURCHASE_ORDER",
     icon: "fas fa-file-invoice",
-    link: "/document/purchase-order",
+    link: "/document/list/purchase-order",
   },
 ];

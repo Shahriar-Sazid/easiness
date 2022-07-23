@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UnitData } from '../models/unit-data.model';
 import { tap } from 'rxjs/operators';
-import Big from 'big.js';
 
 @Injectable({ providedIn: 'root' })
 export class UnitService {

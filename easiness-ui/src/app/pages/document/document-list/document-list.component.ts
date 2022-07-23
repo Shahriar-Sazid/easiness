@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ColumnMode, TableColumn } from '@swimlane/ngx-datatable';
 import { map } from 'rxjs/operators';
 import { DateRange, DocumentSearchRes, DocumentType } from 'src/app/core/models/document.model';
@@ -32,6 +32,7 @@ export class DocumentListComponent implements OnInit {
   constructor(
     private documentService: DocumentService,
     private route: ActivatedRoute,
+    private router: Router,
     public util: UtilService,
     private datePipe: DatePipe,
   ) { }
@@ -83,7 +84,7 @@ export class DocumentListComponent implements OnInit {
 
   search() {
     this.isLoading = true;
-    this.documentService.getDocument(this.searchedOptions).pipe(map(res => {
+    this.documentService.searchDocument(this.searchedOptions).pipe(map(res => {
       res.content.forEach(el => {
         el.date = this.datePipe.transform(new Date(el.date), 'dd-MM-yy hh:mm a')
       })
@@ -130,7 +131,7 @@ export class DocumentListComponent implements OnInit {
     this.searchDocument();
   }
 
-  onActivate(event: {row: DocumentSearchRes}) {
+  onActivate(event: { row: DocumentSearchRes }) {
     // console.log(event.row);
     this.selectedDocument = event.row;
   }
@@ -141,6 +142,10 @@ export class DocumentListComponent implements OnInit {
 
   selectDate(range: DateRange) {
     this.searchOptions = { ...this.searchOptions, ...range }
+  }
+
+  goToDetails() {
+    this.router.navigateByUrl(`/document/details/${this.selectedDocument.id}`)
   }
 }
 

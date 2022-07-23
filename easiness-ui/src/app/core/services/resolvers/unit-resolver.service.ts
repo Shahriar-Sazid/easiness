@@ -10,7 +10,7 @@ export class UnitResolver implements Resolve<UnitData> {
   constructor(private unitService: UnitService) {}
 
 
-  resolve(route: ActivatedRouteSnapshot): Observable<UnitData> {
-    return this.unitService.fetchUnitData();
+  resolve(_route: ActivatedRouteSnapshot): Observable<UnitData> | UnitData {
+    return this.unitService.unitData ? this.unitService.unitData : this.unitService.fetchUnitData()
   }
 }
