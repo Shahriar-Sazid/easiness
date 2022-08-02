@@ -40,6 +40,7 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
+    @Transactional
     public void sell(Invoice invoice) {
         List<StockEntity> stockList = stockService.sellProduct(invoice.getItems());
         documentService.saveInvoice(invoice, stockList);

@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class Stock {
     Long id;
+    Long productId;
     String name;
     String type;
     String brand;

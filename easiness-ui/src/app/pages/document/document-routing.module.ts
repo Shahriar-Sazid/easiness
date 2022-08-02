@@ -4,6 +4,7 @@ import { DocumentResolver } from 'src/app/core/services/resolvers/document-resol
 import { PlaceResolver } from 'src/app/core/services/resolvers/place-resolver.service';
 import { UnitResolver } from 'src/app/core/services/resolvers/unit-resolver.service';
 import { DocumentListComponent } from './document-list/document-list.component';
+import { DocumentViewComponent } from './document-view/document-view.component';
 import { DocumentComponent } from './document/document.component';
 
 const routes: Routes = [
@@ -13,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'details/:id',
-    component: DocumentComponent,
+    component: DocumentViewComponent,
     resolve: {
       units: UnitResolver,
       document: DocumentResolver,

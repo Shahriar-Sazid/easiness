@@ -4,6 +4,7 @@ import { Place } from 'src/app/core/models/place.model';
 import { DocumentItem, DocumentOptions } from 'src/app/core/models/document.model';
 import { UnitService } from 'src/app/core/services/unit.service';
 import { calcQuantityUnitError } from 'src/app/core/validation/custom-validation';
+import { UtilService } from 'src/app/core/services/util.service';
 
 @Component({
   selector: 'app-document-item',
@@ -21,7 +22,7 @@ export class DocumentItemComponent implements OnInit {
   @Input() index: number;
   @Output() onCancel: EventEmitter<number> = new EventEmitter();
   
-  constructor(public unitService: UnitService) {
+  constructor(public unitService: UnitService, private util: UtilService) {
   }
 
   ngOnInit(): void {
@@ -44,15 +45,14 @@ export class DocumentItemComponent implements OnInit {
     }
   }
 
-  getJoinedText() {
-    const arr = [
+  getProductDetails() {
+    return this.util.filterAndJoin([
       this.item.entity.name,
       this.item.entity.type,
       this.item.entity.brand,
       this.item.entity.country,
       this.item.entity.size,
-    ].filter(el => el);
-    return arr.join(", ");
+    ])
   }
 
   cancel() {

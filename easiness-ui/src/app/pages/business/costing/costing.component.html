@@ -7,6 +7,10 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="costingForm">
+      <div class="form-group my-3">
+        <label for="info-box">Product Details </label>
+        <app-info-box> {{ getProductDetails() }} </app-info-box>
+      </div>
 
       <div *ngIf="mode == 'buy'" class="form-group my-3">
         <label for="place">Place </label>

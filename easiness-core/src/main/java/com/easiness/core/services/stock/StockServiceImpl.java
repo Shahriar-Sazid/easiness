@@ -1,10 +1,8 @@
 package com.easiness.core.services.stock;
 
 import com.easiness.core.common.Util;
-import com.easiness.core.common.model.InvoiceItem;
-import com.easiness.core.common.model.MoveProductData;
-import com.easiness.core.common.model.PurchaseOrderItem;
-import com.easiness.core.common.model.Stock;
+import com.easiness.core.common.model.*;
+import com.easiness.core.entities.PeopleEntity;
 import com.easiness.core.entities.StockEntity;
 import com.easiness.core.repositories.PlaceRepository;
 import com.easiness.core.repositories.ProductRepository;
@@ -12,6 +10,7 @@ import com.easiness.core.repositories.StockRepository;
 import com.easiness.core.repositories.UnitRepository;
 import com.easiness.core.services.unit.UnitService;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -19,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -46,6 +46,9 @@ public class StockServiceImpl implements StockService {
 
     @Autowired
     UnitService unitService;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     @Value("${precision.digit-count:6}")
     private Integer precision;
@@ -127,8 +130,38 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    @Transactional
     public void moveProduct(List<MoveProductData> request) {
+        List<StockEntity> fromStocks = stockRepository.findByIdIn(
+                request.stream().map(MoveProductData::getStockId).collect(Collectors.toList()));
 
+        Map<Long, StockEntity> fromStockMap =
+                fromStocks.stream().collect(Collectors.toMap(StockEntity::getId, stockEntity -> stockEntity));
+
+        // As move can be implemented in two easy steps
+        // 1. Sell the product from source stock at the purchase cost
+        // 2. Purchase those products in destination places at their src cost
+        List<PurchaseOrderItem> purchaseItems = new ArrayList<>();
+
+        for (MoveProductData moveData : request) {
+
+            StockEntity stock = fromStockMap.get(moveData.getStockId());
+
+            purchaseItems.add(PurchaseOrderItem.builder()
+                    .quantity(moveData.getQuantity())
+                    .unit(moveData.getUnit())
+                    .place(moveData.getToPlace())
+                    .product(stock.getProduct().getId())
+                    .cost(stock.getCost())
+                    .build());
+
+            BigDecimal convertedQty = convertQty(stock.getUnit().getId(), moveData.getQuantity(), moveData.getUnit());
+            stock.setQuantity(stock.getQuantity().add(convertedQty.negate()));
+        }
+
+        stockRepository.saveAll(fromStocks);
+
+        storeProduct(purchaseItems);
     }
 
     private List<StockEntity> updateExistingStock(Map<String, StockEntity> stockMap, List<PurchaseOrderItem> items) {

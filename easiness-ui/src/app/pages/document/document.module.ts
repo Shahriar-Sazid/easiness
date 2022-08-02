@@ -13,6 +13,7 @@ import { DocumentItemComponent } from './document-item/document-item.component';
 import { DocumentHeaderComponent } from './document-header/document-header.component';
 import { DocumentItemFooterComponent } from './document-item-footer/document-item-footer.component';
 import { DocumentItemHeaderComponent } from './document-item-header/document-item-header.component';
+import { DocumentViewComponent } from './document-view/document-view.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { DocumentItemHeaderComponent } from './document-item-header/document-ite
     DocumentItemComponent,
     DocumentHeaderComponent,
     DocumentItemFooterComponent,
-    DocumentItemHeaderComponent
+    DocumentItemHeaderComponent,
+    DocumentViewComponent
   ],
   imports: [
     CommonModule,

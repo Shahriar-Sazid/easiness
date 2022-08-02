@@ -21,7 +21,7 @@ export const validationMessages: ErrorMessage[] = [
   },
   {
     type: "invalidQty",
-    message: "Sale quantity must be less than or equal to available quantity",
+    message: "Quantity must be less than or equal to available quantity",
   },
   {
     type: "invalidUnit",
@@ -30,6 +30,10 @@ export const validationMessages: ErrorMessage[] = [
   {
     type: "min",
     message: "Input is less than minimum limit"
+  }, 
+  {
+    type: "samePlaceError",
+    message: "Place can't be same"
   },
   {
     type: "max",

@@ -196,6 +196,11 @@ export class UtilService {
     const str = _toString.call(value)
     return str.slice(8, -1)
   }
+
+  filterAndJoin(array: string[], delimiter = ", ") {
+    return array.filter(el => el).join(delimiter);
+  }
+  
   constructor() {
     //implement me
    }

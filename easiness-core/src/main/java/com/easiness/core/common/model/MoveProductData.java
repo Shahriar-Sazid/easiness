@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class MoveProductData {
     private Long stockId;
-    private BigDecimal qty;
+    private BigDecimal quantity;
     private Long unit;
     private Long toPlace;
 }

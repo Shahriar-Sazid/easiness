@@ -1,5 +1,6 @@
 export type Stock = {
     id: number;
+    productId: number;
     name: string;
     type: string;
     brand: string;

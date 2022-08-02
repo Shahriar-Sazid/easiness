@@ -5,7 +5,7 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './pagetitle.component.html',
   styleUrls: ['./pagetitle.component.scss']
 })
-export class PagetitleComponent implements OnInit {
+export class PageTitleComponent implements OnInit {
 
   @Input() breadcrumbItems;
   @Input() title: string;

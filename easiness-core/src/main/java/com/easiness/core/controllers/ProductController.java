@@ -47,7 +47,7 @@ public class ProductController {
         return productService.downloadProductReport(parameterMap);
     }
 
-    @PostMapping("")
+    @PostMapping("/move")
     void moveProduct(@Valid @RequestBody List<MoveProductData> request) {
         stockService.moveProduct(request);
     }

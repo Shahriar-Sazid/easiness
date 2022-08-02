@@ -30,7 +30,7 @@
     </address>
   </div>
   <div class="invoice-date">
-    <small>Invoice / Buy</small>
+    <small>{{viewOptions.key === 'INVOICE'? "Invoice": "Purchase Order"}}</small>
     <div [ngClass]="[viewOptions.theme.text, 'date']">{{doc.date | date: 'MMM dd, yyyy'}}</div>
     <div>
       #0000123DSS<br>

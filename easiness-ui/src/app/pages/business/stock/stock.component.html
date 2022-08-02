@@ -57,7 +57,7 @@
   <ngx-datatable-column name="Options">
     <ng-template ngx-datatable-cell-template>
       <button *ngIf="currentMode.move" [ngbTooltip]="'Move to another place'" placement="right"
-        class="btn btn-outline-secondary" (click)="null">
+        class="btn btn-outline-secondary" (click)="mp.openMoveProductModal()">
         <i class="fas fa-route" aria-hidden="true"></i>
       </button>
       <button *ngIf="currentMode.select" [ngbTooltip]="'Select for sale'" placement="right"
@@ -68,3 +68,4 @@
   </ngx-datatable-column>
   <ngx-datatable-column *ngFor="let column of columns" [name]="column.name"></ngx-datatable-column>
 </ngx-datatable>
+<app-move-product #mp [selectedStock]="selectedStock" [callback]="searchStock"></app-move-product>

@@ -13,6 +13,7 @@ export class ProductService {
 
   productApi = "api/product";
   productReportApi = "api/product/report";
+  moveProductApi = `${this.productApi}/move`
   constructor(private http: HttpClient, private util: UtilService) {}
 
   getProduct(searchOptions: {
@@ -23,8 +24,8 @@ export class ProductService {
     pageSize: number;
   }): Observable<any> {
     this.util.deepTrim(searchOptions);
-    let queryString = this.util.convertObjToQueryString(searchOptions);
-    let url = `${this.productApi}${queryString}`;
+    const queryString = this.util.convertObjToQueryString(searchOptions);
+    const url = `${this.productApi}${queryString}`;
     console.log("----------Get Product Url-----------");
     console.log(url);
     return this.http.get(url);
@@ -50,10 +51,21 @@ export class ProductService {
   }) {
     this.util.deepTrim(searchOptions);
     const headers = new HttpHeaders().set("Content-Type", "application/pdf");
-    let queryString = this.util.convertObjToQueryString(searchOptions);
-    let url = `${this.productReportApi}${queryString}`;
+    const queryString = this.util.convertObjToQueryString(searchOptions);
+    const url = `${this.productReportApi}${queryString}`;
     console.log("----------Get Product Url-----------");
     console.log(url);
     return this.http.get(url, { responseType: "arraybuffer", headers: headers });
+  }
+
+  move(request): Observable<unknown> {
+    if (!Array.isArray(request)) {
+      request = [request]
+    }
+
+    console.log("----------Move Product Url-----------");
+    console.log(this.moveProductApi);
+    
+    return this.http.post(this.moveProductApi, request);
   }
 }

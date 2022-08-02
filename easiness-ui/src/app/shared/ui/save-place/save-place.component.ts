@@ -10,19 +10,18 @@ import Swal from 'sweetalert2';
   templateUrl: './save-place.component.html',
   styleUrls: ['./save-place.component.scss']
 })
-export class SavePlaceComponent implements OnInit {
+export class SavePlaceComponent {
 
   @ViewChild('placeModal') content: any;
   updateMode: boolean;
   placeForm: FormGroup;
-  @Input('callback') callback: Function;
+  @Input('callback') callback: () => void;
   @Input('selectedPlace') selectedPlace: any;
   constructor(private fb: FormBuilder,
     public util: UtilService,
     private placeService: PlaceService,
-    private modalService: NgbModal) {}
+    private modalService: NgbModal) { }
 
-  ngOnInit(): void {}
   openPlaceModal(updateMode: boolean) {
     this.modalService.open(this.content, {
       backdrop: "static",
@@ -91,7 +90,7 @@ export class SavePlaceComponent implements OnInit {
           .addPlace(this.placeForm.value)
           .subscribe(
             (data) => {
-              if(this.callback) {
+              if (this.callback) {
                 this.callback();
               }
               Swal.fire('Good job!', 'Place added successfully', 'success');

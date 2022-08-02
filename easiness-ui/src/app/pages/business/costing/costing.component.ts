@@ -36,6 +36,12 @@ export class CostingComponent implements OnInit {
     console.log('ng on init called');
   }
 
+  getProductDetails(): string {
+    return this.util.filterAndJoin((
+      (entity: Stock) =>
+        [entity.name, entity.type, entity.brand, entity.country, entity.size, entity.placeTxt])(this.selectedEntity))
+  }
+
   openCostingModal(entity: Product & Stock) {
     this.modalRef = this.modalService
       .open(this.content, { ariaLabelledBy: 'modal-basic-title' });
@@ -43,7 +49,7 @@ export class CostingComponent implements OnInit {
       console.log(`Closed with: ${result}`);
       this.costingForm.reset();
       // this.selectedEntity = null;
-    }, (reason) => { 
+    }, (reason) => {
       console.log(reason);
     });
     this.selectedEntity = entity;

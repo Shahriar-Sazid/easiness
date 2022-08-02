@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { PagetitleComponent } from './pagetitle.component';
+import { PageTitleComponent } from './pagetitle.component';
 
 describe('PagetitleComponent', () => {
-  let component: PagetitleComponent;
-  let fixture: ComponentFixture<PagetitleComponent>;
+  let component: PageTitleComponent;
+  let fixture: ComponentFixture<PageTitleComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PagetitleComponent ]
+      declarations: [ PageTitleComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PagetitleComponent);
+    fixture = TestBed.createComponent(PageTitleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

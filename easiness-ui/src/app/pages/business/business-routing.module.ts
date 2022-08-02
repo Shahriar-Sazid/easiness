@@ -21,7 +21,11 @@ const routes: Routes = [
   },
   {
     path: "stock",
-    component: StockComponent
+    component: StockComponent,
+    resolve: {
+      units: UnitResolver,
+      place: PlaceResolver
+    }
   }
 
 ];

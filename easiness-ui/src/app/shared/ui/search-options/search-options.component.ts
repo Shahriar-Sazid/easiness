@@ -8,7 +8,6 @@ import { Component, OnInit, Input } from "@angular/core";
 export class SearchOptionsComponent implements OnInit {
   panelClosed: boolean;
   @Input() panelTitle: string;
-  constructor() {}
 
   ngOnInit() {
     this.panelClosed = false;

@@ -21,7 +21,9 @@ export class StockComponent implements OnInit {
   selectedStock: Stock;
 
   isLoading = false;
-  constructor(private businessService: BusinessService, public placeService: PlaceService) { }
+  constructor(private businessService: BusinessService, public placeService: PlaceService) { 
+    this.searchStock = this.searchStock.bind(this);
+  }
 
 
   searchOptions: SearchOptions;

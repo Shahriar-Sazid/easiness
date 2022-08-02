@@ -13,7 +13,7 @@ import {
 } from "@ng-bootstrap/ng-bootstrap";
 import { ClickOutsideModule } from "ng-click-outside";
 
-import { PagetitleComponent } from "./pagetitle/pagetitle.component";
+import { PageTitleComponent } from "./pagetitle/pagetitle.component";
 import { LoaderComponent } from "./loader/loader.component";
 import { SearchOptionsComponent } from "./search-options/search-options.component";
 import { SaveProductComponent } from "./save-product/save-product.component";
@@ -21,10 +21,12 @@ import { SavePeopleComponent } from "./save-people/save-people.component";
 import { SaveAccountComponent } from "./save-account/save-account.component";
 import { SavePlaceComponent } from "./save-place/save-place.component";
 import { DateRangeComponent } from './date-range/date-range.component';
+import { MoveProductComponent } from './move-product/move-product.component';
+import { InfoBoxComponent } from './info-box/info-box.component';
 
 @NgModule({
   declarations: [
-    PagetitleComponent,
+    PageTitleComponent,
     LoaderComponent,
     SearchOptionsComponent,
     SaveProductComponent,
@@ -32,6 +34,8 @@ import { DateRangeComponent } from './date-range/date-range.component';
     SaveAccountComponent,
     SavePlaceComponent,
     DateRangeComponent,
+    MoveProductComponent,
+    InfoBoxComponent,
   ],
   imports: [
     CommonModule,
@@ -47,14 +51,16 @@ import { DateRangeComponent } from './date-range/date-range.component';
     NgbModule,
   ],
   exports: [
-    PagetitleComponent,
+    PageTitleComponent,
     LoaderComponent,
     SearchOptionsComponent,
     SaveProductComponent,
     SavePeopleComponent,
     SaveAccountComponent,
     SavePlaceComponent,
-    DateRangeComponent
+    DateRangeComponent,
+    MoveProductComponent,
+    InfoBoxComponent
   ],
 })
 export class UIModule {}
