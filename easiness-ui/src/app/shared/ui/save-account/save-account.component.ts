@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   templateUrl: './save-account.component.html',
   styleUrls: ['./save-account.component.scss']
 })
-export class SaveAccountComponent implements OnInit {
+export class SaveAccountComponent {
   @ViewChild('accountModal') accountModal: any;
   updateMode: boolean;
   @Input('selectedAccount') selectedAccount: Account;
@@ -23,8 +23,6 @@ export class SaveAccountComponent implements OnInit {
     private accountService: AccountService,
     private modalService: NgbModal) { }
 
-  ngOnInit(): void {
-  }
   addOrUpdateAccount() {
     if (this.util.validateForm(this.accountForm)) {
       console.log(this.accountForm.value);
@@ -71,10 +69,6 @@ export class SaveAccountComponent implements OnInit {
           });
       }
     }
-  }
-
-  search() {
-    throw new Error('Method not implemented.');
   }
 
   closeAccountModal() {

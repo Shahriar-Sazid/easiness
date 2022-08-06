@@ -1,0 +1,51 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="paymentForm">
+      <div formArrayName="formList">
+        <div class="hover-host" [@payInOut] *ngFor="let data1 of formData().controls; let i=index;">
+          <div [formGroupName]="i" class="row mx-2 my-3 border p-3">
+            <div *ngIf="formData().controls.length > 1" class="rounded-circle close-button-container hover-target">
+              <button id="close-btn" class="btn btn-danger rounded-circle" (click)="removeField(i)"><i
+                  class="fas fa-times"></i></button>
+            </div>
+            
+            <label for="targetAccount" [ngClass]="['col-form-label', inModal? '': 'col-md-3']"> {{modeOptions[mode].label }} <span
+                class="text-danger">*</span></label>
+
+            <div [ngClass]="[inModal? '': 'col-md-9']">
+              <select formControlName="targetAccount" id="targetAccount" class="form-control">
+                <option hidden [ngValue]="null">
+                  Please select
+                </option>
+                <option *ngFor="let account of accountService.accountRecord | keyvalue" [value]="account.key">
+                  {{account.value.accountName}}</option>
+              </select>
+              <span class="text-monospace text-danger">
+                {{ util.getValidationError(paymentForm, "formList." + i +".targetAccount") }} </span>
+            </div>
+            <br>
+            <br>
+            <br>
+            <label for="amount" [ngClass]="['col-form-label', inModal? '': 'col-md-3']">Amount(&#2547;) <span
+                class="text-danger">*</span></label>
+
+            <div [ngClass]="[inModal? '': 'col-md-9']">
+              <input onlyNumber [ignoreChar]="','" inputWithComma type="text" for="amount" formControlName="amount"
+                [ngClass]="['form-control', 'fs-5', 'fw-bold', 'font-monospace', modeOptions[mode].cssClass]">
+              <span class="text-monospace text-danger">
+                {{ util.getValidationError(paymentForm, "formList." + i +".amount") }} </span>
+            </div>
+            <div *ngIf="i === formData().controls.length -1" class="rounded-circle add-button-container hover-target">
+              <button id="add-btn" class="btn btn-success rounded-circle" (click)="addField()"> <i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="d-flex justify-content-center">
+      <ng-content></ng-content>
+
+    </div>
+  </div>
+</div>

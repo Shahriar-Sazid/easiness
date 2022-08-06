@@ -23,6 +23,9 @@ import { SavePlaceComponent } from "./save-place/save-place.component";
 import { DateRangeComponent } from './date-range/date-range.component';
 import { MoveProductComponent } from './move-product/move-product.component';
 import { InfoBoxComponent } from './info-box/info-box.component';
+import { ConfirmPaymentComponent } from "./confirm-payment/confirm-payment.component";
+import { PaymentModalComponent } from './payment-modal/payment-modal.component';
+import { DirectivesModule } from "src/app/core/directives/directive.module";
 
 @NgModule({
   declarations: [
@@ -36,6 +39,8 @@ import { InfoBoxComponent } from './info-box/info-box.component';
     DateRangeComponent,
     MoveProductComponent,
     InfoBoxComponent,
+    ConfirmPaymentComponent,
+    PaymentModalComponent
   ],
   imports: [
     CommonModule,
@@ -49,6 +54,7 @@ import { InfoBoxComponent } from './info-box/info-box.component';
     NgbAccordionModule,
     NgbTooltipModule,
     NgbModule,
+    DirectivesModule
   ],
   exports: [
     PageTitleComponent,
@@ -58,9 +64,11 @@ import { InfoBoxComponent } from './info-box/info-box.component';
     SavePeopleComponent,
     SaveAccountComponent,
     SavePlaceComponent,
+    ConfirmPaymentComponent,
+    PaymentModalComponent,
     DateRangeComponent,
     MoveProductComponent,
-    InfoBoxComponent
+    InfoBoxComponent,
   ],
 })
 export class UIModule {}

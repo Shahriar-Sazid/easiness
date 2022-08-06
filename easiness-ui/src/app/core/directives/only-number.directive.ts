@@ -7,7 +7,7 @@ export class OnlyNumber {
 
   @Input() ignoreChar: string;
   // Allow decimal numbers. The \. is only allowed once to occur
-  private regex: RegExp = new RegExp(/^[0-9]+(\.[0-9]*){0,1}$/g);
+  private regex = new RegExp(/^[0-9]+(\.[0-9]*){0,1}$/g);
 
   // Allow key codes for special events. Reflect :
   // Backspace, tab, end, home
@@ -29,7 +29,7 @@ export class OnlyNumber {
     if(this.ignoreChar) current = current.split(this.ignoreChar).join('');
     // We need this because the current value on the DOM element
     // is not yet updated with the value from this event
-    let next: string = current.concat(event.key);
+    const next: string = current.concat(event.key);
     if (next && !String(next).match(this.regex)) {
       event.preventDefault();
     }

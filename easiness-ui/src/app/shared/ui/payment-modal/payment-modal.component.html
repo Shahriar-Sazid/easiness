@@ -1,0 +1,18 @@
+<ng-template #paymentModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title"> {{ mode === 'from' ? 'Make Payment': 'Receive Payment' }} </h4>
+        <button type="button" class="btn btn-outline-secondary" aria-label="Close"
+            (click)="modal.dismiss('Cross click')">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-confirm-payment #acp [mode]="mode" [inModal]="true"></app-confirm-payment>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="null" [disabled]="!acp.paymentForm.valid">
+            {{ mode === 'from' ?  'Pay': 'Receive' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+    </div>
+</ng-template>

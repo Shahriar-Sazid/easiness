@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UIModule } from 'src/app/shared/ui/ui.module';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { AccountComponent } from './account/account.component';
+import { DirectivesModule } from 'src/app/core/directives/directive.module';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { AccountComponent } from './account/account.component';
     ReactiveFormsModule,
     UIModule,
     NgbTooltipModule,
+    DirectivesModule
   ]
 })
 export class AccountsModule { }

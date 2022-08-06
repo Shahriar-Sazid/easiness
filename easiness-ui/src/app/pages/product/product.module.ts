@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { UIModule } from 'src/app/shared/ui/ui.module';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import { CostingComponent } from '../business/costing/costing.component';
+import { DirectivesModule } from 'src/app/core/directives/directive.module';
 
 
 @NgModule({
@@ -21,6 +21,7 @@ import { CostingComponent } from '../business/costing/costing.component';
     ReactiveFormsModule,
     NgxDatatableModule,
     NgbTooltipModule,
+    DirectivesModule,
     UIModule
   ],
   exports: [

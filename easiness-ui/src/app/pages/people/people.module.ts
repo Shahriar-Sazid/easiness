@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { UIModule } from 'src/app/shared/ui/ui.module';
+import { DirectivesModule } from 'src/app/core/directives/directive.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { UIModule } from 'src/app/shared/ui/ui.module';
     ReactiveFormsModule,
     NgxDatatableModule,
     NgbTooltipModule,
-    UIModule
+    UIModule,
+    DirectivesModule,
   ]
 })
 export class PeopleModule { }

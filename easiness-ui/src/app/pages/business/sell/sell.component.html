@@ -70,11 +70,13 @@
                 <ng-template awWizardStepSymbol>
                   <i class="fas fa-money-check-alt fa-lg"></i>
                 </ng-template>
-  
-                <app-confirm-payment #acp [mode]="'to'" (onPaymentProcessed)="sell($event)">
-                  <button class="btn btn-primary" (click)="acp.getPaymentData()"> Sell </button>
-                </app-confirm-payment>
-  
+                <div class="row justify-content-center">
+                  <div class="col-md-8 col-lg-6">
+                    <app-confirm-payment #acp [mode]="'to'" [inModal]="false" (onPaymentProcessed)="sell($event)">
+                      <button class="btn btn-primary" (click)="acp.getPaymentData()"> Sell </button>
+                    </app-confirm-payment>
+                  </div>
+                </div>
                 <ul class="list-inline wizard mb-0">
                   <li class="previous list-inline-item">
                     <button class="btn btn-primary" awPreviousStep>

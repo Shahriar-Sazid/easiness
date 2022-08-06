@@ -14,6 +14,7 @@ import { DocumentHeaderComponent } from './document-header/document-header.compo
 import { DocumentItemFooterComponent } from './document-item-footer/document-item-footer.component';
 import { DocumentItemHeaderComponent } from './document-item-header/document-item-header.component';
 import { DocumentViewComponent } from './document-view/document-view.component';
+import { DirectivesModule } from 'src/app/core/directives/directive.module';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { DocumentViewComponent } from './document-view/document-view.component';
     NgbModule,
     NgxDatatableModule,
     ReactiveFormsModule,
+    DirectivesModule,
     SharedModule,
     UIModule,
   ],

@@ -13,9 +13,9 @@ import { ProductModule } from '../product/product.module';
 import { CostingComponent } from './costing/costing.component';
 import { BasicInfoComponent } from 'src/app/pages/business/basic-info/basic-info.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { ConfirmPaymentComponent } from './confirm-payment/confirm-payment.component';
 import { StockComponent } from './stock/stock.component';
 import { DocumentModule } from '../document/document.module';
+import { DirectivesModule } from 'src/app/core/directives/directive.module';
 
 
 @NgModule({
@@ -24,7 +24,6 @@ import { DocumentModule } from '../document/document.module';
     SellComponent,
     CostingComponent,
     BasicInfoComponent,
-    ConfirmPaymentComponent,
     StockComponent,
   ],
   imports: [
@@ -37,8 +36,9 @@ import { DocumentModule } from '../document/document.module';
     ArchwizardModule,
     SharedModule,
     UIModule,
+    DirectivesModule,
     ProductModule,
-    DocumentModule
+    DocumentModule,
   ],
 })
 export class BusinessModule { }

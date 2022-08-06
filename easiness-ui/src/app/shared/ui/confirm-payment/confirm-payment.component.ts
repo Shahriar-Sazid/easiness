@@ -15,9 +15,9 @@ import { UtilService } from 'src/app/core/services/util.service';
 })
 export class ConfirmPaymentComponent implements OnInit {
   @Input() mode: 'from'| 'to' = 'to';
+  @Input() inModal;
   paymentForm: FormGroup;
   @Output() onPaymentProcessed = new EventEmitter();
-  comma = ',';
 
   modeOptions = {
     from: {
@@ -34,7 +34,7 @@ export class ConfirmPaymentComponent implements OnInit {
     public accountService: AccountService,
     public util: UtilService) {
     this.paymentForm = this.fb.group({
-      formlist: this.fb.array([]),
+      formList: this.fb.array([]),
     })
   }
 
@@ -44,7 +44,7 @@ export class ConfirmPaymentComponent implements OnInit {
   }
 
   formData(): FormArray {
-    return this.paymentForm.get('formlist') as FormArray;
+    return this.paymentForm.get('formList') as FormArray;
   }
 
   field(): FormGroup {
@@ -63,15 +63,15 @@ export class ConfirmPaymentComponent implements OnInit {
   }
 
   getPaymentData() {
-    let payments: Payment[] = [];
+    const payments: Payment[] = [];
     let validForm = true;
-    for (let form of this.formData().controls) {
+    for (const form of this.formData().controls) {
       // console.log(form);
       validForm = this.util.validateForm(form as FormGroup) && validForm;
     }
     if(validForm) {
       this.formData().controls.forEach(element => {
-        let payment: Payment = {
+        const payment: Payment = {
           targetAccount: element.value.targetAccount,
           amount: this.mode == 'from'? -this.util.getNumberFromLocalString(element.value.amount):
           this.util.getNumberFromLocalString(element.value.amount)

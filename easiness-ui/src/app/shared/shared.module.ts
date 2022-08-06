@@ -11,31 +11,24 @@ import { PlacePipe } from '../core/pipes/place.pipe';
 import { EmptyPlaceHolderPipe } from '../core/pipes/empty-placeholder.pipe';
 import { NumberCommaDirective } from '../core/directives/input-with-comma.directive';
 import { NgxResizeWatcherDirective } from '../core/directives/resize-watch.directive';
+import { DirectivesModule } from '../core/directives/directive.module';
 
 @NgModule({
   declarations: [
-    OnlyNumber,
-    NgxResizeWatcherDirective,
-    NumberCommaDirective,
-    PhoneNoValidator,
     UnitPipe,
     PlacePipe,
     EmptyPlaceHolderPipe
   ],
   exports: [
-    OnlyNumber,
-    NgxResizeWatcherDirective,
-    NumberCommaDirective,
-    NumberCommaDirective,
-    PhoneNoValidator,
     UnitPipe,
     PlacePipe,
-    EmptyPlaceHolderPipe
+    EmptyPlaceHolderPipe,
   ],
   imports: [
     CommonModule,
     UIModule,
-    WidgetModule
+    WidgetModule,
+    DirectivesModule
   ],
 })
 
