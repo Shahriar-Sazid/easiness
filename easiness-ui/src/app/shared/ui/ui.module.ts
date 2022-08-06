@@ -13,7 +13,7 @@ import {
 } from "@ng-bootstrap/ng-bootstrap";
 import { ClickOutsideModule } from "ng-click-outside";
 
-import { PageTitleComponent } from "./pagetitle/pagetitle.component";
+import { PageTitleComponent } from "./page-title/page-title.component";
 import { LoaderComponent } from "./loader/loader.component";
 import { SearchOptionsComponent } from "./search-options/search-options.component";
 import { SaveProductComponent } from "./save-product/save-product.component";

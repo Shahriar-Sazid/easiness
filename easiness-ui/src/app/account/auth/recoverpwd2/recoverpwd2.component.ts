@@ -44,7 +44,7 @@ export class Recoverpwd2Component implements OnInit {
     if (this.resetForm.invalid) {
       return;
     }
-    if (environment.defaultauth === 'firebase') {
+    if (environment.defaultAuth === 'firebase') {
       this.authenticationService.resetPassword(this.f.email.value)
         .catch(error => {
           this.error = error ? error : '';

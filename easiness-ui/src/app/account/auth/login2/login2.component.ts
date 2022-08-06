@@ -70,7 +70,7 @@ export class Login2Component implements OnInit {
     if (this.loginForm.invalid) {
       return;
     } else {
-      if (environment.defaultauth === 'firebase') {
+      if (environment.defaultAuth === 'firebase') {
         this.authenticationService.login(this.f.email.value, this.f.password.value).then((res: any) => {
           this.router.navigate(['/dashboard']);
         })

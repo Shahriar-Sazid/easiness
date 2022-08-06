@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { PageTitleComponent } from './pagetitle.component';
+import { PageTitleComponent } from './page-title.component';
 
 describe('PagetitleComponent', () => {
   let component: PageTitleComponent;

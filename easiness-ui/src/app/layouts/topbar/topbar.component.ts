@@ -91,7 +91,7 @@ export class TopbarComponent implements OnInit {
    * Logout the user
    */
   logout() {
-    if (environment.defaultauth === 'firebase') {
+    if (environment.defaultAuth === 'firebase') {
       this.authService.logout();
     } else {
       this.authFackservice.logout();

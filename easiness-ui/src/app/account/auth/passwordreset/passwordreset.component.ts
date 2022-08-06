@@ -52,7 +52,7 @@ export class PasswordresetComponent implements OnInit, AfterViewInit {
     if (this.resetForm.invalid) {
       return;
     }
-    if (environment.defaultauth === 'firebase') {
+    if (environment.defaultAuth === 'firebase') {
       this.authenticationService.resetPassword(this.f.email.value)
         .catch(error => {
           this.error = error ? error : '';

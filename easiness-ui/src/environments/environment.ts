@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  defaultauth: 'firebase',
+  defaultAuth: 'firebase',
   firebaseConfig: {
     apiKey: 'AIzaSyBSNQDNzQLJLyJWnG40AO27_TY7gRkqjho',
     authDomain: 'test-authentication-4be35.firebaseapp.com',

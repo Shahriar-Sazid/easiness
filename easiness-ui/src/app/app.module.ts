@@ -33,7 +33,7 @@ import { LoaderInterceptorService } from "./core/services/interceptors/loader-in
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeIn from '@angular/common/locales/en-IN';
 
-if (environment.defaultauth === "firebase") {
+if (environment.defaultAuth === "firebase") {
   initFirebaseBackend(environment.firebaseConfig);
 } else {
   // tslint:disable-next-line: no-unused-expression
@@ -41,7 +41,7 @@ if (environment.defaultauth === "firebase") {
 }
 registerLocaleData(localeIn);
 
-export function createTranslateLoader(http: HttpClient): any {
+export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
 }
 

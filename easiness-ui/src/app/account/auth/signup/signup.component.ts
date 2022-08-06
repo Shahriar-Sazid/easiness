@@ -47,7 +47,7 @@ export class SignupComponent implements OnInit {
     if (this.signupForm.invalid) {
       return;
     } else {
-      if (environment.defaultauth === 'firebase') {
+      if (environment.defaultAuth === 'firebase') {
         this.authenticationService.register(this.f.email.value, this.f.password.value).then((res: any) => {
           this.successmsg = true;
           if (this.successmsg) {
