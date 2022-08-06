@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Product } from 'src/app/core/models/product.model';
 import { DocumentItem } from 'src/app/core/models/document.model';
+import { Product } from 'src/app/core/models/product.model';
 import { Stock } from 'src/app/core/models/stock.model';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { UnitService } from 'src/app/core/services/unit.service';

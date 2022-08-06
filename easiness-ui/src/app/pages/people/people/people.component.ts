@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { TableColumn, ColumnMode } from "@swimlane/ngx-datatable";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { ColumnMode, TableColumn } from "@swimlane/ngx-datatable";
 import * as _ from "lodash";
 import { validationMessages } from "src/app/core/helpers/validation/validation-message";
 import { Page } from "src/app/core/models/page.model";
