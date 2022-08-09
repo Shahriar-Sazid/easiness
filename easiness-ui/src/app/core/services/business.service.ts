@@ -4,7 +4,7 @@ import { UtilService } from './util.service';
 import { Observable } from 'rxjs';
 import { Stock } from '../models/stock.model';
 import { Page } from '../models/page.model';
-import { Document } from '../models/document.model';
+import { Document, Payment } from '../models/document.model';
 
 @Injectable({ providedIn: 'root' })
 export class BusinessService {
@@ -12,6 +12,7 @@ export class BusinessService {
     private purchaseApi = `${this.businessApi}purchase`
     private sellApi = `${this.businessApi}sell`
     private stockApi = `${this.businessApi}stock`
+    private paymentApi = `${this.businessApi}payment`
 
     constructor(private http: HttpClient, private util: UtilService) { }
 
@@ -47,5 +48,10 @@ export class BusinessService {
         })
         
         return this.http.post(this.sellApi, invoice);
+    }
+
+    processPayment(paymentTx: {payments: Payment[], docId: number}): Observable<unknown> {
+        
+        return this.http.post(this.paymentApi, paymentTx);
     }
 }

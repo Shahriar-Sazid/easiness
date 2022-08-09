@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -21,6 +22,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,7 +52,7 @@ public class DocumentServiceImpl implements DocumentService {
     ModelMapper modelMapper;
 
     @Override
-    public void savePurchaseOrder(PurchaseOrder purchaseOrder, List<StockEntity> stockList) {
+    public DocumentEntity savePurchaseOrder(PurchaseOrder purchaseOrder, List<StockEntity> stockList) {
         BigDecimal totalCost = BigDecimal.ZERO;
 
         for (PurchaseOrderItem item : purchaseOrder.getItems()) {
@@ -65,12 +67,12 @@ public class DocumentServiceImpl implements DocumentService {
                         .map(item -> toDocumentItem(item, stockList)).collect(Collectors.toList()))
                 .build();
 
-        documentRepository.save(document);
+        return documentRepository.save(document);
 
     }
 
     @Override
-    public void saveInvoice(Invoice invoice, List<StockEntity> stockList) {
+    public DocumentEntity saveInvoice(Invoice invoice, List<StockEntity> stockList) {
         BigDecimal totalPrice = BigDecimal.ZERO;
         for (InvoiceItem item : invoice.getItems()) {
             totalPrice = totalPrice.add(item.getPrice().multiply(item.getQuantity()));
@@ -93,13 +95,14 @@ public class DocumentServiceImpl implements DocumentService {
                         .map(item -> toDocumentItem(item, stockMap)).collect(Collectors.toList()))
                 .build();
 
-        documentRepository.save(document);
+        return documentRepository.save(document);
     }
 
     @Override
     public Page<Document> searchDocument(Map<String, String> params) {
         Pageable pageable = PageRequest.of(Integer.parseInt(params.getOrDefault("page", "1")) - 1,
-                Integer.parseInt(params.getOrDefault("pageSize", "10")));
+                Integer.parseInt(params.getOrDefault("pageSize", "10")),
+                Sort.by(Sort.Direction.DESC, "createdAt"));
 
         Date from = null, to = null;
         try {
@@ -131,6 +134,16 @@ public class DocumentServiceImpl implements DocumentService {
         documentDTO.setItems(documentItemRepository.findItemByDocumentId(id));
 
         return documentDTO;
+    }
+
+    @Override
+    public DocumentEntity getDocumentEntity(Long id) {
+        Optional<DocumentEntity> document = documentRepository.findById(id);
+        if(document.isPresent()) {
+            return document.get();
+        } else {
+            throw new InvalidRequestException(ReasonCode.DOCUMENT_NOT_FOUND.getMessage());
+        }
     }
 
 

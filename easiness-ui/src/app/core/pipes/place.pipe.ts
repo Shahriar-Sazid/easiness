@@ -10,7 +10,7 @@ export class PlacePipe implements PipeTransform {
 
   transform(value: any, ...args: any[]): any {
     if(this.placeService.placeRecord) {
-      let foundPlace = this.placeService.placeRecord[value];
+      const foundPlace = this.placeService.placeRecord[value];
       if(foundPlace) {
         return foundPlace.name;
       } else return null;

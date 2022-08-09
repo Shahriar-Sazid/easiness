@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DocumentDTO {
+    private Long id;
     private Date date;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private PeopleEntity people;

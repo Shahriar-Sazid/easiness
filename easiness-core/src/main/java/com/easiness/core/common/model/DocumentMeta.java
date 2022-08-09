@@ -14,6 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DocumentMeta {
+    private Long id;
     private Date date;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private PeopleEntity people;

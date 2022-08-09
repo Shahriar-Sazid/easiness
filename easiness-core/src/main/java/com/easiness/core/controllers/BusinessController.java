@@ -1,8 +1,6 @@
 package com.easiness.core.controllers;
 
-import com.easiness.core.common.model.Invoice;
-import com.easiness.core.common.model.PurchaseOrder;
-import com.easiness.core.common.model.Stock;
+import com.easiness.core.common.model.*;
 import com.easiness.core.services.business.BusinessService;
 import com.easiness.core.services.stock.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +33,10 @@ public class BusinessController {
     @GetMapping("stock")
     Page<Stock> searchStock(@RequestParam Map<String, String> params) {
         return stockService.searchStock(params);
+    }
+
+    @PostMapping("payment")
+    void processPayments(@Valid @RequestBody PaymentTx paymentTx) {
+        businessService.processPayments(paymentTx);
     }
 }

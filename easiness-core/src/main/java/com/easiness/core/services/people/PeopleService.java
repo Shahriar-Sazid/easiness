@@ -1,6 +1,7 @@
 package com.easiness.core.services.people;
 
 import com.easiness.core.common.model.Invoice;
+import com.easiness.core.common.model.Payment;
 import com.easiness.core.common.model.People;
 import com.easiness.core.common.model.PurchaseOrder;
 import com.easiness.core.entities.PeopleEntity;
@@ -29,4 +30,6 @@ public interface PeopleService {
     void updateSupplierBalance(PurchaseOrder purchaseOrder);
 
     void updateCustomerBalance(Invoice invoice);
+
+    void updateCustomerBalanceAfterPayment(Long peopleId, List<Payment> paymentList);
 }

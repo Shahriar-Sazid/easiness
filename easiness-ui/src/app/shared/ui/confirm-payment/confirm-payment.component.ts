@@ -17,7 +17,7 @@ export class ConfirmPaymentComponent implements OnInit {
   @Input() mode: 'from'| 'to' = 'to';
   @Input() inModal;
   paymentForm: FormGroup;
-  @Output() onPaymentProcessed = new EventEmitter();
+  @Output() onPaymentProcessed = new EventEmitter<Payment[]>();
 
   modeOptions = {
     from: {
@@ -72,9 +72,13 @@ export class ConfirmPaymentComponent implements OnInit {
     if(validForm) {
       this.formData().controls.forEach(element => {
         const payment: Payment = {
-          targetAccount: element.value.targetAccount,
           amount: this.mode == 'from'? -this.util.getNumberFromLocalString(element.value.amount):
           this.util.getNumberFromLocalString(element.value.amount)
+        } as Payment;
+        if(this.mode === 'from') {
+          payment.fromAccount = element.value.targetAccount;
+        } else if(this.mode === 'to') {
+          payment.toAccount = element.value.targetAccount;
         }
         payments.push(payment);
       });

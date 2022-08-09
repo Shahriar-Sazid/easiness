@@ -8,21 +8,23 @@ import { EmptyPlaceHolderPipe } from '../core/pipes/empty-placeholder.pipe';
 import { PlacePipe } from '../core/pipes/place.pipe';
 import { UnitPipe } from '../core/pipes/unit.pipe';
 import { WidgetModule } from './widget/widget.module';
+import { PillPipe } from '../core/pipes/pill.pipe';
 
 @NgModule({
   declarations: [
     UnitPipe,
     PlacePipe,
-    EmptyPlaceHolderPipe
+    EmptyPlaceHolderPipe,
+    PillPipe,
   ],
   exports: [
     UnitPipe,
     PlacePipe,
     EmptyPlaceHolderPipe,
+    PillPipe
   ],
   imports: [
     CommonModule,
-    UIModule,
     WidgetModule,
     DirectivesModule
   ],

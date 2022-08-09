@@ -44,11 +44,10 @@
   </button>
 </div>
 <ngx-datatable class="material" [rows]="productPage.content" [columns]="columns" [columnMode]="columnMode.force"
-  [loadingIndicator]="isLoading"
-  rowHeight="auto" [externalPaging]="true" [count]="productPage.totalElements" [offset]="productPage.number"
-  [footerHeight]="-1" [headerHeight]="-1" [limit]="productPage.size" (activate)="onActivate($event)"
-  (page)="changePage($event)">
-  <ngx-datatable-column name="Options" >
+  [loadingIndicator]="isLoading" rowHeight="auto" [externalPaging]="true" [count]="productPage.totalElements"
+  [offset]="productPage.number" [footerHeight]="-1" [headerHeight]="-1" [limit]="productPage.size"
+  (activate)="onActivate($event)" (page)="changePage($event)">
+  <ngx-datatable-column name="Options">
     <ng-template ngx-datatable-cell-template>
       <button *ngIf="currentMode['update']" [ngbTooltip]="'Update product'" placement="right"
         class="btn btn-outline-secondary" (click)="addProduct.openProductModal(true)">
@@ -60,7 +59,8 @@
       </button>
     </ng-template>
   </ngx-datatable-column>
-  <ngx-datatable-column *ngFor="let column of columns" [name]="column.name"></ngx-datatable-column>
+  <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [prop]="column.prop" [pipe]="column.pipe">
+  </ngx-datatable-column>
 </ngx-datatable>
 
 <!-- <ngx-spinner> </ngx-spinner> -->

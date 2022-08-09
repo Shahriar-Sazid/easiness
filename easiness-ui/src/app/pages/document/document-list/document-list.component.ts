@@ -136,10 +136,6 @@ export class DocumentListComponent implements OnInit {
     this.selectedDocument = event.row;
   }
 
-  selectProduct() {
-    this.onDocumentSelected.emit(this.selectedDocument);
-  }
-
   selectDate(range: DateRange) {
     this.searchOptions = { ...this.searchOptions, ...range }
   }

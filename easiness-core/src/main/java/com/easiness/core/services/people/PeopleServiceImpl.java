@@ -166,7 +166,7 @@ public class PeopleServiceImpl implements PeopleService {
 
     @Override
     public void updateSupplierBalance(PurchaseOrder purchaseOrder) {
-        BigDecimal totalCost = new BigDecimal("0");
+        BigDecimal totalCost = BigDecimal.ZERO;
         for (PurchaseOrderItem item: purchaseOrder.getItems()) {
             totalCost = totalCost.add(item.getQuantity().multiply(item.getCost()));
         }
@@ -179,7 +179,7 @@ public class PeopleServiceImpl implements PeopleService {
 
     @Override
     public void updateCustomerBalance(Invoice invoice) {
-        BigDecimal totalPrice = new BigDecimal("0");
+        BigDecimal totalPrice = BigDecimal.ZERO;
         for (InvoiceItem item: invoice.getItems()) {
             totalPrice = totalPrice.add(item.getQuantity().multiply(item.getPrice()));
         }
@@ -188,6 +188,20 @@ public class PeopleServiceImpl implements PeopleService {
         }
 
         updatePeopleBalance(invoice.getCustomer(), totalPrice);
+    }
+
+    @Override
+    public void updateCustomerBalanceAfterPayment(Long peopleId, List<Payment> paymentList) {
+        BigDecimal amount = BigDecimal.ZERO;
+        for(Payment payment: paymentList) {
+            if(payment.getFromAccount() != null) {
+                amount = amount.add(payment.getAmount());
+            } else if (payment.getToAccount() != null) {
+                amount = amount.add(payment.getAmount().negate());
+            }
+        }
+
+        updatePeopleBalance(peopleId, amount);
     }
 
     void updatePeopleBalance(Long id, BigDecimal value) {

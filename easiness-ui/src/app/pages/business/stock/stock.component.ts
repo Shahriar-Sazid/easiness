@@ -3,6 +3,8 @@ import { TableColumn, ColumnMode } from '@swimlane/ngx-datatable';
 import { Page } from 'src/app/core/models/page.model';
 import { Product } from 'src/app/core/models/product.model';
 import { Stock } from 'src/app/core/models/stock.model';
+import { PlacePipe } from 'src/app/core/pipes/place.pipe';
+import { UnitPipe } from 'src/app/core/pipes/unit.pipe';
 import { BusinessService } from 'src/app/core/services/business.service';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { environment } from 'src/environments/environment';
@@ -10,7 +12,8 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-stock',
   templateUrl: './stock.component.html',
-  styleUrls: ['./stock.component.scss']
+  styleUrls: ['./stock.component.scss'],
+  providers: [PlacePipe]
 })
 export class StockComponent implements OnInit {
   @Output() onStockSelected: EventEmitter<any> = new EventEmitter();
@@ -21,8 +24,9 @@ export class StockComponent implements OnInit {
   selectedStock: Stock;
 
   isLoading = false;
-  constructor(private businessService: BusinessService, public placeService: PlaceService) { 
+  constructor(private businessService: BusinessService, public placeService: PlaceService, private placePipe: PlacePipe) {
     this.searchStock = this.searchStock.bind(this);
+    this.placePipe = new PlacePipe(placeService);
   }
 
 
@@ -41,7 +45,7 @@ export class StockComponent implements OnInit {
     report: false,
     select: true
   }
-  
+
   defaultSearchOptions = {
     page: 1,
     pageSize: environment.pageSize,
@@ -82,7 +86,9 @@ export class StockComponent implements OnInit {
         cellClass: "text-center",
       },
       {
-        name: "Stock Place",
+        name: "Place",
+        prop: "place",
+        pipe: this.placePipe,
         cellClass: "text-center",
       },
       {

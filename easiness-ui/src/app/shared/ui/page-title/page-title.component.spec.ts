@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { PageTitleComponent } from './page-title.component';
 
-describe('PagetitleComponent', () => {
+describe('PageTitleComponent', () => {
   let component: PageTitleComponent;
   let fixture: ComponentFixture<PageTitleComponent>;
 

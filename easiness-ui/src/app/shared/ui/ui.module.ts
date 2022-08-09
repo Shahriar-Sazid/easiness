@@ -40,7 +40,7 @@ import { DirectivesModule } from "src/app/core/directives/directive.module";
     MoveProductComponent,
     InfoBoxComponent,
     ConfirmPaymentComponent,
-    PaymentModalComponent
+    PaymentModalComponent,
   ],
   imports: [
     CommonModule,

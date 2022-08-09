@@ -20,13 +20,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
-public class AccountServiceImpl implements AccountService{
+public class AccountServiceImpl implements AccountService {
 
     @Autowired
     AccountRepository accountRepository;
@@ -90,14 +93,28 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public void updateAccountBalance(List<Payment> payments) {
         if (payments != null) {
+
             List<AccountEntity> accountEntities = accountRepository.findByIdIn(
-                    payments.stream().map(Payment::getTargetAccount).collect(Collectors.toList()));
+                    Stream.concat(
+                            payments.stream().map(Payment::getFromAccount).filter(Objects::nonNull),
+                            payments.stream().map(Payment::getToAccount).filter(Objects::nonNull)
+                    ).collect(Collectors.toList()));
 
             Map<Long, AccountEntity> accountMap = accountEntities.stream().collect(Collectors.toMap(AccountEntity::getId, item -> item));
 
-            for(Payment payment : payments) {
-                AccountEntity account = accountMap.get(payment.getTargetAccount());
-                account.setBalance(account.getBalance().add(payment.getAmount()));
+            for (Payment payment : payments) {
+                if (payment.getFromAccount() != null) {
+                    AccountEntity account = accountMap.get(payment.getFromAccount());
+                    account.setBalance(account.getBalance().add(
+                            payment.getAmount().compareTo(BigDecimal.ZERO) > 0 ?
+                                    payment.getAmount().negate() : payment.getAmount()));
+                }
+                if (payment.getToAccount() != null) {
+                    AccountEntity account = accountMap.get(payment.getToAccount());
+                    account.setBalance(account.getBalance().add(
+                            payment.getAmount().compareTo(BigDecimal.ZERO) > 0 ?
+                                    payment.getAmount() : payment.getAmount().negate()));
+                }
             }
 
             accountRepository.saveAll(accountEntities);
@@ -107,7 +124,7 @@ public class AccountServiceImpl implements AccountService{
     void validateAccountCreationRequest(Account request) {
         Optional<AccountEntity> entity = accountRepository.findByAccountNo(request.getAccountNo());
 
-        if(entity.isPresent()) {
+        if (entity.isPresent()) {
             throw new InvalidRequestException(ReasonCode.DUPLICATE_ACCOUNT_NO_FOUND.getMessage());
         }
 
@@ -121,14 +138,14 @@ public class AccountServiceImpl implements AccountService{
 
     void validateAccountUpdateRequest(Account request) {
         Optional<AccountEntity> entity = accountRepository.findById(request.getId());
-        if(!entity.isPresent()) {
+        if (!entity.isPresent()) {
             throw new InvalidRequestException(ReasonCode.ACCOUNT_NOT_FOUND.getMessage());
         }
 
         entity = accountRepository.findByAccountName(request.getAccountName());
 
         if (entity.isPresent()) {
-            if(!entity.get().getId().equals(request.getId())) {
+            if (!entity.get().getId().equals(request.getId())) {
                 throw new InvalidRequestException(ReasonCode.DUPLICATE_ACCOUNT_NAME_FOUND.getMessage());
             }
         }

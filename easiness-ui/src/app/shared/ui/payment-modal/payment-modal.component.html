@@ -7,10 +7,10 @@
         </button>
     </div>
     <div class="modal-body">
-        <app-confirm-payment #acp [mode]="mode" [inModal]="true"></app-confirm-payment>
+        <app-confirm-payment #acp [mode]="mode" [inModal]="true" (onPaymentProcessed)="processPayment($event)"></app-confirm-payment>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="null" [disabled]="!acp.paymentForm.valid">
+        <button type="button" class="btn btn-primary" (click)="initiatePayment(acp)" [disabled]="!acp.paymentForm.valid">
             {{ mode === 'from' ?  'Pay': 'Receive' }}
         </button>
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>

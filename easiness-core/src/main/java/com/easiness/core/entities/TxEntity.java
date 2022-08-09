@@ -47,4 +47,7 @@ public class TxEntity extends BaseEntity {
 
     @Column(name = "meta")
     String meta;
+
+    @Column(name = "purpose")
+    String purpose;
 }

@@ -1,8 +1,6 @@
 import { People } from "./people.model";
-import { Place } from "./place.model";
 import { Product } from "./product.model";
 import { Stock } from "./stock.model";
-import { Unit } from "./unit-data.model";
 
 export enum DocumentType {
   PURCHASE_ORDER = 'PURCHASE_ORDER',
@@ -27,22 +25,23 @@ export type DocumentItem = {
 }
 
 export type Payment = {
-  targetAccount: number;
+  fromAccount: number;
+  toAccount: number; 
   amount: number;
 }
 
 export type DocumentOptions = {
-  name: any;
-  type: any;
-  brand: any;
-  country: any;
-  size: any;
-  place: any;
-  quantity: any;
-  cost: any;
-  price: any;
-  totalCost: any;
-  totalPrice: any;
+  name: object;
+  type: object;
+  brand: object;
+  country: object;
+  size: object;
+  place: object;
+  quantity: object;
+  cost: object;
+  price: object;
+  totalCost: object;
+  totalPrice: object;
   availableQty: boolean;
   validateQty: boolean;
   validateUnit: boolean;

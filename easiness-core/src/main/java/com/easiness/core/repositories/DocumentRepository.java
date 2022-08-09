@@ -25,7 +25,7 @@ public interface DocumentRepository extends JpaRepository<DocumentEntity, Long> 
                                   Pageable pageable);
 
     @Query(value ="SELECT NEW com.easiness.core.common.model.DocumentMeta" +
-            "(d.createdAt, d.people, d.type, d.total, d.profit)" +
+            "(d.id, d.createdAt, d.people, d.type, d.total, d.profit)" +
             " FROM DocumentEntity d" +
             " WHERE d.id = :id")
     DocumentMeta findDocumentMetaById(@Param("id") Long id);

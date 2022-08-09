@@ -5,7 +5,6 @@ import { PlaceResolver } from 'src/app/core/services/resolvers/place-resolver.se
 import { UnitResolver } from 'src/app/core/services/resolvers/unit-resolver.service';
 import { DocumentListComponent } from './document-list/document-list.component';
 import { DocumentViewComponent } from './document-view/document-view.component';
-import { DocumentComponent } from './document/document.component';
 
 const routes: Routes = [
   {
