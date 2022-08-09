@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ColumnMode, TableColumn } from "@swimlane/ngx-datatable";
 import { environment } from "src/environments/environment";
 // import * as _ from "lodash";

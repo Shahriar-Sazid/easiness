@@ -43,21 +43,22 @@
     <i class="fa fa-download" aria-hidden="true"></i>
   </button>
 </div>
-<ngx-datatable class="material" [rows]="productPage.content" [columns]="columns" [columnMode]="columnMode.force"
+
+<ngx-datatable class="material" [rows]="productPage.content" [columnMode]="columnMode.force"
   [loadingIndicator]="isLoading" rowHeight="auto" [externalPaging]="true" [count]="productPage.totalElements"
   [offset]="productPage.number" [footerHeight]="-1" [headerHeight]="-1" [limit]="productPage.size"
   (activate)="onActivate($event)" (page)="changePage($event)">
   <ngx-datatable-column name="Options">
     <ng-template ngx-datatable-cell-template>
-      <button *ngIf="currentMode['update']" [ngbTooltip]="'Update product'" placement="right"
-        class="btn btn-outline-secondary" (click)="addProduct.openProductModal(true)">
-        <i class="fa fa-edit"></i>
-      </button>
-      <button *ngIf="currentMode['select']" [ngbTooltip]="'Select for purchase'" placement="right"
-        class="btn btn-outline-secondary" (click)="selectProduct()">
-        <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-      </button>
-    </ng-template>
+    <button *ngIf="currentMode['update']" [ngbTooltip]="'Update product'" placement="right"
+      class="btn btn-outline-secondary" (click)="addProduct.openProductModal(true)">
+      <i class="fa fa-edit"></i>
+    </button>
+    <button *ngIf="currentMode['select']" [ngbTooltip]="'Select for purchase'" placement="right"
+      class="btn btn-outline-secondary" (click)="selectProduct()">
+      <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+    </button>
+  </ng-template>
   </ngx-datatable-column>
   <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [prop]="column.prop" [pipe]="column.pipe">
   </ngx-datatable-column>
