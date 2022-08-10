@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AccountRoutingModule } from './account-routing.module';
+import { AccountRoutingModule } from './accounting-routing.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UIModule } from 'src/app/shared/ui/ui.module';
@@ -23,4 +23,4 @@ import { DirectivesModule } from 'src/app/core/directives/directive.module';
     DirectivesModule
   ]
 })
-export class AccountsModule { }
+export class AccountingModule { }

@@ -32,11 +32,11 @@ public class TxEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "people_id")
-    PeopleEntity peopleEntity;
+    PeopleEntity people;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id")
-    DocumentEntity documentEntity;
+    DocumentEntity document;
 
     @Column(name = "ref")
     String ref;
