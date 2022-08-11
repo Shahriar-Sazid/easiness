@@ -5,7 +5,7 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 
 
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { ClickOutsideModule } from 'ng-click-outside';
+// import { ClickOutsideModule } from 'ng-click-outside';
 
 import { UIModule } from '../shared/ui/ui.module';
 import { LayoutComponent } from './layout.component';
@@ -18,6 +18,7 @@ import { VerticalComponent } from './vertical/vertical.component';
 import { HorizontaltopbarComponent } from './horizontaltopbar/horizontaltopbar.component';
 import { LanguageService } from '../core/services/language.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
