@@ -36,10 +36,10 @@ export class ConfirmPaymentComponent implements OnInit {
     this.paymentForm = this.fb.group({
       formList: this.fb.array([]),
     })
+    this.accountService.getAllAccount();
   }
 
   ngOnInit(): void {
-    this.accountService.getAllAccount();
     this.addField();
   }
 

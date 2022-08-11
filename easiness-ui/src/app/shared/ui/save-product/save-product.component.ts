@@ -36,7 +36,7 @@ export class SaveProductComponent implements OnInit {
   openProductModal(updateMode: boolean) {
     if (updateMode) {
       this.updateMode = true;
-      for (let [control] of Object.entries(this.productForm.controls)) {
+      for (const [control] of Object.entries(this.productForm.controls)) {
         this.productForm.get(control).setValue(this.updatingProduct[control]);
       }
     } else {
@@ -46,7 +46,7 @@ export class SaveProductComponent implements OnInit {
   }
 
   addProductSize(sizeInput) {
-    let size = sizeInput.value.trim();
+    const size = sizeInput.value.trim();
     if (size) {
       this.newProductSizes.add(size);
     }
@@ -54,7 +54,7 @@ export class SaveProductComponent implements OnInit {
   }
 
   removeProductSize(sizeToken: HTMLSpanElement) {
-    let size = sizeToken.textContent.trim();
+    const size = sizeToken.textContent.trim();
     this.newProductSizes.delete(size);
     console.log(this.newProductSizes);
   }
@@ -63,7 +63,7 @@ export class SaveProductComponent implements OnInit {
     if (this.util.validateForm(this.productForm)) {
       if (this.updateMode) {
         // this.spinner.show();
-        for (let [key, value] of Object.entries(this.productForm.value)) {
+        for (const [key, value] of Object.entries(this.productForm.value)) {
           this.updatingProduct[key] = value;
         }
         this.productService
@@ -84,7 +84,7 @@ export class SaveProductComponent implements OnInit {
             this.modalService.dismissAll();
           });
       } else {
-        let { size, ...newProducts } = this.productForm.value;
+        const { size, ...newProducts } = this.productForm.value;
         if (size) {
           if (size.trim()) {
             this.newProductSizes.add(size.trim());

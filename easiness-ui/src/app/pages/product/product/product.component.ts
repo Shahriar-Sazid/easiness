@@ -11,6 +11,7 @@ import { UtilService } from "src/app/core/services/util.service";
   selector: "app-product",
   templateUrl: "./product.component.html",
   styleUrls: ["./product.component.scss"],
+  host: { 'class': 'd-block' }
 })
 export class ProductComponent implements OnInit {
   @Output() onProductSelected: EventEmitter<any> = new EventEmitter();

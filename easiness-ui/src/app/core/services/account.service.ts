@@ -17,8 +17,8 @@ export class AccountService {
 
   getAccount(searchOptions: { name: string; contactNo: string; page: number; pageSize: number }): Observable<any> {
     this.util.deepTrim(searchOptions);
-    let queryString = this.util.convertObjToQueryString(searchOptions);
-    let url = `${this.accountApi}${queryString}`;
+    const queryString = this.util.convertObjToQueryString(searchOptions);
+    const url = `${this.accountApi}${queryString}`;
     console.log("----------Get Account Url-----------");
     console.log(url);
     return this.http.get(url);
@@ -45,8 +45,8 @@ export class AccountService {
   }) {
     this.util.deepTrim(searchOptions);
     const headers = new HttpHeaders().set("Content-Type", "application/pdf");
-    let queryString = this.util.convertObjToQueryString(searchOptions);
-    let url = `${this.accountReportApi}${queryString}`;
+    const queryString = this.util.convertObjToQueryString(searchOptions);
+    const url = `${this.accountReportApi}${queryString}`;
     console.log("----------Get Account Url-----------");
     console.log(url);
     return this.http.get(url, { responseType: "arraybuffer", headers: headers });
