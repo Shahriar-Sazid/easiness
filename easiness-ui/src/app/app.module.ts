@@ -16,7 +16,6 @@ import {
   NgbDateAdapter,
   NgbDateNativeAdapter,
 } from "@ng-bootstrap/ng-bootstrap";
-import { ScrollToModule } from "@nicky-lenaers/ngx-scroll-to";
 
 import { LayoutsModule } from "./layouts/layouts.module";
 import { AppRoutingModule } from "./app-routing.module";
@@ -66,7 +65,6 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
     LayoutsModule,
     AppRoutingModule,
     NgxDatatableModule,
-    ScrollToModule.forRoot(),
   ],
   bootstrap: [AppComponent],
   providers: [

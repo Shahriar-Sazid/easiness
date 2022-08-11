@@ -6,7 +6,6 @@ import { DashboardsRoutingModule } from './dashboards-routing.module';
 import { UIModule } from '../../shared/ui/ui.module';
 import { WidgetModule } from '../../shared/widget/widget.module';
 
-import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgbDropdownModule, NgbTooltipModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
 import { SimplebarAngularModule } from 'simplebar-angular';
 
@@ -25,7 +24,6 @@ import { DefaultComponent } from './default/default.component';
     NgbTooltipModule,
     NgbNavModule,
     WidgetModule,
-    NgApexchartsModule,
     SimplebarAngularModule
   ]
 })
