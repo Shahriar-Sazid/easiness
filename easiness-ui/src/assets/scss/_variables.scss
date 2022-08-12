@@ -1249,7 +1249,8 @@ $modal-fade-transform:              translate(0, -50px);
 $modal-show-transform:              none;
 $modal-transition:                  transform .3s ease-out;
 $modal-scale-transform:             scale(1.02);
-
+// custom change
+$zindex-modal:                      1055;
 
 // Alerts
 //
