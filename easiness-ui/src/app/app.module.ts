@@ -31,6 +31,7 @@ import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { LoaderInterceptorService } from "./core/services/interceptors/loader-interceptor.service";
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeIn from '@angular/common/locales/en-IN';
+import { ToastrModule } from 'ngx-toastr';
 
 if (environment.defaultAuth === "firebase") {
   initFirebaseBackend(environment.firebaseConfig);
@@ -65,6 +66,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
     LayoutsModule,
     AppRoutingModule,
     NgxDatatableModule,
+    ToastrModule.forRoot(),
   ],
   bootstrap: [AppComponent],
   providers: [

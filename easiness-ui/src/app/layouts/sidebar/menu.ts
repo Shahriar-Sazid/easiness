@@ -22,7 +22,7 @@ export const MENU: MenuItem[] = [
     id: 4,
     label: "COMMONS.ACCOUNT",
     icon: "fas fa-money-check-alt",
-    link: "/accounts",
+    link: "/accounting",
   },
   {
     id: 5,

@@ -11,10 +11,9 @@ import { UtilService } from "src/app/core/services/util.service";
   selector: "app-product",
   templateUrl: "./product.component.html",
   styleUrls: ["./product.component.scss"],
-  host: { 'class': 'd-block' }
 })
 export class ProductComponent implements OnInit {
-  @Output() onProductSelected: EventEmitter<any> = new EventEmitter();
+  @Output() productSelected: EventEmitter<any> = new EventEmitter();
   @Input() viewMode: 'dedicated' | 'buy' = 'dedicated';
   productPage: Page<Product> = new Page<Product>();
   columns: TableColumn[];
@@ -164,7 +163,7 @@ export class ProductComponent implements OnInit {
   }
 
   selectProduct() {
-    this.onProductSelected.emit(this.selectedProduct);
+    this.productSelected.emit(this.selectedProduct);
   }
 }
 

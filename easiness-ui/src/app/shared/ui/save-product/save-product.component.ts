@@ -14,8 +14,8 @@ export class SaveProductComponent implements OnInit {
   @ViewChild('productModal') addProductModal: any;
   updateMode: boolean;
   productForm: UntypedFormGroup;
-  @Input('callback') callback: Function;
-  @Input('updatingProduct') updatingProduct: any;
+  @Input() callback: Function;
+  @Input() updatingProduct: any;
   newProductSizes: Set<string> = new Set();
 
   constructor(private fb: UntypedFormBuilder,

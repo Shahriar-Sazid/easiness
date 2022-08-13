@@ -1,9 +1,9 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { UtilService } from 'src/app/core/services/util.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-save-place',
@@ -15,11 +15,12 @@ export class SavePlaceComponent {
   @ViewChild('placeModal') content: any;
   updateMode: boolean;
   placeForm: UntypedFormGroup;
-  @Input('callback') callback: () => void;
-  @Input('selectedPlace') selectedPlace: any;
+  @Input() callback: () => void;
+  @Input() selectedPlace: any;
   constructor(private fb: UntypedFormBuilder,
     public util: UtilService,
     private placeService: PlaceService,
+    private toastr: ToastrService,
     private modalService: NgbModal) { }
 
   openPlaceModal(updateMode: boolean) {
@@ -73,12 +74,12 @@ export class SavePlaceComponent {
             (data) => {
               this.callback();
               this.placeForm.reset();
-              Swal.fire('Good job!', 'Place updated successfully', 'success');
+              this.toastr.success('Place updated successfully')
               this.modalService.dismissAll();
             },
             (err) => {
               console.log(err);
-              Swal.fire('Failed!', err.error.message, 'error');
+              this.toastr.error(err.error.message);
             }
           )
           .add(() => {
@@ -93,13 +94,13 @@ export class SavePlaceComponent {
               if (this.callback) {
                 this.callback();
               }
-              Swal.fire('Good job!', 'Place added successfully', 'success');
+              this.toastr.success('Place added successfully')
               this.placeForm.reset();
               this.modalService.dismissAll();
             },
             (err) => {
               console.log(err);
-              Swal.fire('Failed!', err.error.message, 'error');
+              this.toastr.error(err.error.message);
             }
           )
           .add(() => {

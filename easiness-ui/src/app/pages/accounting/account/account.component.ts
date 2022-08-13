@@ -3,7 +3,6 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { TableColumn, ColumnMode } from "@swimlane/ngx-datatable";
-import * as _ from "lodash";
 import { validationMessages } from "src/app/core/helpers/validation/validation-message";
 import { Account } from "src/app/core/models/account.model";
 import { Page } from "src/app/core/models/page.model";
@@ -85,7 +84,7 @@ export class AccountComponent implements OnInit {
     ];
 
     this.activatedRouter.queryParams.subscribe((params) => {
-      this.searchedOptions = _.clone(params);
+      this.searchedOptions = this.util.clone(params);
       this.search();
     });
   }
@@ -93,7 +92,7 @@ export class AccountComponent implements OnInit {
   searchAccount() {
     this.searchOptions.page = 1;
     this.searchOptions.pageSize = 10;
-    this.searchedOptions = _.clone(this.searchOptions);
+    this.searchedOptions = this.util.clone(this.searchOptions);
     this.router.navigate([], {
       queryParams: this.searchedOptions,
     });

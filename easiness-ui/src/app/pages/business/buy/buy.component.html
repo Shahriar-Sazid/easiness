@@ -29,7 +29,7 @@
               <div class="card">
                 <div class="card-body">
 
-                  <app-product [viewMode]="'buy'" (onProductSelected)="costingModal.openCostingModal($event)">
+                  <app-product [viewMode]="'buy'" (productSelected)="costingModal.openCostingModal($event)">
                   </app-product>
 
                 </div>
