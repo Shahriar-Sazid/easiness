@@ -1,22 +1,26 @@
 import { NgModule } from '@angular/core';
+import { NgClickOutsideDirective } from 'ng-click-outside2';
+import { NumberCommaDirective } from './input-with-comma.directive';
 import { OnlyNumber } from './only-number.directive';
 import { PhoneNoValidator } from './phone-no-validator';
 import { NgxResizeWatcherDirective } from './resize-watch.directive';
-import { NumberCommaDirective } from './input-with-comma.directive';
 
 @NgModule({
-    imports: [],
+    imports: [
+        NgClickOutsideDirective
+    ],
     declarations: [
         OnlyNumber,
         NumberCommaDirective,
         PhoneNoValidator,
-        NgxResizeWatcherDirective
+        NgxResizeWatcherDirective,
     ],
     exports: [
         OnlyNumber,
         NumberCommaDirective,
         PhoneNoValidator,
-        NgxResizeWatcherDirective
+        NgxResizeWatcherDirective,
+        NgClickOutsideDirective
     ],
 })
 export class DirectivesModule { }

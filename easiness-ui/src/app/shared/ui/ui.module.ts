@@ -11,7 +11,6 @@ import {
   NgbTooltipModule,
   NgbModule,
 } from "@ng-bootstrap/ng-bootstrap";
-import { ClickOutsideModule } from "ng-click-outside";
 
 import { PageTitleComponent } from "./page-title/page-title.component";
 import { LoaderComponent } from "./loader/loader.component";
@@ -44,7 +43,6 @@ import { DirectivesModule } from "src/app/core/directives/directive.module";
   ],
   imports: [
     CommonModule,
-    ClickOutsideModule,
     FormsModule,
     ReactiveFormsModule,
     NgbCollapseModule,

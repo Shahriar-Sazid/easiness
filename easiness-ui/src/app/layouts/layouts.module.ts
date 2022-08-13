@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { ClickOutsideModule } from 'ng-click-outside';
 
 import { UIModule } from '../shared/ui/ui.module';
 import { LayoutComponent } from './layout.component';
@@ -16,6 +15,7 @@ import { VerticalComponent } from './vertical/vertical.component';
 import { HorizontaltopbarComponent } from './horizontaltopbar/horizontaltopbar.component';
 import { LanguageService } from '../core/services/language.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { DirectivesModule } from '../core/directives/directive.module';
 
 @NgModule({
   declarations: [LayoutComponent, SidebarComponent, TopbarComponent, FooterComponent, RightsidebarComponent, HorizontalComponent, VerticalComponent, HorizontaltopbarComponent],
@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     RouterModule,
     NgbDropdownModule,
-    ClickOutsideModule,
+    DirectivesModule,
     UIModule,
   ],
   providers: [LanguageService]
