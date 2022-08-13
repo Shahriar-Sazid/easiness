@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { UntypedFormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ColumnMode, TableColumn } from "@swimlane/ngx-datatable";
@@ -31,7 +31,7 @@ export class PeopleComponent implements OnInit {
   searchedOptions: any;
   selectedPeople: People;
   updateMode: boolean;
-  peopleForm: FormGroup;
+  peopleForm: UntypedFormGroup;
   validationMessage = validationMessages;
 
   constructor(

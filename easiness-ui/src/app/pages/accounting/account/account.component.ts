@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { TableColumn, ColumnMode } from "@swimlane/ngx-datatable";
@@ -30,14 +30,14 @@ export class AccountComponent implements OnInit {
   searchedOptions: any;
   selectedAccount: Account;
   updateMode: boolean;
-  accountForm: FormGroup;
+  accountForm: UntypedFormGroup;
   validationMessage = validationMessages;
 
   constructor(
     private accountService: AccountService,
     private modalService: NgbModal,
     // private spinner: NgxSpinnerService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public util: UtilService,
     private activatedRouter: ActivatedRoute,
     private router: Router

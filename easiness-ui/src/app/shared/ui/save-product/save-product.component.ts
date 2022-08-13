@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductService } from 'src/app/core/services/product.service';
 import { UtilService } from 'src/app/core/services/util.service';
@@ -13,12 +13,12 @@ import Swal from 'sweetalert2';
 export class SaveProductComponent implements OnInit {
   @ViewChild('productModal') addProductModal: any;
   updateMode: boolean;
-  productForm: FormGroup;
+  productForm: UntypedFormGroup;
   @Input('callback') callback: Function;
   @Input('updatingProduct') updatingProduct: any;
   newProductSizes: Set<string> = new Set();
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
     public util: UtilService,
     private productService: ProductService,
     private modalService: NgbModal) { }

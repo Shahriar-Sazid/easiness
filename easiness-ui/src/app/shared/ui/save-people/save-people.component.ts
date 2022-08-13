@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { Validators, FormArray, FormControl, FormBuilder, FormGroup } from "@angular/forms";
+import { Validators, UntypedFormArray, UntypedFormControl, UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { PeopleService } from "src/app/core/services/people.service";
 import { UtilService } from "src/app/core/services/util.service";
@@ -14,10 +14,10 @@ import Swal from "sweetalert2";
 export class SavePeopleComponent implements OnInit {
   @ViewChild('peopleModal') content: any;
   updateMode: boolean;
-  peopleForm: FormGroup;
+  peopleForm: UntypedFormGroup;
   @Input('callback') callback: Function;
   @Input('selectedPeople') selectedPeople: any;
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
     public util: UtilService,
     private peopleService: PeopleService,
     private modalService: NgbModal) {}
@@ -63,10 +63,10 @@ export class SavePeopleComponent implements OnInit {
           ],
         ],
 
-        contactNo: new FormArray(
+        contactNo: new UntypedFormArray(
           this.selectedPeople.contactNoList.map(
             (contactNo) =>
-              new FormControl(contactNo.contactNo, [
+              new UntypedFormControl(contactNo.contactNo, [
                 Validators.required,
                 ValidatePhoneNo,
               ])
@@ -104,8 +104,8 @@ export class SavePeopleComponent implements OnInit {
           ],
         ],
 
-        contactNo: new FormArray([
-          new FormControl("", [Validators.required, ValidatePhoneNo]),
+        contactNo: new UntypedFormArray([
+          new UntypedFormControl("", [Validators.required, ValidatePhoneNo]),
         ]),
       });
     }
@@ -166,12 +166,12 @@ export class SavePeopleComponent implements OnInit {
   }
 
   get phoneNo() {
-    return this.peopleForm.get("contactNo") as FormArray;
+    return this.peopleForm.get("contactNo") as UntypedFormArray;
   }
 
   addPhoneNo() {
     this.phoneNo.push(
-      new FormControl("", [Validators.required, ValidatePhoneNo])
+      new UntypedFormControl("", [Validators.required, ValidatePhoneNo])
     );
   }
 }

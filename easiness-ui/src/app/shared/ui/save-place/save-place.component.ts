@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { UtilService } from 'src/app/core/services/util.service';
@@ -14,10 +14,10 @@ export class SavePlaceComponent {
 
   @ViewChild('placeModal') content: any;
   updateMode: boolean;
-  placeForm: FormGroup;
+  placeForm: UntypedFormGroup;
   @Input('callback') callback: () => void;
   @Input('selectedPlace') selectedPlace: any;
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
     public util: UtilService,
     private placeService: PlaceService,
     private modalService: NgbModal) { }

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { UntypedFormGroup } from "@angular/forms";
 import { NgbDate } from "@ng-bootstrap/ng-bootstrap";
 import { validationMessages } from "../helpers/validation/validation-message";
 
@@ -68,7 +68,7 @@ export class UtilService {
     }
   }
 
-  getValidationError(form: FormGroup, control: string) {
+  getValidationError(form: UntypedFormGroup, control: string) {
     const formControl = form.get(control);
     for (const msg of this.validationMessage) {
       if (formControl?.hasError(msg.type) && formControl?.touched === true) {
@@ -77,7 +77,7 @@ export class UtilService {
     }
   }
 
-  validateForm(form: FormGroup): boolean {
+  validateForm(form: UntypedFormGroup): boolean {
     let validForm = true;
     for (const [control] of Object.entries(form.controls)) {
       if (form.get(control).invalid) {

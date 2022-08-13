@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Account } from 'src/app/core/models/account.model';
 import { AccountService } from 'src/app/core/services/account.service';
@@ -16,9 +16,9 @@ export class SaveAccountComponent {
   updateMode: boolean;
   @Input('selectedAccount') selectedAccount: Account;
   @Output('onAccountSaved') onAccountSaved: EventEmitter<void> = new EventEmitter();
-  accountForm: FormGroup;
+  accountForm: UntypedFormGroup;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
     public util: UtilService,
     private accountService: AccountService,
     private modalService: NgbModal) { }

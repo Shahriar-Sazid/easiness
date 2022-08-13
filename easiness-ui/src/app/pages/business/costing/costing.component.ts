@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DocumentItem } from 'src/app/core/models/document.model';
 import { Product } from 'src/app/core/models/product.model';
@@ -18,13 +18,13 @@ export class CostingComponent implements OnInit {
   @Input() mode: 'buy' | 'sell';
   @Input() defaultPlace: number;
   @ViewChild('costingModal') content: any;
-  costingForm: FormGroup;
+  costingForm: UntypedFormGroup;
   selectedEntity: Product & Stock;
   @Input('selectedPlace') selectedPlace: any;
   @Output() onAdded: EventEmitter<DocumentItem> = new EventEmitter();
   modalRef: NgbModalRef;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
     public util: UtilService,
     public placeService: PlaceService,
     public unitService: UnitService,

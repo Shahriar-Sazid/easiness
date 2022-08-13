@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { smoothExpandCollapse } from 'src/app/core/animations/animations';
 import { Payment } from 'src/app/core/models/document.model';
 import { AccountService } from 'src/app/core/services/account.service';
@@ -16,7 +16,7 @@ import { UtilService } from 'src/app/core/services/util.service';
 export class ConfirmPaymentComponent implements OnInit {
   @Input() mode: 'from'| 'to' = 'to';
   @Input() inModal;
-  paymentForm: FormGroup;
+  paymentForm: UntypedFormGroup;
   @Output() onPaymentProcessed = new EventEmitter<Payment[]>();
 
   modeOptions = {
@@ -30,7 +30,7 @@ export class ConfirmPaymentComponent implements OnInit {
     }
   }
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
     public accountService: AccountService,
     public util: UtilService) {
     this.paymentForm = this.fb.group({
@@ -43,11 +43,11 @@ export class ConfirmPaymentComponent implements OnInit {
     this.addField();
   }
 
-  formData(): FormArray {
-    return this.paymentForm.get('formList') as FormArray;
+  formData(): UntypedFormArray {
+    return this.paymentForm.get('formList') as UntypedFormArray;
   }
 
-  field(): FormGroup {
+  field(): UntypedFormGroup {
     return this.fb.group({
       targetAccount: [null, [Validators.required]],
       amount: [null, [Validators.required]],
@@ -67,7 +67,7 @@ export class ConfirmPaymentComponent implements OnInit {
     let validForm = true;
     for (const form of this.formData().controls) {
       // console.log(form);
-      validForm = this.util.validateForm(form as FormGroup) && validForm;
+      validForm = this.util.validateForm(form as UntypedFormGroup) && validForm;
     }
     if(validForm) {
       this.formData().controls.forEach(element => {

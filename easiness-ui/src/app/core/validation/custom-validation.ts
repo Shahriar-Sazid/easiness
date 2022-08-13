@@ -1,4 +1,4 @@
-import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { AbstractControl, UntypedFormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
 
 export function ValidatePhoneNo(control: AbstractControl): ValidationErrors | null {
   if (control.value) {
@@ -42,7 +42,7 @@ export function calcQuantityUnitError(sellUnit: number | string, stockUnit: numb
 }
 
 export function ValidateSaleQuantityUnit(availableQty: number, stockUnit: number, converter: any) {
-  return (form: FormGroup) => {
+  return (form: UntypedFormGroup) => {
     const sellQty = form.get('quantity').value;
     const sellUnit = parseInt(form.get('unit').value);
 
