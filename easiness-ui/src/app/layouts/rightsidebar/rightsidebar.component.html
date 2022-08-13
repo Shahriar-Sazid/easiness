@@ -2,7 +2,7 @@
 
 <div class="right-bar" (clickOutside)="hide()" [exclude]="'.right-bar-toggle'">
 
-  <ngx-simplebar class="h-100">
+  <div class="h-100 overflow-auto custom-scrollbar">
     <div class="rightbar-title px-3 py-4">
       <a href="javascript:void(0);" class="right-bar-toggle float-end" (click)="hide();">
         <i class="mdi mdi-close noti-icon"></i>
@@ -28,7 +28,7 @@
         </a>
       </div>
     </div>
-  </ngx-simplebar>
+  </div>
 </div>
 <!-- /Right-bar -->
 

@@ -241,19 +241,6 @@
     width: $sidebar-collapsed-width !important;
     z-index: 5;
 
-    .simplebar-mask,
-    .simplebar-content-wrapper {
-      overflow: visible !important;
-    }
-
-    .simplebar-scrollbar {
-      display: none !important;
-    }
-
-    .simplebar-offset {
-      bottom: 0 !important;
-    }
-
     // Sidebar Menu
     #sidebar-menu {
 

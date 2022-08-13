@@ -7,7 +7,6 @@ import { UIModule } from '../../shared/ui/ui.module';
 import { WidgetModule } from '../../shared/widget/widget.module';
 
 import { NgbDropdownModule, NgbTooltipModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
-import { SimplebarAngularModule } from 'simplebar-angular';
 
 import { DefaultComponent } from './default/default.component';
 
@@ -24,7 +23,6 @@ import { DefaultComponent } from './default/default.component';
     NgbTooltipModule,
     NgbNavModule,
     WidgetModule,
-    SimplebarAngularModule
   ]
 })
 export class DashboardsModule { }

@@ -76,14 +76,12 @@
 </ng-template>
 <!-- Sidebar -->
 
-<div class="vertical-menu">
-  <ngx-simplebar class="h-100" #componentRef>
+<div class="vertical-menu overflow-auto custom-scrollbar">
     <div *ngIf="!isCondensed">
       <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
     </div>
     <div *ngIf="isCondensed">
       <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
     </div>
-  </ngx-simplebar>
 </div>
 <!-- Left Sidebar End -->

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SimplebarAngularModule } from 'simplebar-angular';
 
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClickOutsideModule } from 'ng-click-outside';
@@ -27,7 +26,6 @@ import { TranslateModule } from '@ngx-translate/core';
     NgbDropdownModule,
     ClickOutsideModule,
     UIModule,
-    SimplebarAngularModule
   ],
   providers: [LanguageService]
 })

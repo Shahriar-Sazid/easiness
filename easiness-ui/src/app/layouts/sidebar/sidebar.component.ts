@@ -32,7 +32,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         this._activateMenuDropdown();
-        this._scrollElement();
       }
     });
   }
@@ -42,7 +41,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
     // document.body.setAttribute('data-sidebar', 'dark');
     this.lightSidebar();
 
-    this._scrollElement();
   }
   /**
    * Change the layout onclick
@@ -69,17 +67,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
     } else if (this.menu) {
       this.menu.dispose();
     }
-  }
-  _scrollElement() {
-    setTimeout(() => {
-      if (document.getElementsByClassName("mm-active").length > 0) {
-        const currentPosition = document.getElementsByClassName("mm-active")[0]['offsetTop'];
-        if (currentPosition > 500)
-        if(this.scrollRef.SimpleBar.getScrollElement() !== null)
-          this.scrollRef.SimpleBar.getScrollElement().scrollTop =
-            currentPosition + 300;
-      }
-    }, 300);
   }
 
   /**
@@ -177,7 +164,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
     for (let i = 0; i < links.length; i++) {
       paths.push(links[i]['pathname']);
     }
-    var itemIndex = paths.indexOf(window.location.pathname);
+    const itemIndex = paths.indexOf(window.location.pathname);
     if (itemIndex === -1) {
       const strIndex = window.location.pathname.lastIndexOf('/');
       const item = window.location.pathname.substr(0, strIndex).toString();
