@@ -2,17 +2,17 @@
   <form (ngSubmit)="searchProduct()" #fr="ngForm">
     <div class="row">
       <div class="form-group col-md-6 col-lg-4 col-xl-3">
-        <label for="name">Name</label>
+        <label class="form-label text-dark" for="name">Name</label>
         <input type="text" class="form-control" name="name" id="name" maxlength="30" placeholder="Enter product name.."
           [(ngModel)]="searchOptions.name" />
       </div>
       <div class="form-group col-md-6 col-lg-4 col-xl-3">
-        <label for="type">Type</label>
+        <label class="form-label text-dark" for="type">Type</label>
         <input type="text" class="form-control" name="type" id="type" maxlength="30" placeholder="Enter product type.."
           [(ngModel)]="searchOptions.type" />
       </div>
       <div class="form-group col-md-6 col-lg-4 col-xl-3">
-        <label for="brand">Brand</label>
+        <label class="form-label text-dark" for="brand">Brand</label>
         <input type="text" class="form-control" name="brand" id="brand" maxlength="30"
           placeholder="Enter product brand.." [(ngModel)]="searchOptions.brand" />
       </div>

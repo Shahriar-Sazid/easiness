@@ -19,7 +19,7 @@ public interface AccountService {
 
     ResponseEntity<ByteArrayResource> downloadAccountReport(Map<String, String> parameterMap);
 
-    List<AccountEntity> getAllAccount();
+    Map<Long, AccountEntity> getAllAccount();
 
     void updateAccountBalance(List<Payment> payments);
 }

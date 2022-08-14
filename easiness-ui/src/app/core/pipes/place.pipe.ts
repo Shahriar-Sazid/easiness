@@ -4,7 +4,6 @@ import { PlaceService } from '../services/place.service';
 @Pipe({
   name: 'place'
 })
-
 export class PlacePipe implements PipeTransform {
   constructor(private placeService: PlaceService) {}
 

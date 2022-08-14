@@ -8,6 +8,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { UIModule } from 'src/app/shared/ui/ui.module';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { DirectivesModule } from 'src/app/core/directives/directive.module';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { DirectivesModule } from 'src/app/core/directives/directive.module';
     NgxDatatableModule,
     NgbTooltipModule,
     DirectivesModule,
-    UIModule
+    UIModule,
+    PipesModule
   ],
   exports: [
     ProductComponent

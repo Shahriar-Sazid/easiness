@@ -7,7 +7,7 @@
         </button>
     </div>
     <div class="modal-body">
-        <app-confirm-payment #acp [mode]="mode" [inModal]="true" (onPaymentProcessed)="processPayment($event)"></app-confirm-payment>
+        <app-confirm-payment #acp [mode]="mode" [inModal]="true" (paymentProcessed)="processPayment($event)"></app-confirm-payment>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="initiatePayment(acp)" [disabled]="!acp.paymentForm.valid">

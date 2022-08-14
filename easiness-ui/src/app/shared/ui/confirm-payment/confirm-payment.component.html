@@ -8,12 +8,12 @@
               <button id="close-btn" class="btn btn-danger rounded-circle" (click)="removeField(i)"><i
                   class="fas fa-times"></i></button>
             </div>
-            
-            <label for="targetAccount" [ngClass]="['col-form-label', inModal? '': 'col-md-3']"> {{modeOptions[mode].label }} <span
+
+            <label class="form-label text-dark" for="targetAccount" [ngClass]="['col-form-label', inModal? '': 'col-md-3']"> {{modeOptions[mode].label }} <span
                 class="text-danger">*</span></label>
 
             <div [ngClass]="[inModal? '': 'col-md-9']">
-              <select formControlName="targetAccount" id="targetAccount" class="form-control">
+              <select formControlName="targetAccount" id="targetAccount" class="form-select">
                 <option hidden [ngValue]="null">
                   Please select
                 </option>
@@ -26,11 +26,11 @@
             <br>
             <br>
             <br>
-            <label for="amount" [ngClass]="['col-form-label', inModal? '': 'col-md-3']">Amount(&#2547;) <span
+            <label class="form-label text-dark" for="amount" [ngClass]="['col-form-label', inModal? '': 'col-md-3']">Amount(&#2547;) <span
                 class="text-danger">*</span></label>
 
             <div [ngClass]="[inModal? '': 'col-md-9']">
-              <input onlyNumber [ignoreChar]="','" inputWithComma type="text" for="amount" formControlName="amount"
+              <input onlyNumber [ignoreChar]="','" inputWithComma type="text" id="amount" formControlName="amount"
                 [ngClass]="['form-control', 'fs-5', 'fw-bold', 'font-monospace', modeOptions[mode].cssClass]">
               <span class="text-monospace text-danger">
                 {{ util.getValidationError(paymentForm, "formList." + i +".amount") }} </span>

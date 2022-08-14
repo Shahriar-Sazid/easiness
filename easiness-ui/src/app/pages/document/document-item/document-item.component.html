@@ -121,7 +121,7 @@
                     </div>
                   </div>
                   <span
-                    *ngIf="viewOptions.availableQty && editPermission && (quantityInput == document.activeElement || unitSelect == document.activeElement)"
+                    *ngIf="viewOptions.availableQty && editPermission && (quantityInput === document.activeElement || unitSelect === document.activeElement)"
                     type="button" class="border border-info rounded-pill bg-info bg-soft text-center">
                     Available: {{item.entity.quantity?.toFixed(2).concat(' ').concat(item.entity.unitTxt)}}
                   </span>

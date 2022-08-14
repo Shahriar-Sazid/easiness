@@ -95,7 +95,7 @@
                                     >
                                     <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</ngb-alert>
                                         <div class="mb-3">
-                                            <label for="useremail">Email</label>
+                                            <label class="form-label text-dark" for="useremail">Email</label>
                                             <input type="email" formControlName="email" 
                                             [ngClass]="{ 'is-invalid': submitted && f.email.errors }" class="form-control" id="useremail"
                                                 placeholder="Enter email">

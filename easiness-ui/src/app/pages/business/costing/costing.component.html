@@ -8,12 +8,12 @@
   <div class="modal-body">
     <form [formGroup]="costingForm">
       <div class="form-group my-3">
-        <label for="info-box">Product Details </label>
+        <label class="form-label text-dark" for="info-box">Product Details </label>
         <app-info-box> {{ getProductDetails() }} </app-info-box>
       </div>
 
       <div *ngIf="mode == 'buy'" class="form-group my-3">
-        <label for="place">Place </label>
+        <label class="form-label text-dark" for="place">Place </label>
         <div class="input-group">
           <select id="place" formControlName="place" class="form-select">
             <option *ngFor="let place of placeService.placeRecord | keyvalue" [value]="place.value.id">
@@ -34,7 +34,7 @@
 
 
       <div class="form-group my-3">
-        <label for="quantity">Quantity <span *ngIf="mode == 'sell'" type="button" class="border border-info rounded-pill bg-info bg-soft">
+        <label class="form-label text-dark" for="quantity">Quantity <span *ngIf="mode == 'sell'" type="button" class="border border-info rounded-pill bg-info bg-soft">
             Available: {{selectedEntity.quantity?.toFixed(2).concat(' ').concat(selectedEntity.unitTxt)}}
           </span> </label>
         <input type="number" class="form-control" id="quantity" formControlName="quantity" onlyNumber />
@@ -42,7 +42,7 @@
       </div>
 
       <div class="form-group my-3">
-        <label for="unit">Unit </label>
+        <label class="form-label text-dark" for="unit">Unit </label>
         <select class="form-control" id="unit" formControlName="unit">
           <option hidden [ngValue]="null"> Please select </option>
           <option *ngFor="let unit of unitService.unitData.unitList" [value]="unit.id">{{unit.name}}</option>
@@ -50,12 +50,12 @@
         <span class="text-monospace text-danger"> {{ util.getValidationError(costingForm, "unit") }} </span>
       </div>
       <div *ngIf="mode == 'buy'" class="form-group my-3">
-        <label for="cost">Cost/unit (&#2547;)</label>
+        <label class="form-label text-dark" for="cost">Cost/unit (&#2547;)</label>
         <input type="number" class="form-control" id="cost" formControlName="cost" onlyNumber />
         <span class="text-monospace text-danger"> {{ util.getValidationError(costingForm, "cost") }} </span>
       </div>
       <div *ngIf="mode == 'sell'" class="form-group my-3">
-        <label for="price">Price/unit (&#2547;) <span 
+        <label class="form-label text-dark" for="price">Price/unit (&#2547;) <span 
             class="mx-1 border border-info rounded-pill bg-info bg-soft"> Cost/{{selectedEntity.unitTxt}}: {{selectedEntity.cost?.toFixed(2)}}
             (&#2547;)</span>
           <span *ngIf="getProfitPercentage() >= 0" class="mx-1 border border-success rounded-pill bg-success bg-soft">{{

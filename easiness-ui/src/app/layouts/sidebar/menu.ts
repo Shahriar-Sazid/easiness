@@ -64,4 +64,10 @@ export const MENU: MenuItem[] = [
     icon: "fas fa-file-invoice",
     link: "/document/list/purchase-order",
   },
+  {
+    id: 11,
+    label: "COMMONS.TX_HISTORY",
+    icon: "fas fa-list",
+    link: "/accounting/tx/history"
+  }
 ];

@@ -16,6 +16,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { StockComponent } from './stock/stock.component';
 import { DocumentModule } from '../document/document.module';
 import { DirectivesModule } from 'src/app/core/directives/directive.module';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { DirectivesModule } from 'src/app/core/directives/directive.module';
     DirectivesModule,
     ProductModule,
     DocumentModule,
+    PipesModule
   ],
 })
 export class BusinessModule { }

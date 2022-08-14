@@ -91,7 +91,7 @@
                                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
                                     <div class="mb-3">
-                                        <label for="email">Email</label>
+                                        <label class="form-label text-dark" for="email">Email</label>
                                         <input type="email" class="form-control" id="email" formControlName="email"
                                             [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
                                             placeholder="Enter email">
@@ -107,11 +107,11 @@
                                             <a routerLink="/account/recoverpwd-2" class="text-muted">Forgot
                                                 password?</a>
                                         </div>
-                                        <label for="userpassword">Password</label>
+                                        <label class="form-label text-dark" for="userpassword">Password</label>
                                         <div class="input-group auth-pass-inputgroup">
                                             <input type="password" class="form-control" formControlName="password"
                                                 [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
-                                                placeholder="Enter password" aria-label="Password"
+                                                placeholder="Enter password" aria-label="Password" id="userpassword"
                                                 aria-describedby="password-addon">
                                             <button class="btn btn-light " type="button" id="password-addon"><i
                                                     class="mdi mdi-eye-outline"></i></button>

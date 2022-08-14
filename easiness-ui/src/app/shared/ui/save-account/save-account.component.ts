@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Account } from 'src/app/core/models/account.model';
-import { AccountService } from 'src/app/core/services/account.service';
+import { Account } from 'src/app/core/models/accounting.model';
+import { AccountingService } from 'src/app/core/services/accounting.service';
 import { UtilService } from 'src/app/core/services/util.service';
 import Swal from 'sweetalert2';
 
@@ -14,13 +14,13 @@ import Swal from 'sweetalert2';
 export class SaveAccountComponent {
   @ViewChild('accountModal') accountModal: any;
   updateMode: boolean;
-  @Input('selectedAccount') selectedAccount: Account;
-  @Output('onAccountSaved') onAccountSaved: EventEmitter<void> = new EventEmitter();
+  @Input() selectedAccount: Account;
+  @Output() onAccountSaved: EventEmitter<void> = new EventEmitter();
   accountForm: UntypedFormGroup;
 
   constructor(private fb: UntypedFormBuilder,
     public util: UtilService,
-    private accountService: AccountService,
+    private accountService: AccountingService,
     private modalService: NgbModal) { }
 
   addOrUpdateAccount() {

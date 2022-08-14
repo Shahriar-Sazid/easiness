@@ -8,10 +8,12 @@ import { UIModule } from 'src/app/shared/ui/ui.module';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { AccountComponent } from './account/account.component';
 import { DirectivesModule } from 'src/app/core/directives/directive.module';
+import { TxHistoryComponent } from './tx-history/tx-history.component';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
 
 
 @NgModule({
-  declarations: [AccountComponent],
+  declarations: [AccountComponent, TxHistoryComponent],
   imports: [
     CommonModule,
     AccountRoutingModule,
@@ -20,7 +22,8 @@ import { DirectivesModule } from 'src/app/core/directives/directive.module';
     ReactiveFormsModule,
     UIModule,
     NgbTooltipModule,
-    DirectivesModule
-  ]
+    DirectivesModule,
+    PipesModule
+  ],
 })
 export class AccountingModule { }

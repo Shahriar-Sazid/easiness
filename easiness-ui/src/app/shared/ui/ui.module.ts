@@ -25,6 +25,7 @@ import { InfoBoxComponent } from './info-box/info-box.component';
 import { ConfirmPaymentComponent } from "./confirm-payment/confirm-payment.component";
 import { PaymentModalComponent } from './payment-modal/payment-modal.component';
 import { DirectivesModule } from "src/app/core/directives/directive.module";
+import { PipesModule } from "src/app/core/pipes/pipes.module";
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { DirectivesModule } from "src/app/core/directives/directive.module";
     NgbAccordionModule,
     NgbTooltipModule,
     NgbModule,
-    DirectivesModule
+    DirectivesModule,
+    PipesModule
   ],
   exports: [
     PageTitleComponent,

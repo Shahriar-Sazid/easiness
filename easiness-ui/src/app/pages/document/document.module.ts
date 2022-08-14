@@ -15,6 +15,7 @@ import { DocumentItemFooterComponent } from './document-item-footer/document-ite
 import { DocumentItemHeaderComponent } from './document-item-header/document-item-header.component';
 import { DocumentViewComponent } from './document-view/document-view.component';
 import { DirectivesModule } from 'src/app/core/directives/directive.module';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { DirectivesModule } from 'src/app/core/directives/directive.module';
     DirectivesModule,
     SharedModule,
     UIModule,
+    PipesModule
   ],
   exports: [
     DocumentComponent
