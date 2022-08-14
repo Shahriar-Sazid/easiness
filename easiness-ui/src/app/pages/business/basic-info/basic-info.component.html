@@ -5,7 +5,7 @@
         <form #basicInfoForm="ngForm">
 
           <div class="mb-3 row">
-            <label for="dateTime" class="col-md-3 col-form-label">Date <span class="text-danger">*</span></label>
+            <label class="form-label text-dark" for="dateTime" class="col-md-3 col-form-label">Date <span class="text-danger">*</span></label>
 
             <div class="col-md-9">
               <div class="input-group">
@@ -22,7 +22,7 @@
           </div>
 
           <div class="mb-3 row">
-            <label for="supplierOption" class="col-md-3 col-form-label"> {{ document.type == 'INVOICE'? 'Customer': 'Supplier' }} <span
+            <label class="form-label text-dark" for="supplierOption" class="col-md-3 col-form-label"> {{ document.type === 'INVOICE'? 'Customer': 'Supplier' }} <span
                 class="text-danger">*</span></label>
             <div class="col-md-9">
               <div class="input-group">
@@ -54,7 +54,7 @@
           </div>
 
           <div *ngIf="document.type == 'PURCHASE_ORDER'" class="mb-3 row">
-            <label for="placeOption" class="col-md-3 col-form-label">Place <span class="text-danger">*</span></label>
+            <label class="form-label text-dark" for="placeOption" class="col-md-3 col-form-label">Place <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <div class="input-group">
                 <select required id="placeOption" name="placeOption" class="form-select" [(ngModel)]="defaultPlace"

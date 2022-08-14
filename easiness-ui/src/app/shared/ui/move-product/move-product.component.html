@@ -9,12 +9,12 @@
     <div class="modal-body">
         <form [formGroup]="moveProductForm">
             <div class="form-group">
-                <label for="info-box">Stock details </label><br>
+                <label class="form-label text-dark" for="info-box">Stock details </label><br>
                 <app-info-box> {{ getStockDetail() }} </app-info-box>
             </div>
 
             <div class="form-group my-3">
-                <label for="quantity">Quantity <span type="button"
+                <label class="form-label text-dark" for="quantity">Quantity <span type="button"
                         class="border border-info rounded-pill bg-info bg-soft">
                         Available: {{selectedStock.quantity?.toFixed(2).concat(' ').concat(selectedStock.unitTxt)}}
                     </span> </label>
@@ -24,7 +24,7 @@
             </div>
 
             <div class="form-group my-3">
-                <label for="unit">Unit </label>
+                <label class="form-label text-dark" for="unit">Unit </label>
                 <select class="form-control" id="unit" formControlName="unit">
                     <option hidden [ngValue]="null"> Please select </option>
                     <option *ngFor="let unit of unitService.unitData.unitList" [value]="unit.id">{{unit.name}}</option>
@@ -33,7 +33,7 @@
             </div>
 
             <div class="form-group my-3">
-                <label for="toPlace"> Where to move? </label>
+                <label class="form-label text-dark" for="toPlace"> Where to move? </label>
                 <select class="form-control" id="toPlace" formControlName="toPlace">
                     <option hidden [ngValue]="null"> Please select </option>
                     <option *ngFor="let place of placeService.placeRecord | keyvalue" [value]="place.key">

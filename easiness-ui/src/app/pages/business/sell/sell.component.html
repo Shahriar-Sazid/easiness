@@ -29,7 +29,7 @@
                 <div class="card">
                   <div class="card-body">
   
-                    <app-stock [viewMode]="'sell'" (onStockSelected)="costingModal.openCostingModal($event)"></app-stock>
+                    <app-stock [viewMode]="'sell'" (stockSelected)="costingModal.openCostingModal($event)"></app-stock>
   
                   </div>
                 </div>
@@ -72,7 +72,7 @@
                 </ng-template>
                 <div class="row justify-content-center">
                   <div class="col-md-8 col-lg-6">
-                    <app-confirm-payment #acp [mode]="'to'" [inModal]="false" (onPaymentProcessed)="sell($event)">
+                    <app-confirm-payment #acp [mode]="'to'" [inModal]="false" (paymentProcessed)="sell($event)">
                       <button class="btn btn-primary" (click)="acp.getPaymentData()"> Sell </button>
                     </app-confirm-payment>
                   </div>

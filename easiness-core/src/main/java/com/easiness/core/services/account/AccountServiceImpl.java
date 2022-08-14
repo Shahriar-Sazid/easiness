@@ -86,8 +86,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<AccountEntity> getAllAccount() {
-        return accountRepository.findAll();
+    public Map<Long, AccountEntity> getAllAccount() {
+        return accountRepository.findAll().stream()
+                .collect(Collectors.toMap(AccountEntity::getId, accountEntity -> accountEntity));
     }
 
     @Override

@@ -2,7 +2,7 @@
   <form (ngSubmit)="searchPeople()" #fr="ngForm">
     <div class="row">
       <div class="form-group col-md-6 col-lg-4 col-xl-3">
-        <label for="name">Name</label>
+        <label class="form-label text-dark" for="name">Name</label>
         <input
           type="text"
           class="form-control"
@@ -14,7 +14,7 @@
         />
       </div>
       <div class="form-group col-md-6 col-lg-4 col-xl-3">
-        <label for="contactNo">Contact No</label>
+        <label class="form-label text-dark" for="contactNo">Contact No</label>
         <input
           type="text"
           class="form-control"
@@ -81,7 +81,7 @@
         </button>
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column *ngFor="let column of columns" [name]="column.name"></ngx-datatable-column>
+    <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [prop]="column.prop" [pipe]="column.pipe"></ngx-datatable-column>
   </ngx-datatable>
 </div>
 

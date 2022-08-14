@@ -8,6 +8,7 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { UIModule } from 'src/app/shared/ui/ui.module';
 import { DirectivesModule } from 'src/app/core/directives/directive.module';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { DirectivesModule } from 'src/app/core/directives/directive.module';
     NgbTooltipModule,
     UIModule,
     DirectivesModule,
+    PipesModule
   ]
 })
 export class PeopleModule { }

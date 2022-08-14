@@ -322,6 +322,7 @@
     "STOCK": "Stock",
     "DOCUMENT": "Document",
     "INVOICE": "Invoice",
-    "PURCHASE_ORDER": "Purchase Order"
+    "PURCHASE_ORDER": "Purchase Order",
+    "TX_HISTORY": "Transaction History"
   }
 }

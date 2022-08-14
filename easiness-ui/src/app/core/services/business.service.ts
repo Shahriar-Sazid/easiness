@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Stock } from '../models/stock.model';
 import { Page } from '../models/page.model';
 import { Document, Payment } from '../models/document.model';
+import clone from 'just-clone';
 
 @Injectable({ providedIn: 'root' })
 export class BusinessService {
@@ -24,7 +25,7 @@ export class BusinessService {
 
     buy(purchaseOrder: Document): Observable<any> {
         this.util.deepTrim(purchaseOrder);
-        purchaseOrder = this.util.clone(purchaseOrder);
+        purchaseOrder = clone(purchaseOrder);
         purchaseOrder['supplier'] = purchaseOrder.people;
         purchaseOrder.people = undefined;
         purchaseOrder.items.forEach((item) => {
@@ -38,7 +39,7 @@ export class BusinessService {
 
     sell(invoice: Document): Observable<any> {
         this.util.deepTrim(invoice);
-        invoice = this.util.clone(invoice);
+        invoice = clone(invoice);
         invoice['customer'] = invoice.people;
         invoice.people = undefined;
         invoice.items.forEach((item) => {

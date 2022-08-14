@@ -27,7 +27,7 @@ public class AccountController {
     }
 
     @GetMapping("/all")
-    List<AccountEntity> getAllAccount() {
+    Map<Long, AccountEntity> getAllAccount() {
         return accountService.getAllAccount();
     }
 

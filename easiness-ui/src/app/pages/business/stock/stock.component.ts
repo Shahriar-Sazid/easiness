@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TableColumn, ColumnMode } from '@swimlane/ngx-datatable';
+import clone from 'just-clone';
 import { Page } from 'src/app/core/models/page.model';
-import { Product } from 'src/app/core/models/product.model';
 import { Stock } from 'src/app/core/models/stock.model';
 import { PlacePipe } from 'src/app/core/pipes/place.pipe';
-import { UnitPipe } from 'src/app/core/pipes/unit.pipe';
 import { BusinessService } from 'src/app/core/services/business.service';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { environment } from 'src/environments/environment';
@@ -16,7 +15,7 @@ import { environment } from 'src/environments/environment';
   providers: [PlacePipe]
 })
 export class StockComponent implements OnInit {
-  @Output() onStockSelected: EventEmitter<any> = new EventEmitter();
+  @Output() stockSelected: EventEmitter<any> = new EventEmitter();
   @Input() viewMode: 'dedicated' | 'sell' = 'dedicated';
   stockPage: Page<Stock> = new Page<Stock>();
   columns: TableColumn[];
@@ -26,7 +25,6 @@ export class StockComponent implements OnInit {
   isLoading = false;
   constructor(private businessService: BusinessService, public placeService: PlaceService, private placePipe: PlacePipe) {
     this.searchStock = this.searchStock.bind(this);
-    this.placePipe = new PlacePipe(placeService);
   }
 
 
@@ -62,7 +60,7 @@ export class StockComponent implements OnInit {
     if (!this.placeService.placeRecord) {
       this.placeService.getAllPlace();
     }
-    this.searchOptions = JSON.parse(JSON.stringify(this.defaultSearchOptions));
+    this.searchOptions = clone(this.defaultSearchOptions);
 
     this.columns = [
       {
@@ -108,7 +106,7 @@ export class StockComponent implements OnInit {
   }
 
   resetForm() {
-    this.searchOptions = JSON.parse(JSON.stringify(this.defaultSearchOptions));
+    this.searchOptions = clone(this.defaultSearchOptions);
     this.search();
   }
 
@@ -124,7 +122,7 @@ export class StockComponent implements OnInit {
 
   searchStock() {
     this.searchOptions.page = 1;
-    this.searchedOptions = JSON.parse(JSON.stringify(this.searchOptions));
+    this.searchedOptions = clone(this.searchOptions);
     this.search();
   }
 
@@ -150,7 +148,7 @@ export class StockComponent implements OnInit {
   }
 
   selectStock() {
-    this.onStockSelected.emit(this.selectedStock);
+    this.stockSelected.emit(this.selectedStock);
   }
 }
 

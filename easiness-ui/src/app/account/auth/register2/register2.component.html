@@ -95,7 +95,7 @@
                                     <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</ngb-alert>
 
                                     <div class="mb-3">
-                                        <label for="username">Username</label>
+                                        <label class="form-label text-dark" for="username">Username</label>
                                         <input type="text" formControlName="username" class="form-control" id="username"
                                             [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
                                             placeholder="Enter username">
@@ -105,7 +105,7 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="useremail">Email</label>
+                                        <label class="form-label text-dark" for="useremail">Email</label>
                                         <input type="email" formControlName="email"
                                             [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
                                             class="form-control" id="useremail" placeholder="Enter email">
@@ -116,7 +116,7 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="userpassword">Password</label>
+                                        <label class="form-label text-dark" for="userpassword">Password</label>
                                         <input type="password" formControlName="password"
                                             [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
                                             class="form-control" id="userpassword" placeholder="Enter password">

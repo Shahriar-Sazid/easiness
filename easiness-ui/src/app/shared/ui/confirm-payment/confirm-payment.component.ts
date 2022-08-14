@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { smoothExpandCollapse } from 'src/app/core/animations/animations';
 import { Payment } from 'src/app/core/models/document.model';
-import { AccountService } from 'src/app/core/services/account.service';
+import { AccountingService } from 'src/app/core/services/accounting.service';
 import { UtilService } from 'src/app/core/services/util.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class ConfirmPaymentComponent implements OnInit {
   @Input() mode: 'from'| 'to' = 'to';
   @Input() inModal;
   paymentForm: UntypedFormGroup;
-  @Output() onPaymentProcessed = new EventEmitter<Payment[]>();
+  @Output() paymentProcessed = new EventEmitter<Payment[]>();
 
   modeOptions = {
     from: {
@@ -31,7 +31,7 @@ export class ConfirmPaymentComponent implements OnInit {
   }
 
   constructor(private fb: UntypedFormBuilder,
-    public accountService: AccountService,
+    public accountService: AccountingService,
     public util: UtilService) {
     this.paymentForm = this.fb.group({
       formList: this.fb.array([]),
@@ -82,7 +82,7 @@ export class ConfirmPaymentComponent implements OnInit {
         }
         payments.push(payment);
       });
-      this.onPaymentProcessed.emit(payments);
+      this.paymentProcessed.emit(payments);
       console.log(payments);
     }
   }

@@ -3,10 +3,11 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { TableColumn, ColumnMode } from "@swimlane/ngx-datatable";
+import clone from "just-clone";
 import { validationMessages } from "src/app/core/helpers/validation/validation-message";
-import { Account } from "src/app/core/models/account.model";
+import { Account } from "src/app/core/models/accounting.model";
 import { Page } from "src/app/core/models/page.model";
-import { AccountService } from "src/app/core/services/account.service";
+import { AccountingService } from "src/app/core/services/accounting.service";
 import { UtilService } from "src/app/core/services/util.service";
 @Component({
   selector: "app-account",
@@ -33,7 +34,7 @@ export class AccountComponent implements OnInit {
   validationMessage = validationMessages;
 
   constructor(
-    private accountService: AccountService,
+    private accountService: AccountingService,
     private modalService: NgbModal,
     // private spinner: NgxSpinnerService,
     private fb: UntypedFormBuilder,
@@ -84,7 +85,7 @@ export class AccountComponent implements OnInit {
     ];
 
     this.activatedRouter.queryParams.subscribe((params) => {
-      this.searchedOptions = this.util.clone(params);
+      this.searchedOptions = clone(params);
       this.search();
     });
   }
@@ -92,7 +93,7 @@ export class AccountComponent implements OnInit {
   searchAccount() {
     this.searchOptions.page = 1;
     this.searchOptions.pageSize = 10;
-    this.searchedOptions = this.util.clone(this.searchOptions);
+    this.searchedOptions = clone(this.searchOptions);
     this.router.navigate([], {
       queryParams: this.searchedOptions,
     });

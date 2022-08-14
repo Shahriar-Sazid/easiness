@@ -1,46 +1,50 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ColumnMode, TableColumn } from '@swimlane/ngx-datatable';
-import { map } from 'rxjs/operators';
-import { DateRange, DocumentSearchRes, DocumentType } from 'src/app/core/models/document.model';
+import { TableColumn, ColumnMode } from '@swimlane/ngx-datatable';
+import clone from 'just-clone';
+import { Tx, TxSearchOptions, TxType } from 'src/app/core/models/accounting.model';
+import { DateRange } from 'src/app/core/models/document.model';
 import { Page } from 'src/app/core/models/page.model';
-import { DocumentService } from 'src/app/core/services/document.service';
+import { AccountPipe } from 'src/app/core/pipes/account.pipe';
+import { AmountPipe } from 'src/app/core/pipes/amount.pipe';
+import { AccountingService } from 'src/app/core/services/accounting.service';
 import { UtilService } from 'src/app/core/services/util.service';
 import { DateRangeComponent } from 'src/app/shared/ui/date-range/date-range.component';
 
 @Component({
-  selector: 'app-document-list',
-  templateUrl: './document-list.component.html',
-  styleUrls: ['./document-list.component.scss']
+  selector: 'app-tx-history',
+  templateUrl: './tx-history.component.html',
+  styleUrls: ['./tx-history.component.scss'],
+  providers: [AmountPipe, AccountPipe]
 })
-export class DocumentListComponent implements OnInit {
+export class TxHistoryComponent implements OnInit {
+
   @ViewChild('dr', { static: true }) dateRangeComponent: DateRangeComponent;
   @Input() viewMode: 'dedicated' | 'buy' = 'dedicated';
-  documentPage: Page<DocumentSearchRes> = new Page<DocumentSearchRes>();
+  txPage: Page<Tx> = new Page<Tx>();
   columns: TableColumn[];
   columnMode = ColumnMode;
+  TxTypes = TxType;
 
   isLoading = false;
 
-  searchOptions: SearchOptions = {} as SearchOptions;
+  searchOptions: TxSearchOptions = {} as TxSearchOptions;
 
-  searchedOptions: SearchOptions;
-  selectedDocument: DocumentSearchRes;
+  searchedOptions: TxSearchOptions;
+  selectedTx: Tx;
 
   constructor(
-    private documentService: DocumentService,
-    private route: ActivatedRoute,
     private router: Router,
     public util: UtilService,
+    public accountingService: AccountingService,
     private datePipe: DatePipe,
+    private amountPipe: AmountPipe,
+    private accountPipe: AccountPipe
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.searchOptions.type = params['type'] === 'invoice' ? DocumentType.INVOICE : DocumentType.PURCHASE_ORDER;
-      this.initializeState();
-    });
+    this.initializeState();
   }
 
   initializeState() {
@@ -55,25 +59,32 @@ export class DocumentListComponent implements OnInit {
         cellClass: "text-center",
       },
       {
-        name: "Total",
+        name: "Amount",
         cellClass: "text-center",
+        pipe: this.amountPipe
+      },
+      {
+        name: "From Account",
+        cellClass: "text-center",
+        prop: 'fromAccountId',
+        pipe: this.accountPipe
+      },
+      {
+        name: "To Account",
+        cellClass: "text-center",
+        prop: 'toAccountId',
+        pipe: this.accountPipe
       },
     ];
 
     this.resetForm();
 
-    if (this.searchOptions.type === DocumentType.INVOICE) {
-      this.columns.push({
-        name: "Profit",
-        cellClass: "text-center",
-      })
-    }
   }
 
-  searchDocument() {
+  searchTx() {
     this.searchOptions.page = 1;
     this.searchOptions.pageSize = 5;
-    this.searchedOptions = JSON.parse(JSON.stringify(this.searchOptions));
+    this.searchedOptions = clone(this.searchOptions);
     this.search();
   }
 
@@ -84,10 +95,10 @@ export class DocumentListComponent implements OnInit {
 
   search() {
     this.isLoading = true;
-    this.documentService.searchDocument(this.searchedOptions).subscribe(
+    this.accountingService.searchTx(this.searchedOptions).subscribe(
       (data) => {
         console.log(data);
-        this.documentPage = data;
+        this.txPage = data;
       },
       (err) => {
         console.error(err);
@@ -112,23 +123,20 @@ export class DocumentListComponent implements OnInit {
     };
     reportOptions.page = 1;
     reportOptions.pageSize = 10000000;
-    // this.documentService.downloadAsReport(reportOptions).subscribe((data) => {
+    // this.txService.downloadAsReport(reportOptions).subscribe((data) => {
     //   this.util.downLoadFile(data, "application/pdf");
     // });
   }
 
   resetForm() {
-    this.searchOptions = {} as SearchOptions;
+    this.searchOptions = {} as TxSearchOptions;
     this.dateRangeComponent.reset();
-    this.searchOptions.type =
-      this.route.snapshot.paramMap.get('type') === 'invoice' ?
-        DocumentType.INVOICE : DocumentType.PURCHASE_ORDER;
-    this.searchDocument();
+    this.searchTx();
   }
 
-  onActivate(event: { row: DocumentSearchRes }) {
+  onActivate(event: { row: Tx }) {
     // console.log(event.row);
-    this.selectedDocument = event.row;
+    this.selectedTx = event.row;
   }
 
   selectDate(range: DateRange) {
@@ -136,15 +144,7 @@ export class DocumentListComponent implements OnInit {
   }
 
   goToDetails() {
-    this.router.navigateByUrl(`/document/details/${this.selectedDocument.id}`)
+    this.router.navigateByUrl(`/tx/details/${this.selectedTx.id}`)
   }
 }
 
-type SearchOptions = {
-  from: Date;
-  to: Date;
-  peopleName: string;
-  type: DocumentType;
-  page: number;
-  pageSize: number;
-};

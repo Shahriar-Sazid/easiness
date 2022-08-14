@@ -1,0 +1,86 @@
+<app-search-options panelTitle="Search Transaction">
+    <form (ngSubmit)="searchTx()" #fr="ngForm">
+        <div class="row">
+            <div class="form-group col-md-6 col-lg-4 col-xl-3">
+                <app-date-range #dr (dateSelected)="selectDate($event)"></app-date-range>
+            </div>
+            <div class="form-group col-md-6 col-lg-4 col-xl-3">
+                <label class="form-label text-dark" for="account">Account</label>
+                <select name="account" id="account" class="form-select" [(ngModel)]="searchOptions.account">
+                    <option hidden [ngValue]="undefined">
+                        Please select
+                    </option>
+                    <option *ngFor="let account of accountingService.accountRecord | keyvalue" [value]="account.key">
+                        {{account.value.accountName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 col-lg-4 col-xl-3">
+                <label class="form-label text-dark" for="type"  >Transaction Type</label>
+                <select name="type" id="type"  [(ngModel)]="searchOptions.type" class="form-select">
+                    <option hidden [ngValue]="undefined">
+                        Please select
+                    </option>
+                    <option *ngFor="let txType of TxTypes | keyvalue" [value]="txType.key">
+                        {{txType.value.text}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 col-lg-4 col-xl-3">
+                <label class="form-label text-dark" for="peopleName">People Name</label>
+                <input type="text" class="form-control" name="peopleName" id="peopleName" maxlength="30"
+                    placeholder="Enter people name.." [(ngModel)]="searchOptions.peopleName" />
+            </div>
+
+        </div>
+
+        <hr />
+
+        <div class="d-flex justify-content-end">
+            <div>
+                <button type="submit" class="btn btn-primary mx-1" [disabled]="!fr.valid">
+                    Search
+                </button>
+                <button type="button" class="btn btn-secondary ml-1 mr-3" (click)="resetForm()">
+                    Reset
+                </button>
+            </div>
+        </div>
+    </form>
+</app-search-options>
+<br />
+<div class="d-flex bg-white justify-content-end" role="group">
+
+    <button type="button" class="btn btn-outline-secondary" [ngbTooltip]="'Download Report'"
+        (click)="downloadAsReport()">
+        <i class="fa fa-download" aria-hidden="true"></i>
+    </button>
+</div>
+<ngx-datatable class="material" [rows]="txPage.content" [columns]="columns" [columnMode]="columnMode.force"
+    [loadingIndicator]="isLoading" rowHeight="auto" [externalPaging]="true" [count]="txPage.totalElements"
+    [offset]="txPage.number" [footerHeight]="-1" [headerHeight]="-1" [limit]="txPage.size"
+    (activate)="onActivate($event)" (page)="changePage($event)">
+    <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [prop]="column.prop" [pipe]="column.pipe">
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Options" [headerClass]="'text-center'">
+        <ng-template ngx-datatable-cell-template>
+            <div class="d-flex justify-content-center align-items-center">
+                <button type="button" class="btn btn-sm btn-primary mx-1" (click)="goToDetails()">
+                    Details
+                </button>
+                <button *ngIf="searchOptions.type === 'PURCHASE_ORDER'" type="button"
+                    (click)="apm.openModal('from', selectedTx.id)" class="btn btn-sm btn-danger mx-1">
+                    <i class="fas fa-minus-circle"></i>
+                    Make Payment
+                </button>
+                <button *ngIf="searchOptions.type === 'INVOICE'" type="button"
+                    (click)="apm.openModal('to', selectedTx.id)" class="btn btn-sm btn-success mx-1">
+                    <i class="fas fa-plus-circle"></i>
+                    Receive Payment
+                </button>
+            </div>
+        </ng-template>
+    </ngx-datatable-column>
+</ngx-datatable>
+
+
+<app-payment-modal #apm></app-payment-modal>

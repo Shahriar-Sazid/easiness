@@ -6,6 +6,7 @@ import { Page } from "src/app/core/models/page.model";
 import { Product } from "src/app/core/models/product.model";
 import { ProductService } from "src/app/core/services/product.service";
 import { UtilService } from "src/app/core/services/util.service";
+import clone from "just-clone";
 
 @Component({
   selector: "app-product",
@@ -104,7 +105,7 @@ export class ProductComponent implements OnInit {
   searchProduct() {
     this.searchOptions.page = 1;
     this.searchOptions.pageSize = 10;
-    this.searchedOptions = JSON.parse(JSON.stringify(this.searchOptions));
+    this.searchedOptions = clone(this.searchOptions);
     this.search();
   }
 
