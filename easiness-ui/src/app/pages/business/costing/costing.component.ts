@@ -20,8 +20,8 @@ export class CostingComponent implements OnInit {
   @ViewChild('costingModal') content: any;
   costingForm: UntypedFormGroup;
   selectedEntity: Product & Stock;
-  @Input('selectedPlace') selectedPlace: any;
-  @Output() onAdded: EventEmitter<DocumentItem> = new EventEmitter();
+  @Input() selectedPlace: any;
+  @Output() add: EventEmitter<DocumentItem> = new EventEmitter();
   modalRef: NgbModalRef;
 
   constructor(private fb: UntypedFormBuilder,
@@ -110,7 +110,7 @@ export class CostingComponent implements OnInit {
         purchaseOrderItem[el] = this.costingForm.value[el]
       })
 
-      this.onAdded.emit(purchaseOrderItem);
+      this.add.emit(purchaseOrderItem);
       this.modalRef.close();
     }
   }
@@ -125,7 +125,7 @@ export class CostingComponent implements OnInit {
         documentItem[el] = this.costingForm.value[el]
       })
 
-      this.onAdded.emit(documentItem);
+      this.add.emit(documentItem);
       this.modalRef.close();
     }
   }

@@ -1,0 +1,82 @@
+<ng-template #txDetail let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Transaction details</h4>
+        <button type="button" class="btn btn-outline-secondary" aria-label="Close"
+            (click)="modal.dismiss('Cross click')">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="d-flex">
+            <div class="vr"></div>
+            <div class="flex-grow-1 mx-2">
+                <div class="mb-2 row">
+                    <label for="date" class="col-sm-4 col-form-label">Date</label>
+                    <div class="col-sm-8">
+                        <span type="text" readonly class="form-control-plaintext" id="date"
+                            [innerHTML]="tx.date | date: defaultDateFormat"></span>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <label for="type" class="col-sm-4 col-form-label">Type</label>
+                    <div class="col-sm-8">
+                        <span type="text" readonly class="form-control-plaintext" id="type"
+                            [innerHTML]="tx.type | txType"></span>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <label for="peopleName" class="col-sm-4 col-form-label">People Name</label>
+                    <div class="col-sm-8">
+                        <span type="text" readonly class="form-control-plaintext" id="peopleName"
+                            [innerHTML]="tx.peopleName"></span>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <label for="peopleName" class="col-sm-4 col-form-label">Amount</label>
+                    <div class="col-sm-8">
+                        <span type="text" readonly class="form-control-plaintext" id="peopleName"
+                            [innerHTML]="tx.amount | amount"> </span>
+                    </div>
+                </div>
+                <div *ngIf="tx.fromAccountId" class="mb-2 row">
+                    <label for="fromAccountId" class="col-sm-4 col-form-label">From Account</label>
+                    <div class="col-sm-8">
+                        <span type="text" readonly class="form-control-plaintext" id="fromAccountId"
+                            [innerHTML]="tx.fromAccountId | account"> </span>
+                    </div>
+                </div>
+                <div *ngIf="tx.toAccountId" class="mb-2 row">
+                    <label for="toAccountId" class="col-sm-4 col-form-label">To Account</label>
+                    <div class="col-sm-8">
+                        <span type="text" readonly class="form-control-plaintext" id="toAccountId"
+                            [innerHTML]="tx.toAccountId | account"> </span>
+                    </div>
+                </div>
+                <div *ngIf="tx.documentId" class="mb-2 row">
+                    <label for="documentId" class="col-sm-4 col-form-label">Document</label>
+                    <div class="col-sm-8">
+                        <span type="text" readonly class="form-control-plaintext" (click)="closeModal()"
+                            id="documentId">
+                            <a [routerLink]="'/document/details/' + tx.documentId.toString()" class="stretched-link">
+                                See Details</a>
+                        </span>
+                    </div>
+                </div>
+                <div *ngIf="tx.ref" class="mb-2 row">
+                    <label for="ref" class="col-sm-4 col-form-label">Reference</label>
+                    <div class="col-sm-8">
+                        <span type="text" readonly class="form-control-plaintext" id="ref" [innerHTML]="tx.ref"> </span>
+                    </div>
+                </div>
+                <div *ngIf="tx.purpose" class="mb-2 row">
+                    <label for="purpose" class="col-sm-4 col-form-label">Purpose</label>
+                    <div class="col-sm-8">
+                        <span type="text" readonly class="form-control-plaintext" id="ref" [innerHTML]="tx.purpose">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

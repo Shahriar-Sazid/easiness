@@ -11,6 +11,7 @@ import { AmountPipe } from 'src/app/core/pipes/amount.pipe';
 import { AccountingService } from 'src/app/core/services/accounting.service';
 import { UtilService } from 'src/app/core/services/util.service';
 import { DateRangeComponent } from 'src/app/shared/ui/date-range/date-range.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-tx-history',
@@ -52,7 +53,7 @@ export class TxHistoryComponent implements OnInit {
       {
         name: "Date",
         cellClass: "text-center",
-        pipe: { transform: (value: string) => this.datePipe.transform(value, 'dd-MM-yy hh:mm a') }
+        pipe: { transform: (value: string) => this.datePipe.transform(value, environment.defaultDateFormat) }
       },
       {
         name: "People Name",

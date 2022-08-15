@@ -10,10 +10,11 @@ import { AccountComponent } from './account/account.component';
 import { DirectivesModule } from 'src/app/core/directives/directive.module';
 import { TxHistoryComponent } from './tx-history/tx-history.component';
 import { PipesModule } from 'src/app/core/pipes/pipes.module';
+import { TxDetailComponent } from './tx-detail/tx-detail.component';
 
 
 @NgModule({
-  declarations: [AccountComponent, TxHistoryComponent],
+  declarations: [AccountComponent, TxHistoryComponent, TxDetailComponent],
   imports: [
     CommonModule,
     AccountRoutingModule,

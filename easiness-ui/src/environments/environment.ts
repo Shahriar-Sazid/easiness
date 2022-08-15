@@ -16,7 +16,8 @@ export const environment = {
     measurementId: 'G-6L8TCTHC4H'
   },
   apiBaseUrl: "127.0.0.1:8080",
-  pageSize: 5
+  pageSize: 5,
+  defaultDateFormat: 'dd-MM-yy hh:mm a'
 };
 
 /*

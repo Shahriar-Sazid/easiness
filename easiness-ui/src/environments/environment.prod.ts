@@ -11,5 +11,6 @@ export const environment = {
     appId: '',
     measurementId: ''
   },
-  pageSize: 5
+  pageSize: 5,
+  defaultDateFormat: 'dd-MM-yy hh:mm a'
 };

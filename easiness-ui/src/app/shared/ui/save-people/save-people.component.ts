@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { Component, Input, ViewChild } from "@angular/core";
 import { Validators, UntypedFormArray, UntypedFormControl, UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { PeopleService } from "src/app/core/services/people.service";
@@ -11,18 +11,18 @@ import Swal from "sweetalert2";
   templateUrl: "./save-people.component.html",
   styleUrls: ["./save-people.component.scss"],
 })
-export class SavePeopleComponent implements OnInit {
+export class SavePeopleComponent {
   @ViewChild('peopleModal') content: any;
   updateMode: boolean;
   peopleForm: UntypedFormGroup;
-  @Input('callback') callback: Function;
-  @Input('selectedPeople') selectedPeople: any;
+  @Input() callback: Function;
+  @Input() selectedPeople: any;
   constructor(private fb: UntypedFormBuilder,
     public util: UtilService,
     private peopleService: PeopleService,
-    private modalService: NgbModal) {}
+    private modalService: NgbModal) { }
 
-  ngOnInit(): void {}
+
   openPeopleModal(updateMode: boolean) {
     this.modalService.open(this.content, {
       backdrop: "static",

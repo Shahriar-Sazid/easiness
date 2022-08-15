@@ -36,12 +36,15 @@ export type TxSearchOptions = {
 export const TxType = {
   INCOME: {
     text: "Income",
+    html: `<span class="text-success fw-semibold"> <i class="fas fa-arrow-alt-circle-up"></i> Income </span>`
   },
   EXPENSE: {
     text: "Expense",
+    html: `<span class="text-danger fw-semibold"> <i class="fas fa-arrow-alt-circle-down"></i> Expense </span>`
   },
   BANK_TRANSFER: {
-    text: "Bank Transfer"
+    text: "Bank Transfer",
+    html: `<span class="text-primary fw-semibold"> <i class="fas fa-arrows-alt-h"></i> Bank Transfer </span>`
   },
 }
 

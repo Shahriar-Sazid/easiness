@@ -4,6 +4,7 @@ import { AmountPipe } from './amount.pipe';
 import { EmptyPlaceHolderPipe } from './empty-placeholder.pipe';
 import { PillPipe } from './pill.pipe';
 import { PlacePipe } from './place.pipe';
+import { TxTypePipe } from './tx-type.pipe';
 import { UnitPipe } from './unit.pipe';
 
 
@@ -14,7 +15,8 @@ import { UnitPipe } from './unit.pipe';
         PlacePipe,
         UnitPipe,
         AmountPipe,
-        AccountPipe
+        AccountPipe,
+        TxTypePipe
     ],
     declarations: [
         EmptyPlaceHolderPipe,
@@ -22,7 +24,8 @@ import { UnitPipe } from './unit.pipe';
         PlacePipe,
         UnitPipe,
         AmountPipe,
-        AccountPipe
+        AccountPipe,
+        TxTypePipe
     ],
 })
 export class PipesModule { }
