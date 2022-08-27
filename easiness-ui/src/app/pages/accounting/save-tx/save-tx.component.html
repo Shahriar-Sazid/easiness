@@ -1,0 +1,92 @@
+<div class="container-lg">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-tile">
+                <h3 [ngClass]="[options.class]">
+                    <i [ngClass]="['fas', options.icon]"></i>
+                    New {{ options.text }}
+                </h3>
+                <hr>
+            </div>
+
+            <form [formGroup]="txForm">
+                <div class="row">
+                    <div *ngIf="options.view['fromAccount']" class="mb-3 col-md-6">
+                        <label for="fromAccount" class="form-label">From Account <span
+                                class="text-danger">*</span></label>
+                        <select formControlName="fromAccount" id="fromAccount" class="form-select">
+                            <option hidden [ngValue]="null">
+                                Please select
+                            </option>
+                            <option *ngFor="let account of accountingService.accountRecord | keyvalue"
+                                [value]="account.key">
+                                {{account.value.accountName}}</option>
+                        </select>
+                        <span class="text-monospace text-danger">
+                            {{ util.getValidationError(txForm, "fromAccount") }} </span>
+                    </div>
+
+                    <div *ngIf="options.view['toAccount']" class="mb-3 col-md-6">
+                        <label for="toAccount" class="form-label">To Account <span class="text-danger">*</span></label>
+                        <select formControlName="toAccount" id="toAccount" class="form-select">
+                            <option hidden [ngValue]="null">
+                                Please select
+                            </option>
+                            <option *ngFor="let account of accountingService.accountRecord | keyvalue"
+                                [value]="account.key">
+                                {{account.value.accountName}}</option>
+                        </select>
+                        <span class="text-monospace text-danger">
+                            {{ util.getValidationError(txForm, "toAccount") }} </span>
+                    </div>
+
+                    <div class="mb-3 col-md-6">
+                        <label for="amount" class="form-label">Amount <span class="text-danger">*</span></label>
+                        <input onlyNumber [ignoreChar]="','" inputWithComma type="text" id="amount"
+                            formControlName="amount"
+                            placeholder="Enter amount"
+                            [ngClass]="['form-control', 'fw-bold', 'font-monospace', options.class]">
+                        <span class="text-monospace text-danger">
+                            {{ util.getValidationError(txForm, "amount") }} </span>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="ref" class="form-label">Reference</label>
+                        <input type="text" id="ref" formControlName="ref" class="form-control" placeholder="xyz-xyz-xyz">
+                        <span class="text-monospace text-danger">
+                            {{ util.getValidationError(txForm, "ref") }} </span>
+                    </div>
+                    <div *ngIf="options.view['people']" class="mb-3 col-md-6">
+                        <label for="people" class="form-label">People <span class="form-text text-info">[Balance will be
+                                affected]</span></label>
+                        <select formControlName="people" id="people" class="form-select">
+                            <option hidden [ngValue]="null">
+                                Please select
+                            </option>
+                            <option *ngFor="let people of peopleService.peopleRecord | keyvalue" [value]="people.key">
+                                {{people.value.name}}</option>
+                        </select>
+                        <span class="text-monospace text-danger">
+                            {{ util.getValidationError(txForm, "people") }} </span>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="Tag" class="form-label">Tag <span class="form-text text-info">[This will be useful
+                                for grouping transactions]</span></label>
+                        <input id="typeahead-basic" placeholder="Stuff Salary" type="text" class="form-control" formControlName="tag"
+                            [ngbTypeahead]="search" />
+                    </div>
+                    <div class="mb-3 col-12">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea formControlName="description" class="form-control" placeholder="Optional description here.."></textarea>
+                        <span class="text-monospace text-danger">
+                            {{ util.getValidationError(txForm, "description") }} </span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end align-items-center">
+                    <button class="btn btn-primary mx-1"> Save </button>
+                    <button class="btn btn-secondary mx-1" (click)="goBack()"> Cancel </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

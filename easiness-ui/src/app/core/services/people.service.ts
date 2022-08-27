@@ -4,6 +4,7 @@ import { Observable, Subject } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UtilService } from "./util.service";
 import { People } from "../models/people.model";
+import { map, tap } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -11,16 +12,18 @@ import { People } from "../models/people.model";
 export class PeopleService {
   env = environment;
 
-  customerRecord: Record<string, People>;
-  supplierRecord: Record<string, People>;
+  customerRecord: Record<number, People>;
+  supplierRecord: Record<number, People>;
+  peopleRecord: Record<number, People>;
 
   public peopleSelected;
 
-  peopleUrl = "api/people";
-  peopleReportUrl = this.peopleUrl + "/report";
-  allCustomerUrl = this.peopleUrl + "/customer";
-  allSupplierUrl = this.peopleUrl + "/supplier";
-  peopleByIdUrl = this.peopleUrl + "/id";
+  peopleUrl = "api/people/";
+  peopleReportUrl = `${this.peopleUrl}report`;
+  allCustomerUrl = `${this.peopleUrl}customer`;
+  allSupplierUrl = `${this.peopleUrl}supplier`;
+  allPeopleUrl = `${this.peopleUrl}all`;
+  peopleByIdUrl = `${this.peopleUrl}id`;
   constructor(private http: HttpClient, private util: UtilService) {
     this.getAllSupplier = this.getAllSupplier.bind(this);
     this.getAllCustomer = this.getAllCustomer.bind(this);
@@ -84,15 +87,32 @@ export class PeopleService {
     );
   }
 
-  getPeopleById(id:number) {
+  getAllPeople() {
+    return this.http.get<People[]>(this.allPeopleUrl).pipe(
+      tap(
+        data => {
+          this.peopleRecord = this.util.convertArrayToObject(data, 'id');
+          this.customerRecord = this.util.convertArrayToObject(data.filter(el => el.type !== 'SUPPLIER'), 'id')
+          this.supplierRecord = this.util.convertArrayToObject(data.filter(el => el.type !== 'CUSTOMER'), 'id')
+        }
+      ),
+      map(
+        data =>
+          this.util.convertArrayToObject(data, 'id')
+      )
+    );
+  }
+
+  getPeopleById(id: number) {
     console.log(`People Id: ${id}`);
-    let queryString = this.util.convertObjToQueryString({id});
-    return this.http.get<People>(this.peopleByIdUrl+queryString);
+    let queryString = this.util.convertObjToQueryString({ id });
+    return this.http.get<People>(this.peopleByIdUrl + queryString);
   }
 
   initSupplierSelectedSubject() {
     this.peopleSelected = new Subject<string>();
   }
+
   onPeopleSelect(value: string) {
     this.peopleSelected.next(value);
   }

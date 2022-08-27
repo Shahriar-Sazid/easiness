@@ -7,6 +7,7 @@ import clone from "just-clone";
 import { validationMessages } from "src/app/core/helpers/validation/validation-message";
 import { Page } from "src/app/core/models/page.model";
 import { People } from "src/app/core/models/people.model";
+import { AmountPipe } from "src/app/core/pipes/amount.pipe";
 import { PeopleService } from "src/app/core/services/people.service";
 import { UtilService } from "src/app/core/services/util.service";
 
@@ -14,6 +15,7 @@ import { UtilService } from "src/app/core/services/util.service";
   selector: "app-people",
   templateUrl: "./people.component.html",
   styleUrls: ["./people.component.scss"],
+  providers: [AmountPipe]
 })
 export class PeopleComponent implements OnInit {
   @ViewChild(NgbActiveModal) addPeopleModal: NgbActiveModal;
@@ -38,7 +40,8 @@ export class PeopleComponent implements OnInit {
     private peopleService: PeopleService,
     public util: UtilService,
     private activatedRouter: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private amountPipe: AmountPipe,
   ) {
     this.searchOptions = {
       name: "",
@@ -81,6 +84,7 @@ export class PeopleComponent implements OnInit {
       {
         prop: "balance",
         cellClass: "text-center",
+        pipe: this.amountPipe
       },
     ];
 

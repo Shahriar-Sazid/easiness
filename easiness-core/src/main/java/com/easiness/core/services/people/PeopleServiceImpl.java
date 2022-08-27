@@ -134,6 +134,11 @@ public class PeopleServiceImpl implements PeopleService {
         return peopleRepository.findAllSupplier();
     }
 
+    @Override
+    public List<PeopleEntity> getAll() {
+        return peopleRepository.findAll();
+    }
+
     private People toPeople(PeopleEntity peopleEntity) {
         return People.builder()
                 .name(peopleEntity.getName())
@@ -203,6 +208,8 @@ public class PeopleServiceImpl implements PeopleService {
 
         updatePeopleBalance(peopleId, amount);
     }
+
+
 
     void updatePeopleBalance(Long id, BigDecimal value) {
         Optional<PeopleEntity> peopleEntity = peopleRepository.findById(id);

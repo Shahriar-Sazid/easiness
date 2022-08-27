@@ -55,4 +55,9 @@ public class PeopleController {
     List<PeopleEntity> getAllSupplier() {
         return peopleService.getAllSupplier();
     }
+
+    @GetMapping("/all")
+    List<PeopleEntity> getAllPeople() {
+        return peopleService.getAll();
+    }
 }

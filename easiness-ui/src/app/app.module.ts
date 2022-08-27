@@ -32,6 +32,7 @@ import { LoaderInterceptorService } from "./core/services/interceptors/loader-in
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeIn from '@angular/common/locales/en-IN';
 import { ToastrModule } from 'ngx-toastr';
+import { ProductService } from "./core/services/product.service";
 
 if (environment.defaultAuth === "firebase") {
   initFirebaseBackend(environment.firebaseConfig);
@@ -88,7 +89,8 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
       multi: true,
     },
     { provide: NgbDateAdapter, useClass: NgbDateNativeAdapter },
-    DatePipe
+    DatePipe,
+    "a" === "a"? ProductService: null
   ],
 })
 export class AppModule {}

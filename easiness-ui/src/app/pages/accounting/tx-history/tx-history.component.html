@@ -15,8 +15,8 @@
                 </select>
             </div>
             <div class="form-group col-md-6 col-lg-4 col-xl-3">
-                <label class="form-label text-dark" for="type"  >Transaction Type</label>
-                <select name="type" id="type"  [(ngModel)]="searchOptions.type" class="form-select">
+                <label class="form-label text-dark" for="type">Transaction Type</label>
+                <select name="type" id="type" [(ngModel)]="searchOptions.type" class="form-select">
                     <option hidden [ngValue]="undefined">
                         Please select
                     </option>
@@ -48,10 +48,15 @@
 </app-search-options>
 <br />
 <div class="d-flex bg-white justify-content-end" role="group">
-
-    <button type="button" class="btn btn-outline-secondary" [ngbTooltip]="'Download Report'"
+    <div ngbDropdown class="mx-1">
+        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-plus" aria-hidden="true"></i> New </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <a *ngFor="let txType of TxTypes| keyvalue" [routerLink]="'/accounting/tx/save/' + txType.key"  ngbDropdownItem [innerHTML]="txType.value.html"></a>
+        </div>
+    </div>
+    <button type="button" class="btn btn-outline-secondary"
         (click)="downloadAsReport()">
-        <i class="fa fa-download" aria-hidden="true"></i>
+        <i class="fa fa-download" aria-hidden="true"> Download</i>
     </button>
 </div>
 <ngx-datatable class="material" [rows]="txPage.content" [columns]="columns" [columnMode]="columnMode.force"

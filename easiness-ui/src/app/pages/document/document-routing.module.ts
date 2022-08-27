@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AccountResolver } from 'src/app/core/services/resolvers/account-resolver.service';
 import { DocumentResolver } from 'src/app/core/services/resolvers/document-resolver.service';
 import { PlaceResolver } from 'src/app/core/services/resolvers/place-resolver.service';
 import { UnitResolver } from 'src/app/core/services/resolvers/unit-resolver.service';
@@ -10,6 +11,9 @@ const routes: Routes = [
   {
     path: 'list/:type',
     component: DocumentListComponent,
+    resolve: {
+      account: AccountResolver
+    }
   },
   {
     path: 'details/:id',
@@ -17,7 +21,7 @@ const routes: Routes = [
     resolve: {
       units: UnitResolver,
       document: DocumentResolver,
-      place: PlaceResolver
+      place: PlaceResolver,
     }
   },
 ];

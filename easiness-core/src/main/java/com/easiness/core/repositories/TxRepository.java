@@ -15,7 +15,7 @@ public interface TxRepository extends JpaRepository<TxEntity, Long> {
 
     @Query(value = "SELECT NEW com.easiness.core.common.model.Tx" +
             "(t.id, t.amount, t.fromAccount.id, t.toAccount.id, p.id, p.name," +
-            " t.document.id, t.ref, t.type, t.meta, t.purpose, t.createdAt) FROM " +
+            " t.document.id, t.ref, t.type, t.meta, t.description, t.createdAt) FROM " +
             "TxEntity t LEFT JOIN t.people p ON t.people = p.id WHERE" +
             "(:peopleName = ''  OR UPPER(p.name) LIKE '%'||UPPER(:peopleName)||'%') AND " +
             "(:type IS NULL OR t.type = :type) AND " +

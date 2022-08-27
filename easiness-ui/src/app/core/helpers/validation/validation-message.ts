@@ -38,6 +38,10 @@ export const validationMessages: ErrorMessage[] = [
   {
     type: "max",
     message: "Input is greater than maximum limit"
+  },
+  {
+    type: "invalidFromToAccount",
+    message: "From and to account can't be same"
   }
 ];
 

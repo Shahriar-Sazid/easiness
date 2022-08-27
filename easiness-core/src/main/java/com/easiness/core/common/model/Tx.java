@@ -22,6 +22,6 @@ public class Tx {
     private String ref;
     private TxType type;
     private String meta;
-    private String purpose;
+    private String description;
     private Date date;
 }

@@ -32,4 +32,6 @@ public interface PeopleService {
     void updateCustomerBalance(Invoice invoice);
 
     void updateCustomerBalanceAfterPayment(Long peopleId, List<Payment> paymentList);
+
+    List<PeopleEntity> getAll();
 }

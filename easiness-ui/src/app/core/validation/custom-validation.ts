@@ -1,4 +1,4 @@
-import { AbstractControl, UntypedFormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { AbstractControl, FormGroup, UntypedFormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
 
 export function ValidatePhoneNo(control: AbstractControl): ValidationErrors | null {
   if (control.value) {
@@ -51,5 +51,15 @@ export function ValidateSaleQuantityUnit(availableQty: number, stockUnit: number
     form.get('quantity')?.setErrors(error?.invalidQty ? {invalidQty: error?.invalidQty}: null);
     form.get('unit')?.setErrors(error?.invalidUnit ? {invalidUnit: error?.invalidUnit}: null);
     return error;
+  };
+}
+
+export function ValidateBankTransferAccount() {
+
+  return (form: FormGroup) => {
+    const err = +form.get('fromAccount')?.value === +form.get('toAccount')?.value;
+    form.get('fromAccount')?.setErrors({ invalidFromToAccount:  err });
+    form.get('toAccount')?.setErrors({ invalidFromToAccount:  err });
+    return null;
   };
 }
