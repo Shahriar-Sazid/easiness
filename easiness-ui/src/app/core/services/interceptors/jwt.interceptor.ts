@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { APP_CONFIG } from 'src/environments/environment';
 import { AuthenticationService } from '../auth.service';
 import { AuthfakeauthenticationService } from '../authfake.service';
 
@@ -12,7 +12,7 @@ export class JwtInterceptor implements HttpInterceptor {
     constructor(private authenticationService: AuthenticationService, private authfackservice: AuthfakeauthenticationService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (environment.defaultAuth === 'firebase') {
+        if (APP_CONFIG.defaultAuth === 'firebase') {
             const currentUser = this.authenticationService.currentUser();
             if (currentUser && currentUser.token) {
                 request = request.clone({

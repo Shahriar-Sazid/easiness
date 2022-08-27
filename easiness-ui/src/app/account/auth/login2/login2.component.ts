@@ -8,7 +8,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
-import { environment } from '../../../../environments/environment';
+import { APP_CONFIG } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-login2',
@@ -70,7 +70,7 @@ export class Login2Component implements OnInit {
     if (this.loginForm.invalid) {
       return;
     } else {
-      if (environment.defaultAuth === 'firebase') {
+      if (APP_CONFIG.defaultAuth === 'firebase') {
         this.authenticationService.login(this.f.email.value, this.f.password.value).then((res: any) => {
           this.router.navigate(['/dashboard']);
         })

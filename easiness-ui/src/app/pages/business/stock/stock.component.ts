@@ -6,7 +6,7 @@ import { Stock } from 'src/app/core/models/stock.model';
 import { PlacePipe } from 'src/app/core/pipes/place.pipe';
 import { BusinessService } from 'src/app/core/services/business.service';
 import { PlaceService } from 'src/app/core/services/place.service';
-import { environment } from 'src/environments/environment';
+import { APP_CONFIG } from 'src/environments/environment';
 
 @Component({
   selector: 'app-stock',
@@ -46,7 +46,7 @@ export class StockComponent implements OnInit {
 
   defaultSearchOptions = {
     page: 1,
-    pageSize: environment.pageSize,
+    pageSize: APP_CONFIG.pageSize,
   } as SearchOptions;
 
   currentMode: ViewMode;

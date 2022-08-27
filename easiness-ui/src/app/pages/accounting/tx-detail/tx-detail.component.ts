@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Tx } from 'src/app/core/models/accounting.model';
-import { environment } from 'src/environments/environment';
+import { APP_CONFIG } from 'src/environments/environment';
 
 @Component({
   selector: 'app-tx-detail',
@@ -13,7 +13,7 @@ export class TxDetailComponent {
 
   modalRef: any;
   tx: Tx;
-  defaultDateFormat = environment.defaultDateFormat;
+  defaultDateFormat = APP_CONFIG.defaultDateFormat;
 
   constructor(private modalService: NgbModal) { }
 

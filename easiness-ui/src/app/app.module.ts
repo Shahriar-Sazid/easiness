@@ -7,7 +7,7 @@ import {
   HttpClient,
 } from "@angular/common/http";
 
-import { environment } from "../environments/environment";
+import { APP_CONFIG } from "../environments/environment";
 
 import {
   NgbNavModule,
@@ -34,8 +34,8 @@ import localeIn from '@angular/common/locales/en-IN';
 import { ToastrModule } from 'ngx-toastr';
 import { ProductService } from "./core/services/product.service";
 
-if (environment.defaultAuth === "firebase") {
-  initFirebaseBackend(environment.firebaseConfig);
+if (APP_CONFIG.defaultAuth === "firebase") {
+  initFirebaseBackend(APP_CONFIG.firebaseConfig);
 } else {
   // tslint:disable-next-line: no-unused-expression
   FakeBackendInterceptor;

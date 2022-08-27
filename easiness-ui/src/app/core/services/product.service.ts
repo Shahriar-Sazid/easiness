@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { environment } from "src/environments/environment";
+import { APP_CONFIG } from "src/environments/environment";
 import { Observable } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UtilService } from "./util.service";
@@ -9,7 +9,7 @@ import { Product } from "../models/product.model";
   providedIn: "root",
 })
 export class ProductService {
-  env = environment;
+  env = APP_CONFIG;
 
   productApi = "api/product";
   productReportApi = "api/product/report";

@@ -1,11 +1,16 @@
 {
   "root": true,
   "ignorePatterns": [
-    "projects/**/*",
     "app/**/*", // ignore nodeJs files
     "dist/**/*",
     "release/**/*"
   ],
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "env": {
+    "es6": true
+  },
   "overrides": [
     {
       "files": [
@@ -13,8 +18,9 @@
       ],
       "parserOptions": {
         "project": [
-          "tsconfig.json",
-          "e2e/tsconfig.json"
+          "./tsconfig.app.json",
+          "./tsconfig.spec.json",
+          "./e2e/tsconfig.e2e.json"
         ],
         "createDefaultProgram": true
       },
@@ -23,14 +29,8 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "app",
-            "style": "camelCase"
-          }
-        ],
+        "prefer-arrow/prefer-arrow-functions": 0,
+        "@angular-eslint/directive-selector": 0,
         "@angular-eslint/component-selector": [
           "error",
           {

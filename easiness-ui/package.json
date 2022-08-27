@@ -1,16 +1,52 @@
 {
-  "name": "easiness-ui",
-  "version": "1.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve --host=0.0.0.0 --proxy-config proxy.conf.json",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+  "name": "angular-electron",
+  "version": "11.1.0",
+  "description": "Angular 14 with Electron 19 (Typescript + SASS + Hot Reload)",
+  "homepage": "https://github.com/maximegris/angular-electron",
+  "author": {
+    "name": "Maxime GRIS",
+    "email": "maxime.gris@gmail.com"
   },
+  "keywords": [
+    "angular",
+    "angular 14",
+    "electron",
+    "electron 19",
+    "nodejs",
+    "typescript",
+    "playwright",
+    "eslint",
+    "sass",
+    "windows",
+    "mac",
+    "linux"
+  ],
+  "main": "app/main.js",
   "private": true,
+  "scripts": {
+    "postinstall": "electron-builder install-app-deps",
+    "ng": "ng",
+    "start": "npm-run-all -p electron:serve ng:serve",
+    "ng:serve": "ng serve -c web -o --proxy-config proxy.conf.json",
+    "build": "npm run electron:serve-tsc && ng build --base-href ./",
+    "build:dev": "npm run build -- -c dev",
+    "build:prod": "npm run build -- -c production",
+    "web:build": "npm run build -- -c web-production",
+    "electron": "electron",
+    "electron:serve-tsc": "tsc -p tsconfig.app.json",
+    "electron:serve": "wait-on tcp:4200 && npm run electron:serve-tsc && electron . --serve",
+    "electron:local": "npm run build:prod && electron .",
+    "electron:build": "npm run build:prod && electron-builder build --publish=never",
+    "test": "ng test --watch=false",
+    "test:watch": "ng test",
+    "e2e": "npm run build:prod && playwright test -c e2e/playwright.config.ts e2e/",
+    "e2e:show-trace": "playwright show-trace e2e/tracing/trace.zip",
+    "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
+    "lint": "ng lint"
+  },
   "dependencies": {
+    "@angular/language-service": "14.0.6",
+    "tslib": "^2.4.0",
     "@angular/animations": "^14.1.2",
     "@angular/common": "^14.1.2",
     "@angular/compiler": "^14.1.2",
@@ -48,6 +84,24 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "14.0.0",
+    "@ngx-translate/core": "14.0.0",
+    "@ngx-translate/http-loader": "7.0.0",
+    "@playwright/test": "1.23.4",
+    "conventional-changelog-cli": "2.2.2",
+    "electron": "19.0.8",
+    "electron-builder": "23.1.0",
+    "electron-debug": "3.2.0",
+    "electron-reloader": "1.2.3",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jsdoc": "39.3.3",
+    "eslint-plugin-prefer-arrow": "1.2.3",
+    "karma-electron": "7.2.0",
+    "node-polyfill-webpack-plugin": "2.0.0",
+    "npm-run-all": "4.1.5",
+    "playwright": "1.23.4",
+    "wait-on": "6.0.1",
+    "webdriver-manager": "12.1.8",
     "@angular-devkit/build-angular": "^14.1.2",
     "@angular-eslint/builder": "14.0.2",
     "@angular-eslint/eslint-plugin": "14.0.2",
@@ -78,5 +132,11 @@
     "tslib": "^2.4.0",
     "tslint": "^6.1.3",
     "typescript": "4.6.4"
-  }
+  },
+  "engines": {
+    "node": ">= 14.15.0"
+  },
+  "browserslist": [
+    "chrome 100"
+  ]
 }

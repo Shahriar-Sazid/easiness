@@ -4,7 +4,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { AuthenticationService } from '../services/auth.service';
 import { AuthfakeauthenticationService } from '../services/authfake.service';
 
-import { environment } from '../../../environments/environment';
+import { APP_CONFIG } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (environment.defaultAuth === 'firebase') {
+        if (APP_CONFIG.defaultAuth === 'firebase') {
             const currentUser = this.authenticationService.currentUser();
             if (currentUser) {
                 // logged in so return true

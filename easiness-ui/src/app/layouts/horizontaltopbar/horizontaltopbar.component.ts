@@ -11,7 +11,7 @@ import { DOCUMENT } from '@angular/common';
 
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
-import { environment } from '../../../environments/environment';
+import { APP_CONFIG } from '../../../environments/environment';
 
 @Component({
   selector: 'app-horizontaltopbar',
@@ -79,7 +79,7 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
    * Logout the user
    */
   logout() {
-    if (environment.defaultAuth === 'firebase') {
+    if (APP_CONFIG.defaultAuth === 'firebase') {
       this.authService.logout();
     } else {
       this.authFackservice.logout();

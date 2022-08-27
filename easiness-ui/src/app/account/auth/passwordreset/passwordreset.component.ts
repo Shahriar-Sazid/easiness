@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthenticationService } from '../../../core/services/auth.service';
-import { environment } from '../../../../environments/environment';
+import { APP_CONFIG } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-passwordreset',
@@ -14,7 +14,7 @@ import { environment } from '../../../../environments/environment';
 /**
  * Reset-password component
  */
-export class PasswordresetComponent implements OnInit, AfterViewInit {
+export class PasswordresetComponent implements OnInit {
 
   resetForm: UntypedFormGroup;
   submitted = false;
@@ -35,8 +35,7 @@ export class PasswordresetComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
-  }
+  
 
   // convenience getter for easy access to form fields
   get f() { return this.resetForm.controls; }
@@ -52,7 +51,7 @@ export class PasswordresetComponent implements OnInit, AfterViewInit {
     if (this.resetForm.invalid) {
       return;
     }
-    if (environment.defaultAuth === 'firebase') {
+    if (APP_CONFIG.defaultAuth === 'firebase') {
       this.authenticationService.resetPassword(this.f.email.value)
         .catch(error => {
           this.error = error ? error : '';

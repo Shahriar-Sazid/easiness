@@ -1,6 +1,6 @@
 export const APP_CONFIG = {
-  production: true,
-  environment: 'PROD',
+  production: false,
+  environment: 'WEB',
   defaultAuth: 'firebase',
   firebaseConfig: {
     apiKey: 'AIzaSyBSNQDNzQLJLyJWnG40AO27_TY7gRkqjho',

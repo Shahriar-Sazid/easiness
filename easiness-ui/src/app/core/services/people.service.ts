@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { environment } from "src/environments/environment";
+import { APP_CONFIG } from "src/environments/environment";
 import { Observable, Subject } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UtilService } from "./util.service";
@@ -10,7 +10,7 @@ import { map, tap } from "rxjs/operators";
   providedIn: "root",
 })
 export class PeopleService {
-  env = environment;
+  env = APP_CONFIG;
 
   customerRecord: Record<number, People>;
   supplierRecord: Record<number, People>;

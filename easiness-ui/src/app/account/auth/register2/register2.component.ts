@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AuthenticationService } from '../../../core/services/auth.service';
-import { environment } from '../../../../environments/environment';
+import { APP_CONFIG } from '../../../../environments/environment';
 import { first } from 'rxjs/operators';
 import { UserProfileService } from '../../../core/services/user.service';
 
@@ -61,7 +61,7 @@ export class Register2Component implements OnInit {
     if (this.signupForm.invalid) {
       return;
     } else {
-      if (environment.defaultAuth === 'firebase') {
+      if (APP_CONFIG.defaultAuth === 'firebase') {
         this.authenticationService.register(this.f.email.value, this.f.password.value).then((res: any) => {
           this.successmsg = true;
           if (this.successmsg) {

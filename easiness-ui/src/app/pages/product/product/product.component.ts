@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ColumnMode, TableColumn } from "@swimlane/ngx-datatable";
-import { environment } from "src/environments/environment";
+import { APP_CONFIG } from "src/environments/environment";
 // import * as _ from "lodash";
 import { Page } from "src/app/core/models/page.model";
 import { Product } from "src/app/core/models/product.model";
@@ -75,7 +75,7 @@ export class ProductComponent implements OnInit {
       type: "",
       brand: "",
       page: 1,
-      pageSize: environment.pageSize,
+      pageSize: APP_CONFIG.pageSize,
     };
     this.columns = [
       {

@@ -7,7 +7,7 @@ import { AuthfakeauthenticationService } from '../../../core/services/authfake.s
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
-import { environment } from '../../../../environments/environment';
+import { APP_CONFIG } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     } else {
-      if (environment.defaultAuth === 'firebase') {
+      if (APP_CONFIG.defaultAuth === 'firebase') {
         this.authenticationService.login(this.f.email.value, this.f.password.value).then((res: any) => {
           this.router.navigate(['/dashboard']);
         })

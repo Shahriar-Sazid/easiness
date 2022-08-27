@@ -1,6 +1,7 @@
+import { APP_CONFIG as ac } from "./environment";
 export const APP_CONFIG = {
-  production: true,
-  environment: 'PROD',
+  production: false,
+  environment: 'DEV',
   defaultAuth: 'firebase',
   firebaseConfig: {
     apiKey: 'AIzaSyBSNQDNzQLJLyJWnG40AO27_TY7gRkqjho',
