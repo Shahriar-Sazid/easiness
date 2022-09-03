@@ -1,6 +1,13 @@
 import {app, BrowserWindow, screen} from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
+import server from './server/app';
+
+const port = 3000
+
+server.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
 
 let win: BrowserWindow = null;
 const args = process.argv.slice(1),
