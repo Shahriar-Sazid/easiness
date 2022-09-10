@@ -3,6 +3,7 @@ import * as express from "express";
 import * as cookieParser from "cookie-parser"
 import * as logger from "morgan"
 import * as path from "path"
+import productRouter from "./api/product.api";
 
 const app = express();
 
@@ -12,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use("/", routes);
+app.use("/api/v1/product", productRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

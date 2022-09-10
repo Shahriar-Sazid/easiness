@@ -1,12 +1,14 @@
 import { DataSource } from "typeorm"
 
-export const AppDataSource = new DataSource({
+export const ds = new DataSource({
     type: "better-sqlite3",
     database: "easiness-db",
-    entities: ['../entity/*.ts']
+    entities: ["app/**/*.entity.js"],
+    logger: 'advanced-console',
+    logging: true
 })
 
-AppDataSource.initialize()
+ds.initialize()
     .then(() => {
         console.log("Data Source has been initialized!")
     })

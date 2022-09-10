@@ -44,6 +44,15 @@
             "endsPattern": "^.*Compiled successfully.*"
           }
         }
-      }
+      },
+      {
+        // See https://go.microsoft.com/fwlink/?LinkId=733558
+        // for the documentation about the tasks.json format
+        "label": "tsc",
+        "command": "node_modules/.bin/tsc.cmd",
+        "type": "shell",
+        "args": ["-p", "tsconfig.serve.json"],
+        "problemMatcher": "$tsc"
+    }
     ]
   }

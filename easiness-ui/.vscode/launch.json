@@ -35,7 +35,15 @@
                 "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
             },
             "preLaunchTask": "Build.Main"
-        }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Server",
+            "program": "${workspaceFolder}/app/main.ts",
+            "preLaunchTask": "tsc",
+            "outFiles": ["${workspaceFolder}/app/out-tsc/**/*.js"]
+          }
     ],
     "compounds": [
         {

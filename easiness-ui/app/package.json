@@ -5,6 +5,9 @@
     "name": "Maxime GRIS",
     "email": "maxime.gris@gmail.com"
   },
+  "scripts": {
+    "typeorm": "typeorm-ts-node-esm"
+  },
   "version": "11.1.0",
   "main": "./out-tsc/main.js",
   "private": true,
@@ -20,6 +23,7 @@
     "@types/cookie-parser": "^1.4.3",
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.7.14",
-    "nodemon": "^2.0.19"
+    "electron-rebuild": "^3.2.9",
+    "ts-node": "^10.9.1"
   }
 }

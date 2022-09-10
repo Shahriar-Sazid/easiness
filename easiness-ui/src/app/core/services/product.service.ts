@@ -11,8 +11,8 @@ import { Product } from "../models/product.model";
 export class ProductService {
   env = APP_CONFIG;
 
-  productApi = "api/product";
-  productReportApi = "api/product/report";
+  productApi = "api/v1/product";
+  productReportApi = "api/v1/product/report";
   moveProductApi = `${this.productApi}/move`
   constructor(private http: HttpClient, private util: UtilService) {}
 

@@ -1,1 +1,4 @@
 .idea/
+easiness-ui/easiness-db
+easiness-ui/easiness-db-shm
+easiness-ui/easiness-db-wal
