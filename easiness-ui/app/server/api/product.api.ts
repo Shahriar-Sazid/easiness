@@ -1,13 +1,3 @@
-// import { AppDataSource } from "../config/data-source";
-// import { Product } from "../entity/product";
-
-// export class UserController {
-//     getAll() {
-//         return AppDataSource.manager.find(Product)
-//     }
-// }
-
-
 import { Router, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { FindProductRequest } from "../model/product.model";
@@ -18,9 +8,9 @@ const productRouter: Router = Router();
 productRouter.get('/', async (req: Request, res: Response) => {
     try {
         return res.status(StatusCodes.OK).send(await productService.find({
-           name: req.query.name,
-           type: req.query.type,
-           brand: req.query.brand,
+           name: req.query.name ?? '',
+           type: req.query.type ?? '',
+           brand: req.query.brand ?? '',
            page: req.query.page,
            pageSize: req.query.pageSize 
         } as FindProductRequest));
@@ -31,7 +21,7 @@ productRouter.get('/', async (req: Request, res: Response) => {
 
 productRouter.post('/', async (req: Request, res: Response) => {
     try {
-        return res.status(StatusCodes.CREATED).send(await productService.create(req));
+        return res.status(StatusCodes.CREATED).send(await productService.create(req.body));
     } catch (e) {
         res.status(500).send(e.toString());
     }
@@ -39,7 +29,7 @@ productRouter.post('/', async (req: Request, res: Response) => {
 
 productRouter.put('/', async (req: Request, res: Response) => {
     try {
-        return res.status(StatusCodes.OK).send(await productService.update(req));
+        return res.status(StatusCodes.OK).send(await productService.update(req.body));
     } catch (e) {
         res.status(500).send(e.toString());
     }

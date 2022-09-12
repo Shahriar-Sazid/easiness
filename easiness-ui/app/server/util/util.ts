@@ -1,7 +1,3 @@
-import { Pagination } from "../model/pagination.model";
+import { SelectQueryBuilder } from "typeorm";
+import { Page, Pagination } from "../model/page.model";
 
-export function paginate({ page, pageSize }: Pagination) {
-    page ||= 1
-    pageSize ||= 10
-    return { skip: (+page - 1) * +pageSize, take: +pageSize }
-}

@@ -1,4 +1,4 @@
-import { Pagination } from "./pagination.model";
+import { Pagination } from "./page.model";
 
 export type ProductRequest = {
     name: string;
