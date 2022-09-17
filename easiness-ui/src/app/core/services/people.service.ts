@@ -18,7 +18,7 @@ export class PeopleService {
 
   public peopleSelected;
 
-  peopleUrl = "api/people/";
+  peopleUrl = "api/v1/people/";
   peopleReportUrl = `${this.peopleUrl}report`;
   allCustomerUrl = `${this.peopleUrl}customer`;
   allSupplierUrl = `${this.peopleUrl}supplier`;

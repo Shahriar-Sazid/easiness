@@ -66,7 +66,7 @@ export class SavePeopleComponent {
         contactNo: new UntypedFormArray(
           this.selectedPeople.contactNoList.map(
             (contactNo) =>
-              new UntypedFormControl(contactNo.contactNo, [
+              new UntypedFormControl(contactNo.number, [
                 Validators.required,
                 ValidatePhoneNo,
               ])

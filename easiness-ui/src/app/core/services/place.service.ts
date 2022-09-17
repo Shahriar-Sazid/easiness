@@ -13,7 +13,7 @@ export class PlaceService {
   }
 
   placeRecord: Record<string, Place>;
-  placeUrl = "api/place";
+  placeUrl = "api/v1/place";
   aLLPlaceUrl = `${this.placeUrl}/all`;
 
   getPlace(searchOptions: {

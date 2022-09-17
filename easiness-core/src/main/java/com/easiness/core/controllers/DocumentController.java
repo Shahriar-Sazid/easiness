@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/document")
+@RequestMapping("/api/v1/document")
 public class DocumentController {
 
     @Autowired

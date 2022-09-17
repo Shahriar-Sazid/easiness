@@ -26,7 +26,7 @@ export async function getPage<T>(query: SelectQueryBuilder<T>, pagination: Pagin
             .take(take)
             .getMany(),
         size: take,
-        number: page,
+        number: page as number - 1,
         totalElements: await query
             .getCount()
     } as Page<T>

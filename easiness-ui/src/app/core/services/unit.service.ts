@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UnitService {
-  unitUrl = "api/unit/all";
+  unitUrl = "api/v1/unit/all";
   public unitData: UnitData;
   constructor(private http: HttpClient) {
     if (!this.unitData) {

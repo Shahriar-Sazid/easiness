@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/account")
+@RequestMapping("/api/v1/account")
 public class AccountController {
     @Autowired
     AccountService accountService;

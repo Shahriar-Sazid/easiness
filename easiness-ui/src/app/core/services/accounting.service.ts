@@ -10,10 +10,10 @@ import { UtilService } from "./util.service";
   providedIn: "root",
 })
 export class AccountingService {
-  accountApi = "api/account";
+  accountApi = "api/v1/account";
   accountReportApi = `${this.accountApi}/report`;
   allAccountApi = `${this.accountApi}/all`;
-  txApi = "api/tx";
+  txApi = "api/v1/tx";
 
   accountRecord: Record<string, Account>
   constructor(private http: HttpClient, private util: UtilService) { }

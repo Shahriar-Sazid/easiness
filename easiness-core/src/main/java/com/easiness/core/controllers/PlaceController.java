@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/place")
+@RequestMapping("/api/v1/place")
 public class PlaceController {
     @Autowired
     PlaceService placeService;

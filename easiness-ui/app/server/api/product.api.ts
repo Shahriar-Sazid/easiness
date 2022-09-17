@@ -1,11 +1,11 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 import { FindProductRequest } from "../model/product.model";
 import { productService } from "../service/product.service";
 
 const productRouter: Router = Router();
 
-productRouter.get('/', async (req: Request, res: Response) => {
+productRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
         return res.status(StatusCodes.OK).send(await productService.find({
            name: req.query.name ?? '',
@@ -15,23 +15,23 @@ productRouter.get('/', async (req: Request, res: Response) => {
            pageSize: req.query.pageSize 
         } as FindProductRequest));
     } catch (e) {
-        res.status(500).send(e.toString());
+        next(e)
     }
 });
 
-productRouter.post('/', async (req: Request, res: Response) => {
+productRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
         return res.status(StatusCodes.CREATED).send(await productService.create(req.body));
     } catch (e) {
-        res.status(500).send(e.toString());
+        next(e)
     }
 });
 
-productRouter.put('/', async (req: Request, res: Response) => {
+productRouter.put('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
         return res.status(StatusCodes.OK).send(await productService.update(req.body));
     } catch (e) {
-        res.status(500).send(e.toString());
+        next(e)
     }
 });
 

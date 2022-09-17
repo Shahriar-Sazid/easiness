@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/business/")
+@RequestMapping("/api/v1/business/")
 public class BusinessController {
 
     @Autowired

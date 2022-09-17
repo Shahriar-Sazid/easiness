@@ -1,5 +1,4 @@
 export interface ContactNo {
-  id: number;
-  contactNo: string;
+  number: string;
   ownerId: number;
 }

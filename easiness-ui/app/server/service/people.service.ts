@@ -2,41 +2,36 @@ import { In } from "typeorm";
 import { ds } from "../config/data-source";
 import { ContactNo } from "../entity/contact-no.entity";
 import { People } from "../entity/people.entity";
+import { ApiError } from "../errors/api-error";
+import { ReasonCode } from "../errors/codes";
 import { getPage, Pagination } from "../model/page.model";
 import { FindPeopleRequest, PeopleRequest, PeopleType } from "../model/people.model";
 
 
 const repo = ds.getRepository(People)
 
-const validateRequest = async (req: PeopleRequest) => {
+const validateRequest = async ({id, name, companyName}: PeopleRequest) => {
     const existing = await repo.find({
-        where: [{ id: req.id }, { name: req.name, companyName: req.companyName }],
+        where: [{ id }, { name, companyName }],
     })
 
-    if (!existing && req.id) {
-        return 2
-    } else if (existing?.length > 0) {
-        if (!req.id) {
-            return 3
+    if (id) {
+        if (existing.filter(el => el.id === id)?.length === 0) {
+            throw ApiError.New(ReasonCode.EntityNotFound) 
         }
-        for (const el of existing) {
-            if (el.id !== req.id) {
-                return 3
-            }
+        if (existing.filter(el => (el.id !== id && (el.name === name && el.companyName === companyName)))?.length > 0) {
+            throw ApiError.New(ReasonCode.DupPeopleFound, `People already exists with this name: [${name}] and company: [${companyName}]`)
         }
-    }
-    return 1
+    } else {
+        if (existing.filter(el => (el.name === name && el.companyName === companyName))?.length > 0) {
+            throw ApiError.New(ReasonCode.DupPeopleFound, `People already exists with this name: [${name}] and company: [${companyName}]`)
+        }
+    } 
 }
 
 export const peopleService = {
     save: async (req: PeopleRequest) => {
-        const reqStatus = await validateRequest(req)
-        switch (reqStatus) {
-            case 2:
-                throw new Error("No Customer/Supplier with this id found!")
-            case 3:
-                throw new Error("Customer/Supplier with this name and company already exists!")
-        }
+        await validateRequest(req)
 
         const people = {
             id: req.id,

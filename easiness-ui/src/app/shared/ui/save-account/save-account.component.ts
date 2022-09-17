@@ -89,7 +89,7 @@ export class SaveAccountComponent {
         ],
         holderName: [this.selectedAccount.holderName, [Validators.minLength(3), Validators.maxLength(30)]],
         bank: [this.selectedAccount.bank, [Validators.minLength(2), Validators.maxLength(30)]],
-        branch: [this.selectedAccount.branch, [Validators.minLength(8), Validators.maxLength(30)]],
+        branch: [this.selectedAccount.branch, [Validators.minLength(3), Validators.maxLength(30)]],
         accountNo: [this.selectedAccount.accountNo, [Validators.minLength(5), Validators.maxLength(30)]],
         balance: [
           this.selectedAccount.balance,
@@ -102,7 +102,7 @@ export class SaveAccountComponent {
         accountName: ["", [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
         holderName: ["", [Validators.minLength(3), Validators.maxLength(30)]],
         bank: ["", [Validators.minLength(2), Validators.maxLength(30)]],
-        branch: ["", [Validators.minLength(8), Validators.maxLength(30)]],
+        branch: ["", [Validators.minLength(3), Validators.maxLength(30)]],
         accountNo: ["", [Validators.minLength(5), Validators.maxLength(30)]],
         balance: [0, [Validators.required, Validators.min(-100000000), Validators.max(100000000)]],
       });

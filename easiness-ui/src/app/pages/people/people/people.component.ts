@@ -140,7 +140,7 @@ export class PeopleComponent implements OnInit {
       (data: Page<People>) => {
         console.log(data);
         for (const people of data.content) {
-          people.contactNumber = people.contactNoList.map((contactNo) => contactNo.contactNo).join(",\n");
+          people.contactNumber = people.contactNoList.map((contactNo) => contactNo.number).join(",\n");
         }
         this.peoplePage = data;
       },

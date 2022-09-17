@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/tx")
+@RequestMapping("/api/v1/tx")
 public class TxController {
 
     @Autowired

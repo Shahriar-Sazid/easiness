@@ -7,7 +7,7 @@ import { DocumentResponse, DocumentSearchRes } from '../models/document.model';
 
 @Injectable({ providedIn: 'root' })
 export class DocumentService {
-    documentApi = "api/document";
+    documentApi = "api/v1/document";
     constructor(private http: HttpClient, private util: UtilService) { }
 
     searchDocument(searchOptions: object): Observable<Page<DocumentSearchRes>> {

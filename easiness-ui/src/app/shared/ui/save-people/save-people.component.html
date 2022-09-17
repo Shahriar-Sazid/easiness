@@ -1,12 +1,7 @@
 <ng-template #peopleModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title">{{ updateMode ? "Update People" : "Add People" }}</h4>
-    <button
-      type="button"
-      class="btn btn-outline-secondary"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    >
+    <button type="button" class="btn btn-outline-secondary" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
   </div>
@@ -19,7 +14,8 @@
       </div>
 
       <div class="form-group my-3">
-        <label class="form-label text-dark" for="companyName">Company/Shop Name <span class="text-danger">*</span></label>
+        <label class="form-label text-dark" for="companyName">Company/Shop Name <span
+            class="text-danger">*</span></label>
         <input type="text" class="form-control" id="companyName" formControlName="companyName" />
         <span class="text-monospace text-danger"> {{ util.getValidationError(peopleForm, "companyName") }} </span>
       </div>
@@ -33,52 +29,39 @@
       <div class="form-group my-3">
         <label class="form-label text-dark" for="type">People Type <span class="text-danger">*</span></label>
         <br />
-        <div ngbRadioGroup id="type" [formControlName]="'type'">
+        <div id="type">
           <div class="form-check form-check-inline">
-            <label class="form-check-label" for="typeRadio1" ngbButtonLabel
-              ><input class="form-check-input" type="radio" id="typeRadio1" value="CUSTOMER" ngbButton />Customer</label
-            >
+            <label class="form-check-label" for="typeRadio1"><input class="form-check-input" type="radio"
+                id="typeRadio1" value="CUSTOMER" [formControlName]="'type'" />Customer</label>
           </div>
           <div class="form-check form-check-inline">
-            <label class="form-check-label" for="typeRadio2" ngbButtonLabel>
-              <input class="form-check-input" type="radio" id="typeRadio2" value="SUPPLIER" ngbButton />
-              Supplier</label
-            >
+            <label class="form-check-label" for="typeRadio2">
+              <input class="form-check-input" type="radio" id="typeRadio2" value="SUPPLIER"
+                [formControlName]="'type'" />
+              Supplier</label>
           </div>
           <div class="form-check form-check-inline">
-            <label class="form-check-label" for="typeRadio3" ngbButtonLabel>
-              <input class="form-check-input" type="radio" id="typeRadio3" value="BOTH" ngbButton />
-              Both</label
-            >
+            <label class="form-check-label" for="typeRadio3">
+              <input class="form-check-input" type="radio" id="typeRadio3" value="BOTH" [formControlName]="'type'" />
+              Both</label>
           </div>
         </div>
         <span class="text-monospace text-danger"> {{ util.getValidationError(peopleForm, "type") }} </span>
       </div>
 
       <div class="form-group my-3">
-        <label
-          >Mobile/Phone No <span class="text-danger">*</span
-          ><button
-            class="btn btn-outline-primary rounded-circle btn-sm"
-            type="button"
-            *ngIf="peopleForm.get('contactNo').value.length < 3"
-            [ngbTooltip]="'Add'"
-            (click)="addPhoneNo()"
-          >
-            <i class="fa fa-plus" aria-hidden="true"></i></button
-        ></label>
+        <label>Mobile/Phone No <span class="text-danger">*</span><button
+            class="btn btn-outline-primary rounded-circle btn-sm" type="button"
+            *ngIf="peopleForm.get('contactNo').value.length < 3" [ngbTooltip]="'Add'" (click)="addPhoneNo()">
+            <i class="fa fa-plus" aria-hidden="true"></i></button></label>
 
         <div formArrayName="contactNo">
           <div *ngFor="let control of peopleForm.get('contactNo')['controls']; let i = index">
             <div class="input-group mb-1">
               <input type="tel" class="form-control" [formControlName]="i" />
               <div class="input-group-append">
-                <button
-                  *ngIf="peopleForm.get('contactNo').value.length > 1"
-                  class="btn btn-outline-secondary"
-                  [ngbTooltip]="'Remove'"
-                  (click)="phoneNo.removeAt(i);peopleForm.markAsDirty()"
-                >
+                <button *ngIf="peopleForm.get('contactNo').value.length > 1" class="btn btn-outline-secondary"
+                  [ngbTooltip]="'Remove'" (click)="phoneNo.removeAt(i);peopleForm.markAsDirty()">
                   <i class="fa fa-minus" aria-hidden="true"></i>
                 </button>
               </div>
