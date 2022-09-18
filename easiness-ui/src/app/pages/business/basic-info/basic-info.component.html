@@ -31,12 +31,12 @@
                   <option hidden [ngValue]="undefined">
                     Please select
                   </option>
-                  <ng-container  *ngIf="document.type == 'PURCHASE_ORDER'" >
+                  <ng-container  *ngIf="document.type === 'PURCHASE_ORDER'" >
                     <option [value]="supplier.value.id" *ngFor="let supplier of peopleService.supplierRecord | keyvalue">
                       {{ supplier.value.name }}
                     </option>
                   </ng-container>
-                  <ng-container  *ngIf="document.type == 'INVOICE'" >
+                  <ng-container  *ngIf="document.type === 'INVOICE'" >
                     <option [value]="customer.value.id" *ngFor="let customer of peopleService.customerRecord | keyvalue">
                       {{ customer.value.name }}
                     </option>
@@ -53,7 +53,7 @@
             </div>
           </div>
 
-          <div *ngIf="document.type == 'PURCHASE_ORDER'" class="mb-3 row">
+          <div *ngIf="document.type === 'PURCHASE_ORDER'" class="mb-3 row">
             <label class="form-label text-dark" for="placeOption" class="col-md-3 col-form-label">Place <span class="text-danger">*</span></label>
             <div class="col-md-9">
               <div class="input-group">

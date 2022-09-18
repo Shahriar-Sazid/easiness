@@ -15,5 +15,9 @@ export const ReasonCode = {
     },
     DupPeopleFound: {
         code: "10004",
+    },
+    InvalidUnitConversion: {
+        code: "10005",
+        message: "Invalid unit conversion"
     }
 }

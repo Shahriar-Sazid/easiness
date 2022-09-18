@@ -15,7 +15,7 @@ export class SavePlaceComponent {
   @ViewChild('placeModal') content: any;
   updateMode: boolean;
   placeForm: UntypedFormGroup;
-  @Input() callback: () => void;
+  @Input() callback: any;
   @Input() selectedPlace: any;
   constructor(private fb: UntypedFormBuilder,
     public util: UtilService,

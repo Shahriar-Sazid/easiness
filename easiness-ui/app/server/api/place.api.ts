@@ -21,7 +21,7 @@ placeRouter.put('/', async (req: Request, res: Response, next: NextFunction) => 
     }
 });
 
-placeRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
+placeRouter.get('/all', async (req: Request, res: Response, next: NextFunction) => {
     try {
         return res.status(StatusCodes.OK).send(await placeService.findAll());
     } catch (e) {

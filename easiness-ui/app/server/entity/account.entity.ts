@@ -1,7 +1,6 @@
 import Big from "big.js"
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Unique } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, Unique } from "typeorm"
 import { AccountType } from "../model/account.model"
-import { People } from "./people.entity"
 
 export const uniqueAccountCols = ['accountNo', 'bank']
 

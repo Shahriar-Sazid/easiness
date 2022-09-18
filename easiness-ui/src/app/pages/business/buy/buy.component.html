@@ -12,7 +12,7 @@
                 <i class="fas fa-user fa-lg"></i>
               </ng-template>
 
-              <app-basic-info #basicInfo [document]="purchase" (onPlaceSelection)="selectPlace($event)">
+              <app-basic-info #basicInfo [document]="purchase" (placeSelection)="selectPlace($event)">
               </app-basic-info>
 
               <ul class="list-inline wizard mb-0">
