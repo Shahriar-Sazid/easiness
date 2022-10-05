@@ -62,7 +62,7 @@ peopleRouter.get('/all', async (req: Request, res: Response, next: NextFunction)
 
 peopleRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        return res.status(StatusCodes.OK).send(await peopleService.findById(+req.params.id));
+        return res.status(StatusCodes.OK).send(await peopleService.findById(+req.query.id));
     } catch (e) {
         next(e)
     }

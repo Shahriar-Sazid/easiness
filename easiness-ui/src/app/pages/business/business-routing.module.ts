@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { AccountResolver } from "src/app/core/services/resolvers/account-resolver.service";
 import { PlaceResolver } from "src/app/core/services/resolvers/place-resolver.service";
 import { UnitResolver } from "src/app/core/services/resolvers/unit-resolver.service";
 import { BuyComponent } from "./buy/buy.component";
@@ -12,7 +13,8 @@ const routes: Routes = [
     component: BuyComponent,
     resolve: {
       units: UnitResolver,
-      place: PlaceResolver
+      place: PlaceResolver,
+      account: AccountResolver
     }
   },
   {

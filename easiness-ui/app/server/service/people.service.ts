@@ -81,7 +81,7 @@ export const peopleService = {
     },
 
     findById: async (id: number) => {
-        return await repo.find({ where: { id } })[0]
+        return await repo.findOne({ where: { id } })
     }
 
 }

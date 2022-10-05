@@ -9,6 +9,7 @@ import peopleRouter from "./api/people.api";
 import accountRouter from "./api/account.api";
 import { apiErrorHandler } from "./errors/handler";
 import unitRouter from "./api/unit.api";
+import businessRouter from "./api/business.api";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use("/api/v1/product", productRouter);
 app.use("/api/v1/place", placeRouter);
 app.use("/api/v1/people", peopleRouter);
 app.use("/api/v1/account", accountRouter);
+app.use("/api/v1/business", businessRouter);
 app.use("/api/v1/unit", unitRouter);
 
 // Error handler middleware

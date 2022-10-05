@@ -4,6 +4,7 @@ import { ApiError } from "../errors/api-error";
 import { ReasonCode } from "../errors/codes";
 import { FindAccountRequest } from "../model/account.model";
 import { getPage, Pagination } from "../model/page.model";
+import { utils } from "../utils/utils";
 
 const repo = ds.getRepository(Account)
 
@@ -40,7 +41,7 @@ export const accountService = {
     },
 
     findAll: async () => {
-        return await repo.find();
+        return utils.convertArrayToObject(await repo.find(), account => account.id)
     },
 
     find: async (params: FindAccountRequest) => {

@@ -20,7 +20,8 @@ export const unitService = {
             unitConversionList: conversions
         }
     },
-    convert: async (from: number, to: number, value: string | Big) => {
+
+    convert: (from: number, to: number, value: string | Big) => {
         value = new Big(value)
         let cx = conversions.filter(el => el.from === from && el.to === to).sort((a, b) => a.calStep - b.calStep)
         if (cx?.length > 0) {
@@ -39,7 +40,7 @@ export const unitService = {
                         value = value.div(el.constant)
                 }
             }
-            return value.toPrecision(6, Big.roundHalfEven)
+            return value
         }
         cx = conversions.filter(el => el.from === to && el.to === from).sort((a, b) => b.calStep - a.calStep)
         if (cx?.length > 0) {
@@ -58,7 +59,7 @@ export const unitService = {
                         value = value.mul(el.constant)
                 }
             }
-            return value.toFixed(6, Big.roundHalfEven)
+            return value
         }
         throw ApiError.New(ReasonCode.InvalidUnitConversion)
     }

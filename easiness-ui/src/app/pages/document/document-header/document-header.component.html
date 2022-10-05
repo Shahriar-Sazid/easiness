@@ -2,10 +2,10 @@
   <div class="invoice-from">
     <small>from</small>
     <address *ngIf="viewOptions.key === 'PURCHASE_ORDER'" >
-      <strong [ngClass]="[viewOptions.theme.text]"> {{people.name}} </strong> <br *ngIf="people.name">
-      {{ people.companyName }} <br *ngIf="people.companyName">
-      {{ people.address }} <br *ngIf="people.address">
-      Phone: {{ people.contactNumber }} <br *ngIf="people.contactNumber">
+      <strong [ngClass]="[viewOptions.theme.text]"> {{people?.name}} </strong> <br *ngIf="people?.name">
+      {{ people?.companyName }} <br *ngIf="people?.companyName">
+      {{ people?.address }} <br *ngIf="people?.address">
+      Phone: {{ people?.contactNumber }} <br *ngIf="people?.contactNumber">
     </address>
     <address *ngIf="viewOptions.key === 'INVOICE'" >
       <strong [ngClass]="[viewOptions.theme.text]" >ABDULLAH TOOLS</strong><br>
@@ -17,10 +17,10 @@
   <div class="invoice-to">
     <small>to</small>
     <address *ngIf="viewOptions.key === 'INVOICE'" >
-      <strong [ngClass]="[viewOptions.theme.text]"> {{people.name}} </strong> <br *ngIf="people.name">
-      {{ people.companyName }} <br *ngIf="people.companyName">
-      {{ people.address }} <br *ngIf="people.address">
-      Phone: {{ people.contactNumber }} <br *ngIf="people.contactNumber">
+      <strong [ngClass]="[viewOptions.theme.text]"> {{people?.name}} </strong> <br *ngIf="people?.name">
+      {{ people?.companyName }} <br *ngIf="people?.companyName">
+      {{ people?.address }} <br *ngIf="people?.address">
+      Phone: {{ people?.contactNumber }} <br *ngIf="people?.contactNumber">
     </address>
     <address *ngIf="viewOptions.key === 'PURCHASE_ORDER'" >
       <strong [ngClass]="[viewOptions.theme.text]">ABDULLAH TOOLS</strong><br>
