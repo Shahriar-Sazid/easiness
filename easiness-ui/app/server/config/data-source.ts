@@ -2,12 +2,15 @@ import { DataSource } from "typeorm"
 import { UnitConversion } from "../entity/unit-conversion.entity"
 import { Unit } from "../entity/unit.entity"
 import { initUnit } from "../service/unit.service"
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 export const ds = new DataSource({
     type: "better-sqlite3",
     database: "easiness-db",
     entities: ["app/**/*.entity.js"],
+    synchronize: true,
     logger: 'advanced-console',
+    namingStrategy: new SnakeNamingStrategy(),
     logging: true
 })
 
