@@ -26,6 +26,7 @@ export class SaveAccountComponent {
   addOrUpdateAccount() {
     if (this.util.validateForm(this.accountForm)) {
       console.log(this.accountForm.value);
+      this.accountForm.value.type = "BANK_ACCOUNT";
       if (this.updateMode) {
         // this.spinner.show();
         this.accountService

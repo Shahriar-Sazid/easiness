@@ -1,9 +1,9 @@
 import Big from "big.js";
 
-export type PurchaseOrderItem = {
-    product: number;
-    place: number;
-    quantity: Big;
+export class PurchaseOrderItem {
+    productId: number;
+    placeId: number;
+    quantity: string | Big;
     unit: number;
-    cost: Big;
+    cost: string | Big;
 }

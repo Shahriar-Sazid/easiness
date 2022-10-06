@@ -10,5 +10,8 @@ export const utils = {
 
     convertObjectToArray(obj: object): any[] {
         return Object.values(obj);
-    }
+    },
+
+    camelToSnakeCase: (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)
+
 }

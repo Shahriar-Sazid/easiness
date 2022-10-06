@@ -10,14 +10,14 @@ import { FindPeopleRequest, PeopleRequest, PeopleType } from "../model/people.mo
 
 const repo = ds.getRepository(People)
 
-const validateRequest = async ({id, name, companyName}: PeopleRequest) => {
+const validateRequest = async ({ id, name, companyName }: PeopleRequest) => {
     const existing = await repo.find({
         where: [{ id }, { name, companyName }],
     })
 
     if (id) {
         if (existing.filter(el => el.id === id)?.length === 0) {
-            throw ApiError.New(ReasonCode.EntityNotFound) 
+            throw ApiError.New(ReasonCode.EntityNotFound)
         }
         if (existing.filter(el => (el.id !== id && (el.name === name && el.companyName === companyName)))?.length > 0) {
             throw ApiError.New(ReasonCode.DupPeopleFound, `People already exists with this name: [${name}] and company: [${companyName}]`)
@@ -26,7 +26,7 @@ const validateRequest = async ({id, name, companyName}: PeopleRequest) => {
         if (existing.filter(el => (el.name === name && el.companyName === companyName))?.length > 0) {
             throw ApiError.New(ReasonCode.DupPeopleFound, `People already exists with this name: [${name}] and company: [${companyName}]`)
         }
-    } 
+    }
 }
 
 export const peopleService = {
@@ -76,7 +76,7 @@ export const peopleService = {
             .leftJoinAndSelect("people.contactNoList", "contact")
             .where("(:name = '' OR LOWER(people.name) LIKE '%' || :name || '%')", { name: params.name })
             .andWhere("(:contactNo = '' OR contact.number LIKE '%' || :contactNo || '%')", { contactNo: params.contactNo })
-            
+
         return getPage(query, params as Pagination);
     },
 

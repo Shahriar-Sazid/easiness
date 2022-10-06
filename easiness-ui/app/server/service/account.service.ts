@@ -46,9 +46,9 @@ export const accountService = {
 
     find: async (params: FindAccountRequest) => {
         const query = repo.createQueryBuilder()
-            .where("(:accountNo = '' OR LOWER(accountNo) LIKE '%' || :accountNo || '%')", { accountNo: params.accountNo.toLowerCase() })
-            .andWhere("(:accountName = '' OR LOWER(accountName) LIKE '%' || :accountName || '%')", { accountName: params.accountName.toLowerCase() })
-            .andWhere("(:holderName = '' OR LOWER(holderName) LIKE '%' || :holderName || '%')", { holderName: params.holderName.toLowerCase() })
+            .where("(:accountNo = '' OR LOWER(account_no) LIKE '%' || :accountNo || '%')", { accountNo: params.accountNo.toLowerCase() })
+            .andWhere("(:accountName = '' OR LOWER(account_name) LIKE '%' || :accountName || '%')", { accountName: params.accountName.toLowerCase() })
+            .andWhere("(:holderName = '' OR LOWER(holder_name) LIKE '%' || :holderName || '%')", { holderName: params.holderName.toLowerCase() })
 
         return getPage(query, params as Pagination);
     },

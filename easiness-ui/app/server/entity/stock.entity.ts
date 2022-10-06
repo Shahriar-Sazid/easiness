@@ -1,16 +1,22 @@
 import Big from "big.js";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, Unique } from "typeorm"
+import { Base } from "./base.entity";
 import { Place } from "./place.entity";
 import { Product } from "./product.entity"
 import { Unit } from "./unit.entity";
 
+export const uniqueStockCols = ['productId', 'placeId']
 @Entity({ name: 'stock' })
-export class Stock {
+@Unique(uniqueStockCols)
+export class Stock extends Base {
     @PrimaryGeneratedColumn()
     id: number
 
     @ManyToOne(() => Product)
-    product: Product 
+    @JoinColumn()
+    product: Product
+    @Column()
+    productId: number
 
     @Column('numeric', {
         precision: 20,
@@ -26,12 +32,13 @@ export class Stock {
     @Column('numeric', {
         precision: 20,
         scale: 6,
+        nullable: true,
         transformer: {
             from: (value: string) => new Big(value ?? "0"),
             to: (value: Big) => value?.toString()
         }
     })
-    latestPrice: Big;
+    latestPrice!: Big;
 
     @Column('numeric', {
         precision: 20,
@@ -44,8 +51,14 @@ export class Stock {
     quantity: Big;
 
     @ManyToOne(() => Unit)
-    unit: Unit | number
+    @JoinColumn()
+    unit: Unit
+    @Column()
+    unitId: number
 
     @ManyToOne(() => Place)
-    place:Place | number
+    @JoinColumn()
+    place: Place
+    @Column()
+    placeId: number
 }

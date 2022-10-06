@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Place } from 'src/app/core/models/place.model';
 import { DocumentItem, DocumentOptions } from 'src/app/core/models/document.model';
@@ -11,7 +11,7 @@ import { UtilService } from 'src/app/core/services/util.service';
   templateUrl: './document-item.component.html',
   styleUrls: ['./document-item.component.scss']
 })
-export class DocumentItemComponent implements OnInit {
+export class DocumentItemComponent {
   document = document;
   @Input() viewOptions: DocumentOptions;
   @ViewChild('fr') itemForm!: NgForm;
@@ -21,12 +21,8 @@ export class DocumentItemComponent implements OnInit {
   @Input() item: DocumentItem;
   @Input() index: number;
   @Output() onCancel: EventEmitter<number> = new EventEmitter();
-  
-  constructor(public unitService: UnitService, private util: UtilService) {
-  }
 
-  ngOnInit(): void {
-    //TODO: implement me!
+  constructor(public unitService: UnitService, private util: UtilService) {
   }
 
   display(prop: string) {
@@ -38,7 +34,7 @@ export class DocumentItemComponent implements OnInit {
   }
 
   delayedFocus(inp: HTMLInputElement) {
-    if(this.editPermission) {
+    if (this.editPermission) {
       setTimeout(() => { // this will make the execution after the above boolean has changed
         inp.focus();
       }, 0);

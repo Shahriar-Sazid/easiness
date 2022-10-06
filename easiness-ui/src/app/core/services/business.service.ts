@@ -29,7 +29,9 @@ export class BusinessService {
         purchaseOrder['supplier'] = purchaseOrder.people;
         purchaseOrder.people = undefined;
         purchaseOrder.items.forEach((item) => {
-            item['product'] = item.entity.id;
+            item['productId'] = item.entity.id
+            item['placeId'] = item.place
+            item.place = undefined
             item.entity = undefined;
             return item;
         })
@@ -47,12 +49,12 @@ export class BusinessService {
             item.cost = item.entity.cost;
             return item;
         })
-        
+
         return this.http.post(this.sellApi, invoice);
     }
 
-    processPayment(paymentTx: {payments: Payment[], docId: number}): Observable<unknown> {
-        
+    processPayment(paymentTx: { payments: Payment[], docId: number }): Observable<unknown> {
+
         return this.http.post(this.paymentApi, paymentTx);
     }
 }

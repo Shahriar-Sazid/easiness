@@ -13,16 +13,16 @@ export class Product extends Base {
     @Column()
     name: string
 
-    @Column()
-    type: string
+    @Column({nullable: true})
+    type!: string
 
-    @Column()
-    brand: string
+    @Column({nullable: true})
+    brand!: string
     
     @Column()
     country: string
 
-    @Column()
-    size: string
+    @Column({nullable: true})
+    size!: string
 
 }

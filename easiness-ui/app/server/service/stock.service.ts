@@ -1,14 +1,13 @@
 import Big from "big.js";
 import { ds } from "../config/data-source";
-import { Place } from "../entity/place.entity";
-import { Product } from "../entity/product.entity";
-import { Stock } from "../entity/stock.entity";
+import { Stock, uniqueStockCols } from "../entity/stock.entity";
 import { Unit } from "../entity/unit.entity";
 import { PurchaseOrderItem } from "../model/purchase-order-item.model";
 import { utils } from "../utils/utils";
 import { unitService } from "./unit.service";
 
 export const stockRepo = ds.getRepository(Stock)
+// export const stockColumns = ds.getMetadata(Stock).columns.map(col => col.databaseName)
 
 export const stockService = {
     storeProduct: async (items: PurchaseOrderItem[]) => {
@@ -20,26 +19,26 @@ export const stockService = {
             } else {
                 const prevItem = itemMap[altId];
                 const newCostQty = calculateCostAndQuantity(
-                    prevItem.quantity, prevItem.cost, prevItem.unit, el.quantity, el.cost, el.unit)
+                    prevItem.quantity as Big, prevItem.cost as Big, prevItem.unit, el.quantity as Big, el.cost as Big, el.unit)
                 prevItem.quantity = newCostQty.newQty
                 prevItem.cost = newCostQty.newCost
             }
         }
 
         items = Object.values(itemMap)
-        const inTuples = items.map(el => `(${el.product}, ${el.place})`).join(",")
+        const inTuples = items.map(el => `(${el.productId}, ${el.placeId})`).join(",")
         const stockList = await stockRepo.createQueryBuilder("st")
-            .where(`(st.productId, st.placeId) IN (${inTuples})`)
+            .where(`(st.product_id, st.place_id) IN (${getInTuple(items)})`)
             .getMany()
 
         console.log(stockList);
 
         const stockMap = utils.convertArrayToObject(stockList, (st: Stock) => getAltStockId(st))
 
-        const existingItems: PurchaseOrderItem[] = [] 
-        const newItems: PurchaseOrderItem[]  = [] 
+        const existingItems: PurchaseOrderItem[] = []
+        const newItems: PurchaseOrderItem[] = []
         for (const item of items) {
-            if(stockMap[getAltStockId(item)]) {
+            if (stockMap[getAltStockId(item)]) {
                 existingItems.push(item)
             } else {
                 newItems.push(item)
@@ -49,21 +48,35 @@ export const stockService = {
         const updatedStocks = updateExistingStock(stockMap, existingItems);
         const newStocks = addNewStock(newItems);
 
-        return await stockRepo.createQueryBuilder()
-            .insert()
-            .into(Stock)
-            .values([...updatedStocks, ...newStocks])
-            .execute()
+        const stocksToUpsert = [...updatedStocks, ...newStocks]
+
+        const stockColumns = ds.getMetadata(Stock).columns.map(col => col.databaseName)
+        try {
+            await stockRepo.createQueryBuilder()
+                .insert()
+                .into(Stock)
+                .orUpdate(stockColumns, uniqueStockCols.map(col => utils.camelToSnakeCase(col)))
+                .values(stocksToUpsert)
+                .execute()
+
+            return stockRepo.createQueryBuilder("st")
+                .where(`(st.product_id, st.place_id) IN (${getInTuple(stocksToUpsert)})`)
+                .getMany()
+        } catch (error) {
+            throw error
+        }
+
     },
 
 }
 
 function updateExistingStock(stockMap: Record<string, Stock>, existingItems: PurchaseOrderItem[]): Stock[] {
-    const stockList: Stock[]= [] 
+    const stockList: Stock[] = []
     for (const item of existingItems) {
         const stock = stockMap[getAltStockId(item)]
 
-        const newCostQty = calculateCostAndQuantity(stock.quantity, stock.cost, (stock.unit as Unit).id, item.quantity, item.cost, item.unit)
+        const newCostQty = calculateCostAndQuantity(stock.quantity, stock.cost, stock.unitId,
+            item.quantity as Big, item.cost as Big, item.unit)
         stock.cost = newCostQty.newCost
         stock.quantity = newCostQty.newQty
         stockList.push(stock)
@@ -72,13 +85,13 @@ function updateExistingStock(stockMap: Record<string, Stock>, existingItems: Pur
 }
 
 function addNewStock(newItems: PurchaseOrderItem[]): Stock[] {
-    const stockList: Stock[]= [] 
+    const stockList: Stock[] = []
     for (const item of newItems) {
         const stock: Stock = {
-            product: { id: item.product} as Product,
-            place: { id: item.place} as Place,
+            productId: item.productId,
+            placeId: item.placeId,
             quantity: item.quantity,
-            unit: item.unit,
+            unitId: item.unit,
             cost: item.cost,
         } as Stock
 
@@ -94,14 +107,13 @@ function calculateCostAndQuantity(prevQty: Big, prevCost: Big, prevUnit: number,
 }
 
 function convertQty(prevUnit: number, qty: Big, unit: number): Big {
-    return prevUnit === unit ? qty : unitService.convert(unit, prevUnit, qty)
+    return prevUnit.toString() === unit.toString() ? qty : unitService.convert(unit, prevUnit, qty)
 }
 
-function getAltStockId({ product, place }: { product: number | Product, place: number | Place }): string {
-    if (product instanceof Product) {
-        if (place instanceof Place) {
-            return `${product.id}_${place.id}`
-        }
-    }
-    return `${product}_${place}`
+function getAltStockId({ productId, placeId }: { productId: number, placeId: number }): string {
+    return `${productId}_${placeId}`
+}
+
+function getInTuple(items: { productId: number; placeId: number; }[]): string {
+    return items.map(el => `(${el.productId}, ${el.placeId})`).join(",")
 }

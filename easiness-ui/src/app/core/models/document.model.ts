@@ -26,7 +26,7 @@ export type DocumentItem = {
 
 export type Payment = {
   fromAccount: number;
-  toAccount: number; 
+  toAccount: number;
   amount: number;
 }
 

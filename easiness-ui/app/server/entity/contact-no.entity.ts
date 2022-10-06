@@ -1,10 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Unique } from "typeorm"
+import { Entity, Column, ManyToOne, Unique } from "typeorm"
 import { People } from "./people.entity"
 
-export const uniqueContactCols = ['number', 'ownerId']
 
 @Entity({ name: 'contact_no' })
-@Unique(uniqueContactCols)
 export class ContactNo {
     @Column({
         primary: true,
@@ -18,7 +16,7 @@ export class ContactNo {
     owner: People
 
     @Column({
-        primary: true
+        primary: true,
     })
     ownerId: number
 }
