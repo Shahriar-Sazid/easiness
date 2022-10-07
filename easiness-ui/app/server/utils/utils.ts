@@ -1,4 +1,3 @@
-
 type CallbackFunction<Type> = (arg: Type) => string | number;
 export const utils = {
     convertArrayToObject<Type>(arr: Type[], fn: CallbackFunction<Type>): Record<string, Type> {
@@ -8,10 +7,7 @@ export const utils = {
         }, {});
     },
 
-    convertObjectToArray(obj: object): any[] {
-        return Object.values(obj);
-    },
+    camelToSnakeCase: (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`),
 
-    camelToSnakeCase: (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)
 
 }

@@ -1,9 +1,20 @@
 import Big from "big.js";
+import { ToBig } from "../utils/decorators";
+
 
 export class PurchaseOrderItem {
     productId: number;
     placeId: number;
-    quantity: string | Big;
+
+    @ToBig
+    quantity: Big;
+
     unit: number;
-    cost: string | Big;
+
+    @ToBig
+    cost: Big;
+
+    public getAltId() {
+        return `${this.productId}_${this.placeId}`
+    }
 }

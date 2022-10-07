@@ -13,7 +13,8 @@ export const stockService = {
     storeProduct: async (items: PurchaseOrderItem[]) => {
         let itemMap: { [key: string]: PurchaseOrderItem } = {};
         for (const el of items) {
-            const altId = getAltStockId(el)
+            const altId = el.getAltId()
+
             if (!itemMap[altId]) {
                 itemMap[altId] = el
             } else {
@@ -26,19 +27,18 @@ export const stockService = {
         }
 
         items = Object.values(itemMap)
-        const inTuples = items.map(el => `(${el.productId}, ${el.placeId})`).join(",")
         const stockList = await stockRepo.createQueryBuilder("st")
             .where(`(st.product_id, st.place_id) IN (${getInTuple(items)})`)
             .getMany()
 
         console.log(stockList);
 
-        const stockMap = utils.convertArrayToObject(stockList, (st: Stock) => getAltStockId(st))
+        const stockMap = utils.convertArrayToObject(stockList, (st: Stock) => st.getAltId())
 
         const existingItems: PurchaseOrderItem[] = []
         const newItems: PurchaseOrderItem[] = []
         for (const item of items) {
-            if (stockMap[getAltStockId(item)]) {
+            if (stockMap[item.getAltId()]) {
                 existingItems.push(item)
             } else {
                 newItems.push(item)
@@ -73,7 +73,7 @@ export const stockService = {
 function updateExistingStock(stockMap: Record<string, Stock>, existingItems: PurchaseOrderItem[]): Stock[] {
     const stockList: Stock[] = []
     for (const item of existingItems) {
-        const stock = stockMap[getAltStockId(item)]
+        const stock = stockMap[item.getAltId()]
 
         const newCostQty = calculateCostAndQuantity(stock.quantity, stock.cost, stock.unitId,
             item.quantity as Big, item.cost as Big, item.unit)
@@ -108,10 +108,6 @@ function calculateCostAndQuantity(prevQty: Big, prevCost: Big, prevUnit: number,
 
 function convertQty(prevUnit: number, qty: Big, unit: number): Big {
     return prevUnit.toString() === unit.toString() ? qty : unitService.convert(unit, prevUnit, qty)
-}
-
-function getAltStockId({ productId, placeId }: { productId: number, placeId: number }): string {
-    return `${productId}_${placeId}`
 }
 
 function getInTuple(items: { productId: number; placeId: number; }[]): string {

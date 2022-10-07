@@ -61,4 +61,8 @@ export class Stock extends Base {
     place: Place
     @Column()
     placeId: number
+
+    public getAltId() {
+        return `${this.productId}_${this.placeId}`
+    }
 }

@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { StatusCodes } from "http-status-codes";
-import { FindPeopleRequest } from "../model/people.model";
 import { businessService } from "../service/business.service";
-import { peopleService } from "../service/people.service";
 
 const businessRouter: Router = Router();
 
