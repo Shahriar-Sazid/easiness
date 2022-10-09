@@ -1,15 +1,13 @@
 import Big from "big.js";
 import { ds } from "../config/data-source";
-import { Stock, uniqueStockCols } from "../entity/stock.entity";
-import { Unit } from "../entity/unit.entity";
-import { getPage, Page, Pagination } from "../model/page.model";
-import { PurchaseOrderItem } from "../model/purchase-order-item.model";
+import { Stock } from "../entity/stock.entity";
+import { getPage, Pagination } from "../model/page.model";
+import { PurchaseOrderItem } from "../model/purchase-order.model";
 import { FindStockReq, StockRes } from "../model/stock.model";
 import { utils } from "../utils/utils";
 import { unitService } from "./unit.service";
 
 export const repo = ds.getRepository(Stock)
-// export const stockColumns = ds.getMetadata(Stock).columns.map(col => col.databaseName)
 
 export const stockService = {
     storeProduct: async (items: PurchaseOrderItem[]) => {

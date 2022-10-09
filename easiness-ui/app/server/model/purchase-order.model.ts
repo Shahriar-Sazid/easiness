@@ -1,6 +1,7 @@
+import Big from "big.js";
 import { Type } from "class-transformer";
+import { ToBig } from "../utils/decorators";
 import { Payment } from "./payment.model";
-import { PurchaseOrderItem } from "./purchase-order-item.model";
 
 export class PurchaseOrder {
     @Type(() => Date)
@@ -13,4 +14,21 @@ export class PurchaseOrder {
 
     @Type(() => Payment)
     payments: Payment[];
+}
+
+export class PurchaseOrderItem {
+    productId: number;
+    placeId: number;
+
+    @ToBig
+    quantity: Big;
+
+    unit: number;
+
+    @ToBig
+    cost: Big;
+
+    public getAltId() {
+        return `${this.productId}_${this.placeId}`
+    }
 }

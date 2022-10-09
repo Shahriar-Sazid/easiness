@@ -4,6 +4,7 @@ import { Document } from "../entity/document.entity";
 import { People } from "../entity/people.entity";
 import { Stock, uniqueStockCols } from "../entity/stock.entity";
 import { Tx } from "../entity/tx.entity";
+import { Invoice } from "../model/invoice.model";
 import { PaymentTx } from "../model/payment.model";
 import { PurchaseOrder } from "../model/purchase-order.model";
 import { utils } from "../utils/utils";
@@ -50,6 +51,10 @@ export const businessService = {
                 .values(txList)
                 .execute()
         })
+    },
+
+    sell: async (req: Invoice) => {
+
     },
 }
 
