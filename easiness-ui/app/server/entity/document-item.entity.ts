@@ -13,7 +13,7 @@ export class DocumentItem extends Base {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => Document)
+    @ManyToOne(() => Document, (document) => document.items)
     document: Document
     @Index()
     @Column()

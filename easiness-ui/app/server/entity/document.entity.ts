@@ -4,18 +4,18 @@ import { BigColumn } from "../utils/decorators";
 import { Base } from "./base.entity";
 import { DocumentItem } from "./document-item.entity";
 import { People } from "./people.entity";
-import { Product } from "./product.entity";
 
 export enum DocumentType {
-    PURCHASE_ORDER = "Purchase Order",
-    INVOICE = "Invoice"
+    PURCHASE_ORDER = "PURCHASE_ORDER",
+    INVOICE = "INVOICE"
 }
+
 @Entity({ name: 'document' })
 export class Document extends Base {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => Product)
+    @ManyToOne(() => People)
     people: People
     @Column()
     peopleId: number
