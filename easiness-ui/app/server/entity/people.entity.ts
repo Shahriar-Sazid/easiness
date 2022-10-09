@@ -1,6 +1,7 @@
 import Big from "big.js"
 import { Entity, PrimaryGeneratedColumn, Column, Unique, OneToMany } from "typeorm"
 import { PeopleType } from "../model/people.model"
+import { BigColumn } from "../utils/decorators"
 import { Base } from "./base.entity"
 import { ContactNo } from "./contact-no.entity"
 
@@ -19,24 +20,17 @@ export class People extends Base {
     @Column()
     companyName: string
 
-    @Column()
-    address: string
+    @Column({ nullable: true })
+    address!: string
 
     @Column()
     type: PeopleType
 
-    @Column()
-    email: string
+    @Column({ nullable: true })
+    email!: string
 
-    @Column('numeric', {
-        precision: 20,
-        scale: 6,
-        transformer: {
-            from: (value: string) => new Big(value),
-            to: (value: Big) => value.toString()
-        }
-    })
-    balance: Big;
+    @BigColumn()
+    balance: Big
 
     @OneToMany(() => ContactNo, (contact) => contact.owner, { eager: true, cascade: true })
     contactNoList: ContactNo[]

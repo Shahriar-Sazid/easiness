@@ -1,9 +1,12 @@
+import Big, { Comparison } from "big.js";
+import { In } from "typeorm";
 import { ds } from "../config/data-source";
 import { Account } from "../entity/account.entity";
 import { ApiError } from "../errors/api-error";
 import { ReasonCode } from "../errors/codes";
 import { FindAccountRequest } from "../model/account.model";
 import { getPage, Pagination } from "../model/page.model";
+import { Payment } from "../model/payment.model";
 import { utils } from "../utils/utils";
 
 const repo = ds.getRepository(Account)
@@ -52,4 +55,35 @@ export const accountService = {
 
         return getPage(query, params as Pagination);
     },
+
+    updateAccountBalance: async (payments: Payment[]) => {
+        if (payments) {
+            const ids: number[] = []
+            for (const payment of payments) {
+                if (payment.fromAccount) {
+                    ids.push(payment.fromAccount)
+                }
+                if (payment.toAccount) {
+                    ids.push(payment.toAccount)
+                }
+            }
+
+            const accounts = await repo.findBy({ id: In(ids) })
+
+            const accountMap = utils.convertArrayToObject(accounts, (account) => account.id)
+
+            for (const payment of payments) {
+                if (payment.fromAccount) {
+                    const account = accountMap[payment.fromAccount]
+                    account.balance = payment.amount.gt(0) ? account.balance.sub(payment.amount) : account.balance.add(payment.amount)
+                }
+                if (payment.toAccount) {
+                    const account = accountMap[payment.toAccount]
+                    account.balance = payment.amount.gt(0) ? account.balance.add(payment.amount) : account.balance.sub(payment.amount)
+                }
+            }
+
+            return accounts
+        }
+    }
 }

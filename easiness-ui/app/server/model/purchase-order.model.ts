@@ -11,5 +11,6 @@ export class PurchaseOrder {
     @Type(() => PurchaseOrderItem)
     items: PurchaseOrderItem[];
 
+    @Type(() => Payment)
     payments: Payment[];
 }

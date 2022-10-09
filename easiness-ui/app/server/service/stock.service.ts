@@ -48,24 +48,7 @@ export const stockService = {
         const updatedStocks = updateExistingStock(stockMap, existingItems);
         const newStocks = addNewStock(newItems);
 
-        const stocksToUpsert = [...updatedStocks, ...newStocks]
-
-        const stockColumns = ds.getMetadata(Stock).columns.map(col => col.databaseName)
-        try {
-            await stockRepo.createQueryBuilder()
-                .insert()
-                .into(Stock)
-                .orUpdate(stockColumns, uniqueStockCols.map(col => utils.camelToSnakeCase(col)))
-                .values(stocksToUpsert)
-                .execute()
-
-            return stockRepo.createQueryBuilder("st")
-                .where(`(st.product_id, st.place_id) IN (${getInTuple(stocksToUpsert)})`)
-                .getMany()
-        } catch (error) {
-            throw error
-        }
-
+        return [...updatedStocks, ...newStocks]
     },
 
 }

@@ -1,3 +1,4 @@
+import Big from "big.js";
 import { In } from "typeorm";
 import { ds } from "../config/data-source";
 import { ContactNo } from "../entity/contact-no.entity";
@@ -6,6 +7,8 @@ import { ApiError } from "../errors/api-error";
 import { ReasonCode } from "../errors/codes";
 import { getPage, Pagination } from "../model/page.model";
 import { FindPeopleRequest, PeopleRequest, PeopleType } from "../model/people.model";
+import { PurchaseOrder } from "../model/purchase-order.model";
+import { utils } from "../utils/utils";
 
 
 const repo = ds.getRepository(People)
@@ -82,6 +85,30 @@ export const peopleService = {
 
     findById: async (id: number) => {
         return await repo.findOne({ where: { id } })
-    }
+    },
 
+    updateSupplierBalance: async (req: PurchaseOrder) => {
+        let totalCost = new Big(0)
+        for (const item of req.items) {
+            totalCost = totalCost.add(item.cost.mul(item.quantity))
+        }
+        for (const payment of req.payments) {
+            totalCost = totalCost.add(payment.amount)
+        }
+        return updatePeopleBalance(req.supplier, utils.negate(totalCost))
+    },
+    updateCustomerBalance: async (req: any) => {
+
+    },
+
+}
+
+async function updatePeopleBalance(id: number, amount: Big) {
+    const people = await repo.findOneBy({ id })
+    if (people) {
+        people.balance = people.balance.add(amount)
+        return people
+    } else {
+        throw ApiError.New(ReasonCode.EntityNotFound)
+    }
 }

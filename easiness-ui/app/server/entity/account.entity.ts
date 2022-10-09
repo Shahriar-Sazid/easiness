@@ -19,11 +19,11 @@ export class Account {
     @Column()
     holderName: string
 
-    @Column()
-    bank: string
+    @Column({ nullable: true })
+    bank!: string
 
-    @Column()
-    branch: string
+    @Column({ nullable: true })
+    branch!: string
 
     @Column({ unique: true })
     accountNo: string
