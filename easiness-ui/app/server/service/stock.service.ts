@@ -1,6 +1,7 @@
 import Big from "big.js";
 import { ds } from "../config/data-source";
 import { Stock } from "../entity/stock.entity";
+import { InvoiceItem } from "../model/invoice.model";
 import { getPage, Pagination } from "../model/page.model";
 import { PurchaseOrderItem } from "../model/purchase-order.model";
 import { FindStockReq, StockRes } from "../model/stock.model";
@@ -49,6 +50,10 @@ export const stockService = {
         const newStocks = addNewStock(newItems);
 
         return [...updatedStocks, ...newStocks]
+    },
+
+    sellProduct: async (items: InvoiceItem[]) => {
+
     },
 
     find: async ({ name, type, brand, placeId, page, pageSize }: FindStockReq) => {
