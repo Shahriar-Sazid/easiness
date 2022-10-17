@@ -23,6 +23,8 @@ export const unitService = {
 
     convert: (from: number, to: number, value: string | Big) => {
         value = new Big(value)
+        from = +from
+        to = +to
         let cx = conversions.filter(el => el.from === from && el.to === to).sort((a, b) => a.calStep - b.calStep)
         if (cx?.length > 0) {
             for (const el of cx) {

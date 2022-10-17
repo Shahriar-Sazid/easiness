@@ -1,5 +1,5 @@
 import Big, { Comparison } from "big.js";
-import { In } from "typeorm";
+import { In, Repository } from "typeorm";
 import { ds } from "../config/data-source";
 import { Account } from "../entity/account.entity";
 import { ApiError } from "../errors/api-error";
@@ -56,7 +56,7 @@ export const accountService = {
         return getPage(query, params as Pagination);
     },
 
-    updateAccountBalance: async (payments: Payment[]) => {
+    updateAccountBalance: async (repo: Repository<Account>, payments: Payment[]) => {
         if (payments) {
             const ids: number[] = []
             for (const payment of payments) {
@@ -83,7 +83,12 @@ export const accountService = {
                 }
             }
 
-            return accounts
+            await repo.createQueryBuilder()
+                .insert()
+                .into(Account)
+                .values(accounts)
+                .orUpdate(['balance'], ['id'])
+                .execute()
         }
     }
 }

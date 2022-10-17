@@ -1,11 +1,13 @@
 import Big from "big.js";
-import { In } from "typeorm";
+import { In, Repository } from "typeorm";
 import { ds } from "../config/data-source";
 import { ContactNo } from "../entity/contact-no.entity";
 import { People } from "../entity/people.entity";
 import { ApiError } from "../errors/api-error";
 import { ReasonCode } from "../errors/codes";
+import { Invoice } from "../model/invoice.model";
 import { getPage, Pagination } from "../model/page.model";
+import { Payment } from "../model/payment.model";
 import { FindPeopleRequest, PeopleRequest, PeopleType } from "../model/people.model";
 import { PurchaseOrder } from "../model/purchase-order.model";
 import { utils } from "../utils/utils";
@@ -88,26 +90,29 @@ export const peopleService = {
     },
 
     updateSupplierBalance: async (req: PurchaseOrder) => {
-        let totalCost = new Big(0)
-        for (const item of req.items) {
-            totalCost = totalCost.add(item.cost.mul(item.quantity))
-        }
-        for (const payment of req.payments) {
-            totalCost = totalCost.add(payment.amount)
-        }
-        return updatePeopleBalance(req.supplier, utils.negate(totalCost))
-    },
-    updateCustomerBalance: async (req: any) => {
-
+        const debt = req.totalCost().sub(req.totalPaymentDone())
+        await updatePeopleBalance(repo, req.supplier, utils.negate(debt))
     },
 
+    updateCustomerBalance: async (repo: Repository<People>, req: Invoice) => {
+        const due = req.totalPrice().sub(req.totalPaymentReceived())
+        await updatePeopleBalance(repo, req.customer, due)
+    },
+
+    adjustPayment: async (repo: Repository<People>, id: number, payments: Payment[]) => {
+        let amount = new Big(0)
+        for (const payment of payments) {
+            amount = amount.add(payment.amount)
+        }
+        await updatePeopleBalance(repo, id, utils.negate(amount))
+    },
 }
 
-async function updatePeopleBalance(id: number, amount: Big) {
+async function updatePeopleBalance(repo: Repository<People>, id: number, amount: Big) {
     const people = await repo.findOneBy({ id })
     if (people) {
         people.balance = people.balance.add(amount)
-        return people
+        await repo.save(people)
     } else {
         throw ApiError.New(ReasonCode.EntityNotFound)
     }

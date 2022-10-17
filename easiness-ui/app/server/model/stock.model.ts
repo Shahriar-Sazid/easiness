@@ -1,3 +1,5 @@
+import Big from "big.js";
+import { ToBig } from "../utils/decorators";
 import { Pagination } from "./page.model";
 
 export type StockRes = {
@@ -22,3 +24,13 @@ export type FindStockReq = {
     brand: string;
     placeId: number;
 } & Pagination
+
+
+export class MoveProductInfo {
+    stockId: number
+    @ToBig
+    quantity: Big
+    unit: number
+    toPlace: number
+}
+

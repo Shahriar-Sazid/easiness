@@ -7,23 +7,52 @@ import { PurchaseOrder, PurchaseOrderItem } from "../model/purchase-order.model"
 import { DocumentItem } from "../entity/document-item.entity";
 import { FindDocumentReq } from "../model/document.model";
 import { getPage } from "../model/page.model";
+import { Invoice, InvoiceItem } from "../model/invoice.model";
+import { utils } from "../utils/utils";
+import { Repository } from "typeorm";
 
 const repo = ds.getRepository(Document)
 
 export const documentService = {
-    makePurchaseDocument: (req: PurchaseOrder, stockList: Stock[]) => {
+    savePurchaseOrder: async (repo: Repository<Document>, req: PurchaseOrder, stockList: Stock[]) => {
         let totalCost = new Big(0)
 
         for (const item of req.items) {
-            totalCost = totalCost.add(item.cost)
+            totalCost = totalCost.add(item.cost.mul(item.quantity))
         }
 
-        return {
+        const document = {
             peopleId: req.supplier,
             type: DocumentType.PURCHASE_ORDER,
             total: totalCost,
-            items: req.items.map(item => toDocumentItem(item, stockList))
+            items: req.items.map(item => toPurchaseOrderItem(item, stockList))
         } as Document
+
+        return await repo.save(document)
+    },
+
+    saveInvoice: async (repo: Repository<Document>, req: Invoice, stockList: Stock[]) => {
+        let totalPrice = new Big(0)
+        for (const item of req.items) {
+            totalPrice = totalPrice.add(item.price.mul(item.quantity))
+        }
+
+        let totalCost = new Big(0)
+        for (const item of req.items) {
+            totalCost = totalCost.add(item.cost.mul(item.quantity))
+        }
+
+        const stockMap = utils.convertArrayToObject(stockList, (st: Stock) => st.id)
+
+        const document = {
+            peopleId: req.customer,
+            type: DocumentType.INVOICE,
+            total: totalPrice,
+            profit: totalPrice.add(utils.negate(totalCost)),
+            items: req.items.map(item => toInvoiceItem(item, stockMap))
+        } as Document
+
+        return await repo.save(document)
     },
 
     find: async ({ from, to, peopleName, type, page, pageSize }: FindDocumentReq) => {
@@ -49,7 +78,7 @@ export const documentService = {
     },
 }
 
-function toDocumentItem(item: PurchaseOrderItem, stockList: Stock[]): DocumentItem {
+function toPurchaseOrderItem(item: PurchaseOrderItem, stockList: Stock[]): DocumentItem {
     const docItem = {
         costOrPrice: item.cost,
         placeId: item.placeId,
@@ -64,4 +93,14 @@ function toDocumentItem(item: PurchaseOrderItem, stockList: Stock[]): DocumentIt
         }
     }
     return docItem
+}
+
+function toInvoiceItem(item: InvoiceItem, stockMap: Record<number, Stock>): DocumentItem {
+    return {
+        costOrPrice: item.cost,
+        quantity: item.quantity,
+        unitId: item.unit,
+        affectedStockId: item.stock,
+        productId: stockMap[item.stock]?.productId
+    } as DocumentItem
 }

@@ -2,12 +2,11 @@ import { ds } from "../config/data-source";
 import { Account } from "../entity/account.entity";
 import { Document } from "../entity/document.entity";
 import { People } from "../entity/people.entity";
-import { Stock, uniqueStockCols } from "../entity/stock.entity";
+import { Stock } from "../entity/stock.entity";
 import { Tx } from "../entity/tx.entity";
 import { Invoice } from "../model/invoice.model";
 import { PaymentTx } from "../model/payment.model";
 import { PurchaseOrder } from "../model/purchase-order.model";
-import { utils } from "../utils/utils";
 import { accountService } from "./account.service";
 import { documentService } from "./document.service";
 import { peopleService } from "./people.service";
@@ -17,47 +16,39 @@ import { txService } from "./tx.service";
 export const businessService = {
     purchase: async (req: PurchaseOrder) => {
         await ds.transaction(async (tm) => {
-            let stockList = await stockService.storeProduct(req.items)
-            const stockColumns = ds.getMetadata(Stock).columns.map(col => col.databaseName)
-            await tm.createQueryBuilder()
-                .insert()
-                .into(Stock)
-                .orUpdate(stockColumns, uniqueStockCols.map(col => utils.camelToSnakeCase(col)))
-                .values(stockList)
-                .execute()
-            stockList = await tm.createQueryBuilder().from(Stock, "st")
-                .where(`(st.product_id, st.place_id) IN (${getInTuple(stockList)})`)
-                .getMany()
-
-            const document = await tm.getRepository(Document).save(documentService.makePurchaseDocument(req, stockList))
-
-            await tm.createQueryBuilder()
-                .insert()
-                .into(Account)
-                .values(await accountService.updateAccountBalance(req.payments))
-                .orUpdate(['balance'], ['id'])
-                .execute()
-
-            tm.getRepository(People).save(await peopleService.updateSupplierBalance(req))
-
-            const txList = txService.makeTxList({
+            let stockList = await stockService.storeProduct(tm.getRepository(Stock), req.items)
+            const document = await documentService.savePurchaseOrder(tm.getRepository(Document), req, stockList)
+            await accountService.updateAccountBalance(tm.getRepository(Account), req.payments)
+            await peopleService.updateSupplierBalance(req)
+            txService.saveTxList(tm.getRepository(Tx), {
                 payments: req.payments,
                 docId: document.id,
                 peopleId: req.supplier,
             } as PaymentTx)
-            await tm.createQueryBuilder()
-                .insert()
-                .into(Tx)
-                .values(txList)
-                .execute()
         })
     },
 
-    sell: async (req: Invoice) => {
-
+    sell: async (invoice: Invoice) => {
+        await ds.transaction(async (tm) => {
+            const stockList = await stockService.sellProduct(tm.getRepository(Stock), invoice.items)
+            const document = await documentService.saveInvoice(tm.getRepository(Document), invoice, stockList)
+            accountService.updateAccountBalance(tm.getRepository(Account), invoice.payments)
+            await peopleService.updateCustomerBalance(tm.getRepository(People), invoice)
+            txService.saveTxList(tm.getRepository(Tx), {
+                payments: invoice.payments,
+                docId: document.id,
+                peopleId: invoice.customer,
+            } as PaymentTx)
+        })
     },
-}
 
-function getInTuple(items: { productId: number; placeId: number; }[]): string {
-    return items.map(el => `(${el.productId}, ${el.placeId})`).join(",")
+    processPayments: async (paymentTx: PaymentTx) => {
+        await ds.transaction(async (tm) => {
+            accountService.updateAccountBalance(tm.getRepository(Account), paymentTx.payments)
+            const doc = await documentService.getDetails(paymentTx.docId)
+            paymentTx.peopleId = doc.peopleId
+            peopleService.adjustPayment(tm.getRepository(People), doc.peopleId, paymentTx.payments)
+            txService.saveTxList(tm.getRepository(Tx), paymentTx)
+        })
+    },
 }

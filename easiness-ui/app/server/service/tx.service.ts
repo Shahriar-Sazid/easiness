@@ -1,3 +1,4 @@
+import { Repository } from "typeorm";
 import { ds } from "../config/data-source";
 import { Tx, TxType } from "../entity/tx.entity";
 import { getPage, Pagination } from "../model/page.model";
@@ -7,7 +8,7 @@ import { FindTxReq, TxRes } from "../model/tx.model";
 const repo = ds.getRepository(Tx)
 
 export const txService = {
-    makeTxList: (paymentTx: PaymentTx) => {
+    saveTxList: async (repo: Repository<Tx>, paymentTx: PaymentTx) => {
         const txList = []
 
         for (const payment of paymentTx.payments) {
@@ -22,7 +23,11 @@ export const txService = {
             } as Tx)
         }
 
-        return txList
+        await repo.createQueryBuilder()
+            .insert()
+            .into(Tx)
+            .values(txList)
+            .execute()
     },
 
     find: async ({ from, to, peopleName, type, page, pageSize }: FindTxReq) => {

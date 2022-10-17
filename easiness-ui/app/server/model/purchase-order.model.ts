@@ -14,6 +14,24 @@ export class PurchaseOrder {
 
     @Type(() => Payment)
     payments: Payment[];
+
+    public totalCost() {
+        let totalCost = new Big(0)
+        for (const item of this.items) {
+            totalCost = totalCost.add(item.cost.mul(item.quantity))
+        }
+
+        return totalCost.abs()
+    }
+
+    totalPaymentDone(): Big {
+        let totalAmount = new Big(0)
+        for (const payment of this.payments) {
+            totalAmount = totalAmount.add(payment.amount)
+        }
+
+        return totalAmount.abs()
+    }
 }
 
 export class PurchaseOrderItem {

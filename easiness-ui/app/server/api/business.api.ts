@@ -1,6 +1,7 @@
 import { plainToInstance } from "class-transformer";
 import { NextFunction, Request, Response, Router } from "express";
 import { StatusCodes } from "http-status-codes";
+import { Invoice } from "../model/invoice.model";
 import { PurchaseOrder } from "../model/purchase-order.model";
 import { businessService } from "../service/business.service";
 
@@ -12,6 +13,17 @@ businessRouter.post('/purchase', async (req: Request, res: Response, next: NextF
         const purchaseReq = plainToInstance(PurchaseOrder, req.body)
         return res.status(StatusCodes.CREATED).send(
             await businessService.purchase(purchaseReq)
+        );
+    } catch (e) {
+        next(e)
+    }
+});
+
+businessRouter.post('/sell', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const invoiceReq = plainToInstance(Invoice, req.body)
+        return res.status(StatusCodes.CREATED).send(
+            await businessService.sell(invoiceReq)
         );
     } catch (e) {
         next(e)

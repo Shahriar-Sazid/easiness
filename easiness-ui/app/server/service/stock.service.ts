@@ -1,17 +1,18 @@
 import Big from "big.js";
+import { In, Repository } from "typeorm";
 import { ds } from "../config/data-source";
-import { Stock } from "../entity/stock.entity";
+import { Stock, uniqueStockCols } from "../entity/stock.entity";
 import { InvoiceItem } from "../model/invoice.model";
 import { getPage, Pagination } from "../model/page.model";
 import { PurchaseOrderItem } from "../model/purchase-order.model";
-import { FindStockReq, StockRes } from "../model/stock.model";
+import { FindStockReq, MoveProductInfo, StockRes } from "../model/stock.model";
 import { utils } from "../utils/utils";
 import { unitService } from "./unit.service";
 
 export const repo = ds.getRepository(Stock)
 
 export const stockService = {
-    storeProduct: async (items: PurchaseOrderItem[]) => {
+    storeProduct: async (repo: Repository<Stock>, items: PurchaseOrderItem[]) => {
         let itemMap: { [key: string]: PurchaseOrderItem } = {};
         for (const el of items) {
             const altId = el.getAltId()
@@ -48,12 +49,42 @@ export const stockService = {
 
         const updatedStocks = updateExistingStock(stockMap, existingItems);
         const newStocks = addNewStock(newItems);
+        const stockColumns = ds.getMetadata(Stock).columns.map(col => col.databaseName)
 
-        return [...updatedStocks, ...newStocks]
+        await repo.createQueryBuilder()
+            .insert()
+            .into(Stock)
+            .orUpdate(stockColumns, uniqueStockCols.map(col => utils.camelToSnakeCase(col)))
+            .values([...updatedStocks, ...newStocks])
+            .execute()
+
+        return await repo.createQueryBuilder("st")
+            .where(`(st.product_id, st.place_id) IN (${getInTuple(stockList)})`)
+            .getMany()
+
     },
 
-    sellProduct: async (items: InvoiceItem[]) => {
+    sellProduct: async (repo: Repository<Stock>, items: InvoiceItem[]) => {
+        const stockList = await repo.findBy({ id: In(items.map(item => item.stock)) })
+        const stockMap = utils.convertArrayToObject(stockList, (st: Stock) => st.getAltId())
 
+        for (const item of items) {
+            const stock = stockMap[item.stock]
+
+            const delQty = convertQty(stock.unitId, item.quantity, item.unit)
+            stock.quantity = stock.quantity.add(utils.negate(delQty))
+            stock.latestPrice = item.price
+        }
+        const stockColumns = ds.getMetadata(Stock).columns.map(col => col.databaseName)
+
+        await repo.createQueryBuilder()
+            .insert()
+            .into(Stock)
+            .orUpdate(stockColumns, uniqueStockCols.map(col => utils.camelToSnakeCase(col)))
+            .values(stockList)
+            .execute()
+
+        return stockList
     },
 
     find: async ({ name, type, brand, placeId, page, pageSize }: FindStockReq) => {
@@ -92,7 +123,44 @@ export const stockService = {
                 } as StockRes
             })
         }
-    }
+    },
+
+    async move(req: MoveProductInfo[]) {
+        await ds.transaction(async (tm) => {
+            const repo = tm.getRepository(Stock)
+
+            const fromStocks = await repo.findBy({ id: In(req.map(item => item.stockId)) })
+            const fromStockMap = utils.convertArrayToObject(fromStocks, (st: Stock) => st.id)
+
+            const purchaseItems: PurchaseOrderItem[] = []
+
+            for (const moveData of req) {
+                const stock = fromStockMap[moveData.stockId]
+
+                purchaseItems.push({
+                    quantity: moveData.quantity,
+                    unit: moveData.unit,
+                    placeId: moveData.toPlace,
+                    productId: stock.productId,
+                    cost: stock.cost
+                } as PurchaseOrderItem)
+
+                const delQty = convertQty(stock.unitId, moveData.quantity, moveData.unit)
+                stock.quantity = stock.quantity.add(utils.negate(delQty))
+            }
+            const stockColumns = ds.getMetadata(Stock).columns.map(col => col.databaseName)
+
+            await repo.createQueryBuilder()
+                .insert()
+                .into(Stock)
+                .orUpdate(stockColumns, uniqueStockCols.map(col => utils.camelToSnakeCase(col)))
+                .values(fromStocks)
+                .execute()
+
+            this.storeProduct(purchaseItems)
+        })
+
+    },
 }
 
 function updateExistingStock(stockMap: Record<string, Stock>, existingItems: PurchaseOrderItem[]): Stock[] {
