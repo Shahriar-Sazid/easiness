@@ -36,13 +36,13 @@ export class DocumentItem extends Base {
     unitId: number
 
     @ManyToOne(() => Place)
-    place: Place
-    @Column()
-    placeId: number
+    place!: Place
+    @Column({ nullable: true })
+    placeId!: number
 
     @ManyToOne(() => Stock)
-    affectedStock: Stock
+    affectedStock!: Stock
     @Column({ nullable: true })
-    affectedStockId: number
+    affectedStockId!: number
 
 }

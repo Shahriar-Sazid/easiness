@@ -66,7 +66,7 @@ export const stockService = {
 
     sellProduct: async (repo: Repository<Stock>, items: InvoiceItem[]) => {
         const stockList = await repo.findBy({ id: In(items.map(item => item.stock)) })
-        const stockMap = utils.convertArrayToObject(stockList, (st: Stock) => st.getAltId())
+        const stockMap = utils.convertArrayToObject(stockList, (st: Stock) => st.id)
 
         for (const item of items) {
             const stock = stockMap[item.stock]
@@ -82,6 +82,7 @@ export const stockService = {
             .into(Stock)
             .orUpdate(stockColumns, uniqueStockCols.map(col => utils.camelToSnakeCase(col)))
             .values(stockList)
+            .updateEntity(false)
             .execute()
 
         return stockList

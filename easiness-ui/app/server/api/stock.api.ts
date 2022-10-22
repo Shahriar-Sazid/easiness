@@ -12,6 +12,7 @@ stockRouter.get('/', async (req: Request, res: Response, next: NextFunction) => 
             name: req.query.name ?? '',
             type: req.query.type ?? '',
             brand: req.query.brand ?? '',
+            placeId: req.query.placeId ? +req.query.placeId : undefined,
             page: req.query.page,
             pageSize: req.query.pageSize
         } as FindStockReq));

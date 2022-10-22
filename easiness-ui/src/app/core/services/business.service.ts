@@ -10,9 +10,9 @@ import clone from 'just-clone';
 @Injectable({ providedIn: 'root' })
 export class BusinessService {
     private businessApi = 'api/v1/business/'
+    private stockApi = 'api/v1/stock'
     private purchaseApi = `${this.businessApi}purchase`
     private sellApi = `${this.businessApi}sell`
-    private stockApi = `${this.businessApi}stock`
     private paymentApi = `${this.businessApi}payment`
 
     constructor(private http: HttpClient, private util: UtilService) { }

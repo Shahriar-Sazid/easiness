@@ -1,4 +1,5 @@
 import Big from "big.js";
+import { Type } from "class-transformer";
 import { ToBig } from "../utils/decorators";
 
 export class Payment {
@@ -8,7 +9,8 @@ export class Payment {
     amount: Big
 }
 
-export type PaymentTx = {
+export class PaymentTx {
+    @Type(() => Payment)
     payments: Payment[]
     peopleId: number
     docId: number

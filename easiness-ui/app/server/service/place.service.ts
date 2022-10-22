@@ -1,5 +1,6 @@
 import { ds } from "../config/data-source";
 import { Place } from "../entity/place.entity";
+import { utils } from "../utils/utils";
 
 const repo = ds.getRepository(Place)
 
@@ -10,6 +11,6 @@ export const placeService = {
     },
 
     findAll: async () => {
-        return await repo.find();
+        return utils.convertArrayToObject(await repo.find(), (place: Place) => place.id)
     }
 }

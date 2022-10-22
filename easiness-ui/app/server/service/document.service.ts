@@ -5,7 +5,7 @@ import { Stock } from "../entity/stock.entity";
 import { DocumentType } from "../entity/document.entity";
 import { PurchaseOrder, PurchaseOrderItem } from "../model/purchase-order.model";
 import { DocumentItem } from "../entity/document-item.entity";
-import { FindDocumentReq } from "../model/document.model";
+import { DocumentRes, FindDocumentReq } from "../model/document.model";
 import { getPage } from "../model/page.model";
 import { Invoice, InvoiceItem } from "../model/invoice.model";
 import { utils } from "../utils/utils";
@@ -57,13 +57,28 @@ export const documentService = {
 
     find: async ({ from, to, peopleName, type, page, pageSize }: FindDocumentReq) => {
         const query = repo.createQueryBuilder("dc").
-            select(["dc.id", "dc.created_at", "pp.name", "dc.type", "dc.total", "dc.profit"])
+            select(["dc.id", "dc.createdAt", "pp.name", "dc.type", "dc.total", "dc.profit"])
             .innerJoin("dc.people", "pp")
             .where("(:name = '' OR LOWER(pp.name) LIKE '%' || :name || '%')", { name: peopleName })
             .andWhere("(:type IS NULL OR dc.type = :type)", { type })
             .andWhere("(dc.createdAt BETWEEN :from AND :to)", { from, to })
 
-        return getPage(query, { page, pageSize })
+        const docList = await getPage(query, { page, pageSize })
+        const { content, ...others } = docList
+
+        return {
+            ...others,
+            content: content.map((doc: Document) => {
+                return {
+                    id: doc.id,
+                    date: doc.createdAt,
+                    peopleName: doc.people.name,
+                    documentType: doc.type,
+                    total: doc.total,
+                    profit: doc.profit,
+                } as DocumentRes
+            })
+        }
     },
 
     getDetails: async (id: number) => {

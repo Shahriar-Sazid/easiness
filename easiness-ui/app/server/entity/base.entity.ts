@@ -1,4 +1,4 @@
-import { BaseEntity, CreateDateColumn, UpdateDateColumn, VersionColumn } from "typeorm";
+import { CreateDateColumn, UpdateDateColumn, VersionColumn } from "typeorm";
 
 export class Base {
     @CreateDateColumn()

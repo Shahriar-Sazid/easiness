@@ -38,8 +38,9 @@ export const txService = {
             .where("(:name = '' OR LOWER(p.name) LIKE '%' || :name || '%')", { name: peopleName })
             .andWhere("(:type IS NULL OR t.type = :type)", { type })
             .andWhere("(t.createdAt BETWEEN :from AND :to)", { from, to })
+            .orderBy("t.createdAt", "DESC")
 
-        const txList = await getPage(query, { page, pageSize } as Pagination)
+        const txList = await getPage(query, { page, pageSize })
         const { content, ...others } = txList
 
         return {

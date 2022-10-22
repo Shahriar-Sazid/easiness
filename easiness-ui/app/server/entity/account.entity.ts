@@ -1,12 +1,13 @@
 import Big from "big.js"
 import { Entity, PrimaryGeneratedColumn, Column, Unique } from "typeorm"
 import { AccountType } from "../model/account.model"
+import { Base } from "./base.entity"
 
 export const uniqueAccountCols = ['accountNo', 'bank']
 
 @Entity({ name: 'account' })
 @Unique(uniqueAccountCols)
-export class Account {
+export class Account extends Base {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -25,7 +26,7 @@ export class Account {
     @Column({ nullable: true })
     branch!: string
 
-    @Column({ unique: true })
+    @Column()
     accountNo: string
 
     @Column('numeric', {

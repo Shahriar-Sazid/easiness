@@ -20,6 +20,11 @@ const routes: Routes = [
   {
     path: "sell",
     component: SellComponent,
+    resolve: {
+      units: UnitResolver,
+      place: PlaceResolver,
+      account: AccountResolver
+    }
   },
   {
     path: "stock",
@@ -36,4 +41,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class BusinessRoutingModule {}
+export class BusinessRoutingModule { }

@@ -59,6 +59,7 @@ export class SaveAccountComponent {
               Swal.fire('Good job!', 'Account updated successfully', 'success');
               this.accountForm.reset();
               this.modalService.dismissAll();
+              this.accountService.getAllAccount()
             },
             (err) => {
               console.log(err);
