@@ -8,6 +8,7 @@ import { validationMessages } from "src/app/core/helpers/validation/validation-m
 import { Page } from "src/app/core/models/page.model";
 import { People } from "src/app/core/models/people.model";
 import { AmountPipe } from "src/app/core/pipes/amount.pipe";
+import { PDFService } from "src/app/core/services/pdf.service";
 import { PeopleService } from "src/app/core/services/people.service";
 import { UtilService } from "src/app/core/services/util.service";
 
@@ -41,6 +42,7 @@ export class PeopleComponent implements OnInit {
     public util: UtilService,
     private activatedRouter: ActivatedRoute,
     private router: Router,
+    private pdfService: PDFService,
     private amountPipe: AmountPipe,
   ) {
     this.searchOptions = {
@@ -103,7 +105,7 @@ export class PeopleComponent implements OnInit {
     });
   }
 
-  resetForm() { 
+  resetForm() {
     //TODO: implement me!!
   }
 
@@ -112,17 +114,37 @@ export class PeopleComponent implements OnInit {
   downloadAsReport() {
     const keyNameMap = {
       name: "Name",
+      companyName: "Company Name",
+      address: "Address",
+      email: "Email",
+      type: "Type",
       contactNo: "Contact No",
+      balance: "Balance",
     };
+
     const reportOptions = {
       ...this.searchedOptions,
       activeFilters: this.util.buildActiveFilters(this.searchedOptions, keyNameMap),
     };
     reportOptions.page = 1;
     reportOptions.pageSize = 10000000;
-    this.peopleService.downloadAsReport(reportOptions).subscribe((data) => {
-      this.util.downLoadFile(data, "application/pdf");
-    });
+
+    this.peopleService.getPeople(reportOptions).subscribe((data) => {
+      const rows = []
+
+      for (const el of data.content) {
+        el.contactNumber = el.contactNoList.map((contactNo) => contactNo.number).join(",\n");
+        rows.push([el.name, el.companyName, el.address, el.email.replace("@", "@\n"), el.type, el.contactNumber, el.balance])
+      }
+
+
+      let dd = this.pdfService.getListTemplate(
+        Object.values(keyNameMap).map(el => ({ text: el, style: "tableHeader" })),
+        rows, reportOptions.activeFilters, 'auto')
+
+      this.pdfService.open(dd)
+    })
+
   }
 
   onActivate(event: any) {

@@ -1,4 +1,5 @@
-<app-document-header [people]="people" [viewOptions]="viewOptions" [doc]="document"></app-document-header>
+<app-document-header [people]="people" [viewOptions]="viewOptions" [editPermission]="editPermission" [doc]="document">
+</app-document-header>
 <br>
 <app-document-item-header [editPermission]="editPermission" [viewOptions]="viewOptions"></app-document-item-header>
 <div [@fadeInOut] *ngFor="let item of document.items; let i = index">

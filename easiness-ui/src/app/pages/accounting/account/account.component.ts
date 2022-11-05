@@ -8,6 +8,7 @@ import { validationMessages } from "src/app/core/helpers/validation/validation-m
 import { Account } from "src/app/core/models/accounting.model";
 import { Page } from "src/app/core/models/page.model";
 import { AccountingService } from "src/app/core/services/accounting.service";
+import { PDFService } from "src/app/core/services/pdf.service";
 import { UtilService } from "src/app/core/services/util.service";
 @Component({
   selector: "app-account",
@@ -40,7 +41,8 @@ export class AccountComponent implements OnInit {
     private fb: UntypedFormBuilder,
     public util: UtilService,
     private activatedRouter: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private pdfService: PDFService
   ) {
     this.searchOptions = {
       accountName: "",
@@ -106,8 +108,13 @@ export class AccountComponent implements OnInit {
   downloadAsReport() {
     let keyNameMap = {
       accountName: "Account Name",
+      holderName: "Holder Name",
+      bank: "Bank",
+      branch: "Branch",
       accountNo: "Account No",
+      balance: "Balance",
     };
+
     let reportOptions = {
       ...this.searchedOptions,
       activeFilters: this.util.buildActiveFilters(
@@ -117,9 +124,19 @@ export class AccountComponent implements OnInit {
     };
     reportOptions.page = 1;
     reportOptions.pageSize = 10000000;
-    this.accountService.downloadAsReport(reportOptions).subscribe((data) => {
-      this.util.downLoadFile(data, "application/pdf");
-    });
+
+    this.accountService.getAccount(reportOptions).subscribe((data) => {
+      const rows = []
+      for (const el of data.content) {
+        rows.push([el.accountName, el.holderName, el.bank, el.branch, el.accountNo, el.balance])
+      }
+
+      let dd = this.pdfService.getListTemplate(
+        Object.values(keyNameMap).map(el => ({ text: el, style: "tableHeader" })),
+        rows, reportOptions.activeFilters, '*')
+
+      this.pdfService.open(dd)
+    })
   }
 
   onActivate(event: any) {

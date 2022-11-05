@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ColumnMode, TableColumn } from "@swimlane/ngx-datatable";
 import { APP_CONFIG } from "src/environments/environment";
-// import * as _ from "lodash";
 import { Page } from "src/app/core/models/page.model";
 import { Product } from "src/app/core/models/product.model";
 import { ProductService } from "src/app/core/services/product.service";
 import { UtilService } from "src/app/core/services/util.service";
 import clone from "just-clone";
+import { PDFService } from "src/app/core/services/pdf.service";
 
 @Component({
   selector: "app-product",
@@ -58,15 +58,16 @@ export class ProductComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    public util: UtilService
+    public util: UtilService,
+    private pdfService: PDFService
   ) {
     this.search = this.search.bind(this);
   }
 
   ngOnInit() {
-    if(this.viewMode == 'buy') {
+    if (this.viewMode == 'buy') {
       this.currentMode = this.buyMode;
-    } else if(this.viewMode == 'dedicated') {
+    } else if (this.viewMode == 'dedicated') {
       this.currentMode = this.dedicatedMode;
     }
 
@@ -109,7 +110,7 @@ export class ProductComponent implements OnInit {
     this.search();
   }
 
-  changePage(event) {
+  changePage(event: { offset: number; }) {
     this.searchedOptions.page = event.offset + 1;
     this.search();
   }
@@ -134,6 +135,8 @@ export class ProductComponent implements OnInit {
       name: "Name",
       type: "Type",
       brand: "Brand",
+      country: "Country",
+      size: "Size",
     };
     const reportOptions = {
       ...this.searchedOptions,
@@ -144,9 +147,20 @@ export class ProductComponent implements OnInit {
     };
     reportOptions.page = 1;
     reportOptions.pageSize = 10000000;
-    this.productService.downloadAsReport(reportOptions).subscribe((data) => {
-      this.util.downLoadFile(data, "application/pdf");
+
+    this.productService.getProduct(reportOptions).subscribe(data => {
+      const rows = []
+      for (const el of data.content) {
+        rows.push([el.name, el.type, el.brand, el.country, el.size])
+      }
+
+      let dd = this.pdfService.getListTemplate(
+        Object.values(keyNameMap).map(el => ({ text: el, style: "tableHeader" })),
+        rows, reportOptions.activeFilters, '*')
+
+      this.pdfService.open(dd)
     });
+
   }
 
   resetForm() {

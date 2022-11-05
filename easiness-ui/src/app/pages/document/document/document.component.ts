@@ -48,7 +48,8 @@ export class DocumentComponent implements OnInit {
       validateUnit: true,
       theme: {
         bg: 'bg-success',
-        text: 'text-success'
+        text: 'text-success',
+        btn: 'btn btn-sm btn-outline-success',
       },
       key: DocumentType.INVOICE,
     } as DocumentOptions,
@@ -69,7 +70,8 @@ export class DocumentComponent implements OnInit {
       validateUnit: false,
       theme: {
         bg: 'bg-danger',
-        text: 'text-danger'
+        text: 'text-danger',
+        btn: 'btn btn-sm btn-outline-danger',
       },
       key: DocumentType.PURCHASE_ORDER,
     } as DocumentOptions,
