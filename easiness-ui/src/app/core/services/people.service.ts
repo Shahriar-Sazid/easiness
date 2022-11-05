@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UtilService } from "./util.service";
 import { People } from "../models/people.model";
 import { map, tap } from "rxjs/operators";
+import { Page } from "../models/page.model";
 
 @Injectable({
   providedIn: "root",
@@ -29,13 +30,13 @@ export class PeopleService {
     this.getAllCustomer = this.getAllCustomer.bind(this);
   }
 
-  getPeople(searchOptions: { name: string; contactNo: string; page: number; pageSize: number }): Observable<any> {
+  getPeople(searchOptions: { name: string; contactNo: string; page: number; pageSize: number }): Observable<Page<People>> {
     this.util.deepTrim(searchOptions);
     let queryString = this.util.convertObjToQueryString(searchOptions);
     let url = `${this.peopleUrl}${queryString}`;
     console.log("----------Get People Url-----------");
     console.log(url);
-    return this.http.get(url);
+    return this.http.get<Page<People>>(url);
   }
 
   addPeople(newPeople): Observable<any> {

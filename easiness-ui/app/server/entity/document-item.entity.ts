@@ -30,8 +30,6 @@ export class DocumentItem extends Base {
     @BigColumn()
     costOrPrice: Big
 
-    @ManyToOne(() => Unit)
-    unit: Unit
     @Column()
     unitId: number
 

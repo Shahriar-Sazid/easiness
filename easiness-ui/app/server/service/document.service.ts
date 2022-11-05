@@ -84,11 +84,24 @@ export const documentService = {
     getDetails: async (id: number) => {
         const document = await repo.findOne({
             relations: {
-                items: true
+                people: true,
+                items: {
+                    product: true,
+                }
             },
             where: { id }
         })
         document['date'] = document.createdAt
+
+        for (const item of document.items) {
+            item['name'] = item.product.name
+            item['type'] = item.product.type
+            item['brand'] = item.product.brand
+            item['country'] = item.product.country
+            item['size'] = item.product.size
+            item['unit'] = item.unitId
+            item.product = undefined
+        }
         return document
     },
 }

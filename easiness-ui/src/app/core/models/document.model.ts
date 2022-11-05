@@ -8,6 +8,7 @@ export enum DocumentType {
 }
 
 export type Document = {
+  id: number;
   type: DocumentType;
   date: Date;
   people: number;
@@ -48,6 +49,7 @@ export type DocumentOptions = {
   theme: {
     bg: string;
     text: string;
+    btn: string;
   };
   key: DocumentType;
 }
@@ -93,6 +95,7 @@ export type DocumentItemResponse = {
 
 export function toDocument(documentRes: DocumentResponse): Document {
   const doc: Document = {
+    id: documentRes.id,
     type: documentRes.type,
     date: documentRes.date,
     people: documentRes.people.id,

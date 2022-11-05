@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UtilService } from "./util.service";
 import { Product } from "../models/product.model";
+import { Page } from "../models/page.model";
 
 @Injectable({
   providedIn: "root",
@@ -14,7 +15,7 @@ export class ProductService {
   productApi = "api/v1/product";
   productReportApi = "api/v1/product/report";
   moveProductApi = `${this.productApi}/move`
-  constructor(private http: HttpClient, private util: UtilService) {}
+  constructor(private http: HttpClient, private util: UtilService) { }
 
   getProduct(searchOptions: {
     name: string;
@@ -22,13 +23,13 @@ export class ProductService {
     brand: string;
     page: number;
     pageSize: number;
-  }): Observable<any> {
+  }): Observable<Page<Product>> {
     this.util.deepTrim(searchOptions);
     const queryString = this.util.convertObjToQueryString(searchOptions);
     const url = `${this.productApi}${queryString}`;
     console.log("----------Get Product Url-----------");
     console.log(url);
-    return this.http.get(url);
+    return this.http.get<Page<Product>>(url);
   }
 
   addProducts(newProducts): Observable<any> {
@@ -65,7 +66,7 @@ export class ProductService {
 
     console.log("----------Move Product Url-----------");
     console.log(this.moveProductApi);
-    
+
     return this.http.post(this.moveProductApi, request);
   }
 }
