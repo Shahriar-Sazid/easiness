@@ -6,6 +6,7 @@ import { Stock } from '../models/stock.model';
 import { Page } from '../models/page.model';
 import { Document, Payment } from '../models/document.model';
 import clone from 'just-clone';
+import { PaymentTx } from '../models/payment.model';
 
 @Injectable({ providedIn: 'root' })
 export class BusinessService {
@@ -53,7 +54,7 @@ export class BusinessService {
         return this.http.post(this.sellApi, invoice);
     }
 
-    processPayment(paymentTx: { payments: Payment[], docId: number }): Observable<unknown> {
+    processPayment(paymentTx: PaymentTx): Observable<unknown> {
 
         return this.http.post(this.paymentApi, paymentTx);
     }

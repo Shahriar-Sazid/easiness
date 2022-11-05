@@ -9,6 +9,7 @@ import { Page } from 'src/app/core/models/page.model';
 import { AccountPipe } from 'src/app/core/pipes/account.pipe';
 import { AmountPipe } from 'src/app/core/pipes/amount.pipe';
 import { AccountingService } from 'src/app/core/services/accounting.service';
+import { PeopleService } from 'src/app/core/services/people.service';
 import { UtilService } from 'src/app/core/services/util.service';
 import { DateRangeComponent } from 'src/app/shared/ui/date-range/date-range.component';
 import { APP_CONFIG } from 'src/environments/environment';
@@ -41,7 +42,8 @@ export class TxHistoryComponent implements OnInit {
     public accountingService: AccountingService,
     private datePipe: DatePipe,
     private amountPipe: AmountPipe,
-    private accountPipe: AccountPipe
+    private accountPipe: AccountPipe,
+    public peopleService: PeopleService,
   ) { }
 
   ngOnInit() {

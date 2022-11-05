@@ -14,12 +14,12 @@ export function ValidatePhoneNo(control: AbstractControl): ValidationErrors | nu
 export function ValidatePlace(place: number): ValidatorFn | null {
 
   return (control: AbstractControl) => {
-    if(+control.value === +place) {
+    if (+control.value === +place) {
       return { samePlaceError: true }
     }
     return null;
   }
-  
+
 }
 
 export function calcQuantityUnitError(sellUnit: number | string, stockUnit: number | string, sellQty: number | string, availableQty: number | string, converter: any) {
@@ -47,9 +47,9 @@ export function ValidateSaleQuantityUnit(availableQty: number, stockUnit: number
     const sellUnit = parseInt(form.get('unit').value);
 
     const error = calcQuantityUnitError(sellUnit, stockUnit, sellQty, availableQty, converter)
-    
-    form.get('quantity')?.setErrors(error?.invalidQty ? {invalidQty: error?.invalidQty}: null);
-    form.get('unit')?.setErrors(error?.invalidUnit ? {invalidUnit: error?.invalidUnit}: null);
+
+    form.get('quantity')?.setErrors(error?.invalidQty ? { invalidQty: error?.invalidQty } : null);
+    form.get('unit')?.setErrors(error?.invalidUnit ? { invalidUnit: error?.invalidUnit } : null);
     return error;
   };
 }
@@ -58,8 +58,9 @@ export function ValidateBankTransferAccount() {
 
   return (form: FormGroup) => {
     const err = +form.get('fromAccount')?.value === +form.get('toAccount')?.value;
-    form.get('fromAccount')?.setErrors({ invalidFromToAccount:  err });
-    form.get('toAccount')?.setErrors({ invalidFromToAccount:  err });
+
+    form.get('fromAccount')?.setErrors(err ? { invalidFromToAccount: true } : null);
+    form.get('toAccount')?.setErrors(err ? { invalidFromToAccount: true } : null);
     return null;
   };
 }

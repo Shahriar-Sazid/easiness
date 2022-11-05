@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Payment } from 'src/app/core/models/document.model';
+import { PaymentTx } from 'src/app/core/models/payment.model';
 import { BusinessService } from 'src/app/core/services/business.service';
 import Swal from 'sweetalert2';
 import { ConfirmPaymentComponent } from '../confirm-payment/confirm-payment.component';
@@ -43,12 +44,12 @@ export class PaymentModalComponent {
   }
 
   processPayment(payments: Payment[]) {
-    this.businessService.processPayment({ payments, docId: this.docId }).subscribe(
+    this.businessService.processPayment({ payments, docId: this.docId } as PaymentTx).subscribe(
       data => {
         console.log(data);
         this.modalService.dismissAll();
         Swal.fire('Good job!', "Payment has been processed successfully", 'success');
-        
+
       }
     )
   }

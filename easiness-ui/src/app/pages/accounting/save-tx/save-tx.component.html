@@ -43,15 +43,15 @@
                     <div class="mb-3 col-md-6">
                         <label for="amount" class="form-label">Amount <span class="text-danger">*</span></label>
                         <input onlyNumber [ignoreChar]="','" inputWithComma type="text" id="amount"
-                            formControlName="amount"
-                            placeholder="Enter amount"
+                            formControlName="amount" placeholder="Enter amount"
                             [ngClass]="['form-control', 'fw-bold', 'font-monospace', options.class]">
                         <span class="text-monospace text-danger">
                             {{ util.getValidationError(txForm, "amount") }} </span>
                     </div>
                     <div class="mb-3 col-md-6">
                         <label for="ref" class="form-label">Reference</label>
-                        <input type="text" id="ref" formControlName="ref" class="form-control" placeholder="xyz-xyz-xyz">
+                        <input type="text" id="ref" formControlName="ref" class="form-control"
+                            placeholder="xyz-xyz-xyz">
                         <span class="text-monospace text-danger">
                             {{ util.getValidationError(txForm, "ref") }} </span>
                     </div>
@@ -68,22 +68,24 @@
                         <span class="text-monospace text-danger">
                             {{ util.getValidationError(txForm, "people") }} </span>
                     </div>
-                    <div class="mb-3 col-md-6">
+                    <!-- <div class="mb-3 col-md-6">
                         <label for="Tag" class="form-label">Tag <span class="form-text text-info">[This will be useful
                                 for grouping transactions]</span></label>
                         <input id="typeahead-basic" placeholder="Stuff Salary" type="text" class="form-control" formControlName="tag"
                             [ngbTypeahead]="search" />
-                    </div>
+                    </div> -->
                     <div class="mb-3 col-12">
                         <label for="description" class="form-label">Description</label>
-                        <textarea formControlName="description" class="form-control" placeholder="Optional description here.."></textarea>
+                        <textarea formControlName="description" class="form-control"
+                            placeholder="Optional description here.."></textarea>
                         <span class="text-monospace text-danger">
                             {{ util.getValidationError(txForm, "description") }} </span>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-end align-items-center">
-                    <button class="btn btn-primary mx-1"> Save </button>
+                    <button class="btn btn-primary mx-1" [disabled]="!txForm.valid" (click)="save()"> Save
+                    </button>
                     <button class="btn btn-secondary mx-1" (click)="goBack()"> Cancel </button>
                 </div>
             </form>

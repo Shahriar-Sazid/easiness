@@ -16,6 +16,7 @@ const routes: Routes = [
     component: TxHistoryComponent,
     resolve: {
       accounts: AccountResolver,
+      people: PeopleResolver,
     }
   },
   {

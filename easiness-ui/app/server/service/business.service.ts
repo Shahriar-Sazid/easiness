@@ -32,7 +32,7 @@ export const businessService = {
         await ds.transaction(async (tm) => {
             const stockList = await stockService.sellProduct(tm.getRepository(Stock), invoice.items)
             const document = await documentService.saveInvoice(tm.getRepository(Document), invoice, stockList)
-            accountService.updateAccountBalance(tm.getRepository(Account), invoice.payments)
+            await accountService.updateAccountBalance(tm.getRepository(Account), invoice.payments)
             await peopleService.updateCustomerBalance(tm.getRepository(People), invoice)
             txService.saveTxList(tm.getRepository(Tx), {
                 payments: invoice.payments,
@@ -44,11 +44,21 @@ export const businessService = {
 
     processPayments: async (paymentTx: PaymentTx) => {
         await ds.transaction(async (tm) => {
-            accountService.updateAccountBalance(tm.getRepository(Account), paymentTx.payments)
-            const doc = await documentService.getDetails(paymentTx.docId)
-            paymentTx.peopleId = doc.peopleId
-            peopleService.adjustPayment(tm.getRepository(People), doc.peopleId, paymentTx.payments)
-            txService.saveTxList(tm.getRepository(Tx), paymentTx)
+            try {
+                await accountService.updateAccountBalance(tm.getRepository(Account), paymentTx.payments)
+                console.log(paymentTx.docId);
+                if (paymentTx.docId) {
+                    const doc = await documentService.getDetails(paymentTx.docId, tm.getRepository(Document))
+                    paymentTx.peopleId = doc.peopleId
+                }
+                if (paymentTx.peopleId) {
+                    await peopleService.adjustPayment(tm.getRepository(People), paymentTx.peopleId, paymentTx.payments)
+                }
+                await txService.saveTxList(tm.getRepository(Tx), paymentTx)
+            } catch (error) {
+                throw error
+            }
+
         })
     },
 }

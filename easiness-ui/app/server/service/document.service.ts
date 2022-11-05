@@ -10,6 +10,8 @@ import { getPage } from "../model/page.model";
 import { Invoice, InvoiceItem } from "../model/invoice.model";
 import { utils } from "../utils/utils";
 import { Repository } from "typeorm";
+import { ApiError } from "../errors/api-error";
+import { ReasonCode } from "../errors/codes";
 
 const repo = ds.getRepository(Document)
 
@@ -81,16 +83,23 @@ export const documentService = {
         }
     },
 
-    getDetails: async (id: number) => {
-        const document = await repo.findOne({
-            relations: {
-                people: true,
-                items: {
-                    product: true,
-                }
-            },
-            where: { id }
-        })
+    getDetails: async (id: number, repository: Repository<Document> = repo) => {
+        let document: Document;
+        try {
+            document = await repository.findOneOrFail({
+                relations: {
+                    people: true,
+                    items: {
+                        product: true,
+                    }
+                },
+                where: { id }
+            })
+        } catch (error) {
+            throw ApiError.New(ReasonCode.EntityNotFound)
+        }
+
+
         document['date'] = document.createdAt
 
         for (const item of document.items) {
