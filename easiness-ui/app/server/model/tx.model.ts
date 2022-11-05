@@ -11,6 +11,7 @@ export class FindTxReq {
 
     type: TxType
     peopleName: string
+    peopleId: number
     account: number
     page: number
     pageSize: number

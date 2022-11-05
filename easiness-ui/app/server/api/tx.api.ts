@@ -14,6 +14,7 @@ txRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
             type: req.query.type ? TxType[req.query.type as string] : undefined,
             account: +req.query.account,
             peopleName: req.query.peopleName ?? '',
+            peopleId: req.query.peopleId ? +req.query.peopleId : undefined,
             page: +req.query.page,
             pageSize: +req.query.pageSize,
         } as FindTxReq));

@@ -30,12 +30,13 @@ export const txService = {
             .execute()
     },
 
-    find: async ({ from, to, peopleName, type, page, pageSize }: FindTxReq) => {
+    find: async ({ from, to, peopleName, peopleId, type, page, pageSize }: FindTxReq) => {
         const query = repo.createQueryBuilder("t").
             select(["t.id", "t.amount", "t.fromAccountId", "t.toAccountId", "p.id", "p.name",
                 "t.documentId", "t.ref", "t.type", "t.meta", "t.description", "t.createdAt"])
             .innerJoin("t.people", "p")
-            .where("(:name = '' OR LOWER(p.name) LIKE '%' || :name || '%')", { name: peopleName })
+            .where("(:peopleName = '' OR LOWER(p.name) LIKE '%' || :peopleName || '%')", { peopleName })
+            .where("(:peopleId IS NULL OR p.id = :peopleId)", { peopleId })
             .andWhere("(:type IS NULL OR t.type = :type)", { type })
             .andWhere("(t.createdAt BETWEEN :from AND :to)", { from, to })
             .orderBy("t.createdAt", "DESC")

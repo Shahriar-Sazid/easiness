@@ -8,9 +8,9 @@ import { People } from "./people.entity";
 
 
 export enum TxType {
-    INCOME = "Income",
-    EXPENSE = "Expense",
-    BANK_TRANSFER = "Bank Transfer"
+    INCOME = "INCOME",
+    EXPENSE = "EXPENSE",
+    BANK_TRANSFER = "BANK_TRANSFER"
 }
 
 @Entity({ name: 'tx' })

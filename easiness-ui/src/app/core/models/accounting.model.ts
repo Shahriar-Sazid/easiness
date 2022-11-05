@@ -26,13 +26,13 @@ export type Tx = {
 }
 
 export type TxSearchOptions = {
-  from: Date;
-  to: Date;
-  type: string;
-  peopleName: string;
-  account: number;
-  page: number;
-  pageSize: number;
+  from: Date
+  to: Date
+  type: string
+  peopleId: number
+  account: number
+  page: number
+  pageSize: number
 }
 
 export type TxOptions = {
@@ -45,6 +45,7 @@ export type TxOptions = {
   icon: string;
   text: string;
   html: string;
+  key: string;
 }
 
 export const TxType: { [key: string]: TxOptions } = {
@@ -57,7 +58,8 @@ export const TxType: { [key: string]: TxOptions } = {
       people: true,
     },
     icon: "fa-arrow-alt-circle-up",
-    class: 'text-success'
+    class: 'text-success',
+    key: "INCOME"
   },
   EXPENSE: {
     text: "Expense",
@@ -69,6 +71,7 @@ export const TxType: { [key: string]: TxOptions } = {
     },
     class: 'text-danger',
     icon: "fa-arrow-alt-circle-down",
+    key: "EXPENSE",
   },
   BANK_TRANSFER: {
     text: "Bank Transfer",
@@ -79,7 +82,8 @@ export const TxType: { [key: string]: TxOptions } = {
       people: false
     },
     class: 'text-primary',
-    icon: "fa-arrows-alt-h"
+    icon: "fa-arrows-alt-h",
+    key: "BANK_TRANSFER",
   },
 }
 
@@ -91,5 +95,4 @@ export type SaveTxRequest = {
   ref: FormControl<string>;
   people: FormControl<number>;
   description: FormControl<string>;
-  tag: FormControl<string>;
 }

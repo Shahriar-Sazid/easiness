@@ -25,9 +25,15 @@
                 </select>
             </div>
             <div class="form-group col-md-6 col-lg-4 col-xl-3">
-                <label class="form-label text-dark" for="peopleName">People Name</label>
-                <input type="text" class="form-control" name="peopleName" id="peopleName" maxlength="30"
-                    placeholder="Enter people name.." [(ngModel)]="searchOptions.peopleName" />
+                <label class="form-label text-dark" for="peopleId">People</label>
+                <select id="peopleId" name="peopleId" class="form-select" [(ngModel)]="searchOptions.account">
+                    <option hidden [ngValue]="undefined">
+                        Please select
+                    </option>
+                    <option [value]="people.value.id" *ngFor="let people of peopleService.peopleRecord | keyvalue">
+                        {{ people.value.name }}
+                    </option>
+                </select>
             </div>
 
         </div>
@@ -49,13 +55,14 @@
 <br />
 <div class="d-flex bg-white justify-content-end" role="group">
     <div ngbDropdown class="mx-1">
-        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-plus" aria-hidden="true"></i> New </button>
+        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle><i
+                class="fa fa-plus" aria-hidden="true"></i> New </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <a *ngFor="let txType of TxTypes| keyvalue" [routerLink]="'/accounting/tx/save/' + txType.key"  ngbDropdownItem [innerHTML]="txType.value.html"></a>
+            <a *ngFor="let txType of TxTypes| keyvalue" [routerLink]="'/accounting/tx/save/' + txType.key"
+                ngbDropdownItem [innerHTML]="txType.value.html"></a>
         </div>
     </div>
-    <button type="button" class="btn btn-outline-secondary"
-        (click)="downloadAsReport()">
+    <button type="button" class="btn btn-outline-secondary" (click)="downloadAsReport()">
         <i class="fa fa-download" aria-hidden="true"> Download</i>
     </button>
 </div>
