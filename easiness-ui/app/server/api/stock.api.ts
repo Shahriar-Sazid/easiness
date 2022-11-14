@@ -21,13 +21,6 @@ stockRouter.get('/', async (req: Request, res: Response, next: NextFunction) => 
     }
 });
 
-stockRouter.get('/move', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const movReq = plainToInstance(MoveProductInfo, [...req.body])
-        return res.status(StatusCodes.OK).send(await stockService.move(movReq));
-    } catch (e) {
-        next(e)
-    }
-});
+
 
 export default stockRouter

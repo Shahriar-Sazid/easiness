@@ -1,36 +1,35 @@
 import Big from "big.js";
-import { ToBig } from "../utils/decorators";
+import { Transform, Type } from "class-transformer";
 import { Pagination } from "./page.model";
 
 export type StockRes = {
-    id: number;
-    productId: number;
-    name: string;
-    type: string;
-    brand: string;
-    country: string;
-    size: string;
-    placeTxt: string;
-    place: number;
-    quantity: number;
-    unitTxt: string;
-    unit: number;
-    cost: number;
+    id: number
+    productId: number
+    name: string
+    type: string
+    brand: string
+    country: string
+    size: string
+    placeTxt: string
+    place: number
+    quantity: number
+    unitTxt: string
+    unit: number
+    cost: number
 }
 
 export type FindStockReq = {
-    name: string;
-    type: string;
-    brand: string;
-    placeId: number;
+    name: string
+    type: string
+    brand: string
+    placeId: number
 } & Pagination
-
 
 export class MoveProductInfo {
     stockId: number
-    @ToBig
+    @Type(() => Number)
+    @Transform(({ value }) => new Big(value), { toClassOnly: true })
     quantity: Big
     unit: number
     toPlace: number
 }
-

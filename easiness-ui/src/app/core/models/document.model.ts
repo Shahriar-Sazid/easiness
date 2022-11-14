@@ -90,7 +90,7 @@ export type DocumentItemResponse = {
   quantity: number;
   unit: number;
   costOrPrice: number;
-  place: number;
+  placeId: number;
 }
 
 export function toDocument(documentRes: DocumentResponse): Document {
@@ -111,7 +111,6 @@ export function toDocument(documentRes: DocumentResponse): Document {
           brand: item.brand,
           country: item.country,
           size: item.size,
-          place: item.place,
         } as Stock,
         price: item.costOrPrice,
         quantity: item.quantity,
@@ -129,7 +128,7 @@ export function toDocument(documentRes: DocumentResponse): Document {
         } as Product,
         cost: item.costOrPrice,
         quantity: item.quantity,
-        place: item.place,
+        place: item.placeId,
         unit: item.unit,
       } as DocumentItem)
     }

@@ -55,19 +55,6 @@
                         <span class="text-monospace text-danger">
                             {{ util.getValidationError(txForm, "ref") }} </span>
                     </div>
-                    <div *ngIf="options.view['people']" class="mb-3 col-md-6">
-                        <label for="people" class="form-label">People <span class="form-text text-info">[Balance will be
-                                affected]</span></label>
-                        <select formControlName="people" id="people" class="form-select">
-                            <option hidden [ngValue]="null">
-                                Please select
-                            </option>
-                            <option *ngFor="let people of peopleService.peopleRecord | keyvalue" [value]="people.key">
-                                {{people.value.name}}</option>
-                        </select>
-                        <span class="text-monospace text-danger">
-                            {{ util.getValidationError(txForm, "people") }} </span>
-                    </div>
                     <!-- <div class="mb-3 col-md-6">
                         <label for="Tag" class="form-label">Tag <span class="form-text text-info">[This will be useful
                                 for grouping transactions]</span></label>

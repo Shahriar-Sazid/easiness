@@ -1,4 +1,5 @@
 import Big from "big.js";
+import { plainToClass, plainToInstance } from "class-transformer";
 import { In, Repository } from "typeorm";
 import { ds } from "../config/data-source";
 import { Stock, uniqueStockCols } from "../entity/stock.entity";
@@ -137,14 +138,15 @@ export const stockService = {
 
             for (const moveData of req) {
                 const stock = fromStockMap[moveData.stockId]
+                let item = new PurchaseOrderItem()
 
-                purchaseItems.push({
-                    quantity: moveData.quantity,
-                    unit: moveData.unit,
-                    placeId: moveData.toPlace,
-                    productId: stock.productId,
-                    cost: stock.cost
-                } as PurchaseOrderItem)
+                item.quantity = moveData.quantity
+                item.unit = moveData.unit
+                item.placeId = moveData.toPlace
+                item.productId = stock.productId
+                item.cost = stock.cost
+
+                purchaseItems.push(item)
 
                 const delQty = convertQty(stock.unitId, moveData.quantity, moveData.unit)
                 stock.quantity = stock.quantity.add(utils.negate(delQty))
@@ -158,7 +160,7 @@ export const stockService = {
                 .values(fromStocks)
                 .execute()
 
-            this.storeProduct(purchaseItems)
+            await this.storeProduct(repo, plainToInstance(PurchaseOrderItem, purchaseItems))
         })
 
     },

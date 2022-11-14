@@ -3,6 +3,7 @@ import * as express from "express";
 import * as cookieParser from "cookie-parser"
 import * as logger from "morgan"
 import * as path from "path"
+import 'reflect-metadata';
 import productRouter from "./api/product.api";
 import placeRouter from "./api/place.api";
 import peopleRouter from "./api/people.api";

@@ -4,6 +4,7 @@ import { Tx, TxType } from "../entity/tx.entity";
 import { getPage, Pagination } from "../model/page.model";
 import { Payment, PaymentTx } from "../model/payment.model";
 import { FindTxReq, TxRes } from "../model/tx.model";
+import { utils } from "../utils/utils";
 
 const repo = ds.getRepository(Tx)
 
@@ -12,7 +13,7 @@ export const txService = {
         const txList = []
 
         for (const payment of paymentTx.payments) {
-            txList.push({
+            const tx = {
                 amount: payment.amount,
                 fromAccountId: payment.fromAccount,
                 toAccountId: payment.toAccount,
@@ -20,7 +21,17 @@ export const txService = {
                 peopleId: paymentTx.peopleId,
                 type: getType(payment),
                 ref: paymentTx.ref
-            } as Tx)
+            } as Tx
+
+            if (payment.fromAccount && payment.toAccount) {
+                tx.amount = payment.amount.abs()
+            } else if (payment.fromAccount) {
+                tx.amount = utils.negate(payment.amount.abs())
+            } else if (payment.toAccount) {
+                tx.amount = payment.amount.abs()
+            }
+
+            txList.push(tx)
         }
 
         await repo.createQueryBuilder()

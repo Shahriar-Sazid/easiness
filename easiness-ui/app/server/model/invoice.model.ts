@@ -1,6 +1,5 @@
 import Big from "big.js";
-import { Type } from "class-transformer";
-import { ToBig } from "../utils/decorators";
+import { Transform, Type } from "class-transformer";
 import { Payment } from "./payment.model";
 
 
@@ -49,14 +48,17 @@ export class Invoice {
 export class InvoiceItem {
     stock: number
 
-    @ToBig
+    @Type(() => Number)
+    @Transform(({ value }) => new Big(value), { toClassOnly: true })
     quantity: Big
 
     unit: number
 
-    @ToBig
+    @Type(() => Number)
+    @Transform(({ value }) => new Big(value), { toClassOnly: true })
     price: Big
 
-    @ToBig
+    @Type(() => Number)
+    @Transform(({ value }) => new Big(value), { toClassOnly: true })
     cost: Big
 }

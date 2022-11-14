@@ -24,7 +24,6 @@ export class SaveTxComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public util: UtilService,
-    public peopleService: PeopleService,
     private route: ActivatedRoute,
     private location: Location,
     private businessService: BusinessService,
@@ -37,7 +36,6 @@ export class SaveTxComponent implements OnInit {
       amount: new FormControl(undefined, Validators.required),
       ref: new FormControl(),
       description: new FormControl(),
-      people: new FormControl(),
     } as SaveTxRequest, { validators: [ValidateBankTransferAccount()] });
 
     this.route.params.subscribe(params => {
@@ -61,7 +59,6 @@ export class SaveTxComponent implements OnInit {
     switch (this.options.key) {
       case TxType.INCOME.key:
         req = {
-          peopleId: this.txForm.value.people,
           ref: this.txForm.value.ref,
           purpose: this.txForm.value.description,
           payments: [{
@@ -72,7 +69,6 @@ export class SaveTxComponent implements OnInit {
         break
       case TxType.EXPENSE.key:
         req = {
-          peopleId: this.txForm.value.people,
           ref: this.txForm.value.ref,
           purpose: this.txForm.value.description,
           payments: [{
@@ -83,7 +79,6 @@ export class SaveTxComponent implements OnInit {
         break
       case TxType.BANK_TRANSFER.key:
         req = {
-          peopleId: this.txForm.value.people,
           ref: this.txForm.value.ref,
           purpose: this.txForm.value.description,
           payments: [{

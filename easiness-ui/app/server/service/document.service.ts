@@ -64,6 +64,7 @@ export const documentService = {
             .where("(:name = '' OR LOWER(pp.name) LIKE '%' || :name || '%')", { name: peopleName })
             .andWhere("(:type IS NULL OR dc.type = :type)", { type })
             .andWhere("(dc.createdAt BETWEEN :from AND :to)", { from, to })
+            .orderBy("dc.createdAt", "DESC")
 
         const docList = await getPage(query, { page, pageSize })
         const { content, ...others } = docList

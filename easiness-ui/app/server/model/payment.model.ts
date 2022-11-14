@@ -1,11 +1,11 @@
 import Big from "big.js";
-import { Type } from "class-transformer";
-import { ToBig } from "../utils/decorators";
+import { Transform, Type } from "class-transformer";
 
 export class Payment {
     fromAccount: number
     toAccount: number
-    @ToBig
+    @Type(() => Number)
+    @Transform(({ value }) => new Big(value), { toClassOnly: true })
     amount: Big
 }
 

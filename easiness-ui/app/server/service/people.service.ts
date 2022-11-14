@@ -102,9 +102,14 @@ export const peopleService = {
     adjustPayment: async (repo: Repository<People>, id: number, payments: Payment[]) => {
         let amount = new Big(0)
         for (const payment of payments) {
-            amount = amount.add(payment.amount)
+            if (payment.fromAccount) {
+                amount = amount.add(payment.amount.abs())
+            } else if (payment.toAccount) {
+                amount = amount.add(utils.negate(payment.amount.abs()))
+            }
         }
-        await updatePeopleBalance(repo, id, utils.negate(amount))
+
+        await updatePeopleBalance(repo, id, amount)
     },
 }
 
