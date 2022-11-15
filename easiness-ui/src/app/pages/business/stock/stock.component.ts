@@ -61,9 +61,6 @@ export class StockComponent implements OnInit {
       this.currentMode = this.dedicatedMode;
     }
 
-    if (!this.placeService.placeRecord) {
-      this.placeService.getAllPlace();
-    }
     this.searchOptions = clone(this.defaultSearchOptions);
 
     this.columns = [

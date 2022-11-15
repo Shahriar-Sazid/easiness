@@ -23,18 +23,17 @@ export class BuyComponent implements OnInit {
     private router: Router,
     public placeService: PlaceService,
     public util: UtilService,
-    private businessSevice: BusinessService
+    private businessService: BusinessService
   ) {
   }
 
   ngOnInit(): void {
     this.peopleService.getAllSupplier();
-    this.placeService.getAllPlace();
   }
 
 
   addToPurchaseList(item: DocumentItem) {
-    if(!this.purchase.items) {
+    if (!this.purchase.items) {
       this.purchase.items = [];
     }
     this.purchase.items.push(item);
@@ -45,12 +44,12 @@ export class BuyComponent implements OnInit {
   }
 
   buy(payments: Payment[]) {
-    this.businessSevice.buy({ ...this.purchase, payments}).subscribe(
+    this.businessService.buy({ ...this.purchase, payments }).subscribe(
       data => {
         window.location.reload();
       },
       err => {
-        
+
       }
     )
   }

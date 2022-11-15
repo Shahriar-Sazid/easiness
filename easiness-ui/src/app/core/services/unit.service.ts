@@ -24,34 +24,57 @@ export class UnitService {
   }
 
   convert(from: number, to: number, value: number): number {
-    let conversions = this.unitData.unitConversionList.filter(el => el.from === from && el.to === to);
+    let conversions = this.unitData.unitConversionList.filter(el => +el.from === +from && +el.to === +to);
     conversions = conversions.sort((a, b) => (a.calStep - b.calStep))
-    
-    if (!conversions?.length) {
-      throw new Error("No valid conversion possible");
-    }
 
-    for (const conversion of conversions) {
-      switch (conversion.operator) {
-        case 'PLUS':
-          value = value + conversion.constant
-          break;
-        case 'MINUS':
-          value = value - conversion.constant
-          break;
-        case 'MULTIPLY':
-          value = value * conversion.constant
-          break;
-        case 'DIVIDE':
-          value = value / conversion.constant
-          break;
-        default:
-          break;
+    if (conversions.length > 0) {
+      for (const conversion of conversions) {
+        switch (conversion.operator) {
+          case 'PLUS':
+            value = value + conversion.constant
+            break;
+          case 'MINUS':
+            value = value - conversion.constant
+            break;
+          case 'MULTIPLY':
+            value = value * conversion.constant
+            break;
+          case 'DIVIDE':
+            value = value / conversion.constant
+            break;
+          default:
+            break;
+        }
       }
+      return value;
     }
-    return value;
+
+    conversions = this.unitData.unitConversionList.filter(el => +el.from === +to && +el.to === +from);
+    conversions = conversions.sort((a, b) => b.calStep - a.calStep)
+
+    if (conversions.length > 0) {
+      for (const conversion of conversions) {
+        switch (conversion.operator) {
+          case 'PLUS':
+            value = value - conversion.constant
+            break;
+          case 'MINUS':
+            value = value + conversion.constant
+            break;
+          case 'MULTIPLY':
+            value = value / conversion.constant
+            break;
+          case 'DIVIDE':
+            value = value * conversion.constant
+            break;
+          default:
+            break;
+        }
+      }
+      return value;
+    }
+
+    throw new Error('Unsupported conversion')
   }
-
-
 }
 

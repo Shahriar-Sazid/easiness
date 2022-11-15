@@ -33,8 +33,8 @@ export class PlaceService {
     return this.http.get<Record<string, Place>>(this.aLLPlaceUrl).pipe(
       tap(
         data => {
-        this.placeRecord = data;
-      }
+          this.placeRecord = data
+        }
       )
     );
   }

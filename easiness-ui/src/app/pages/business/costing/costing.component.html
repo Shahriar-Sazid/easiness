@@ -22,7 +22,7 @@
           </select>
 
           <div class="input-group-append">
-            <button class="btn btn-secondary" [ngbTooltip]="'Refresh'" (click)="placeService.getAllPlace()"
+            <button class="btn btn-secondary" [ngbTooltip]="'Refresh'" (click)="placeService.getAllPlace().subscribe()"
               type="button">
               <i class="fa fa-refresh" aria-hidden="true"></i>
               <i class="fas fa-sync-alt"></i>
@@ -34,7 +34,8 @@
 
 
       <div class="form-group my-3">
-        <label class="form-label text-dark" for="quantity">Quantity <span *ngIf="mode === 'sell'" type="button" class="border border-info rounded-pill bg-info bg-soft">
+        <label class="form-label text-dark" for="quantity">Quantity <span *ngIf="mode === 'sell'" type="button"
+            class="border border-info rounded-pill bg-info bg-soft">
             Available: {{selectedEntity.quantity?.toFixed(2).concat(' ').concat(selectedEntity.unitTxt)}}
           </span> </label>
         <input type="number" class="form-control" id="quantity" formControlName="quantity" onlyNumber />
@@ -55,8 +56,9 @@
         <span class="text-monospace text-danger"> {{ util.getValidationError(costingForm, "cost") }} </span>
       </div>
       <div *ngIf="mode === 'sell'" class="form-group my-3">
-        <label class="form-label text-dark" for="price">Price/unit (&#2547;) <span 
-            class="mx-1 border border-info rounded-pill bg-info bg-soft"> Cost/{{selectedEntity.unitTxt}}: {{selectedEntity.cost?.toFixed(2)}}
+        <label class="form-label text-dark" for="price">Price/unit (&#2547;) <span
+            class="mx-1 border border-info rounded-pill bg-info bg-soft"> Cost/{{costingForm.value.unit | unit}}:
+            {{getCost()}}
             (&#2547;)</span>
           <span *ngIf="getProfitPercentage() >= 0" class="mx-1 border border-success rounded-pill bg-success bg-soft">{{
             getProfitPercentage().toFixed(2).concat("%") }} <i class="fas fa-arrow-up"></i> </span>

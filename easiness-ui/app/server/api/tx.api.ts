@@ -12,7 +12,7 @@ txRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
             from: req.query.from ? new Date(req.query.from as string) : new Date("2022-01-01"),
             to: req.query.to ? new Date(req.query.to as string) : new Date("2099-01-01"),
             type: req.query.type ? TxType[req.query.type as string] : undefined,
-            account: +req.query.account,
+            account: req.query.account ? +req.query.account : undefined,
             peopleName: req.query.peopleName ?? '',
             peopleId: req.query.peopleId ? +req.query.peopleId : undefined,
             page: +req.query.page,

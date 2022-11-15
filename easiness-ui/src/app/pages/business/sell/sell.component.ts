@@ -28,12 +28,11 @@ export class SellComponent implements OnInit {
 
   ngOnInit(): void {
     this.peopleService.getAllCustomer();
-    this.placeService.getAllPlace();
   }
 
 
   addToSalesList(item: any) {
-    if(!this.invoice.items) {
+    if (!this.invoice.items) {
       this.invoice.items = [];
     }
     this.invoice.items.push(item);
@@ -41,12 +40,12 @@ export class SellComponent implements OnInit {
 
 
   sell(payments: Payment[]) {
-    this.businessService.sell({ ...this.invoice, payments}).subscribe(
+    this.businessService.sell({ ...this.invoice, payments }).subscribe(
       data => {
         window.location.reload();
       },
       err => {
-        
+
       }
     )
   }

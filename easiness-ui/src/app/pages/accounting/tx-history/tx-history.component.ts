@@ -86,7 +86,7 @@ export class TxHistoryComponent implements OnInit {
 
   searchTx() {
     this.searchOptions.page = 1;
-    this.searchOptions.pageSize = 5;
+    this.searchOptions.pageSize = APP_CONFIG.pageSize;
     this.searchedOptions = clone(this.searchOptions);
     this.search();
   }

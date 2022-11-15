@@ -72,7 +72,9 @@ export class SavePlaceComponent {
           })
           .subscribe(
             (data) => {
-              this.callback();
+              if (this.callback) {
+                this.callback().subscribe();
+              }
               this.placeForm.reset();
               this.toastr.success('Place updated successfully')
               this.modalService.dismissAll();
@@ -92,7 +94,7 @@ export class SavePlaceComponent {
           .subscribe(
             (data) => {
               if (this.callback) {
-                this.callback();
+                this.callback().subscribe();
               }
               this.toastr.success('Place added successfully')
               this.placeForm.reset();

@@ -7,17 +7,17 @@ export class UnitConversion {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({name: 'from_unit'})
+    @Column({ name: 'from_unit' })
     from: number
 
-    @Column({name: 'to_unit'})
+    @Column({ name: 'to_unit' })
     to: number
 
-    @Column({name: 'cal_step'})
+    @Column({ name: 'cal_step' })
     calStep: number
 
     @Column()
-    Operator: Operator 
+    operator: Operator
 
     @Column('numeric', {
         precision: 20,
