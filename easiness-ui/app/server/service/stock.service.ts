@@ -72,7 +72,7 @@ export const stockService = {
         for (const item of items) {
             const stock = stockMap[item.stock]
 
-            const delQty = convertQty(stock.unitId, item.quantity, item.unit)
+            const delQty = convertValue(item.unit, stock.unitId, item.quantity)
             stock.quantity = stock.quantity.add(utils.negate(delQty))
             stock.latestPrice = item.price
         }
@@ -148,7 +148,7 @@ export const stockService = {
 
                 purchaseItems.push(item)
 
-                const delQty = convertQty(stock.unitId, moveData.quantity, moveData.unit)
+                const delQty = convertValue(moveData.unit, stock.unitId, moveData.quantity)
                 stock.quantity = stock.quantity.add(utils.negate(delQty))
             }
             const stockColumns = ds.getMetadata(Stock).columns.map(col => col.databaseName)
@@ -197,13 +197,14 @@ function addNewStock(newItems: PurchaseOrderItem[]): Stock[] {
 }
 
 function calculateCostAndQuantity(prevQty: Big, prevCost: Big, prevUnit: number, qty: Big, cost: Big, unit: number): { newQty: Big; newCost: Big } {
-    const newQty = prevQty.add(convertQty(prevUnit, qty, unit))
-    const newCost = ((prevCost.mul(prevQty)).add((cost.mul(qty)))).div(prevQty.add(qty))
+    const newQty = prevQty.add(convertValue(unit, prevUnit, qty))
+    const costPerPrevUnit = convertValue(prevUnit, unit, cost)
+    const newCost = ((prevCost.mul(prevQty)).add((costPerPrevUnit.mul(qty)))).div(prevQty.add(qty))
     return { newQty, newCost }
 }
 
-function convertQty(prevUnit: number, qty: Big, unit: number): Big {
-    return prevUnit.toString() === unit.toString() ? qty : unitService.convert(unit, prevUnit, qty)
+function convertValue(from: number, to: number, value: Big): Big {
+    return +from === +to ? value : unitService.convert(from, to, value)
 }
 
 function getInTuple(items: { productId: number; placeId: number; }[]): string {

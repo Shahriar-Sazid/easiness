@@ -26,13 +26,13 @@ export class DocumentHeaderComponent implements OnDestroy, OnInit {
   ) { }
 
   ngOnInit() {
-    if (!this.people) {
+    if (!this.people.id) {
       this.peopleService.initSupplierSelectedSubject();
       this.peopleService.peopleSelected.subscribe(
         res => {
           this.peopleService.getPeopleById(+res).subscribe(
             data => {
-              this.people.contactNumber = this.people.contactNoList.map(el => el.number).join("\n");
+              this.people.contactNumber = data.contactNoList.map(el => el.number).join("\n");
               this.people = data;
             }
           )

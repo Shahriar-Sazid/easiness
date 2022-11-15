@@ -3,6 +3,7 @@ import { TableColumn, ColumnMode } from '@swimlane/ngx-datatable';
 import clone from 'just-clone';
 import { Page } from 'src/app/core/models/page.model';
 import { Stock } from 'src/app/core/models/stock.model';
+import { AmountPipe } from 'src/app/core/pipes/amount.pipe';
 import { PlacePipe } from 'src/app/core/pipes/place.pipe';
 import { BusinessService } from 'src/app/core/services/business.service';
 import { PlaceService } from 'src/app/core/services/place.service';
@@ -12,7 +13,7 @@ import { APP_CONFIG } from 'src/environments/environment';
   selector: 'app-stock',
   templateUrl: './stock.component.html',
   styleUrls: ['./stock.component.scss'],
-  providers: [PlacePipe]
+  providers: [PlacePipe, AmountPipe]
 })
 export class StockComponent implements OnInit {
   @Output() stockSelected: EventEmitter<any> = new EventEmitter();
@@ -23,7 +24,10 @@ export class StockComponent implements OnInit {
   selectedStock: Stock;
 
   isLoading = false;
-  constructor(private businessService: BusinessService, public placeService: PlaceService, private placePipe: PlacePipe) {
+  constructor(private businessService: BusinessService,
+    public placeService: PlaceService,
+    public amountPipe: AmountPipe,
+    private placePipe: PlacePipe) {
     this.searchStock = this.searchStock.bind(this);
   }
 
@@ -95,10 +99,12 @@ export class StockComponent implements OnInit {
       },
       {
         name: "Unit Cost",
+        pipe: this.amountPipe,
         cellClass: "text-center",
       },
       {
         name: "Total Cost",
+        pipe: this.amountPipe,
         cellClass: "text-center",
       }
     ];
@@ -132,7 +138,7 @@ export class StockComponent implements OnInit {
       .subscribe(
         (data) => {
           data.content.forEach(el => {
-            el['quantityUnit'] = `${el.quantity} ${el.unitTxt}`
+            el['quantityUnit'] = `${el.quantity % 1 ? el.quantity.toFixed(2) : el.quantity} ${el.unitTxt}`
             el['stockPlace'] = el.placeTxt;
             el['unitCost'] = el.cost;
             el['totalCost'] = (el.cost * el.quantity).toFixed(2)
