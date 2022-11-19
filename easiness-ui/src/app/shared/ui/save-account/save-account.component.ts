@@ -15,7 +15,7 @@ export class SaveAccountComponent {
   @ViewChild('accountModal') accountModal: any;
   updateMode: boolean;
   @Input() selectedAccount: Account;
-  @Output() onAccountSaved: EventEmitter<void> = new EventEmitter();
+  @Output() accountSaved: EventEmitter<void> = new EventEmitter();
   accountForm: UntypedFormGroup;
 
   constructor(private fb: UntypedFormBuilder,
@@ -36,7 +36,7 @@ export class SaveAccountComponent {
           })
           .subscribe(
             (data) => {
-              this.onAccountSaved.emit();
+              this.accountSaved.emit();
               Swal.fire('Good job!', 'Account updated successfully', 'success');
               this.accountForm.reset();
               this.modalService.dismissAll();
@@ -55,7 +55,7 @@ export class SaveAccountComponent {
           .addAccount(this.accountForm.value)
           .subscribe(
             (data) => {
-              this.onAccountSaved.emit();
+              this.accountSaved.emit();
               Swal.fire('Good job!', 'Account updated successfully', 'success');
               this.accountForm.reset();
               this.modalService.dismissAll();
@@ -106,7 +106,6 @@ export class SaveAccountComponent {
         bank: ["", [Validators.minLength(2), Validators.maxLength(30)]],
         branch: ["", [Validators.minLength(3), Validators.maxLength(30)]],
         accountNo: ["", [Validators.minLength(5), Validators.maxLength(30)]],
-        balance: [0, [Validators.required, Validators.min(-100000000), Validators.max(100000000)]],
       });
     }
   }

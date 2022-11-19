@@ -95,14 +95,6 @@ export class SavePeopleComponent {
         address: ["", [Validators.minLength(3), Validators.maxLength(100)]],
         email: ["", [Validators.email]],
         type: ["BOTH", [Validators.required]],
-        balance: [
-          0,
-          [
-            Validators.required,
-            Validators.min(-100000000),
-            Validators.max(100000000),
-          ],
-        ],
 
         contactNo: new UntypedFormArray([
           new UntypedFormControl("", [Validators.required, ValidatePhoneNo]),

@@ -7,6 +7,7 @@ import clone from "just-clone";
 import { validationMessages } from "src/app/core/helpers/validation/validation-message";
 import { Account } from "src/app/core/models/accounting.model";
 import { Page } from "src/app/core/models/page.model";
+import { AmountPipe } from "src/app/core/pipes/amount.pipe";
 import { AccountingService } from "src/app/core/services/accounting.service";
 import { PDFService } from "src/app/core/services/pdf.service";
 import { UtilService } from "src/app/core/services/util.service";
@@ -14,6 +15,7 @@ import { UtilService } from "src/app/core/services/util.service";
   selector: "app-account",
   templateUrl: "./account.component.html",
   styleUrls: ["./account.component.scss"],
+  providers: [AmountPipe]
 })
 export class AccountComponent implements OnInit {
   @ViewChild(NgbActiveModal) addAccountModal: NgbActiveModal;
@@ -42,7 +44,8 @@ export class AccountComponent implements OnInit {
     public util: UtilService,
     private activatedRouter: ActivatedRoute,
     private router: Router,
-    private pdfService: PDFService
+    private pdfService: PDFService,
+    private amountPipe: AmountPipe
   ) {
     this.searchOptions = {
       accountName: "",
@@ -81,6 +84,7 @@ export class AccountComponent implements OnInit {
       },
       {
         name: "Balance",
+        pipe: this.amountPipe,
         prop: "balance",
         cellClass: "text-center",
       },

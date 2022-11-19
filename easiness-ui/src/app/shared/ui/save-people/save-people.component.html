@@ -79,7 +79,7 @@
         <span class="text-monospace text-danger"> {{ util.getValidationError(peopleForm, "email") }} </span>
       </div>
 
-      <div class="form-group my-3">
+      <div *ngIf="!updateMode" class="form-group my-3">
         <label class="form-label text-dark" for="balance">Balance <span class="text-danger">*</span></label>
         <input type="number" step="0.01" class="form-control" id="balance" formControlName="balance" />
         <span class="text-monospace text-danger"> {{ util.getValidationError(peopleForm, "balance") }} </span>
