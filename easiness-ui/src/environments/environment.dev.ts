@@ -3,6 +3,7 @@ import { commonEnv } from "./environment.common";
 const env = {
   production: false,
   environment: 'DEV',
+  interceptAPICall: true,
 };
 
 export const APP_CONFIG = { ...commonEnv, ...env };

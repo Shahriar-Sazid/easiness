@@ -7,7 +7,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 export const ds = new DataSource({
     type: "better-sqlite3",
     database: "easiness-db",
-    entities: ["app/**/*.entity.js"],
+    entities: ["../**/*.entity.{ts,js}"],
     synchronize: true,
     logger: 'advanced-console',
     namingStrategy: new SnakeNamingStrategy(),

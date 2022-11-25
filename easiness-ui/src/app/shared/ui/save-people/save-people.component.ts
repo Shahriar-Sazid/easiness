@@ -54,14 +54,7 @@ export class SavePeopleComponent {
           ],
         ],
 
-        balance: [
-          this.selectedPeople.balance,
-          [
-            Validators.required,
-            Validators.min(-100000000),
-            Validators.max(100000000),
-          ],
-        ],
+
 
         contactNo: new UntypedFormArray(
           this.selectedPeople.contactNoList.map(
@@ -99,6 +92,15 @@ export class SavePeopleComponent {
         contactNo: new UntypedFormArray([
           new UntypedFormControl("", [Validators.required, ValidatePhoneNo]),
         ]),
+
+        balance: [
+          0,
+          [
+            Validators.required,
+            Validators.min(-100000000),
+            Validators.max(100000000),
+          ],
+        ],
       });
     }
   }

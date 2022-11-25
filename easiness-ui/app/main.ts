@@ -5,9 +5,13 @@ import server from './server/app';
 
 const port = 3000
 
-server.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+try {
+  server.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+  })
+} catch (error) {
+  console.log("Error occured: ", error);
+}
 
 let win: BrowserWindow = null;
 const args = process.argv.slice(1),
@@ -25,6 +29,7 @@ function createWindow(): BrowserWindow {
     height: size.height,
     webPreferences: {
       nodeIntegration: true,
+      webSecurity: false,
       allowRunningInsecureContent: (serve),
       contextIsolation: false,  // false if you want to run e2e test with Spectron
     },
@@ -37,12 +42,16 @@ function createWindow(): BrowserWindow {
     require('electron-reloader')(module);
     win.loadURL('http://localhost:4200');
   } else {
-    // Path when running electron executable
-    let pathIndex = './index.html';
+    console.log("------------ i am here -------------------");
 
-    if (fs.existsSync(path.join(__dirname, '../dist/index.html'))) {
+    // Path when running electron executable
+    let pathIndex = '../index.html';
+
+    if (fs.existsSync(path.join(__dirname, '../../dist/index.html'))) {
       // Path when running electron in local folder
-      pathIndex = '../dist/index.html';
+      console.log("------------ i am here -------------------");
+
+      pathIndex = '../../dist/index.html';
     }
 
     const url = new URL(path.join('file:', __dirname, pathIndex));
