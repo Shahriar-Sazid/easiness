@@ -19,7 +19,9 @@
     align-items: center;
     margin: 0 auto;
     height: $header-height;
-    padding: 0 calc(#{$grid-gutter-width} / 2) 0 0 /*rtl: 0 0 0 calc(#{$grid-gutter-width} / 2) */;
+    padding: 0 calc(#{$grid-gutter-width} / 2) 0 0
+    /*rtl: 0 0 0 calc(#{$grid-gutter-width} / 2) */
+    ;
 
     .dropdown .show {
         &.header-item {
@@ -29,7 +31,7 @@
 }
 
 .navbar-brand-box {
-    padding: 0 1.5rem;
+    padding: 0 .5rem;
     text-align: center;
     width: $navbar-brand-box-width;
 }
@@ -60,6 +62,7 @@
         box-shadow: none;
         border-radius: 30px;
     }
+
     span {
         position: absolute;
         z-index: 10;
@@ -74,10 +77,11 @@
 // Mega menu
 
 .megamenu-list {
-    li{
+    li {
         position: relative;
         padding: 5px 0px;
-        a{
+
+        a {
             color: $dropdown-color;
         }
     }
@@ -183,9 +187,10 @@
 }
 
 body[data-topbar="dark"] {
-    #page-topbar { 
+    #page-topbar {
         background-color: $header-dark-bg;
     }
+
     .navbar-header {
         .dropdown .show {
             &.header-item {
@@ -200,7 +205,7 @@ body[data-topbar="dark"] {
 
     .header-item {
         color: $header-dark-item-color;
-    
+
         &:hover {
             color: $header-dark-item-color;
         }
@@ -209,7 +214,7 @@ body[data-topbar="dark"] {
     .header-profile-user {
         background-color: rgba($white, 0.25);
     }
-    
+
     .noti-icon {
         i {
             color: $header-dark-item-color;
@@ -225,14 +230,15 @@ body[data-topbar="dark"] {
     }
 
     .app-search {
-    
+
         .form-control {
-            background-color: rgba($topbar-search-bg,0.07);
+            background-color: rgba($topbar-search-bg, 0.07);
             color: $white;
         }
+
         span,
         input.form-control::-webkit-input-placeholder {
-            color: rgba($white,0.5);
+            color: rgba($white, 0.5);
         }
     }
 }
@@ -274,16 +280,17 @@ body[data-layout="horizontal"] {
     .navbar-brand-box {
         width: auto;
     }
+
     .page-content {
         margin-top: $header-height;
         padding: calc(55px + #{$grid-gutter-width}) calc(#{$grid-gutter-width} / 2) $footer-height calc(#{$grid-gutter-width} / 2);
-    }    
+    }
 }
 
-@media (max-width: 992px) { 
+@media (max-width: 992px) {
     body[data-layout="horizontal"] {
         .page-content {
             margin-top: 15px;
-        }    
+        }
     }
 }

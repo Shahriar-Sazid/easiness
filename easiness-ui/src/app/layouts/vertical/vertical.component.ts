@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
@@ -10,7 +10,7 @@ import { Router, NavigationEnd } from '@angular/router';
 /**
  * Vertical component
  */
-export class VerticalComponent implements OnInit, AfterViewInit {
+export class VerticalComponent implements OnInit {
 
   isCondensed = false;
 
@@ -37,8 +37,7 @@ export class VerticalComponent implements OnInit, AfterViewInit {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua);
   }
 
-  ngAfterViewInit() {
-  }
+
 
   /**
    * on settings button clicked from topbar
