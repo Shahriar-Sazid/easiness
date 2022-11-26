@@ -34,7 +34,7 @@ export class Account extends Base {
         scale: 6,
         transformer: {
             from: (value: string) => new Big(value),
-            to: (value: Big) => value.toString()
+            to: (value: Big) => value?.toString()
         }
     })
     balance: Big
