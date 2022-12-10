@@ -44,7 +44,7 @@ export class CostingComponent implements OnInit {
 
   openCostingModal(entity: Product & Stock) {
     this.modalRef = this.modalService
-      .open(this.content, { ariaLabelledBy: 'modal-basic-title' });
+      .open(this.content, { ariaLabelledBy: 'modal-basic-title', backdrop: "static" });
     this.modalRef.result.then((result) => {
       console.log(`Closed with: ${result}`);
       this.costingForm.reset();
@@ -132,16 +132,13 @@ export class CostingComponent implements OnInit {
 
   getProfitPercentage(): number {
     if (this.costingForm.value.price > 0) {
-      return (((this.costingForm.value?.price - this.getCost()) / this.selectedEntity.cost) * 100)
+      const cost = this.getCost()
+      return ((this.costingForm.value?.price - cost) / cost) * 100
     }
     return undefined;
   }
 
   getCost(): number {
-    if (+this.costingForm.value.unit === +this.selectedEntity.unit) {
-      return this.selectedEntity.cost
-    }
-
     return this.unitService.convert(+this.costingForm.value.unit, +this.selectedEntity.unit, this.selectedEntity?.cost)
   }
 }

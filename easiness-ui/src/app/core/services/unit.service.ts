@@ -24,6 +24,10 @@ export class UnitService {
   }
 
   convert(from: number, to: number, value: number): number {
+    if (+from === +to) {
+      return value
+    }
+
     let conversions = this.unitData.unitConversionList.filter(el => +el.from === +from && +el.to === +to);
     conversions = conversions.sort((a, b) => (a.calStep - b.calStep))
 

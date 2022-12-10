@@ -1,8 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TableColumn, ColumnMode } from '@swimlane/ngx-datatable';
-import clone from 'just-clone';
+import { ColumnMode, TableColumn } from '@swimlane/ngx-datatable';
 import { Tx, TxSearchOptions, TxType } from 'src/app/core/models/accounting.model';
 import { DateRange } from 'src/app/core/models/document.model';
 import { Page } from 'src/app/core/models/page.model';
@@ -33,7 +32,6 @@ export class TxHistoryComponent implements OnInit {
 
   searchOptions: TxSearchOptions = {} as TxSearchOptions;
 
-  searchedOptions: TxSearchOptions;
   selectedTx: Tx;
 
   constructor(
@@ -44,6 +42,7 @@ export class TxHistoryComponent implements OnInit {
     private amountPipe: AmountPipe,
     private accountPipe: AccountPipe,
     public peopleService: PeopleService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -81,24 +80,22 @@ export class TxHistoryComponent implements OnInit {
     ];
 
     this.resetForm();
-
   }
 
   searchTx() {
     this.searchOptions.page = 1;
     this.searchOptions.pageSize = APP_CONFIG.pageSize;
-    this.searchedOptions = clone(this.searchOptions);
     this.search();
   }
 
   changePage(event) {
-    this.searchedOptions.page = event.offset + 1;
+    this.searchOptions.page = event.offset + 1;
     this.search();
   }
 
   search() {
-    this.isLoading = true;
-    this.accountingService.searchTx(this.searchedOptions).subscribe(
+    this.isLoading = true
+    this.accountingService.searchTx(this.searchOptions).subscribe(
       (data) => {
         console.log(data);
         this.txPage = data;
@@ -118,9 +115,9 @@ export class TxHistoryComponent implements OnInit {
       brand: "Brand",
     };
     const reportOptions = {
-      ...this.searchedOptions,
+      ...this.searchOptions,
       activeFilters: this.util.buildActiveFilters(
-        this.searchedOptions,
+        this.searchOptions,
         keyNameMap
       ),
     };

@@ -56,10 +56,9 @@
         <span class="text-monospace text-danger"> {{ util.getValidationError(costingForm, "cost") }} </span>
       </div>
       <div *ngIf="mode === 'sell'" class="form-group my-3">
-        <label class="form-label text-dark" for="price">Price/unit (&#2547;) <span
+        <label class="form-label text-dark" for="price">Price/{{costingForm.value.unit | unit}} (&#2547;) <span
             class="mx-1 border border-info rounded-pill bg-info bg-soft"> Cost/{{costingForm.value.unit | unit}}:
-            {{getCost()}}
-            (&#2547;)</span>
+            {{getCost() | currency : 'BDT' : 'symbol-narrow': '1.2-2' : 'en-IN'}} </span>
           <span *ngIf="getProfitPercentage() >= 0" class="mx-1 border border-success rounded-pill bg-success bg-soft">{{
             getProfitPercentage().toFixed(2).concat("%") }} <i class="fas fa-arrow-up"></i> </span>
           <span *ngIf="getProfitPercentage() < 0" class="mx-1 border border-danger rounded-pill bg-danger bg-soft">{{
