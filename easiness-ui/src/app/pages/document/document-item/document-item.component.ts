@@ -20,7 +20,7 @@ export class DocumentItemComponent {
   @Input() placeRecord: Record<string, Place>;
   @Input() item: DocumentItem;
   @Input() index: number;
-  @Output() onCancel: EventEmitter<number> = new EventEmitter();
+  @Output() cancel: EventEmitter<number> = new EventEmitter();
 
   constructor(public unitService: UnitService, private util: UtilService) {
   }
@@ -51,8 +51,8 @@ export class DocumentItemComponent {
     ])
   }
 
-  cancel() {
-    this.onCancel.emit(this.index);
+  cancelItem() {
+    this.cancel.emit(this.index);
   }
 
   isValid() {

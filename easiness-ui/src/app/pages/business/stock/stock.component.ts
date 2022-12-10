@@ -1,12 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TableColumn, ColumnMode } from '@swimlane/ngx-datatable';
+import { Router } from '@angular/router';
+import { ColumnMode, TableColumn } from '@swimlane/ngx-datatable';
 import clone from 'just-clone';
 import { Page } from 'src/app/core/models/page.model';
 import { Stock } from 'src/app/core/models/stock.model';
 import { AmountPipe } from 'src/app/core/pipes/amount.pipe';
 import { PlacePipe } from 'src/app/core/pipes/place.pipe';
 import { BusinessService } from 'src/app/core/services/business.service';
+import { PDFService } from 'src/app/core/services/pdf.service';
 import { PlaceService } from 'src/app/core/services/place.service';
+import { UtilService } from 'src/app/core/services/util.service';
 import { APP_CONFIG } from 'src/environments/environment';
 
 @Component({
@@ -27,6 +30,8 @@ export class StockComponent implements OnInit {
   constructor(private businessService: BusinessService,
     public placeService: PlaceService,
     public amountPipe: AmountPipe,
+    private util: UtilService,
+    private pdfService: PDFService,
     private placePipe: PlacePipe) {
     this.searchStock = this.searchStock.bind(this);
   }
@@ -34,7 +39,6 @@ export class StockComponent implements OnInit {
 
   searchOptions: SearchOptions;
 
-  searchedOptions: SearchOptions;
 
   dedicatedMode: ViewMode = {
     move: true,
@@ -119,19 +123,18 @@ export class StockComponent implements OnInit {
   }
 
   changePage(event: { offset: number; }) {
-    this.searchedOptions.page = event.offset + 1;
+    this.searchOptions.page = event.offset + 1;
     this.search();
   }
 
   searchStock() {
     this.searchOptions.page = 1;
-    this.searchedOptions = clone(this.searchOptions);
     this.search();
   }
 
   search() {
     this.isLoading = true;
-    this.businessService.getStock(this.searchedOptions)
+    this.businessService.getStock(this.searchOptions)
       .subscribe(
         (data) => {
           data.content.forEach(el => {
@@ -152,6 +155,46 @@ export class StockComponent implements OnInit {
 
   selectStock() {
     this.stockSelected.emit(this.selectedStock);
+  }
+
+  downloadAsReport({ name, type, brand, placeId }) {
+    const activeFilters = this.util.filterAndJoin([
+      name ? `Product Name: ${name}` : undefined,
+      type ? `Product Type: ${type}` : undefined,
+      brand ? `Brand: ${brand}` : undefined,
+      placeId ? `Place: ${this.placePipe.transform(placeId)}` : undefined,
+    ], "; ")
+
+    const reportOptions = {
+      ...this.searchOptions,
+      activeFilters
+    };
+
+    reportOptions.page = 1;
+    reportOptions.pageSize = 10000000;
+
+    this.businessService.getStock(reportOptions).subscribe(data => {
+      const rows = []
+      for (const el of data.content) {
+        rows.push([
+          { text: el.name, fontSize: 10 },
+          { text: el.type, fontSize: 10 },
+          { text: el.brand, fontSize: 10 },
+          { text: el.country, fontSize: 10 },
+          { text: el.size, fontSize: 10 },
+          { text: el.placeTxt, fontSize: 10 },
+          { text: `${el.quantity % 1 ? el.quantity.toFixed(2) : el.quantity} ${el.unitTxt}`, fontSize: 10 },
+          { text: this.amountPipe.transform(el.cost, true, 'Tk '), fontSize: 10 },
+        ])
+      }
+
+      let dd = this.pdfService.getListTemplate(
+        ["Name", "Type", "Brand", "Country", "Size", "Place", "Quantity", "Cost/Unit"]
+          .map(el => ({ text: el, style: "tableHeader" })),
+        rows, reportOptions.activeFilters, '*')
+
+      this.pdfService.open(dd)
+    });
   }
 }
 
