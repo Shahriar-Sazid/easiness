@@ -58,7 +58,7 @@ export class UtilService {
       }
     }
     if (activeFilters.endsWith("; ")) {
-      activeFilters = activeFilters.substr(0, activeFilters.length - 2);
+      activeFilters = activeFilters.substring(0, activeFilters.length - 2);
     }
     return activeFilters;
   }

@@ -7,7 +7,9 @@ import { DateRange } from 'src/app/core/models/document.model';
 import { Page } from 'src/app/core/models/page.model';
 import { AccountPipe } from 'src/app/core/pipes/account.pipe';
 import { AmountPipe } from 'src/app/core/pipes/amount.pipe';
+import { PeoplePipe } from 'src/app/core/pipes/people.pipe';
 import { AccountingService } from 'src/app/core/services/accounting.service';
+import { PDFService } from 'src/app/core/services/pdf.service';
 import { PeopleService } from 'src/app/core/services/people.service';
 import { UtilService } from 'src/app/core/services/util.service';
 import { DateRangeComponent } from 'src/app/shared/ui/date-range/date-range.component';
@@ -17,7 +19,7 @@ import { APP_CONFIG } from 'src/environments/environment';
   selector: 'app-tx-history',
   templateUrl: './tx-history.component.html',
   styleUrls: ['./tx-history.component.scss'],
-  providers: [AmountPipe, AccountPipe]
+  providers: [AmountPipe, AccountPipe, PeoplePipe]
 })
 export class TxHistoryComponent implements OnInit {
 
@@ -41,12 +43,19 @@ export class TxHistoryComponent implements OnInit {
     private datePipe: DatePipe,
     private amountPipe: AmountPipe,
     private accountPipe: AccountPipe,
+    private peoplePipe: PeoplePipe,
     public peopleService: PeopleService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private pdfService: PDFService,
   ) { }
 
   ngOnInit() {
     this.initializeState();
+    this.activatedRoute.queryParams.subscribe(data => {
+      console.log(data)
+      this.searchOptions = JSON.parse(JSON.stringify(data))
+      this.search()
+    })
   }
 
   initializeState() {
@@ -85,7 +94,10 @@ export class TxHistoryComponent implements OnInit {
   searchTx() {
     this.searchOptions.page = 1;
     this.searchOptions.pageSize = APP_CONFIG.pageSize;
-    this.search();
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: this.searchOptions
+    })
   }
 
   changePage(event) {
@@ -96,11 +108,11 @@ export class TxHistoryComponent implements OnInit {
   search() {
     this.isLoading = true
     this.accountingService.searchTx(this.searchOptions).subscribe(
-      (data) => {
+      data => {
         console.log(data);
         this.txPage = data;
       },
-      (err) => {
+      err => {
         console.error(err);
       }, () => {
         this.isLoading = false;
@@ -108,21 +120,43 @@ export class TxHistoryComponent implements OnInit {
     );
   }
 
-  downloadAsReport() {
-    const keyNameMap = {
-      name: "Name",
-      type: "Type",
-      brand: "Brand",
-    };
+  downloadAsReport({ from, to, type, account: accountId, peopleId }) {
+    const activeFilters = this.util.filterAndJoin([
+      from ? `From Date: ${this.datePipe.transform(from, APP_CONFIG.defaultDateFormat)}` : undefined,
+      to ? `To Date: ${this.datePipe.transform(to, APP_CONFIG.defaultDateFormat)}` : undefined,
+      type ? `Transaction Type: ${TxType[type]?.text}` : undefined,
+      accountId ? `Account: ${this.accountPipe.transform(accountId)}` : undefined,
+      peopleId ? `People: ${this.peoplePipe.transform(peopleId)}` : undefined,
+    ], "; ")
+
     const reportOptions = {
       ...this.searchOptions,
-      activeFilters: this.util.buildActiveFilters(
-        this.searchOptions,
-        keyNameMap
-      ),
+      activeFilters
     };
+
     reportOptions.page = 1;
     reportOptions.pageSize = 10000000;
+
+    this.accountingService.searchTx(reportOptions).subscribe(data => {
+      const rows = []
+      for (const el of data.content) {
+        rows.push([
+          { text: this.datePipe.transform(el.date, APP_CONFIG.defaultDateFormat), fontSize: 10 },
+          { text: TxType[el.type]?.text, fontSize: 10 },
+          { text: el.peopleName, fontSize: 10 },
+          { text: this.amountPipe.transform(el.amount, true, 'Tk '), fontSize: 10 },
+          { text: this.accountPipe.transform(el.fromAccountId), fontSize: 10 },
+          { text: this.accountPipe.transform(el.toAccountId), fontSize: 10 },
+        ])
+      }
+
+      let dd = this.pdfService.getListTemplate(
+        ["Date Time", "Tx Type", "People", "Amount", "From Account", "To Account"]
+          .map(el => ({ text: el, style: "tableHeader" })),
+        rows, reportOptions.activeFilters, '*')
+
+      this.pdfService.open(dd)
+    });
     // this.txService.downloadAsReport(reportOptions).subscribe((data) => {
     //   this.util.downLoadFile(data, "application/pdf");
     // });
@@ -131,7 +165,10 @@ export class TxHistoryComponent implements OnInit {
   resetForm() {
     this.searchOptions = {} as TxSearchOptions;
     this.dateRangeComponent.reset();
-    this.searchTx();
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: this.searchOptions
+    })
   }
 
   onActivate(event: { row: Tx }) {

@@ -36,7 +36,7 @@ export class PDFService {
 					table: {
 						widths: ['75%', '25%'],
 						body: [
-							[{ text: [{ text: "Active Filters-> ", bold: true }, filters || '<No Filters>'] }, { text: "Date: ".concat(new Date().toDateString()), alignment: 'right' }]
+							[{ text: [{ text: "Active Filters-> ", bold: true }, filters || '<No Filters>'] }, { text: "Date: ".concat(new Date().toDateString()), alignment: 'right', italics: true }]
 						]
 					},
 					layout: 'noBorders',
@@ -92,7 +92,7 @@ export class PDFService {
 				},
 				tableHeader: {
 					bold: true,
-					fontSize: 13,
+					fontSize: 11,
 					color: 'black'
 				}
 			}

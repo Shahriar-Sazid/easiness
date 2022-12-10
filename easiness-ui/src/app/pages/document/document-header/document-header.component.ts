@@ -77,7 +77,7 @@ export class DocumentHeaderComponent implements OnDestroy, OnInit {
     }
 
 
-    let date = this.datePipe.transform(this.doc.date, 'MMM dd, yyyy hh:mm a');
+    let date = this.datePipe.transform(this.doc.date, 'MMM dd, yyyy hh:mm a')
     let today = this.datePipe.transform(new Date(), 'MMM dd, yyyy hh:mm a')
     let invoiceNo = this.doc?.id?.toString().padStart(7, '0')
 

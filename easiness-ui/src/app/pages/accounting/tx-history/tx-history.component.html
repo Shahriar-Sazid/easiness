@@ -62,8 +62,8 @@
                 ngbDropdownItem [innerHTML]="txType.value.html"></a>
         </div>
     </div>
-    <button type="button" class="btn btn-outline-secondary" (click)="downloadAsReport()">
-        <i class="fa fa-download" aria-hidden="true"> Download</i>
+    <button type="button" class="btn btn-outline-secondary" (click)="downloadAsReport(searchOptions)">
+        <i class="fa fa-download" aria-hidden="true"> </i> Download
     </button>
 </div>
 <ngx-datatable class="material" [rows]="txPage.content" [columns]="columns" [columnMode]="columnMode.force"

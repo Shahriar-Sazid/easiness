@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { AccountPipe } from './account.pipe';
 import { AmountPipe } from './amount.pipe';
 import { EmptyPlaceHolderPipe } from './empty-placeholder.pipe';
+import { PeoplePipe } from './people.pipe';
 import { PillPipe } from './pill.pipe';
 import { PlacePipe } from './place.pipe';
 import { TxTypePipe } from './tx-type.pipe';
@@ -16,7 +17,8 @@ import { UnitPipe } from './unit.pipe';
         UnitPipe,
         AmountPipe,
         AccountPipe,
-        TxTypePipe
+        PeoplePipe,
+        TxTypePipe,
     ],
     declarations: [
         EmptyPlaceHolderPipe,
@@ -25,7 +27,8 @@ import { UnitPipe } from './unit.pipe';
         UnitPipe,
         AmountPipe,
         AccountPipe,
-        TxTypePipe
+        PeoplePipe,
+        TxTypePipe,
     ],
 })
 export class PipesModule { }
