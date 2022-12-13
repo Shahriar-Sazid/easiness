@@ -5,7 +5,7 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { TableColumn, ColumnMode } from "@swimlane/ngx-datatable";
 import clone from "just-clone";
 import { validationMessages } from "src/app/core/helpers/validation/validation-message";
-import { Account } from "src/app/core/models/accounting.model";
+import { Account, TxSearchOptions } from "src/app/core/models/accounting.model";
 import { Page } from "src/app/core/models/page.model";
 import { AmountPipe } from "src/app/core/pipes/amount.pipe";
 import { AccountingService } from "src/app/core/services/accounting.service";
@@ -163,5 +163,13 @@ export class AccountComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  goToTxHistory(): void {
+    this.router.navigate(['accounting', 'tx', 'history'], {
+      queryParams: {
+        account: this.selectedAccount.id,
+      } as TxSearchOptions
+    })
   }
 }

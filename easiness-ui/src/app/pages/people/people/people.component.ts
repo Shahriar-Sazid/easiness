@@ -5,6 +5,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ColumnMode, TableColumn } from "@swimlane/ngx-datatable";
 import clone from "just-clone";
 import { validationMessages } from "src/app/core/helpers/validation/validation-message";
+import { TxSearchOptions } from "src/app/core/models/accounting.model";
 import { Page } from "src/app/core/models/page.model";
 import { People } from "src/app/core/models/people.model";
 import { AmountPipe } from "src/app/core/pipes/amount.pipe";
@@ -173,4 +174,11 @@ export class PeopleComponent implements OnInit {
   }
 
 
+  goToTxHistory(): void {
+    this.router.navigate(['accounting', 'tx', 'history'], {
+      queryParams: {
+        peopleId: this.selectedPeople.id,
+      } as TxSearchOptions
+    })
+  }
 }

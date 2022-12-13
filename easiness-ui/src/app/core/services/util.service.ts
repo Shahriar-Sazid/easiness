@@ -136,6 +136,37 @@ export class UtilService {
     return array.filter(el => el).join(delimiter);
   }
 
+  deepEqual(x: object, y: object): boolean {
+    if (x === y) {
+      return true;
+    }
+    else if ((typeof x == "object" && x != null) && (typeof y == "object" && y != null)) {
+      if (Object.keys(x).length != Object.keys(y).length)
+        return false;
+
+      for (var prop in x) {
+        if (y.hasOwnProperty(prop)) {
+          if (!this.deepEqual(x[prop], y[prop]))
+            return false;
+        }
+        else
+          return false;
+      }
+
+      return true;
+    }
+    else
+      return false;
+  }
+
+  toNgbDate(date: Date | string): NgbDate {
+    if (!date) {
+      return null
+    }
+    date = new Date(date);
+    return new NgbDate(date.getFullYear(), date.getMonth() + 1, date.getDate())
+  }
+
   constructor() {
     //implement me
   }

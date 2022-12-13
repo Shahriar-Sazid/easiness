@@ -1,16 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { ColumnMode, TableColumn } from '@swimlane/ngx-datatable';
-import clone from 'just-clone';
-import { Page } from 'src/app/core/models/page.model';
-import { Stock } from 'src/app/core/models/stock.model';
-import { AmountPipe } from 'src/app/core/pipes/amount.pipe';
-import { PlacePipe } from 'src/app/core/pipes/place.pipe';
-import { BusinessService } from 'src/app/core/services/business.service';
-import { PDFService } from 'src/app/core/services/pdf.service';
-import { PlaceService } from 'src/app/core/services/place.service';
-import { UtilService } from 'src/app/core/services/util.service';
-import { APP_CONFIG } from 'src/environments/environment';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { ColumnMode, TableColumn } from '@swimlane/ngx-datatable'
+import clone from 'just-clone'
+import { Page } from 'src/app/core/models/page.model'
+import { Stock } from 'src/app/core/models/stock.model'
+import { AmountPipe } from 'src/app/core/pipes/amount.pipe'
+import { PlacePipe } from 'src/app/core/pipes/place.pipe'
+import { BusinessService } from 'src/app/core/services/business.service'
+import { PDFService } from 'src/app/core/services/pdf.service'
+import { PlaceService } from 'src/app/core/services/place.service'
+import { UtilService } from 'src/app/core/services/util.service'
+import { APP_CONFIG } from 'src/environments/environment'
 
 @Component({
   selector: 'app-stock',
@@ -19,25 +18,25 @@ import { APP_CONFIG } from 'src/environments/environment';
   providers: [PlacePipe, AmountPipe]
 })
 export class StockComponent implements OnInit {
-  @Output() stockSelected: EventEmitter<any> = new EventEmitter();
-  @Input() viewMode: 'dedicated' | 'sell' = 'dedicated';
-  stockPage: Page<Stock> = new Page<Stock>();
-  columns: TableColumn[];
-  columnMode = ColumnMode;
-  selectedStock: Stock;
+  @Output() stockSelected: EventEmitter<any> = new EventEmitter()
+  @Input() viewMode: 'dedicated' | 'sell' = 'dedicated'
+  stockPage: Page<Stock> = new Page<Stock>()
+  columns: TableColumn[]
+  columnMode = ColumnMode
+  selectedStock: Stock
 
-  isLoading = false;
+  isLoading = false
   constructor(private businessService: BusinessService,
     public placeService: PlaceService,
     public amountPipe: AmountPipe,
     private util: UtilService,
     private pdfService: PDFService,
     private placePipe: PlacePipe) {
-    this.searchStock = this.searchStock.bind(this);
+    this.searchStock = this.searchStock.bind(this)
   }
 
 
-  searchOptions: SearchOptions;
+  searchOptions: SearchOptions
 
 
   dedicatedMode: ViewMode = {
@@ -55,17 +54,17 @@ export class StockComponent implements OnInit {
   defaultSearchOptions = {
     page: 1,
     pageSize: APP_CONFIG.pageSize,
-  } as SearchOptions;
+  } as SearchOptions
 
-  currentMode: ViewMode;
+  currentMode: ViewMode
   ngOnInit(): void {
     if (this.viewMode == 'sell') {
-      this.currentMode = this.sellMode;
+      this.currentMode = this.sellMode
     } else if (this.viewMode == 'dedicated') {
-      this.currentMode = this.dedicatedMode;
+      this.currentMode = this.dedicatedMode
     }
 
-    this.searchOptions = clone(this.defaultSearchOptions);
+    this.searchOptions = clone(this.defaultSearchOptions)
 
     this.columns = [
       {
@@ -108,53 +107,53 @@ export class StockComponent implements OnInit {
         pipe: this.amountPipe,
         cellClass: "text-center",
       }
-    ];
-    this.searchStock();
+    ]
+    this.searchStock()
   }
 
   resetForm() {
-    this.searchOptions = clone(this.defaultSearchOptions);
-    this.search();
+    this.searchOptions = clone(this.defaultSearchOptions)
+    this.search()
   }
 
   onActivate(event: any) {
-    // console.log(event.row);
-    this.selectedStock = event.row;
+    // console.log(event.row)
+    this.selectedStock = event.row
   }
 
-  changePage(event: { offset: number; }) {
-    this.searchOptions.page = event.offset + 1;
-    this.search();
+  changePage(event: { offset: number }) {
+    this.searchOptions.page = event.offset + 1
+    this.search()
   }
 
   searchStock() {
-    this.searchOptions.page = 1;
-    this.search();
+    this.searchOptions.page = 1
+    this.search()
   }
 
   search() {
-    this.isLoading = true;
+    this.isLoading = true
     this.businessService.getStock(this.searchOptions)
       .subscribe(
         (data) => {
           data.content.forEach(el => {
             el['quantityUnit'] = `${el.quantity % 1 ? el.quantity.toFixed(2) : el.quantity} ${el.unitTxt}`
-            el['stockPlace'] = el.placeTxt;
-            el['unitCost'] = el.cost;
+            el['stockPlace'] = el.placeTxt
+            el['unitCost'] = el.cost
             el['totalCost'] = (el.cost * el.quantity).toFixed(2)
           })
-          this.stockPage = data;
+          this.stockPage = data
         },
         (err) => {
-          console.error(err);
+          console.error(err)
         }, () => {
-          this.isLoading = false;
+          this.isLoading = false
         }
-      );
+      )
   }
 
   selectStock() {
-    this.stockSelected.emit(this.selectedStock);
+    this.stockSelected.emit(this.selectedStock)
   }
 
   downloadAsReport({ name, type, brand, placeId }) {
@@ -163,15 +162,15 @@ export class StockComponent implements OnInit {
       type ? `Product Type: ${type}` : undefined,
       brand ? `Brand: ${brand}` : undefined,
       placeId ? `Place: ${this.placePipe.transform(placeId)}` : undefined,
-    ], "; ")
+    ], " ")
 
     const reportOptions = {
       ...this.searchOptions,
       activeFilters
-    };
+    }
 
-    reportOptions.page = 1;
-    reportOptions.pageSize = 10000000;
+    reportOptions.page = 1
+    reportOptions.pageSize = 10000000
 
     this.businessService.getStock(reportOptions).subscribe(data => {
       const rows = []
@@ -194,21 +193,21 @@ export class StockComponent implements OnInit {
         rows, reportOptions.activeFilters, '*')
 
       this.pdfService.open(dd)
-    });
+    })
   }
 }
 
 interface ViewMode {
-  move: boolean;
-  report: boolean;
-  select: boolean;
+  move: boolean
+  report: boolean
+  select: boolean
 }
 
 type SearchOptions = {
-  name: string;
-  type: string;
-  brand: string;
-  placeId: string;
-  page: number;
-  pageSize: number;
+  name: string
+  type: string
+  brand: string
+  placeId: string
+  page: number
+  pageSize: number
 }

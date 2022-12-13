@@ -2,7 +2,7 @@
     <form (ngSubmit)="searchTx()" #fr="ngForm">
         <div class="row">
             <div class="form-group col-md-6 col-lg-4 col-xl-3">
-                <app-date-range #dr (dateSelected)="selectDate($event)"></app-date-range>
+                <app-date-range [defaultRange]="searchOptions" #dr (dateSelected)="selectDate($event)"></app-date-range>
             </div>
             <div class="form-group col-md-6 col-lg-4 col-xl-3">
                 <label class="form-label text-dark" for="account">Account</label>

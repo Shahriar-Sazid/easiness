@@ -1,32 +1,36 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, Input, AfterViewInit, Output } from '@angular/core';
+import { NgbCalendar, NgbDate, NgbDateAdapter, NgbDateNativeAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { DateRange } from 'src/app/core/models/document.model';
+import { UtilService } from 'src/app/core/services/util.service';
 
 @Component({
   selector: 'app-date-range',
   templateUrl: './date-range.component.html',
   styleUrls: ['./date-range.component.scss']
 })
-export class DateRangeComponent implements OnInit {
+export class DateRangeComponent implements AfterViewInit {
   hoveredDate: NgbDate | null = null;
 
   fromDate: NgbDate | null;
   toDate: NgbDate | null;
   today = this.calendar.getToday();
 
-  @Output() dateSelected = new EventEmitter<{ from: Date; to: Date }>();
+  @Output() dateSelected = new EventEmitter<DateRange>();
+  @Input() defaultRange: DateRange = {} as DateRange;
 
-  constructor(private calendar: NgbCalendar, public formatter: NgbDateParserFormatter) {
+  constructor(private calendar: NgbCalendar,
+    private utils: UtilService,
+    public formatter: NgbDateParserFormatter) {
 
   }
 
-  ngOnInit(): void {
-    this.reset();
+  ngAfterViewInit(): void {
+    this.reset()
   }
 
   reset() {
-    this.fromDate = this.calendar.getNext(this.today, 'm', -1);
-    this.toDate = this.today;
+    this.fromDate = this.utils.toNgbDate(this.defaultRange.from)
+    this.toDate = this.utils.toNgbDate(this.defaultRange.to)
     this.dateSelected.emit(this.toDateRange())
   }
 
@@ -68,5 +72,3 @@ export class DateRangeComponent implements OnInit {
     }
   }
 }
-
-

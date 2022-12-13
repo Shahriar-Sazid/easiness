@@ -47,15 +47,32 @@ export class TxHistoryComponent implements OnInit {
     public peopleService: PeopleService,
     private activatedRoute: ActivatedRoute,
     private pdfService: PDFService,
-  ) { }
+  ) {
+
+  }
 
   ngOnInit() {
     this.initializeState();
     this.activatedRoute.queryParams.subscribe(data => {
-      console.log(data)
-      this.searchOptions = JSON.parse(JSON.stringify(data))
-      this.search()
+      let searchOptions: TxSearchOptions
+      if (this.counter()() === 1) {
+        if (this.util.deepEqual(data, {})) {
+          searchOptions = this.defaultSearchOptions()
+        } else {
+          searchOptions = JSON.parse(JSON.stringify(data))
+        }
+      }
+      this.searchOptions = searchOptions
+      this.search(searchOptions)
     })
+  }
+
+  counter() {
+    let cnt = 0
+    return function () {
+      cnt++
+      return cnt
+    }
   }
 
   initializeState() {
@@ -87,8 +104,6 @@ export class TxHistoryComponent implements OnInit {
         pipe: this.accountPipe
       },
     ];
-
-    this.resetForm();
   }
 
   searchTx() {
@@ -102,12 +117,12 @@ export class TxHistoryComponent implements OnInit {
 
   changePage(event) {
     this.searchOptions.page = event.offset + 1;
-    this.search();
+    this.search(this.searchOptions);
   }
 
-  search() {
+  search(searchOptions: TxSearchOptions) {
     this.isLoading = true
-    this.accountingService.searchTx(this.searchOptions).subscribe(
+    this.accountingService.searchTx(searchOptions).subscribe(
       data => {
         console.log(data);
         this.txPage = data;
@@ -162,9 +177,20 @@ export class TxHistoryComponent implements OnInit {
     // });
   }
 
+  defaultSearchOptions(): TxSearchOptions {
+    const from = new Date()
+    from.setMonth(from.getMonth() - 1)
+    from.setHours(0, 0, 0, 0)
+    return {
+      from,
+      to: new Date(),
+    } as TxSearchOptions
+  }
+
   resetForm() {
-    this.searchOptions = {} as TxSearchOptions;
-    this.dateRangeComponent.reset();
+    this.searchOptions = this.defaultSearchOptions()
+    setTimeout(() => this.dateRangeComponent.reset(), 0)
+    this.dateRangeComponent.reset()
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: this.searchOptions

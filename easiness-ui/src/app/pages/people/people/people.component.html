@@ -3,28 +3,13 @@
     <div class="row">
       <div class="form-group col-md-6 col-lg-4 col-xl-3">
         <label class="form-label text-dark" for="name">Name</label>
-        <input
-          type="text"
-          class="form-control"
-          name="name"
-          id="name"
-          maxlength="30"
-          placeholder="Enter people name.."
-          [(ngModel)]="searchOptions.name"
-        />
+        <input type="text" class="form-control" name="name" id="name" maxlength="30" placeholder="Enter people name.."
+          [(ngModel)]="searchOptions.name" />
       </div>
       <div class="form-group col-md-6 col-lg-4 col-xl-3">
         <label class="form-label text-dark" for="contactNo">Contact No</label>
-        <input
-          type="text"
-          class="form-control"
-          name="contactNo"
-          id="contactNo"
-          placeholder="Enter contact no.."
-          validPhoneNoDirective
-          [(ngModel)]="searchOptions.contactNo"
-          #contactNo="ngModel"
-        />
+        <input type="text" class="form-control" name="contactNo" id="contactNo" placeholder="Enter contact no.."
+          validPhoneNoDirective [(ngModel)]="searchOptions.contactNo" #contactNo="ngModel" />
       </div>
     </div>
 
@@ -41,52 +26,37 @@
 
 <div class="shadow bg-white">
   <div class="d-flex bg-white align-items-baseline justify-content-end" role="group">
-    <button
-      type="button"
-      class="btn btn-outline-primary mx-1"
-      ngbTooltip="Add People"
-      (click)="peopleModal.openPeopleModal(false)"
-    >
+    <button type="button" class="btn btn-outline-primary mx-1" ngbTooltip="Add People"
+      (click)="peopleModal.openPeopleModal(false)">
       <i class="fa fa-plus"></i>
     </button>
-    <button
-      type="button"
-      class="btn btn-outline-secondary"
-      ngbTooltip="Download Report"
-      placement="left"
-      (click)="downloadAsReport()"
-    >
+    <button type="button" class="btn btn-outline-secondary" ngbTooltip="Download Report" placement="left"
+      (click)="downloadAsReport()">
       <i class="fa fa-download" aria-hidden="true"></i>
     </button>
   </div>
-  <ngx-datatable
-    class="material"
-    [rows]="peoplePage.content"
-    [columns]="columns"
-    [columnMode]="columnMode.force"
-    [footerHeight]="-1"
-    [headerHeight]="-1"
-    rowHeight="auto"
-    [externalPaging]="true"
-    [count]="peoplePage.totalElements"
-    [offset]="peoplePage.number"
-    [limit]="peoplePage.size"
-    (activate)="onActivate($event)"
-    (page)="changePage($event)"
-  >
-    <ngx-datatable-column name="Options" >
+  <ngx-datatable class="material" [rows]="peoplePage.content" [columns]="columns" [columnMode]="columnMode.force"
+    [footerHeight]="-1" [headerHeight]="-1" rowHeight="auto" [externalPaging]="true" [count]="peoplePage.totalElements"
+    [offset]="peoplePage.number" [limit]="peoplePage.size" (activate)="onActivate($event)" (page)="changePage($event)">
+    <ngx-datatable-column name="Options">
       <ng-template ngx-datatable-cell-template>
-        <button class="btn btn-outline-secondary" (click)="peopleModal.openPeopleModal(true)">
-          <i class="fa fa-edit"></i>
-        </button>
+        <div class="d-flex align-items-center justify-content-start" role="group">
+          <button ngbTooltip="Update People" class="btn btn-outline-secondary mx-1"
+            (click)="peopleModal.openPeopleModal(true)">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button ngbTooltip="See Transaction History" class="btn btn-outline-secondary mx-1" (click)="goToTxHistory()">
+            <i class="fas fa-list-ul"></i>
+          </button>
+        </div>
+
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [prop]="column.prop" [pipe]="column.pipe"></ngx-datatable-column>
+    <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [prop]="column.prop" [pipe]="column.pipe">
+    </ngx-datatable-column>
   </ngx-datatable>
 </div>
 
-<app-save-people #peopleModal
-[selectedPeople]="selectedPeople"
-[callback]="search">
+<app-save-people #peopleModal [selectedPeople]="selectedPeople" [callback]="search">
 
 </app-save-people>

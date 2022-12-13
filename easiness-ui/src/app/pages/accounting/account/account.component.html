@@ -45,9 +45,17 @@
     (page)="changePage($event)">
     <ngx-datatable-column name="Options">
       <ng-template ngx-datatable-cell-template>
-        <button class="btn btn-outline-secondary" (click)="accountModal.openAccountModal(true)">
-          <i class="fa fa-edit"></i>
-        </button>
+
+        <div class="d-flex align-items-center justify-content-start" role="group">
+          <button ngbTooltip="Update Account" class="btn btn-outline-secondary"
+            (click)="accountModal.openAccountModal(true)">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button ngbTooltip="See Transaction History" class="btn btn-outline-secondary mx-1" (click)="goToTxHistory()">
+            <i class="fas fa-list-ul"></i>
+          </button>
+        </div>
+
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [prop]="column.prop" [pipe]="column.pipe">
