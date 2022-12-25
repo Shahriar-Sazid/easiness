@@ -14,6 +14,7 @@ export const productService = {
                 type: product.type,
                 brand: product.brand,
                 country: product.country,
+                preferredUnit: product.preferredUnit,
                 size,
             } as Product))
         } else {

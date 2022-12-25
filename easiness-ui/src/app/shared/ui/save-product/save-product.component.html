@@ -3,12 +3,7 @@
     <h4 class="modal-title">
       {{ updateMode ? "Update Product" : "Add Product" }}
     </h4>
-    <button
-      type="button"
-      class="btn btn-outline-secondary"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    >
+    <button type="button" class="btn btn-outline-secondary" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
   </div>
@@ -17,100 +12,70 @@
     <form [formGroup]="productForm">
       <div class="form-group mb-3">
         <label class="form-label text-dark" for="name">Name <span class="text-danger">*</span></label>
-        <input
-          type="text"
-          class="form-control"
-          id="name"
-          formControlName="name"
-        />
+        <input type="text" class="form-control" id="name" formControlName="name" />
         <span class="text-monospace text-danger">
           {{ util.getValidationError(productForm, "name") }}
         </span>
       </div>
       <div class="form-group my-3">
         <label class="form-label text-dark" for="type">Type</label>
-        <input
-          type="text"
-          class="form-control"
-          id="type"
-          formControlName="type"
-        />
+        <input type="text" class="form-control" id="type" formControlName="type" />
         <span class="text-monospace text-danger">
           {{ util.getValidationError(productForm, "type") }}
         </span>
       </div>
       <div class="form-group my-3">
         <label class="form-label text-dark" for="brand">Brand</label>
-        <input
-          type="text"
-          class="form-control"
-          id="brand"
-          formControlName="brand"
-        />
+        <input type="text" class="form-control" id="brand" formControlName="brand" />
         <span class="text-monospace text-danger">
           {{ util.getValidationError(productForm, "brand") }}
         </span>
       </div>
       <div class="form-group my-3">
         <label class="form-label text-dark" for="country">Country <span class="text-danger">*</span></label>
-        <input
-          type="text"
-          class="form-control"
-          id="country"
-          formControlName="country"
-        />
+        <input type="text" class="form-control" id="country" formControlName="country" />
         <span class="text-monospace text-danger">
           {{ util.getValidationError(productForm, "country") }}
         </span>
       </div>
+
+      <div class="form-group my-3">
+        <label class="form-label text-dark" for="preferredUnit">Preferred Unit <span
+            class="text-danger">*</span></label>
+        <select class="form-control" id="preferredUnit" formControlName="preferredUnit">
+          <option hidden [ngValue]="null"> Please select </option>
+          <option *ngFor="let unit of unitService.unitData.unitList" [value]="unit.id">{{unit.name}}</option>
+        </select>
+        <div *ngIf="getPossibleUnits()" class="rounded border border-info my-1 p-2 bg-info bg-soft"> Possible
+          Units are <span class="text-primary"> {{getPossibleUnits()}}</span>
+        </div>
+        <span class="text-monospace text-danger"> {{ util.getValidationError(productForm, "preferredUnit") }} </span>
+      </div>
+
       <div class="form-group my-3">
         <label class="form-label text-dark" for="size">Size</label>
         <div class="input-group">
-          <input
-            #sizeInput
-            type="text"
-            class="form-control"
-            id="size"
-            name="size"
-            formControlName="size"
-          />
+          <input #sizeInput type="text" class="form-control" id="size" name="size" formControlName="size" />
           <div *ngIf="!updateMode" class="input-group-append">
-            <button
-              class="btn btn-outline-success"
-              (click)="addProductSize(sizeInput)"
-            >
+            <button class="btn btn-outline-success" (click)="addProductSize(sizeInput)">
               <i class="fa fa-plus"></i>
             </button>
           </div>
         </div>
       </div>
       <div *ngIf="!updateMode" class="d-flex flex-wrap">
-        <button
-          *ngFor="let size of newProductSizes"
-          class="btn btn-outline-primary m-1 product-size-token"
-        >
+        <button *ngFor="let size of newProductSizes" class="btn btn-outline-primary m-1 product-size-token">
           <span #sizeToken>{{ size }} </span>
-          <i
-            class="fa fa-times-circle"
-            (click)="removeProductSize(sizeToken)"
-          ></i>
+          <i class="fa fa-times-circle" (click)="removeProductSize(sizeToken)"></i>
         </button>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-primary"
-      (click)="addOrUpdateProduct()"
-    >
+    <button type="button" class="btn btn-primary" (click)="addOrUpdateProduct()">
       {{ updateMode ? "Update" : "Add" }}
     </button>
-    <button
-      type="button"
-      class="btn btn-secondary"
-      (click)="closeProductModal()"
-    >
+    <button type="button" class="btn btn-secondary" (click)="closeProductModal()">
       Close
     </button>
   </div>

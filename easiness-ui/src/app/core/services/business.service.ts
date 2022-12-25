@@ -25,37 +25,38 @@ export class BusinessService {
     }
 
     buy(purchaseOrder: Document): Observable<any> {
-        this.util.deepTrim(purchaseOrder);
-        purchaseOrder = clone(purchaseOrder);
-        purchaseOrder['supplier'] = purchaseOrder.people;
-        purchaseOrder.people = undefined;
+        this.util.deepTrim(purchaseOrder)
+        purchaseOrder = clone(purchaseOrder)
+        purchaseOrder['supplier'] = purchaseOrder.people
+        purchaseOrder.people = undefined
         purchaseOrder.items.forEach((item) => {
             item['productId'] = item.entity.id
+            item['preferredUnit'] = item.entity.preferredUnit
             item['placeId'] = item.place
             item.place = undefined
-            item.entity = undefined;
-            return item;
+            item.entity = undefined
+            return item
         })
 
-        return this.http.post(this.purchaseApi, purchaseOrder);
+        return this.http.post(this.purchaseApi, purchaseOrder)
     }
 
     sell(invoice: Document): Observable<any> {
-        this.util.deepTrim(invoice);
-        invoice = clone(invoice);
-        invoice['customer'] = invoice.people;
-        invoice.people = undefined;
+        this.util.deepTrim(invoice)
+        invoice = clone(invoice)
+        invoice['customer'] = invoice.people
+        invoice.people = undefined
         invoice.items.forEach((item) => {
-            item['stock'] = item.entity.id;
-            item.cost = item.entity.cost;
-            return item;
+            item['stock'] = item.entity.id
+            item['preferredUnit'] = item.entity.preferredUnit
+            item.cost = item.entity.cost
+            return item
         })
 
         return this.http.post(this.sellApi, invoice);
     }
 
     processPayment(paymentTx: PaymentTx): Observable<unknown> {
-
         return this.http.post(this.paymentApi, paymentTx);
     }
 }

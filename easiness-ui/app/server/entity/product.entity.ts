@@ -4,7 +4,7 @@ import { Base } from "./base.entity"
 
 export const uniqueProductCols = ['name', 'type', 'brand', 'country', 'size']
 
-@Entity({name: 'product'})
+@Entity({ name: 'product' })
 @Unique(uniqueProductCols)
 export class Product extends Base {
     @PrimaryGeneratedColumn()
@@ -13,16 +13,19 @@ export class Product extends Base {
     @Column()
     name: string
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     type!: string
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     brand!: string
-    
+
     @Column()
     country: string
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     size!: string
+
+    @Column()
+    preferredUnit: number
 
 }

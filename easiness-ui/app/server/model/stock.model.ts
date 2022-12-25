@@ -9,6 +9,7 @@ export type StockRes = {
     type: string
     brand: string
     country: string
+    preferredUnit: number
     size: string
     placeTxt: string
     place: number

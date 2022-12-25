@@ -1,11 +1,12 @@
 import { Pagination } from "./page.model";
 
 export type ProductRequest = {
-    name: string;
-    type: string;
-    brand: string;
-    country: string;
-    sizes: string[];
+    name: string
+    type: string
+    brand: string
+    country: string
+    sizes: string[]
+    preferredUnit: number
 }
 
 export type FindProductRequest = ProductRequest & Pagination 

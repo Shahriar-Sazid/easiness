@@ -46,7 +46,8 @@
         <label class="form-label text-dark" for="unit">Unit </label>
         <select class="form-control" id="unit" formControlName="unit">
           <option hidden [ngValue]="null"> Please select </option>
-          <option *ngFor="let unit of unitService.unitData.unitList" [value]="unit.id">{{unit.name}}</option>
+          <option *ngFor="let unit of unitService.getPossibleUnits(+selectedEntity.preferredUnit)" [value]="unit.id">
+            {{unit.name}}</option>
         </select>
         <span class="text-monospace text-danger"> {{ util.getValidationError(costingForm, "unit") }} </span>
       </div>

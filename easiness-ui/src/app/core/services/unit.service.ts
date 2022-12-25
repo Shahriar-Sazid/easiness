@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UnitData } from '../models/unit-data.model';
+import { Unit, UnitData } from '../models/unit-data.model';
 import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
@@ -79,6 +79,40 @@ export class UnitService {
     }
 
     throw new Error('Unsupported conversion')
+  }
+
+  // !TODO: Implement in proper way. not work for multiple step
+  getPossibleUnits(sample: number, inclusive = true): Unit[] {
+    const possibleUnits = []
+
+    if (inclusive) {
+      for (const unit of this.unitData.unitList) {
+        if (+unit.id === +sample) {
+          possibleUnits.push(unit)
+        }
+      }
+    }
+
+
+    let conversions = this.unitData.unitConversionList.filter(el => +el.from === +sample)
+    for (const conversion of conversions) {
+      for (const unit of this.unitData.unitList) {
+        if (+unit.id === +conversion.to) {
+          possibleUnits.push(unit)
+        }
+      }
+    }
+
+    conversions = this.unitData.unitConversionList.filter(el => +el.to === +sample)
+    for (const conversion of conversions) {
+      for (const unit of this.unitData.unitList) {
+        if (+unit.id === +conversion.from) {
+          possibleUnits.push(unit)
+        }
+      }
+    }
+
+    return possibleUnits
   }
 }
 

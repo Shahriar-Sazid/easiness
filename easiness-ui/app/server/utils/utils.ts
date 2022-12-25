@@ -16,4 +16,20 @@ export const utils = {
         return zero.sub(num)
     },
 
+    joinAndEncapsulate(delimiter = ", ", cornerChar = "(", ...args: (string | number)[]): string {
+        switch (cornerChar) {
+            case `"`:
+                return `"${args.join(delimiter)}"`
+            case `'`:
+                return `'${args.join(delimiter)}'`
+            case '`':
+                return '`' + args.join(delimiter) + '`'
+            case `(`:
+                return `(${args.join(delimiter)})`
+            case `{`:
+                return `{${args.join(delimiter)}}`
+            case `[`:
+                return `[${args.join(delimiter)}]`
+        }
+    },
 }

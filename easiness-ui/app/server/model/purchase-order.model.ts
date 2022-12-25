@@ -4,15 +4,15 @@ import { Payment } from "./payment.model";
 
 export class PurchaseOrder {
     @Type(() => Date)
-    date: Date;
+    date: Date
 
-    supplier: number;
+    supplier: number
 
     @Type(() => PurchaseOrderItem)
-    items: PurchaseOrderItem[];
+    items: PurchaseOrderItem[]
 
     @Type(() => Payment)
-    payments: Payment[];
+    payments: Payment[]
 
     public totalCost() {
         let totalCost = new Big(0)
@@ -34,18 +34,19 @@ export class PurchaseOrder {
 }
 
 export class PurchaseOrderItem {
-    productId: number;
-    placeId: number;
+    productId: number
+    placeId: number
 
     @Type(() => Number)
     @Transform(({ value }) => new Big(value), { toClassOnly: true })
     quantity: Big;
 
-    unit: number;
+    unit: number
+    preferredUnit: number
 
     @Type(() => Number)
     @Transform(({ value }) => new Big(value), { toClassOnly: true })
-    cost: Big;
+    cost: Big
 
     public getAltId() {
         return `${this.productId}_${this.placeId}`

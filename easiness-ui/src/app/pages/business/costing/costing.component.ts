@@ -114,18 +114,19 @@ export class CostingComponent implements OnInit {
       this.modalRef.close();
     }
   }
+
   addToSalesList() {
     if (this.util.validateForm(this.costingForm)) {
       console.log(this.costingForm.value);
-      const documentItem: DocumentItem = {
+      const invoiceItem: DocumentItem = {
         entity: { ...this.selectedEntity },
       } as DocumentItem;
 
       ['price', 'quantity', 'unit'].forEach(el => {
-        documentItem[el] = this.costingForm.value[el]
+        invoiceItem[el] = this.costingForm.value[el]
       })
 
-      this.add.emit(documentItem);
+      this.add.emit(invoiceItem);
       this.modalRef.close();
     }
   }

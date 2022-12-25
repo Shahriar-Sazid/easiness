@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductService } from 'src/app/core/services/product.service';
+import { UnitService } from 'src/app/core/services/unit.service';
 import { UtilService } from 'src/app/core/services/util.service';
 import Swal from 'sweetalert2';
 
@@ -11,7 +12,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./save-product.component.scss']
 })
 export class SaveProductComponent implements OnInit {
-  @ViewChild('productModal') addProductModal: any;
+  @ViewChild('productModal') saveProductModal: any;
   updateMode: boolean;
   productForm: UntypedFormGroup;
   @Input() callback: Function;
@@ -21,6 +22,7 @@ export class SaveProductComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder,
     public util: UtilService,
     private productService: ProductService,
+    public unitService: UnitService,
     private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -30,19 +32,22 @@ export class SaveProductComponent implements OnInit {
       brand: ["", [Validators.minLength(3), Validators.maxLength(25)]],
       country: ["", [Validators.required, Validators.maxLength(20)]],
       size: ["", [Validators.maxLength(25)]],
+      preferredUnit: [null, [Validators.required]]
     });
   }
 
   openProductModal(updateMode: boolean) {
     if (updateMode) {
       this.updateMode = true;
+      this.productForm.get('preferredUnit')?.disable()
       for (const [control] of Object.entries(this.productForm.controls)) {
         this.productForm.get(control).setValue(this.updatingProduct[control]);
       }
     } else {
+      this.productForm.get('preferredUnit')?.enable()
       this.updateMode = false;
     }
-    this.modalService.open(this.addProductModal);
+    this.modalService.open(this.saveProductModal);
   }
 
   addProductSize(sizeInput) {
@@ -126,4 +131,8 @@ export class SaveProductComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
+  getPossibleUnits() {
+    const units = this.unitService.getPossibleUnits(+this.productForm.get('preferredUnit')?.value)
+    return units.map(unit => unit.name).join(", ")
+  }
 }
