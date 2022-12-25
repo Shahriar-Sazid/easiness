@@ -5,6 +5,7 @@ import { ContactNo } from "../entity/contact-no.entity";
 import { People } from "../entity/people.entity";
 import { ApiError } from "../errors/api-error";
 import { ReasonCode } from "../errors/codes";
+import { ChartPoint } from "../model/dashboard.model";
 import { Invoice } from "../model/invoice.model";
 import { getPage, Pagination } from "../model/page.model";
 import { Payment } from "../model/payment.model";
@@ -53,8 +54,6 @@ export const peopleService = {
 
         return await repo.save(people)
     },
-
-
 
     findAll: async () => {
         return await repo.find();
@@ -111,6 +110,30 @@ export const peopleService = {
 
         await updatePeopleBalance(repo, id, amount)
     },
+
+    getTopDuePeople: async (count: number) => {
+        const topDuePeople = await repo.createQueryBuilder("ppl").
+            select(["ppl.name as label", "ppl.balance as value"]).
+            where("ppl.balance>0").
+            orderBy("ppl.balance", "DESC").
+            limit(count).
+            getRawMany() as ChartPoint[]
+        console.log(topDuePeople);
+
+        return topDuePeople
+    },
+
+    getTopDebtPeople: async (count: number) => {
+        const topDebtPeople = await repo.createQueryBuilder("ppl").
+            select(["ppl.name as label", "ppl.balance as value"]).
+            where("ppl.balance<=0").
+            orderBy("ppl.balance", "ASC").
+            limit(count).
+            getRawMany() as ChartPoint[]
+        console.log(topDebtPeople);
+
+        return topDebtPeople
+    }
 }
 
 async function updatePeopleBalance(repo: Repository<People>, id: number, amount: Big) {

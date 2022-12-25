@@ -28,7 +28,10 @@ export class DocumentItem extends Base {
     quantity: Big
 
     @BigColumn()
-    costOrPrice: Big
+    cost: Big
+
+    @BigColumn(true)
+    price!: Big
 
     @Column()
     unitId: number

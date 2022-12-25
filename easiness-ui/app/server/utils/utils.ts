@@ -32,4 +32,8 @@ export const utils = {
                 return `[${args.join(delimiter)}]`
         }
     },
+
+    filterAndJoin(delimiter = ", ", ...args: (string | number)[]): string {
+        return args.filter(el => el).join(delimiter)
+    }
 }
