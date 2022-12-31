@@ -12,10 +12,9 @@ import { utils } from "../utils/utils";
 import { Repository } from "typeorm";
 import { ApiError } from "../errors/api-error";
 import { ReasonCode } from "../errors/codes";
-import { ChartPoint } from "../model/dashboard.model";
+import { ChartPoint, DateRange } from "../model/dashboard.model";
 
 const repo = ds.getRepository(Document)
-const itemRepo = ds.getRepository(DocumentItem)
 
 type TopProduct = {
     productId: number,
@@ -125,16 +124,19 @@ export const documentService = {
         return document
     },
 
-    getTopProductByProfit: async (count: number) => {
-        const topProductByProfit: TopProduct[] = await itemRepo.createQueryBuilder("di").
-            select(["di.productId AS productId", "pr.name AS name", "pr.type AS type",
-                "pr.brand AS brand", "SUM((di.price-di.cost)*di.quantity) AS value"]).
-            innerJoin("di.product", "pr").
-            where("di.price IS NOT NULL").
-            groupBy("di.productId").
-            limit(count).
-            orderBy("value", "DESC").
-            getRawMany() as TopProduct[]
+    getTopProductByProfit: async ({ from, to }: DateRange, count: number) => {
+        const topProductByProfit: TopProduct[] =
+            await repo.createQueryBuilder("dc").
+                innerJoin("dc.items", "di").
+                innerJoin("di.product", "pr").
+                select(["di.productId AS productId", "pr.name AS name", "pr.type AS type",
+                    "pr.brand AS brand", "SUM((di.price-di.cost)*di.quantity) AS value"]).
+                where("di.price IS NOT NULL").
+                andWhere("dc.createdAt BETWEEN :from and :to", { from, to }).
+                groupBy("di.productId").
+                limit(count).
+                orderBy("value", "DESC").
+                getRawMany() as TopProduct[]
 
         console.log(topProductByProfit);
 
@@ -144,20 +146,23 @@ export const documentService = {
         } as ChartPoint))
     },
 
-    getTopProductByQuantity: async (count: number) => {
-        const topProductByProfit: TopProduct[] = await itemRepo.createQueryBuilder("di").
-            select(["di.productId AS productId", "pr.name AS name", "pr.type AS type",
-                "pr.brand AS brand", "SUM(di.quantity) AS value"]).
-            innerJoin("di.product", "pr").
-            where("di.price IS NOT NULL").
-            groupBy("di.productId").
-            orderBy("value", "DESC").
-            limit(count).
-            getRawMany() as TopProduct[]
+    getTopProductByQuantity: async ({ from, to }: DateRange, count: number) => {
+        const topProductByQuantity: TopProduct[] =
+            await repo.createQueryBuilder("dc").
+                innerJoin("dc.items", "di").
+                innerJoin("di.product", "pr").
+                select(["di.productId AS productId", "pr.name AS name", "pr.type AS type",
+                    "pr.brand AS brand", "SUM(di.quantity) AS value"]).
+                where("di.price IS NOT NULL").
+                andWhere("dc.createdAt BETWEEN :from and :to", { from, to }).
+                groupBy("di.productId").
+                orderBy("value", "DESC").
+                limit(count).
+                getRawMany() as TopProduct[]
 
-        console.log(topProductByProfit);
+        console.log(topProductByQuantity);
 
-        return topProductByProfit.map(item => ({
+        return topProductByQuantity.map(item => ({
             label: utils.filterAndJoin(" | ", item.name, item.type, item.brand),
             value: item.value
         } as ChartPoint))

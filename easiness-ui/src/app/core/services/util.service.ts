@@ -167,6 +167,12 @@ export class UtilService {
     return new NgbDate(date.getFullYear(), date.getMonth() + 1, date.getDate())
   }
 
+  getNDayBefore(n: number) {
+    let today = new Date()
+    const offset = n * 86400 * 1000
+    return new Date(today.getTime() - offset)
+  }
+
   constructor() {
     //implement me
   }

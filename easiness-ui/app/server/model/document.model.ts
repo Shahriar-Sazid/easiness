@@ -1,14 +1,9 @@
 import Big from "big.js";
 import { Type } from "class-transformer";
 import { DocumentType } from "../entity/document.entity";
+import { DateRange } from "./dashboard.model";
 
-export class FindDocumentReq {
-    @Type(() => Date)
-    from: Date
-
-    @Type(() => Date)
-    to: Date
-
+export class FindDocumentReq extends DateRange {
     type: DocumentType
     peopleName: string
     page: number | string

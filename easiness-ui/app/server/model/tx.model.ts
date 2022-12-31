@@ -1,14 +1,9 @@
 import Big from "big.js"
 import { Type } from "class-transformer"
 import { TxType } from "../entity/tx.entity"
+import { DateRange } from "./dashboard.model"
 
-export class FindTxReq {
-    @Type(() => Date)
-    from: Date
-
-    @Type(() => Date)
-    to: Date
-
+export class FindTxReq extends DateRange {
     type: TxType
     peopleName: string
     peopleId: number

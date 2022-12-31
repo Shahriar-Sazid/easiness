@@ -12,6 +12,28 @@
             </div>
         </div>
     </div>
-    <!-- end page title -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input (input)="getDataForLast('week')" type="radio" class="btn-check" name="btnradio" id="btnradio1"
+                    autocomplete="off" [checked]="period==='week'">
+                <label class="btn btn-outline-primary" for="btnradio1">Last Week</label>
 
-</div> <!-- container-fluid -->
+                <input (input)="getDataForLast('month')" type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                    autocomplete="off" [checked]="period==='month'">
+                <label class="btn btn-outline-primary" for="btnradio2">Last Month</label>
+
+                <input (input)="getDataForLast('year')" type="radio" class="btn-check" name="btnradio" id="btnradio3"
+                    autocomplete="off" [checked]="period==='year'">
+                <label class="btn btn-outline-primary" for="btnradio3">Last Year</label>
+            </div>
+        </div>
+        <hr>
+        <div class="row shadow-sm g-2">
+            <div *ngFor="let chart of chartsMeta | keyvalue: keepOrder" class="col-md-6 p-2 hover-shadow">
+                <h4 class="text-center text-secondary">{{chart.value.label}}</h4>
+                <canvas [id]="chart.key"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

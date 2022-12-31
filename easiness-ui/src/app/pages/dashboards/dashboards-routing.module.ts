@@ -5,7 +5,7 @@ import { DefaultComponent } from './default/default.component';
 
 const routes: Routes = [
     {
-        path: 'default',
+        path: '',
         component: DefaultComponent
     },
 ];
@@ -14,4 +14,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class DashboardsRoutingModule {}
+export class DashboardsRoutingModule { }
