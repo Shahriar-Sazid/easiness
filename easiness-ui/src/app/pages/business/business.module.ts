@@ -17,6 +17,7 @@ import { StockComponent } from './stock/stock.component';
 import { DocumentModule } from '../document/document.module';
 import { DirectivesModule } from 'src/app/core/directives/directive.module';
 import { PipesModule } from 'src/app/core/pipes/pipes.module';
+import { InitialStockComponent } from './initial-stock/initial-stock.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { PipesModule } from 'src/app/core/pipes/pipes.module';
     CostingComponent,
     BasicInfoComponent,
     StockComponent,
+    InitialStockComponent,
   ],
   imports: [
     CommonModule,
