@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Place } from 'src/app/core/models/place.model';
-import { DocumentItem, DocumentOptions } from 'src/app/core/models/document.model';
+import { DocumentItem, DocumentOptions, DocumentType } from 'src/app/core/models/document.model';
 import { UnitService } from 'src/app/core/services/unit.service';
 import { calcQuantityUnitError } from 'src/app/core/validation/custom-validation';
 import { UtilService } from 'src/app/core/services/util.service';
@@ -15,12 +15,16 @@ export class DocumentItemComponent {
   document = document;
   @Input() viewOptions: DocumentOptions;
   @ViewChild('fr') itemForm!: NgForm;
+  @ViewChild('placeInput') placeInput!: ElementRef;
+  @ViewChild('costInput') costInput!: ElementRef;
+  @ViewChild('priceInput') priceInput!: ElementRef;
   @Input() editPermission: boolean;
   editMode = false;
   @Input() placeRecord: Record<string, Place>;
   @Input() item: DocumentItem;
   @Input() index: number;
   @Output() cancel: EventEmitter<number> = new EventEmitter();
+  @Output() nextCursor: EventEmitter<number> = new EventEmitter();
 
   constructor(public unitService: UnitService, private util: UtilService) {
   }
@@ -37,7 +41,7 @@ export class DocumentItemComponent {
     if (this.editPermission) {
       setTimeout(() => { // this will make the execution after the above boolean has changed
         inp.focus();
-      }, 0);
+      }, 100);
     }
   }
 
@@ -53,6 +57,26 @@ export class DocumentItemComponent {
 
   cancelItem() {
     this.cancel.emit(this.index);
+  }
+
+  focusNextItem() {
+    this.nextCursor.emit(this.index);
+  }
+
+  focusCurrentItem() {
+    switch (this.viewOptions.key) {
+      case DocumentType.INITIAL_STOCK:
+        this.placeInput.nativeElement.focus()
+        break;
+      case DocumentType.PURCHASE_ORDER:
+        this.editMode = true
+        this.delayedFocus(this.costInput.nativeElement)
+        break;
+      case DocumentType.INVOICE:
+        this.editMode = true
+        this.delayedFocus(this.priceInput.nativeElement)
+        break;
+    }
   }
 
   isValid() {

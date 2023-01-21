@@ -4,6 +4,7 @@ import { AccountResolver } from "src/app/core/services/resolvers/account-resolve
 import { PlaceResolver } from "src/app/core/services/resolvers/place-resolver.service";
 import { UnitResolver } from "src/app/core/services/resolvers/unit-resolver.service";
 import { BuyComponent } from "./buy/buy.component";
+import { InitialStockComponent } from "./initial-stock/initial-stock.component";
 import { SellComponent } from "./sell/sell.component";
 import { StockComponent } from "./stock/stock.component";
 
@@ -33,7 +34,16 @@ const routes: Routes = [
       units: UnitResolver,
       place: PlaceResolver
     }
-  }
+  },
+  {
+    path: "initial-stock",
+    component: InitialStockComponent,
+    resolve: {
+      units: UnitResolver,
+      place: PlaceResolver,
+      account: AccountResolver
+    }
+  },
 
 ];
 

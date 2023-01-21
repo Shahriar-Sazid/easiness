@@ -1,10 +1,12 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { DocumentItem, Payment, Document, DocumentType } from "src/app/core/models/document.model";
 import { BusinessService } from "src/app/core/services/business.service";
 import { PeopleService } from "src/app/core/services/people.service";
 import { PlaceService } from "src/app/core/services/place.service";
+import { StockService } from "src/app/core/services/stock.service";
 import { UtilService } from "src/app/core/services/util.service";
+import { DocumentComponent } from "../../document/document/document.component";
 
 @Component({
   selector: "app-buy",
@@ -12,8 +14,10 @@ import { UtilService } from "src/app/core/services/util.service";
   styleUrls: ["./initial-stock.component.scss"],
 })
 export class InitialStockComponent implements OnInit {
+  @ViewChild('doc') docComp: DocumentComponent;
+
   purchase = {
-    type: DocumentType.PURCHASE_ORDER,
+    type: DocumentType.INITIAL_STOCK,
     date: new Date()
   } as Document;
 
@@ -22,7 +26,7 @@ export class InitialStockComponent implements OnInit {
     public peopleService: PeopleService,
     public placeService: PlaceService,
     public util: UtilService,
-    private businessService: BusinessService
+    private stockService: StockService
   ) {
   }
 
@@ -38,12 +42,8 @@ export class InitialStockComponent implements OnInit {
     this.purchase.items.push(item);
   }
 
-  selectPlace(place: number) {
-    this.defaultPlace = place;
-  }
-
-  buy(payments: Payment[]) {
-    this.businessService.buy({ ...this.purchase, payments }).subscribe(
+  addToStock() {
+    this.stockService.addAsInitialStock(this.docComp.document?.items).subscribe(
       data => {
         window.location.reload();
       },

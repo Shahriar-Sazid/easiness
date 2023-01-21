@@ -4,9 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { DefaultComponent } from './dashboards/default/default.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboards', pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 
-  { path: 'dashboards', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule) },
+  { path: 'dashboard', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule) },
   { path: 'product', loadChildren: () => import('./product/product.module').then(m => m.ProductModule) },
   { path: 'people', loadChildren: () => import('./people/people.module').then(m => m.PeopleModule) },
   { path: 'accounting', loadChildren: () => import('./accounting/accounting.module').then(m => m.AccountingModule) },

@@ -45,7 +45,8 @@
                 <div class="form-group">
                   <select [disabled]="!editPermission"
                     [ngClass]="['form-control p-0', placeModel.invalid && placeModel.touched? 'border border-danger': 'border-0']"
-                    name="place" #placeModel="ngModel" [required]="display('place')" [(ngModel)]="item.place">
+                    name="place" #placeInput #placeModel="ngModel" [required]="display('place')"
+                    [(ngModel)]="item.place" (input)="placeInput.blur();editMode=!editMode;delayedFocus(costInput)">
                     <option [ngValue]="null" disabled>Select place</option>
                     <option *ngFor="let place of placeRecord | keyvalue" [value]="place.value.id">
                       {{ place.value.name }}
@@ -111,9 +112,11 @@
                         <select [disabled]="!editPermission" #unitSelect #unitModel="ngModel" name="unitControl"
                           required
                           [ngClass]="['form-control p-0 full-text', unitModel.invalid && unitModel.touched? 'border border-danger': 'border-0']"
-                          name="unit" id="place" [(ngModel)]="item.unit" (ngModelChange)="validateUnit($event)">
+                          name="unit" id="place" [(ngModel)]="item.unit"
+                          (ngModelChange)="validateUnit($event);focusNextItem()">
                           <option [ngValue]="null" disabled>Select unit</option>
-                          <option *ngFor="let unit of unitService.unitData.unitList" [value]="unit.id">
+                          <option *ngFor="let unit of unitService.getPossibleUnits(+item.entity.preferredUnit)"
+                            [value]="unit.id">
                             {{ unit.name }}
                         </select>
                       </div>

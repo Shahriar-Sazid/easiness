@@ -25,6 +25,12 @@ export const MENU: MenuItem[] = [
     link: "/accounting",
   },
   {
+    id: 4,
+    label: "COMMONS.INITIAL_STOCK",
+    icon: "fas fa-border-all",
+    link: "/business/initial-stock",
+  },
+  {
     id: 5,
     label: "COMMONS.BUSINESS",
     isTitle: true,

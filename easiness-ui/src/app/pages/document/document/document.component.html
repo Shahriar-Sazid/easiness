@@ -1,10 +1,12 @@
-<app-document-header [people]="people" [viewOptions]="viewOptions" [editPermission]="editPermission" [doc]="document">
+<app-document-header *ngIf="viewOptions.showDocumentHeader" [people]="people" [viewOptions]="viewOptions"
+  [editPermission]="editPermission" [doc]="document">
 </app-document-header>
 <br>
 <app-document-item-header [editPermission]="editPermission" [viewOptions]="viewOptions"></app-document-item-header>
 <div [@fadeInOut] *ngFor="let item of document.items; let i = index">
   <app-document-item [editPermission]="editPermission" [viewOptions]="viewOptions"
-    [placeRecord]="placeService.placeRecord" [item]="item" [index]="i" (cancel)="cancelItem($event)">
+    [placeRecord]="placeService.placeRecord" [item]="item" [index]="i" (cancel)="cancelItem($event)"
+    (nextCursor)="focusNextItem($event)">
   </app-document-item>
   <hr class="m-0 bg-primary">
 </div>

@@ -29,8 +29,8 @@
             </div>
         </div>
         <hr>
-        <div class="row shadow-sm g-2">
-            <div *ngFor="let chart of chartsMeta | keyvalue: keepOrder" class="col-md-6 p-2 hover-shadow">
+        <div class="row g-2">
+            <div *ngFor="let chart of chartsMeta | keyvalue: keepOrder" class="col-md-6 p-2 hover-shadow rounded-4">
                 <h4 class="text-center text-secondary">{{chart.value.label}}</h4>
                 <canvas [id]="chart.key"></canvas>
             </div>

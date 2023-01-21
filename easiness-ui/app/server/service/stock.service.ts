@@ -68,6 +68,12 @@ export const stockService = {
             .getMany()
     },
 
+    addAsInitialStock: async (items: PurchaseOrderItem[]) => {
+        await ds.transaction(async (tm) => {
+            return await stockService.storeProduct(tm.getRepository(Stock), items)
+        })
+    },
+
     sellProduct: async (repo: Repository<Stock>, items: InvoiceItem[]) => {
         const stockList = await repo.findBy({ id: In(items.map(item => item.stock)) })
         const stockMap = utils.convertArrayToObject(stockList, (st: Stock) => st.id)

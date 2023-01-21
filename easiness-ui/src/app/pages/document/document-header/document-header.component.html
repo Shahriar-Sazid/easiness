@@ -32,11 +32,10 @@
   <div class="invoice-date">
     <small>{{viewOptions.key === 'INVOICE'? "Invoice": "Purchase Order"}}</small>
     <div [ngClass]="[viewOptions.theme.text, 'date']">{{doc.date | date: 'MMM dd, yyyy'}}</div>
-    <div>
-      #0000123DSS<br>
-    </div>
+    <div> #0000123DSS<br> </div>
     <div class="d-flex justify-content-end align-items-center">
-      <button [class]="viewOptions.theme.btn" (click)="download()"> <i class="fas fa-download"></i> Download
+      <button *ngIf="!editPermission" [class]="viewOptions.theme.btn" (click)="download()"> <i
+          class="fas fa-download"></i> Download
       </button>
     </div>
   </div>

@@ -46,6 +46,7 @@ export class DocumentComponent implements OnInit {
       availableQty: true,
       validateQty: true,
       validateUnit: true,
+      showDocumentHeader: true,
       theme: {
         bg: 'bg-success',
         text: 'text-success',
@@ -68,12 +69,36 @@ export class DocumentComponent implements OnInit {
       availableQty: false,
       validateQty: false,
       validateUnit: false,
+      showDocumentHeader: true,
       theme: {
         bg: 'bg-danger',
         text: 'text-danger',
         btn: 'btn btn-sm btn-outline-danger',
       },
       key: DocumentType.PURCHASE_ORDER,
+    } as DocumentOptions,
+    [DocumentType.INITIAL_STOCK]: {
+      name: this.getViewOptions(3),
+      type: this.getViewOptions(3),
+      brand: this.getViewOptions(2),
+      country: this.getViewOptions(2),
+      size: this.getViewOptions(2),
+      place: this.getViewOptions(2),
+      quantity: this.getViewOptions(3),
+      cost: this.getViewOptions(3),
+      price: this.getViewOptions(undefined),
+      totalCost: this.getViewOptions(4),
+      totalPrice: this.getViewOptions(undefined),
+      availableQty: false,
+      validateQty: false,
+      validateUnit: false,
+      showDocumentHeader: false,
+      theme: {
+        bg: 'bg-danger',
+        text: 'text-danger',
+        btn: 'btn btn-sm btn-outline-danger',
+      },
+      key: DocumentType.INITIAL_STOCK,
     } as DocumentOptions,
   }
   editPermission: boolean;
@@ -95,6 +120,12 @@ export class DocumentComponent implements OnInit {
 
   cancelItem(index: number) {
     this.document.items.splice(index, 1);
+  }
+
+  focusNextItem(index: number) {
+    if (this.invCompList.length > index + 1) {
+      this.invCompList.get(index + 1).focusCurrentItem()
+    }
   }
 
   isValid() {

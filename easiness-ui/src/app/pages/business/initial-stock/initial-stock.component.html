@@ -7,21 +7,6 @@
                 <div class="card-body">
                     <aw-wizard [navBarLayout]="'large-empty'">
 
-                        <aw-wizard-step stepTitle="Basic Info">
-                            <ng-template awWizardStepSymbol>
-                                <i class="fas fa-user fa-lg"></i>
-                            </ng-template>
-
-                            <app-basic-info #basicInfo [document]="purchase" (placeSelection)="selectPlace($event)">
-                            </app-basic-info>
-
-                            <ul class="list-inline wizard mb-0">
-                                <li class="next list-inline-item float-end">
-                                    <button [disabled]="!basicInfo?.basicInfoForm?.valid" class="btn btn-primary"
-                                        awNextStep>Next</button>
-                                </li>
-                            </ul>
-                        </aw-wizard-step>
 
                         <aw-wizard-step stepTitle="Product Selection">
                             <ng-template awWizardStepSymbol>
@@ -37,61 +22,34 @@
                                 </div>
                             </div>
                             <ul class="list-inline wizard mb-0">
-                                <li class="previous list-inline-item">
-                                    <button class="btn btn-primary" awPreviousStep>
-                                        Previous
-                                    </button>
-                                </li>
                                 <li class="next list-inline-item float-end">
                                     <button class="btn btn-primary" awNextStep>Next</button>
                                 </li>
                             </ul>
                         </aw-wizard-step>
 
-                        <aw-wizard-step stepTitle="Purchase Order">
+                        <aw-wizard-step stepTitle="Stock Information">
                             <ng-template awWizardStepSymbol>
                                 <i class="fas fa-file-invoice fa-lg"></i>
                             </ng-template>
 
-                            <app-document [mode]="purchase.type" #inv [document]="purchase"></app-document>
+                            <app-document [mode]="purchase.type" #doc [document]="purchase"></app-document>
                             <br>
                             <ul class="list-inline wizard mb-0">
                                 <ul class="list-inline wizard mb-0">
                                     <li class="previous list-inline-item">
-                                        <button class="btn btn-primary" awPreviousStep>
+                                        <button class="btn btn-secondary" awPreviousStep>
                                             Previous
                                         </button>
                                     </li>
                                     <li class="next list-inline-item float-end">
-                                        <button class="btn btn-primary" awNextStep
-                                            [disabled]="!inv.isValid()">Next</button>
+                                        <button class="btn btn-primary" awNextStep [disabled]="!doc.isValid()"
+                                            (click)="addToStock()">Add To
+                                            Stock</button>
                                     </li>
                                 </ul>
                             </ul>
                         </aw-wizard-step>
-
-                        <aw-wizard-step stepTitle="Make Payment">
-                            <ng-template awWizardStepSymbol>
-                                <i class="fas fa-money-check-alt fa-lg"></i>
-                            </ng-template>
-                            <div class="row justify-content-center">
-                                <div class="col-md-8 col-lg-6">
-                                    <app-confirm-payment #acp [mode]="'from'" [inModal]="false"
-                                        (paymentProcessed)="buy($event)">
-                                        <button class="btn btn-primary" (click)="acp.getPaymentData()"> Buy </button>
-                                    </app-confirm-payment>
-                                </div>
-                            </div>
-
-                            <ul class="list-inline wizard mb-0">
-                                <li class="previous list-inline-item">
-                                    <button class="btn btn-primary" awPreviousStep>
-                                        Previous
-                                    </button>
-                                </li>
-                            </ul>
-                        </aw-wizard-step>
-
                     </aw-wizard>
                 </div>
             </div>

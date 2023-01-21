@@ -5,9 +5,9 @@ import { Page } from 'src/app/core/models/page.model'
 import { Stock } from 'src/app/core/models/stock.model'
 import { AmountPipe } from 'src/app/core/pipes/amount.pipe'
 import { PlacePipe } from 'src/app/core/pipes/place.pipe'
-import { BusinessService } from 'src/app/core/services/business.service'
 import { PDFService } from 'src/app/core/services/pdf.service'
 import { PlaceService } from 'src/app/core/services/place.service'
+import { StockService } from 'src/app/core/services/stock.service'
 import { UtilService } from 'src/app/core/services/util.service'
 import { APP_CONFIG } from 'src/environments/environment'
 
@@ -26,8 +26,8 @@ export class StockComponent implements OnInit {
   selectedStock: Stock
 
   isLoading = false
-  constructor(private businessService: BusinessService,
-    public placeService: PlaceService,
+  constructor(public placeService: PlaceService,
+    private stockService: StockService,
     public amountPipe: AmountPipe,
     private util: UtilService,
     private pdfService: PDFService,
@@ -133,7 +133,7 @@ export class StockComponent implements OnInit {
 
   search() {
     this.isLoading = true
-    this.businessService.getStock(this.searchOptions)
+    this.stockService.getStock(this.searchOptions)
       .subscribe(
         (data) => {
           data.content.forEach(el => {
@@ -172,7 +172,7 @@ export class StockComponent implements OnInit {
     reportOptions.page = 1
     reportOptions.pageSize = 10000000
 
-    this.businessService.getStock(reportOptions).subscribe(data => {
+    this.stockService.getStock(reportOptions).subscribe(data => {
       const rows = []
       for (const el of data.content) {
         rows.push([

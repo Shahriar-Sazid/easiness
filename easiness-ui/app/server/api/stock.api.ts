@@ -1,10 +1,22 @@
-import { plainToClass, plainToInstance } from "class-transformer";
-import { Router, Request, Response, NextFunction } from "express";
+import { plainToInstance } from "class-transformer";
+import { NextFunction, Request, Response, Router } from "express";
 import { StatusCodes } from "http-status-codes";
-import { FindStockReq, MoveProductInfo } from "../model/stock.model";
+import { PurchaseOrderItem } from "../model/purchase-order.model";
+import { FindStockReq } from "../model/stock.model";
 import { stockService } from "../service/stock.service";
 
 const stockRouter: Router = Router();
+
+stockRouter.post('/initial-stock', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const items = plainToInstance(PurchaseOrderItem, req.body as PurchaseOrderItem[])
+        return res.status(StatusCodes.CREATED).send(
+            stockService.addAsInitialStock(items)
+        );
+    } catch (e) {
+        next(e)
+    }
+});
 
 stockRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {

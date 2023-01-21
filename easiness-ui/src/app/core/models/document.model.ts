@@ -4,6 +4,7 @@ import { Stock } from "./stock.model";
 
 export enum DocumentType {
   PURCHASE_ORDER = 'PURCHASE_ORDER',
+  INITIAL_STOCK = 'INITIAL_STOCK',
   INVOICE = 'INVOICE'
 }
 
@@ -32,26 +33,27 @@ export type Payment = {
 }
 
 export type DocumentOptions = {
-  name: object;
-  type: object;
-  brand: object;
-  country: object;
-  size: object;
-  place: object;
-  quantity: object;
-  cost: object;
-  price: object;
-  totalCost: object;
-  totalPrice: object;
-  availableQty: boolean;
-  validateQty: boolean;
-  validateUnit: boolean;
+  name: object
+  type: object
+  brand: object
+  country: object
+  size: object
+  place: object
+  quantity: object
+  cost: object
+  price: object
+  totalCost: object
+  totalPrice: object
+  availableQty: boolean
+  validateQty: boolean
+  validateUnit: boolean
+  showDocumentHeader: boolean
   theme: {
-    bg: string;
-    text: string;
-    btn: string;
-  };
-  key: DocumentType;
+    bg: string
+    text: string
+    btn: string
+  }
+  key: DocumentType
 }
 
 
