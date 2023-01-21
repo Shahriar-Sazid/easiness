@@ -4,6 +4,7 @@ import { BigColumn } from "../utils/decorators";
 import { Base } from "./base.entity";
 import { DocumentItem } from "./document-item.entity";
 import { People } from "./people.entity";
+import { Tx } from "./tx.entity";
 
 export enum DocumentType {
     PURCHASE_ORDER = "PURCHASE_ORDER",
@@ -31,5 +32,8 @@ export class Document extends Base {
 
     @OneToMany(() => DocumentItem, (item) => item.document, { cascade: true })
     items: DocumentItem[]
+
+    @OneToMany(() => Tx, (item) => item.document)
+    payments: Tx[]
 
 }

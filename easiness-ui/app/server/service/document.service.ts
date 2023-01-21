@@ -101,7 +101,8 @@ export const documentService = {
                     people: true,
                     items: {
                         product: true,
-                    }
+                    },
+                    payments: true
                 },
                 where: { id }
             })
