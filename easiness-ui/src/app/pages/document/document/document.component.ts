@@ -53,6 +53,7 @@ export class DocumentComponent implements OnInit {
         btn: 'btn btn-sm btn-outline-success',
       },
       key: DocumentType.INVOICE,
+      remainder: "Due",
     } as DocumentOptions,
     [DocumentType.PURCHASE_ORDER]: {
       name: this.getViewOptions(3),
@@ -76,6 +77,7 @@ export class DocumentComponent implements OnInit {
         btn: 'btn btn-sm btn-outline-danger',
       },
       key: DocumentType.PURCHASE_ORDER,
+      remainder: "Debt",
     } as DocumentOptions,
     [DocumentType.INITIAL_STOCK]: {
       name: this.getViewOptions(3),

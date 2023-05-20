@@ -1,3 +1,4 @@
+import { Tx } from "./accounting.model";
 import { People } from "./people.model";
 import { Product } from "./product.model";
 import { Stock } from "./stock.model";
@@ -54,6 +55,7 @@ export type DocumentOptions = {
     btn: string
   }
   key: DocumentType
+  remainder: string
 }
 
 
@@ -72,27 +74,30 @@ export type DateRange = {
 }
 
 export type DocumentResponse = {
-  id: number;
-  date: Date;
-  people: People;
-  type: DocumentType;
-  total: number;
-  profit: number;
+  id: number
+  date: Date
+  people: People
+  type: DocumentType
+  total: number
+  profit: number
   items: DocumentItemResponse[]
+  payments: Tx[]
 }
 
 export type DocumentItemResponse = {
-  id: number;
-  documentId: number;
-  name: string;
-  type: string;
-  brand: string;
-  country: string;
-  size: string;
-  quantity: number;
-  unit: number;
-  costOrPrice: number;
-  placeId: number;
+  id: number
+  documentId: number
+  name: string
+  type: string
+  brand: string
+  country: string
+  size: string
+  preferredUnit: number
+  quantity: number
+  unit: number
+  cost: number
+  price: number
+  placeId: number
 }
 
 export function toDocument(documentRes: DocumentResponse): Document {
@@ -102,7 +107,16 @@ export function toDocument(documentRes: DocumentResponse): Document {
     date: documentRes.date,
     people: documentRes.people.id,
     items: [],
+    payments: [],
   } as Document;
+
+  documentRes.payments.forEach(payment => {
+    doc.payments.push({
+      fromAccount: payment.fromAccountId,
+      toAccount: payment.toAccountId,
+      amount: payment.amount,
+    } as Payment)
+  })
 
   documentRes.items.forEach(item => {
     if (doc.type === DocumentType.INVOICE) {
@@ -113,8 +127,9 @@ export function toDocument(documentRes: DocumentResponse): Document {
           brand: item.brand,
           country: item.country,
           size: item.size,
+          preferredUnit: item.preferredUnit
         } as Stock,
-        price: item.costOrPrice,
+        price: item.price,
         quantity: item.quantity,
         unit: item.unit,
       } as DocumentItem)
@@ -127,8 +142,9 @@ export function toDocument(documentRes: DocumentResponse): Document {
           brand: item.brand,
           country: item.country,
           size: item.size,
+          preferredUnit: item.preferredUnit
         } as Product,
-        cost: item.costOrPrice,
+        cost: item.cost,
         quantity: item.quantity,
         place: item.placeId,
         unit: item.unit,

@@ -65,7 +65,6 @@
       "LOGOUT": "Logout"
     }
   },
-
   "MENUITEMS": {
     "MENU": {
       "TEXT": "Menu"
@@ -316,6 +315,7 @@
     "PRODUCT": "Product",
     "PEOPLE": "People",
     "ACCOUNT": "Account",
+    "INITIAL_STOCK": "Initial Stock",
     "BUSINESS": "Business",
     "BUY": "Buy",
     "SELL": "Sell",

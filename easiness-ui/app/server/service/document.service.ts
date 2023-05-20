@@ -120,6 +120,7 @@ export const documentService = {
             item['country'] = item.product.country
             item['size'] = item.product.size
             item['unit'] = item.unitId
+            item['preferredUnit'] = item.product.preferredUnit
             item.product = undefined
         }
         return document

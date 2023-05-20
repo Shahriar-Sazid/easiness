@@ -5,8 +5,13 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'amount',
 })
 export class AmountPipe implements PipeTransform {
-    transform(value: any, noStyle?: boolean, prefix = '৳ '): any {
-        const formattedValue = formatCurrency(value, 'en-IN', prefix, 'BDT', '1.2-2');
+    transform(value: any, noStyle?: boolean, prefix = '৳ ', abs = false): any {
+        if (abs) {
+            value = Math.abs(+value)
+        }
+
+        const formattedValue = formatCurrency(+value, 'en-IN', prefix, 'BDT', '1.2-2');
+
 
         if (noStyle) {
             return formattedValue

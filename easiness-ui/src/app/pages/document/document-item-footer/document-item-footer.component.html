@@ -1,21 +1,33 @@
-<div class="d-flex">
-
-  <div class="flex-grow-1">
-    <div class="row">
-      <div class="col-8"></div>
-      <div class="col-4">
-        <div [ngClass]="['shadow', viewOptions.theme.bg, 'bg-gradient', 'p-3']" style="--bs-bg-opacity: .1;">
-          <div class="invoice-price-right">
-            <small>TOTAL</small>
-            <br>
-            <h4 [ngClass]="[viewOptions.theme.text]" *ngIf="!isInvoice()"> {{ calculateToatalCost() | currency : 'BDT' : 'symbol-narrow': '1.2-2' :'en-IN'}}</h4>
-            <h4 [ngClass]="[viewOptions.theme.text]" *ngIf="isInvoice()"> {{ calculateToatalPrice() | currency : 'BDT' : 'symbol-narrow': '1.2-2' :'en-IN'}}</h4>
-          </div>
-        </div>
-
+<div class="row p-0 mx-1">
+  <div class="col-8 p-0"></div>
+  <div [ngClass]="['shadow', viewOptions.theme.bg, 'bg-gradient', 'p-0', 'col-2']" style="--bs-bg-opacity: .1;">
+    <div class="p-3">
+      <span [ngClass]="[viewOptions.theme.text, 'd-block', 'fw-bold', 'fs-5', 'text-end']">Total</span>
+      <div *ngIf="!editPermission">
+        <span *ngFor="let payment of document.payments"
+          [ngClass]="[viewOptions.theme.text, 'd-block', 'fs-5', 'text-end']">
+          {{ document.date | date : 'dd-MM-yy' }} </span>
+        <hr class="opacity-0 my-1">
+        <span [ngClass]="[viewOptions.theme.text, 'd-block', 'fw-bold', 'fs-5', 'text-end']"> {{viewOptions.remainder}}
+        </span>
       </div>
     </div>
-
-
+  </div>
+  <div [ngClass]="['shadow', viewOptions.theme.bg, 'bg-gradient', 'p-0', 'col-2']" style="--bs-bg-opacity: .1;">
+    <div class="p-3">
+      <div>
+        <span [ngClass]="['px-1', viewOptions.theme.text, 'fw-bold', 'fs-5']">{{ calculateTotal() | amount: true}}
+        </span>
+      </div>
+      <div *ngIf="!editPermission">
+        <div *ngFor="let payment of document.payments">
+          <span [ngClass]="['px-1', viewOptions.theme.text, 'fw-bold', 'fs-5']">
+            (-) {{ payment.amount | amount: true : '৳': true}} </span>
+        </div>
+        <hr class="my-1">
+        <span [ngClass]="['px-1', viewOptions.theme.text, 'fw-bold', 'fs-5']">
+          {{ calculateDueOrDebt() | amount: true : '৳': false}} </span>
+      </div>
+    </div>
   </div>
 </div>
