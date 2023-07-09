@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { AccountingService } from '../services/accounting.service';
+import { AccountingService } from '../services/iface/account.service';
 
 @Pipe({
     name: 'account'
@@ -8,7 +8,7 @@ export class AccountPipe implements PipeTransform {
     constructor(private accountingService: AccountingService) { }
 
     transform(value: any, ...args: string[]): any {
-        if(args.length === 0) args = ['accountName'];
+        if (args.length === 0) args = ['accountName'];
         if (this.accountingService.accountRecord) {
             const foundAccount = this.accountingService.accountRecord[value];
             if (foundAccount) {

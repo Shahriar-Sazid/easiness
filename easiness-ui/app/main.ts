@@ -1,7 +1,8 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, ipcMain, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import server from './server/app';
+import { registerIPCHandler } from './server/ipc/register';
 
 const port = 3000
 
@@ -28,10 +29,11 @@ function createWindow(): BrowserWindow {
     width: size.width,
     height: size.height,
     webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
       webSecurity: false,
       allowRunningInsecureContent: (serve),
-      contextIsolation: false,  // false if you want to run e2e test with Spectron
+      contextIsolation: true,  // false if you want to run e2e test with Spectron
     },
   });
 
@@ -74,7 +76,17 @@ try {
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
   // Added 400 ms to fix the black background issue while using transparent window. More detais at https://github.com/electron/electron/issues/15947
-  app.on('ready', () => setTimeout(createWindow, 400));
+  app.on('ready', () => {
+    setTimeout(createWindow, 400)
+    registerIPCHandler(ipcMain)
+    app.on('activate', () => {
+      // On OS X it's common to re-create a window in the app when the
+      // dock icon is clicked and there are no other windows open.
+      if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    })
+  })
+
+
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
@@ -85,13 +97,7 @@ try {
     }
   });
 
-  app.on('activate', () => {
-    // On OS X it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (win === null) {
-      createWindow();
-    }
-  });
+
 
 } catch (e) {
   // Catch Error

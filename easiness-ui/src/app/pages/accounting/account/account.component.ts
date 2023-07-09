@@ -8,7 +8,7 @@ import { validationMessages } from "src/app/core/helpers/validation/validation-m
 import { Account, TxSearchOptions } from "src/app/core/models/accounting.model";
 import { Page } from "src/app/core/models/page.model";
 import { AmountPipe } from "src/app/core/pipes/amount.pipe";
-import { AccountingService } from "src/app/core/services/accounting.service";
+import { AccountingService } from "src/app/core/services/iface/account.service";
 import { PDFService } from "src/app/core/services/pdf.service";
 import { UtilService } from "src/app/core/services/util.service";
 @Component({

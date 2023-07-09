@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Account } from 'src/app/core/models/accounting.model';
-import { AccountingService } from 'src/app/core/services/accounting.service';
+import { AccountingService } from 'src/app/core/services/iface/account.service';
 import { UtilService } from 'src/app/core/services/util.service';
 import Swal from 'sweetalert2';
 

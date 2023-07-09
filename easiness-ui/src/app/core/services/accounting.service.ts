@@ -5,11 +5,10 @@ import { tap } from "rxjs/operators";
 import { Account, Tx, TxSearchOptions } from "../models/accounting.model";
 import { Page } from "../models/page.model";
 import { UtilService } from "./util.service";
+import { AccountingService } from "./iface/account.service";
 
-@Injectable({
-  providedIn: "root",
-})
-export class AccountingService {
+@Injectable()
+export class AccountingWebService implements AccountingService {
   accountApi = "api/v1/account"
   accountReportApi = `${this.accountApi}/report`
   allAccountApi = `${this.accountApi}/all`
@@ -45,7 +44,7 @@ export class AccountingService {
     page: number
     pageSize: number
     activeFilters: string
-  }) {
+  }): Observable<any> {
     this.util.deepTrim(searchOptions)
     const headers = new HttpHeaders().set("Content-Type", "application/pdf")
     const queryString = this.util.convertObjToQueryString(searchOptions)
@@ -55,7 +54,7 @@ export class AccountingService {
     return this.http.get(url, { responseType: "arraybuffer", headers: headers })
   }
 
-  getAllAccount() {
+  getAllAccount(): Observable<any> {
     console.log("----------Get All Account Url-----------")
     console.log(this.allAccountApi)
 

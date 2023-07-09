@@ -8,7 +8,7 @@ import { Page } from 'src/app/core/models/page.model';
 import { AccountPipe } from 'src/app/core/pipes/account.pipe';
 import { AmountPipe } from 'src/app/core/pipes/amount.pipe';
 import { PeoplePipe } from 'src/app/core/pipes/people.pipe';
-import { AccountingService } from 'src/app/core/services/accounting.service';
+import { AccountingService } from 'src/app/core/services/iface/account.service';
 import { PDFService } from 'src/app/core/services/pdf.service';
 import { PeopleService } from 'src/app/core/services/people.service';
 import { UtilService } from 'src/app/core/services/util.service';

@@ -32,7 +32,9 @@ import { LoaderInterceptorService } from "./core/services/interceptors/loader-in
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeIn from '@angular/common/locales/en-IN';
 import { ToastrModule } from 'ngx-toastr';
-import { ProductService } from "./core/services/product.service";
+import { AccountingService } from "./core/services/iface/account.service";
+import { AccountingIPCService } from "./core/services/ipc/accounting-ipc.service";
+import { AccountingWebService } from "./core/services/accounting.service";
 
 if (APP_CONFIG.defaultAuth === "firebase") {
   initFirebaseBackend(APP_CONFIG.firebaseConfig);
@@ -90,7 +92,10 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
     },
     { provide: NgbDateAdapter, useClass: NgbDateNativeAdapter },
     DatePipe,
-    "a" === "a"? ProductService: null
+    {
+      provide: AccountingService,
+      useClass: (() => APP_CONFIG.useIPC ? AccountingIPCService : AccountingWebService)(),
+    },
   ],
 })
-export class AppModule {}
+export class AppModule { }
