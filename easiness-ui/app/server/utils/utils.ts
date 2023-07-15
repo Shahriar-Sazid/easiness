@@ -16,6 +16,7 @@ export const utils = {
         return zero.sub(num)
     },
 
+    simpleClone: (obj: any) => JSON.parse(JSON.stringify(obj)),
     joinAndEncapsulate(delimiter = ", ", cornerChar = "(", ...args: (string | number)[]): string {
         switch (cornerChar) {
             case `"`:
