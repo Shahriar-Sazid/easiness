@@ -6,6 +6,7 @@ import { from } from 'rxjs';
 import { APP_CONFIG } from "src/environments/environment";
 import { Page } from "../../models/page.model";
 import { AccountingService } from "../iface/account.service";
+import { tap } from "rxjs/operators";
 
 
 @Injectable()
@@ -15,19 +16,6 @@ export class AccountingIPCService implements AccountingService {
     constructor(private util: UtilService) {
 
     }
-    updateAccount(updatedAccount: Account): Observable<any> {
-        throw new Error("Method not implemented.");
-    }
-    getAllAccount(): Observable<any> {
-        throw new Error("Method not implemented.");
-    }
-    searchTx(options: TxSearchOptions): Observable<Page<Tx>> {
-        throw new Error("Method not implemented.");
-    }
-    downloadAsReport(searchOptions: { name: string; type: string; brand: string; page: number; pageSize: number; activeFilters: string; }): Observable<any> {
-        throw new Error("Method not implemented.");
-    }
-
     addAccount(newAccount: Account): Observable<any> {
         this.util.deepTrim(newAccount)
         const res = (window as any).electronAPI.createAccount(newAccount)
@@ -38,6 +26,34 @@ export class AccountingIPCService implements AccountingService {
         this.util.deepTrim(searchOptions)
         const res = (window as any).electronAPI.searchAccount(searchOptions) as Promise<Page<Account>>
         return from(res)
+    }
+
+    updateAccount(updatedAccount: Account): Observable<any> {
+        console.log(updatedAccount)
+        this.util.deepTrim(updatedAccount)
+        const res = (window as any).electronAPI.updateAccount(updatedAccount)
+        return from(res)
+    }
+
+    getAllAccount(): Observable<any> {
+        const res = (window as any).electronAPI.getAllAccount()
+        return from(res).pipe(
+            tap(
+                data => {
+                    this.accountRecord = data
+                }
+            )
+        )
+    }
+
+    searchTx(options: TxSearchOptions): Observable<Page<Tx>> {
+        this.util.deepTrim(options)
+        const res = (window as any).electronAPI.searchTx(options) as Promise<Page<Tx>>
+        return from(res)
+    }
+
+    downloadAsReport(searchOptions: { name: string; type: string; brand: string; page: number; pageSize: number; activeFilters: string; }): Observable<any> {
+        throw new Error("Method not implemented.");
     }
 
 }

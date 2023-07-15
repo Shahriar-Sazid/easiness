@@ -5,10 +5,11 @@ import { IpcMainInvokeEvent } from "electron";
 import { utils } from "../utils/utils";
 
 export const accountHandler = {
-    create: async (event: IpcMainInvokeEvent, account: Account) => {
+    save: async (event: IpcMainInvokeEvent, account: Account) => {
         const res = await accountService.save(account)
         return res
     },
+
     search: async (event: IpcMainInvokeEvent, req: FindAccountRequest) => {
         const res = await accountService.find({
             accountName: req.accountName ?? '',
@@ -18,5 +19,11 @@ export const accountHandler = {
             pageSize: req.pageSize ?? 10
         } as FindAccountRequest)
         return utils.simpleClone(res)
-    }
+    },
+
+    getAll: async (event: IpcMainInvokeEvent) => {
+        const res = await accountService.findAll()
+        return utils.simpleClone(res)
+    },
+
 }
