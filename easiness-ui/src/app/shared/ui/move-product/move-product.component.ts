@@ -2,8 +2,8 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Stock } from 'src/app/core/models/stock.model';
+import { ProductService } from 'src/app/core/services/iface/product.service';
 import { PlaceService } from 'src/app/core/services/place.service';
-import { ProductService } from 'src/app/core/services/product.service';
 import { UnitService } from 'src/app/core/services/unit.service';
 import { UtilService } from 'src/app/core/services/util.service';
 import { ValidatePlace, ValidateSaleQuantityUnit } from 'src/app/core/validation/custom-validation';
@@ -19,7 +19,7 @@ export class MoveProductComponent {
   @ViewChild('moveProductModal') content: unknown;
   updateMode: boolean;
   moveProductForm: UntypedFormGroup;
-  @Input('callback') callback: () => void;
+  @Input() callback: () => void;
   @Input() selectedStock: Stock;
 
   constructor(private fb: UntypedFormBuilder,

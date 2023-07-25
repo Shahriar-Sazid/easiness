@@ -35,6 +35,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { AccountingService } from "./core/services/iface/account.service";
 import { AccountingIPCService } from "./core/services/ipc/accounting-ipc.service";
 import { AccountingWebService } from "./core/services/accounting.service";
+import { ProductService } from "./core/services/iface/product.service";
+import { ProductIPCService } from "./core/services/ipc/product-ipc.service";
+import { ProductWebService } from "./core/services/product.service";
 
 if (APP_CONFIG.defaultAuth === "firebase") {
   initFirebaseBackend(APP_CONFIG.firebaseConfig);
@@ -96,6 +99,10 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
       provide: AccountingService,
       useClass: (() => APP_CONFIG.useIPC ? AccountingIPCService : AccountingWebService)(),
     },
+    {
+      provide: ProductService,
+      useClass: (() => APP_CONFIG.useIPC ? ProductIPCService : ProductWebService)(),
+    }
   ],
 })
 export class AppModule { }

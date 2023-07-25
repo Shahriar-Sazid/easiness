@@ -3,10 +3,10 @@ import { ColumnMode, TableColumn } from "@swimlane/ngx-datatable";
 import { APP_CONFIG } from "src/environments/environment";
 import { Page } from "src/app/core/models/page.model";
 import { Product } from "src/app/core/models/product.model";
-import { ProductService } from "src/app/core/services/product.service";
 import { UtilService } from "src/app/core/services/util.service";
 import clone from "just-clone";
 import { PDFService } from "src/app/core/services/pdf.service";
+import { ProductService } from "src/app/core/services/iface/product.service";
 
 @Component({
   selector: "app-product",

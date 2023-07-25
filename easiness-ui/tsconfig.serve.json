@@ -8,6 +8,7 @@
     "experimentalDecorators": true,
     "module": "commonjs",
     "target": "ES6",
+    "allowJs": true,
     "types": [
       "node"
     ],
@@ -19,7 +20,7 @@
     ],
   },
   "files": [
-    "app/preload.ts",
+    "app/preload.js",
     "app/main.ts"
   ],
   "exclude": [
