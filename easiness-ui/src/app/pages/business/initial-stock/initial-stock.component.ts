@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { Router } from "@angular/router";
-import { DocumentItem, Payment, Document, DocumentType } from "src/app/core/models/document.model";
-import { BusinessService } from "src/app/core/services/business.service";
-import { PeopleService } from "src/app/core/services/people.service";
+import { DocumentItem, Document, DocumentType } from "src/app/core/models/document.model";
 import { PlaceService } from "src/app/core/services/place.service";
 import { StockService } from "src/app/core/services/stock.service";
 import { UtilService } from "src/app/core/services/util.service";
 import { DocumentComponent } from "../../document/document/document.component";
+import { PeopleService } from "src/app/core/services/iface/people.service";
 
 @Component({
   selector: "app-buy",

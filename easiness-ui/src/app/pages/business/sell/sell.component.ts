@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Document, DocumentItem, Payment } from 'src/app/core/models/document.model';
+import { Document, Payment } from 'src/app/core/models/document.model';
 import { BusinessService } from 'src/app/core/services/business.service';
-import { PeopleService } from 'src/app/core/services/people.service';
+import { PeopleService } from 'src/app/core/services/iface/people.service';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { UtilService } from 'src/app/core/services/util.service';
 

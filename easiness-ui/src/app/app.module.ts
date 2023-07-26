@@ -1,43 +1,46 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgModule } from "@angular/core";
 import {
-  HttpClientModule,
   HTTP_INTERCEPTORS,
   HttpClient,
+  HttpClientModule,
 } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { APP_CONFIG } from "../environments/environment";
 
 import {
-  NgbNavModule,
   NgbAccordionModule,
-  NgbTooltipModule,
   NgbDateAdapter,
   NgbDateNativeAdapter,
+  NgbNavModule,
+  NgbTooltipModule,
 } from "@ng-bootstrap/ng-bootstrap";
 
-import { LayoutsModule } from "./layouts/layouts.module";
+import { DatePipe, registerLocaleData } from '@angular/common';
+import localeIn from '@angular/common/locales/en-IN';
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { NgxDatatableModule } from "@swimlane/ngx-datatable";
+import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { initFirebaseBackend } from "./authUtils";
-import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { ErrorInterceptor } from "./core/services/interceptors/error.interceptor";
-import { JwtInterceptor } from "./core/services/interceptors/jwt.interceptor";
-import { FakeBackendInterceptor } from "./core/services/interceptors/fake-backend";
-import { ApiInterceptor } from "./core/services/interceptors/api-interceptor";
-import { NgxDatatableModule } from "@swimlane/ngx-datatable";
-import { LoaderInterceptorService } from "./core/services/interceptors/loader-interceptor.service";
-import { DatePipe, registerLocaleData } from '@angular/common';
-import localeIn from '@angular/common/locales/en-IN';
-import { ToastrModule } from 'ngx-toastr';
-import { AccountingService } from "./core/services/iface/account.service";
-import { AccountingIPCService } from "./core/services/ipc/accounting-ipc.service";
 import { AccountingWebService } from "./core/services/accounting.service";
+import { AccountingService } from "./core/services/iface/account.service";
+import { PeopleService } from "./core/services/iface/people.service";
 import { ProductService } from "./core/services/iface/product.service";
+import { ApiInterceptor } from "./core/services/interceptors/api-interceptor";
+import { ErrorInterceptor } from "./core/services/interceptors/error.interceptor";
+import { FakeBackendInterceptor } from "./core/services/interceptors/fake-backend";
+import { JwtInterceptor } from "./core/services/interceptors/jwt.interceptor";
+import { LoaderInterceptorService } from "./core/services/interceptors/loader-interceptor.service";
+import { AccountingIPCService } from "./core/services/ipc/accounting-ipc.service";
+import { PeopleIPCService } from "./core/services/ipc/people-ipc.service";
 import { ProductIPCService } from "./core/services/ipc/product-ipc.service";
+import { PeopleWebService } from "./core/services/people.service";
 import { ProductWebService } from "./core/services/product.service";
+import { LayoutsModule } from "./layouts/layouts.module";
 
 if (APP_CONFIG.defaultAuth === "firebase") {
   initFirebaseBackend(APP_CONFIG.firebaseConfig);
@@ -102,6 +105,10 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
     {
       provide: ProductService,
       useClass: (() => APP_CONFIG.useIPC ? ProductIPCService : ProductWebService)(),
+    },
+    {
+      provide: PeopleService,
+      useClass: (() => APP_CONFIG.useIPC ? PeopleIPCService : PeopleWebService)(),
     }
   ],
 })

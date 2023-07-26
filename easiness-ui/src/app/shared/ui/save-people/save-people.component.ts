@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild } from "@angular/core";
 import { Validators, UntypedFormArray, UntypedFormControl, UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { PeopleService } from "src/app/core/services/people.service";
+import { PeopleService } from "src/app/core/services/iface/people.service";
 import { UtilService } from "src/app/core/services/util.service";
 import { ValidatePhoneNo } from "src/app/core/validation/custom-validation";
 import Swal from "sweetalert2";

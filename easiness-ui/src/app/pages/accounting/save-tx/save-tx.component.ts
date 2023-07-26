@@ -7,7 +7,6 @@ import { Payment } from 'src/app/core/models/document.model';
 import { PaymentTx } from 'src/app/core/models/payment.model';
 import { BusinessService } from 'src/app/core/services/business.service';
 import { AccountingService } from 'src/app/core/services/iface/account.service';
-import { PeopleService } from 'src/app/core/services/people.service';
 import { UtilService } from 'src/app/core/services/util.service';
 import { ValidateBankTransferAccount } from 'src/app/core/validation/custom-validation';
 import Swal from 'sweetalert2';

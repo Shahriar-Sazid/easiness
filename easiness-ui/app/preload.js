@@ -12,4 +12,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
     updateProduct: (req) => ipcRenderer.invoke('product:update', req),
     searchProduct: (req) => ipcRenderer.invoke('product:search', req),
     moveProduct: (req) => ipcRenderer.invoke('product:move', req),
+
+    createPeople: (req) => ipcRenderer.invoke('people:create', req),
+    updatePeople: (req) => ipcRenderer.invoke('people:update', req),
+    searchPeople: (req) => ipcRenderer.invoke('people:search', req),
+    getAllCustomer: () => ipcRenderer.invoke('people:getCustomer'),
+    getAllSupplier: () => ipcRenderer.invoke('people:getSupplier'),
+    getAllPeople: () => ipcRenderer.invoke('people:getAll'),
+    getDetails: (req) => ipcRenderer.invoke('people:getDetails', req)
 })
