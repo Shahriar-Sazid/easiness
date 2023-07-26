@@ -3,6 +3,7 @@ import { accountHandler } from './account.ipc';
 import { txHandler } from './tx.ipc';
 import { productHandler } from './product.ipc';
 import { peopleHandler } from './people.ipc';
+import { unitHandler } from './unit.ipc';
 
 export function registerIPCHandler(ipc: typeof ipcMain) {
 
@@ -25,5 +26,7 @@ export function registerIPCHandler(ipc: typeof ipcMain) {
     ipc.handle('people:getSupplier', peopleHandler.getSupplier)
     ipc.handle('people:getAll', peopleHandler.getAll)
     ipc.handle('people:getDetails', peopleHandler.getDetails)
+
+    ipc.handle('unit:getAll', unitHandler.getAll)
 
 }

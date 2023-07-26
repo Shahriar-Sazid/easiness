@@ -41,6 +41,9 @@ import { ProductIPCService } from "./core/services/ipc/product-ipc.service";
 import { PeopleWebService } from "./core/services/people.service";
 import { ProductWebService } from "./core/services/product.service";
 import { LayoutsModule } from "./layouts/layouts.module";
+import { UnitService } from "./core/services/iface/unit.service";
+import { UnitIPCService } from "./core/services/ipc/unit-ipc.service";
+import { UnitWebService } from "./core/services/unit.service";
 
 if (APP_CONFIG.defaultAuth === "firebase") {
   initFirebaseBackend(APP_CONFIG.firebaseConfig);
@@ -109,6 +112,10 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
     {
       provide: PeopleService,
       useClass: (() => APP_CONFIG.useIPC ? PeopleIPCService : PeopleWebService)(),
+    },
+    {
+      provide: UnitService,
+      useClass: (() => APP_CONFIG.useIPC ? UnitIPCService : UnitWebService)(),
     }
   ],
 })

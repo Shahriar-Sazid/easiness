@@ -3,8 +3,8 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Stock } from 'src/app/core/models/stock.model';
 import { ProductService } from 'src/app/core/services/iface/product.service';
+import { UnitService } from 'src/app/core/services/iface/unit.service';
 import { PlaceService } from 'src/app/core/services/place.service';
-import { UnitService } from 'src/app/core/services/unit.service';
 import { UtilService } from 'src/app/core/services/util.service';
 import { ValidatePlace, ValidateSaleQuantityUnit } from 'src/app/core/validation/custom-validation';
 import Swal from 'sweetalert2';

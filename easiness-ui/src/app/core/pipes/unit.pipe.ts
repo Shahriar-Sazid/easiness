@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { UnitService } from '../services/unit.service';
+import { UnitService } from '../services/iface/unit.service';
 
 @Pipe({
   name: 'unit'
@@ -11,9 +11,9 @@ export class UnitPipe implements PipeTransform {
   }
 
   transform(value: number, ...args: unknown[]): string {
-    if(this.unitService.unitData) {
+    if (this.unitService.unitData) {
       const foundUnit = this.unitService.unitData.unitList.find(unit => unit.id == value);
-      if(foundUnit) {
+      if (foundUnit) {
         return foundUnit.name;
       } else return null;
     }

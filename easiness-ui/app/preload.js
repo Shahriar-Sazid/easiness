@@ -19,5 +19,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     getAllCustomer: () => ipcRenderer.invoke('people:getCustomer'),
     getAllSupplier: () => ipcRenderer.invoke('people:getSupplier'),
     getAllPeople: () => ipcRenderer.invoke('people:getAll'),
-    getDetails: (req) => ipcRenderer.invoke('people:getDetails', req)
+    getPeopleDetails: (req) => ipcRenderer.invoke('people:getDetails', req),
+
+    getUnitData: () => ipcRenderer.invoke('unit:getAll')
 })
