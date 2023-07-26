@@ -6,16 +6,13 @@ import { UtilService } from "./util.service";
 import { People } from "../models/people.model";
 import { map, tap } from "rxjs/operators";
 import { Page } from "../models/page.model";
+import { PeopleService } from "./iface/people.service";
 
-@Injectable({
-  providedIn: "root",
-})
-export class PeopleService {
-  env = APP_CONFIG;
-
-  customerRecord: Record<number, People>;
-  supplierRecord: Record<number, People>;
-  peopleRecord: Record<number, People>;
+@Injectable()
+export class PeopleWebService implements PeopleService {
+  customerRecord: Record<number, People>
+  supplierRecord: Record<number, People>
+  peopleRecord: Record<number, People>
 
   public peopleSelected;
 
@@ -39,7 +36,7 @@ export class PeopleService {
     return this.http.get<Page<People>>(url);
   }
 
-  addPeople(newPeople): Observable<any> {
+  addPeople(newPeople: People): Observable<any> {
     this.util.deepTrim(newPeople);
     return this.http.post(this.peopleUrl, newPeople);
   }

@@ -7,6 +7,7 @@ import { utils } from "../utils/utils";
 export const accountHandler = {
     save: async (event: IpcMainInvokeEvent, account: Account) => {
         const res = await accountService.save(account)
+
         return res
     },
 
@@ -18,11 +19,13 @@ export const accountHandler = {
             page: req.page ?? 1,
             pageSize: req.pageSize ?? 10
         } as FindAccountRequest)
+
         return utils.simpleClone(res)
     },
 
     getAll: async (event: IpcMainInvokeEvent) => {
         const res = await accountService.findAll()
+
         return utils.simpleClone(res)
     },
 

@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProductService } from 'src/app/core/services/product.service';
-import { UnitService } from 'src/app/core/services/unit.service';
+import { ProductService } from 'src/app/core/services/iface/product.service';
+import { UnitService } from 'src/app/core/services/iface/unit.service';
 import { UtilService } from 'src/app/core/services/util.service';
 import Swal from 'sweetalert2';
 

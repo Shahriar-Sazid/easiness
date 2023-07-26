@@ -9,8 +9,8 @@ import { TxSearchOptions } from "src/app/core/models/accounting.model";
 import { Page } from "src/app/core/models/page.model";
 import { People } from "src/app/core/models/people.model";
 import { AmountPipe } from "src/app/core/pipes/amount.pipe";
+import { PeopleService } from "src/app/core/services/iface/people.service";
 import { PDFService } from "src/app/core/services/pdf.service";
-import { PeopleService } from "src/app/core/services/people.service";
 import { UtilService } from "src/app/core/services/util.service";
 
 @Component({

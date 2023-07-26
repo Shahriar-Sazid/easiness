@@ -3,7 +3,6 @@ import { Observable } from "rxjs";
 import { Account, Tx, TxSearchOptions } from "../../models/accounting.model";
 import { UtilService } from "../util.service";
 import { from } from 'rxjs';
-import { APP_CONFIG } from "src/environments/environment";
 import { Page } from "../../models/page.model";
 import { AccountingService } from "../iface/account.service";
 import { tap } from "rxjs/operators";

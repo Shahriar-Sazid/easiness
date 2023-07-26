@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { PeopleService } from '../services/people.service';
+import { PeopleService } from '../services/iface/people.service';
 
 @Pipe({
     name: 'people'

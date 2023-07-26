@@ -1,11 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { People } from 'src/app/core/models/people.model';
 import { Document, DocumentOptions, DocumentType } from 'src/app/core/models/document.model';
-import { PeopleService } from 'src/app/core/services/people.service';
 import { PDFService } from 'src/app/core/services/pdf.service';
 import { UtilService } from 'src/app/core/services/util.service';
 import { DatePipe } from '@angular/common';
 import { UnitPipe } from 'src/app/core/pipes/unit.pipe';
+import { PeopleService } from 'src/app/core/services/iface/people.service';
 
 @Component({
   selector: 'app-document-header',

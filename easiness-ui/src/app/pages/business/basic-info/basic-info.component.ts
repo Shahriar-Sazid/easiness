@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Document, DocumentType } from 'src/app/core/models/document.model';
-import { PeopleService } from 'src/app/core/services/people.service';
+import { PeopleService } from 'src/app/core/services/iface/people.service';
 import { PlaceService } from 'src/app/core/services/place.service';
 import { UtilService } from 'src/app/core/services/util.service';
 

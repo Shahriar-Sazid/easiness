@@ -5,11 +5,10 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UtilService } from "./util.service";
 import { Product } from "../models/product.model";
 import { Page } from "../models/page.model";
+import { ProductService } from "./iface/product.service";
 
-@Injectable({
-  providedIn: "root",
-})
-export class ProductService {
+@Injectable()
+export class ProductWebService implements ProductService {
   env = APP_CONFIG;
 
   productApi = "api/v1/product";

@@ -16,6 +16,7 @@ export const txHandler = {
             page: +req.page,
             pageSize: +req.pageSize,
         } as FindTxReq)
+
         return utils.simpleClone(res)
     },
 
