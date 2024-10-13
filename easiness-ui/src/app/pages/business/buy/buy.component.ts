@@ -46,7 +46,7 @@ export class BuyComponent implements OnInit {
   buy(payments: Payment[]) {
     this.businessService.buy({ ...this.purchase, payments }).subscribe(
       data => {
-        window.location.reload();
+        this.router.navigate(['business', 'stock'])
       },
       err => {
 

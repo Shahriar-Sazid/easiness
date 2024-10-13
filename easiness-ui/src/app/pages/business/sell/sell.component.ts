@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Document, Payment } from 'src/app/core/models/document.model';
 import { BusinessService } from 'src/app/core/services/business.service';
 import { PeopleService } from 'src/app/core/services/iface/people.service';
@@ -19,6 +20,7 @@ export class SellComponent implements OnInit {
 
   defaultPlace: number;
   constructor(
+    public router: Router,
     public peopleService: PeopleService,
     public placeService: PlaceService,
     public util: UtilService,
@@ -42,7 +44,7 @@ export class SellComponent implements OnInit {
   sell(payments: Payment[]) {
     this.businessService.sell({ ...this.invoice, payments }).subscribe(
       data => {
-        window.location.reload();
+        this.router.navigate(['business', 'stock'])
       },
       err => {
 

@@ -42,10 +42,12 @@ export const txService = {
     },
 
     find: async ({ from, to, peopleName, peopleId, account, type, page, pageSize }: FindTxReq) => {
+        console.log('printing tx')
+        console.log(from, to, peopleId, peopleName, account, type)
         const query = repo.createQueryBuilder("t").
             select(["t.id", "t.amount", "t.fromAccountId", "t.toAccountId", "p.id", "p.name",
                 "t.documentId", "t.ref", "t.type", "t.meta", "t.description", "t.createdAt"])
-            .innerJoin("t.people", "p")
+            .leftJoin("t.people", "p")
             .where("(:peopleName = '' OR LOWER(p.name) LIKE '%' || :peopleName || '%')", { peopleName })
             .andWhere("(:peopleId IS NULL OR p.id = :peopleId)", { peopleId })
             .andWhere("(:account IS NULL OR :account = t.fromAccountId OR :account = t.toAccountId)", { account })
@@ -65,7 +67,7 @@ export const txService = {
                     fromAccountId: tx.fromAccountId,
                     toAccountId: tx.toAccountId,
                     peopleId: tx.peopleId,
-                    peopleName: tx.people.name,
+                    peopleName: tx.people?.name,
                     documentId: tx.documentId,
                     ref: tx.ref,
                     type: tx.type,
