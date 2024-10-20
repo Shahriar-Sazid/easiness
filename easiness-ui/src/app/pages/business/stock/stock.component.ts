@@ -7,7 +7,7 @@ import { AmountPipe } from 'src/app/core/pipes/amount.pipe'
 import { PlacePipe } from 'src/app/core/pipes/place.pipe'
 import { PDFService } from 'src/app/core/services/pdf.service'
 import { PlaceService } from 'src/app/core/services/place.service'
-import { StockService } from 'src/app/core/services/stock.service'
+import { StockWebService } from 'src/app/core/services/stock.service'
 import { UtilService } from 'src/app/core/services/util.service'
 import { APP_CONFIG } from 'src/environments/environment'
 
@@ -27,7 +27,7 @@ export class StockComponent implements OnInit {
 
   isLoading = false
   constructor(public placeService: PlaceService,
-    private stockService: StockService,
+    private stockService: StockWebService,
     public amountPipe: AmountPipe,
     private util: UtilService,
     private pdfService: PDFService,

@@ -7,7 +7,7 @@ import { Stock } from '../models/stock.model';
 import { DocumentItem } from '../models/document.model';
 
 @Injectable({ providedIn: 'root' })
-export class StockService {
+export class StockWebService {
     constructor(private http: HttpClient,
         private util: UtilService) { }
     private stockApi = 'api/v1/stock'
