@@ -17,12 +17,12 @@ import {
   NgbTooltipModule,
 } from "@ng-bootstrap/ng-bootstrap";
 
-import { DatePipe, registerLocaleData } from '@angular/common';
-import localeIn from '@angular/common/locales/en-IN';
+import { DatePipe, registerLocaleData } from "@angular/common";
+import localeIn from "@angular/common/locales/en-IN";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule } from "ngx-toastr";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { initFirebaseBackend } from "./authUtils";
@@ -36,14 +36,28 @@ import { FakeBackendInterceptor } from "./core/services/interceptors/fake-backen
 import { JwtInterceptor } from "./core/services/interceptors/jwt.interceptor";
 import { LoaderInterceptorService } from "./core/services/interceptors/loader-interceptor.service";
 import { AccountingIPCService } from "./core/services/ipc/accounting-ipc.service";
-import { PeopleIPCService } from "./core/services/ipc/people-ipc.service";
 import { ProductIPCService } from "./core/services/ipc/product-ipc.service";
 import { PeopleWebService } from "./core/services/people.service";
 import { ProductWebService } from "./core/services/product.service";
 import { LayoutsModule } from "./layouts/layouts.module";
 import { UnitService } from "./core/services/iface/unit.service";
-import { UnitIPCService } from "./core/services/ipc/unit-ipc.service";
 import { UnitWebService } from "./core/services/unit.service";
+import { StockService } from "./core/services/iface/stock.service";
+import { StockIPCService } from "./core/services/ipc/stock-ipc.service";
+import { StockWebService } from "./core/services/stock.service";
+import { UserProfileService } from "./core/services/user.service";
+import { BusinessService } from "./core/services/business.service";
+import { DocumentService } from "./core/services/document.service";
+import { LanguageService } from "./core/services/language.service";
+import { UtilService } from "./core/services/util.service";
+import { PlaceService } from "./core/services/place.service";
+import { PDFService } from "./core/services/pdf.service";
+import { LoaderService } from "./core/services/loader.service";
+import { EventService } from "./core/services/event.service";
+import { AppService } from "./core/services/app.service";
+import { AuthenticationService } from "./core/services/auth.service";
+import { AuthfakeauthenticationService } from "./core/services/authfake.service";
+import { DashboardService } from "./core/services/dashboard.service";
 
 if (APP_CONFIG.defaultAuth === "firebase") {
   initFirebaseBackend(APP_CONFIG.firebaseConfig);
@@ -58,9 +72,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -82,6 +94,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
   ],
   bootstrap: [AppComponent],
   providers: [
+    { provide: NgbDateAdapter, useClass: NgbDateNativeAdapter },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     {
@@ -89,34 +102,102 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
       useClass: FakeBackendInterceptor,
       multi: true,
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ApiInterceptor,
-      multi: true,
-    },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderInterceptorService,
       multi: true,
     },
-    { provide: NgbDateAdapter, useClass: NgbDateNativeAdapter },
     DatePipe,
+
     {
       provide: AccountingService,
-      useClass: (() => APP_CONFIG.useIPC ? AccountingIPCService : AccountingWebService)(),
+      useClass: (() =>
+        APP_CONFIG.useIPC ? AccountingIPCService : AccountingWebService)(),
     },
     {
       provide: ProductService,
-      useClass: (() => APP_CONFIG.useIPC ? ProductIPCService : ProductWebService)(),
+      useClass: (() =>
+        APP_CONFIG.useIPC ? ProductIPCService : ProductWebService)(),
     },
+
     {
       provide: PeopleService,
-      useClass: (() => APP_CONFIG.useIPC ? PeopleIPCService : PeopleWebService)(),
+      useClass: (() =>
+        APP_CONFIG.useIPC ? PeopleWebService : PeopleWebService)(),
     },
     {
       provide: UnitService,
-      useClass: (() => APP_CONFIG.useIPC ? UnitIPCService : UnitWebService)(),
-    }
+      useClass: (() => (APP_CONFIG.useIPC ? UnitWebService : UnitWebService))(),
+    },
+    {
+      provide: StockService,
+      useClass: (() => {
+        console.log("useIPC", APP_CONFIG.useIPC);
+        return APP_CONFIG.useIPC ? StockIPCService : StockWebService;
+      })(),
+    },
+    {
+      provide: UserProfileService,
+      useClass: (() =>
+        APP_CONFIG.useIPC ? UserProfileService : UserProfileService)(),
+    },
+    {
+      provide: BusinessService,
+      useClass: (() =>
+        APP_CONFIG.useIPC ? BusinessService : BusinessService)(),
+    },
+    {
+      provide: DocumentService,
+      useClass: (() =>
+        APP_CONFIG.useIPC ? DocumentService : DocumentService)(),
+    },
+    {
+      provide: LanguageService,
+      useClass: (() =>
+        APP_CONFIG.useIPC ? LanguageService : LanguageService)(),
+    },
+    {
+      provide: UtilService,
+      useClass: (() => (APP_CONFIG.useIPC ? UtilService : UtilService))(),
+    },
+    {
+      provide: PlaceService,
+      useClass: (() => (APP_CONFIG.useIPC ? PlaceService : PlaceService))(),
+    },
+    {
+      provide: PDFService,
+      useClass: (() => (APP_CONFIG.useIPC ? PDFService : PDFService))(),
+    },
+    {
+      provide: LoaderService,
+      useClass: (() => (APP_CONFIG.useIPC ? LoaderService : LoaderService))(),
+    },
+    {
+      provide: EventService,
+      useClass: (() => (APP_CONFIG.useIPC ? EventService : EventService))(),
+    },
+    {
+      provide: AppService,
+      useClass: (() => (APP_CONFIG.useIPC ? AppService : AppService))(),
+    },
+    {
+      provide: AuthenticationService,
+      useClass: (() =>
+        APP_CONFIG.useIPC ? AuthenticationService : AuthenticationService)(),
+    },
+    {
+      provide: AuthfakeauthenticationService,
+      useClass: (() =>
+        APP_CONFIG.useIPC
+          ? AuthfakeauthenticationService
+          : AuthfakeauthenticationService)(),
+    },
+    {
+      provide: DashboardService,
+      useClass: (() =>
+        APP_CONFIG.useIPC ? DashboardService : DashboardService)(),
+    },
   ],
 })
-export class AppModule { }
+export class AppModule {}

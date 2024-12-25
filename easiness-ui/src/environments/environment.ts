@@ -7,7 +7,7 @@ import { commonEnv } from "./environment.common";
 const env = {
   production: false,
   environment: 'LOCAL',
-  useIPC: false,
+  useIPC: true,
 };
 
 export const APP_CONFIG = { ...commonEnv, ...env };

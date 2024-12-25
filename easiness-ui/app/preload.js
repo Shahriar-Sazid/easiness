@@ -21,5 +21,14 @@ contextBridge.exposeInMainWorld('electronAPI', {
     getAllPeople: () => ipcRenderer.invoke('people:getAll'),
     getPeopleDetails: (req) => ipcRenderer.invoke('people:getDetails', req),
 
-    getUnitData: () => ipcRenderer.invoke('unit:getAll')
+    getUnitData: () => ipcRenderer.invoke('unit:getAll'),
+
+    addAsInitialStock: (req) => ipcRenderer.invoke('stock:addAsInitialStock', req),
+    searchStock: (req) => ipcRenderer.invoke('stock:search', req),
+
+    // Commented out Place Methods
+    // createPlace: (req) => ipcRenderer.invoke('place:create', req),
+    // updatePlace: (req) => ipcRenderer.invoke('place:update', req),
+    // searchPlace: (req) => ipcRenderer.invoke('place:search', req),
+    // getAllPlace: () => ipcRenderer.invoke('place:getAll'),
 })

@@ -5,7 +5,6 @@ import { getFirebaseBackend } from '../../authUtils';
 import { User } from '../models/auth.models';
 
 @Injectable({ providedIn: 'root' })
-
 export class AuthenticationService {
 
     user: User;
@@ -50,9 +49,9 @@ export class AuthenticationService {
      * @param email email
      */
     resetPassword(email: string) {
-        return getFirebaseBackend().forgetPassword(email).then((response: any) => {
-            const message = response.data;
-            return message;
+        return getFirebaseBackend().resetPassword(email).then((response: any) => {
+            const status = response.status;
+            return status;
         });
     }
 
@@ -64,4 +63,3 @@ export class AuthenticationService {
         getFirebaseBackend().logout();
     }
 }
-
