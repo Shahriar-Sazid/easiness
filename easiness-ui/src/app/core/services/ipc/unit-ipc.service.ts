@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { UnitService } from "../iface/unit.service";
-import { UnitData, Unit } from "../../models/unit-data.model";
+import { UnitData } from "../../models/unit-data.model";
 import { from } from "rxjs";
 import { tap } from "rxjs/operators";
 

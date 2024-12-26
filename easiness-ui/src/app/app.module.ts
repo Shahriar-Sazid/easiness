@@ -58,6 +58,11 @@ import { AppService } from "./core/services/app.service";
 import { AuthenticationService } from "./core/services/auth.service";
 import { AuthfakeauthenticationService } from "./core/services/authfake.service";
 import { DashboardService } from "./core/services/dashboard.service";
+import { UnitIPCService } from "./core/services/ipc/unit-ipc.service";
+import { PlaceIpcService } from "./core/services/ipc/place-ipc.service";
+import { PeopleIPCService } from "./core/services/ipc/people-ipc.service";
+import { DocumentIpcService } from "./core/services/ipc/document-ipc.service";
+import { BusinessIpcService } from "./core/services/ipc/business-ipc.service";
 
 if (APP_CONFIG.defaultAuth === "firebase") {
   initFirebaseBackend(APP_CONFIG.firebaseConfig);
@@ -124,18 +129,16 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
     {
       provide: PeopleService,
       useClass: (() =>
-        APP_CONFIG.useIPC ? PeopleWebService : PeopleWebService)(),
+        APP_CONFIG.useIPC ? PeopleIPCService : PeopleWebService)(),
     },
     {
       provide: UnitService,
-      useClass: (() => (APP_CONFIG.useIPC ? UnitWebService : UnitWebService))(),
+      useClass: (() => (APP_CONFIG.useIPC ? UnitIPCService : UnitWebService))(),
     },
     {
       provide: StockService,
-      useClass: (() => {
-        console.log("useIPC", APP_CONFIG.useIPC);
-        return APP_CONFIG.useIPC ? StockIPCService : StockWebService;
-      })(),
+      useClass: (() =>
+        APP_CONFIG.useIPC ? StockIPCService : StockWebService)(),
     },
     {
       provide: UserProfileService,
@@ -145,12 +148,12 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
     {
       provide: BusinessService,
       useClass: (() =>
-        APP_CONFIG.useIPC ? BusinessService : BusinessService)(),
+        APP_CONFIG.useIPC ? BusinessIpcService : BusinessService)(),
     },
     {
       provide: DocumentService,
       useClass: (() =>
-        APP_CONFIG.useIPC ? DocumentService : DocumentService)(),
+        APP_CONFIG.useIPC ? DocumentIpcService : DocumentService)(),
     },
     {
       provide: LanguageService,
@@ -163,7 +166,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
     },
     {
       provide: PlaceService,
-      useClass: (() => (APP_CONFIG.useIPC ? PlaceService : PlaceService))(),
+      useClass: (() => (APP_CONFIG.useIPC ? PlaceIpcService : PlaceService))(),
     },
     {
       provide: PDFService,

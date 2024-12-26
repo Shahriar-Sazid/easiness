@@ -4,30 +4,41 @@ import { placeService } from "../service/place.service";
 
 const placeRouter: Router = Router();
 
-
-placeRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
+placeRouter.post(
+  "/",
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-        return res.status(StatusCodes.CREATED).send(await placeService.save(req.body));
+      return res
+        .status(StatusCodes.CREATED)
+        .send(await placeService.save(req.body));
     } catch (e) {
-        next(e)
+      next(e);
     }
-});
+  }
+);
 
-placeRouter.put('/', async (req: Request, res: Response, next: NextFunction) => {
+placeRouter.put(
+  "/",
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-        return res.status(StatusCodes.ACCEPTED).send(await placeService.save(req.body));
+      return res
+        .status(StatusCodes.ACCEPTED)
+        .send(await placeService.save(req.body));
     } catch (e) {
-        next(e)
+      next(e);
     }
-});
+  }
+);
 
-placeRouter.get('/all', async (req: Request, res: Response, next: NextFunction) => {
+placeRouter.get(
+  "/all",
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-        return res.status(StatusCodes.OK).send(await placeService.findAll());
+      return res.status(StatusCodes.OK).send(await placeService.findAll());
     } catch (e) {
-        next(e)
+      next(e);
     }
-});
-
+  }
+);
 
 export default placeRouter;

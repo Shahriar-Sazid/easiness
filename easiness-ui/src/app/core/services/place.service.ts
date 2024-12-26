@@ -6,7 +6,7 @@ import { Place } from "../models/place.model";
 import { Page } from "../models/page.model";
 import { tap } from "rxjs/operators";
 
-@Injectable({ providedIn: "root" })
+@Injectable()
 export class PlaceService {
   constructor(private http: HttpClient, private util: UtilService) {
     this.getAllPlace = this.getAllPlace.bind(this);

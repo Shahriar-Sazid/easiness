@@ -1,24 +1,25 @@
-import { ipcMain } from 'electron';
-import { PlaceService } from '../../src/app/core/services/place.service';
+import { IpcMainInvokeEvent } from "electron";
+import { placeService } from "../service/place.service";
+import { Place } from "../entity/place.entity";
+import { utils } from "../utils/utils";
 
 export const placeHandler = {
-    // Placeholder for create method
-    create: async (event, place) => {
-        // TODO: Implement place creation logic
-    },
+  
+  create: async (event: IpcMainInvokeEvent, place: Place) => {
+    const res = await placeService.save(place);
 
-    // Placeholder for update method
-    update: async (event, place) => {
-        // TODO: Implement place update logic
-    },
+    return utils.simpleClone(res);
+  },
+  update: async (event: IpcMainInvokeEvent, place: Place) => {
+    const res = await placeService.save(place);
 
-    // Placeholder for search method
-    search: async (event, searchOptions) => {
-        // TODO: Implement place search logic
-    },
+    return utils.simpleClone(res);
+  },
 
-    // Placeholder for get all method
-    getAll: async (event) => {
-        // TODO: Implement get all places logic
-    }
+ 
+  findAll: async (event: IpcMainInvokeEvent) => {
+    const res = await placeService.findAll();
+
+    return utils.simpleClone(res);
+  },
 };

@@ -1,26 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { Observable, from } from "rxjs";
+import { catchError } from "rxjs/operators";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class DocumentIpcService {
-  async searchDocument(searchOptions) {
-    try {
-      const res = await (window as any).electronAPI.searchDocument(searchOptions);
-      return res;
-    } catch (error) {
-      console.error('Error searching document:', error);
-      throw error;
-    }
+  
+  searchDocument(searchOptions: object): Observable<any> {
+    return from((window as any).electronAPI.searchDocument(searchOptions)).pipe(
+      catchError(err => {
+        console.error("Error in searchDocument IPC call:", err);
+        throw err;
+      })
+    );
   }
 
-  async getDocumentById(id: number) {
-    try {
-      const res = await (window as any).electronAPI.getDocumentById(id);
-      return res;
-    } catch (error) {
-      console.error('Error getting document by ID:', error);
-      throw error;
-    }
+  getDocumentById(id: number): Observable<any> {
+    return from((window as any).electronAPI.getDocumentById(id)).pipe(
+      catchError(err => {
+        console.error("Error in getDocumentById IPC call:", err);
+        throw err;
+      })
+    );
   }
 }

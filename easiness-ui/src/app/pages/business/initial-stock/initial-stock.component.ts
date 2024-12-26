@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { DocumentItem, Document, DocumentType } from "src/app/core/models/document.model";
 import { PlaceService } from "src/app/core/services/place.service";
-import { StockWebService } from "src/app/core/services/stock.service";
 import { UtilService } from "src/app/core/services/util.service";
 import { DocumentComponent } from "../../document/document/document.component";
 import { PeopleService } from "src/app/core/services/iface/people.service";
+import { StockService } from "src/app/core/services/iface/stock.service";
 
 @Component({
   selector: "app-buy",
@@ -24,7 +24,7 @@ export class InitialStockComponent implements OnInit {
     public peopleService: PeopleService,
     public placeService: PlaceService,
     public util: UtilService,
-    private stockService: StockWebService
+    private stockService: StockService
   ) {
   }
 

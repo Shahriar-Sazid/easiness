@@ -7,7 +7,7 @@ import { Stock } from "../models/stock.model";
 import { DocumentItem } from "../models/document.model";
 import { StockService } from "./iface/stock.service";
 
-@Injectable({ providedIn: "root" })
+@Injectable()
 export class StockWebService implements StockService {
   constructor(private http: HttpClient, private util: UtilService) {}
   private stockApi = "api/v1/stock";

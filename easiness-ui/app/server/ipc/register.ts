@@ -5,7 +5,8 @@ import { productHandler } from "./product.ipc";
 import { peopleHandler } from "./people.ipc";
 import { unitHandler } from "./unit.ipc";
 import { stockHandler } from "./stock.ipc";
-// import { placeHandler } from './place.ipc'; // Uncomment when implementing
+import { placeHandler } from "./place.ipc";
+import { documentHandler } from "./document.ipc";
 
 export function registerIPCHandler(ipc: typeof ipcMain) {
   ipc.handle("account:create", accountHandler.save);
@@ -30,12 +31,13 @@ export function registerIPCHandler(ipc: typeof ipcMain) {
 
   ipc.handle("unit:getAll", unitHandler.getAll);
 
-  // Commented out Place Handlers
-  // ipc.handle('place:create', placeHandler.create)
-  // ipc.handle('place:update', placeHandler.update)
-  // ipc.handle('place:search', placeHandler.search)
-  // ipc.handle('place:getAll', placeHandler.getAll)
+  ipc.handle("place:create", placeHandler.create);
+  ipc.handle("place:update", placeHandler.update);
+  ipc.handle("place:findAll", placeHandler.findAll);
 
   ipc.handle("stock:addAsInitialStock", stockHandler.addAsInitialStock);
   ipc.handle("stock:search", stockHandler.search);
+
+  ipc.handle("document:search", documentHandler.findAll);
+  ipc.handle("document:getById", documentHandler.getDetails);
 }
