@@ -1,4 +1,4 @@
-import Big from "big.js";
+import * as Big from "big.js";
 import { Pagination } from "./page.model";
 
 export enum PeopleType {

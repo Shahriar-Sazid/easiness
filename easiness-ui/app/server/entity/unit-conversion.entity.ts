@@ -1,4 +1,4 @@
-import Big from "big.js"
+import * as Big from "big.js"
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 import { Operator } from "../model/operator"
 

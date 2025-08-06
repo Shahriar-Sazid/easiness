@@ -1,4 +1,4 @@
-import Big from "big.js";
+import * as Big from "big.js";
 import { ds } from "../config/data-source";
 import { Document } from "../entity/document.entity";
 import { Stock } from "../entity/stock.entity";

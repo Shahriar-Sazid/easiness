@@ -1,4 +1,4 @@
-import Big from "big.js"
+import * as Big from "big.js"
 import { Entity, PrimaryGeneratedColumn, Column, Unique } from "typeorm"
 import { AccountType } from "../model/account.model"
 import { Base } from "./base.entity"

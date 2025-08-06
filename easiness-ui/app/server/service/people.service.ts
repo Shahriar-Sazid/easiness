@@ -1,4 +1,4 @@
-import Big from "big.js";
+import * as Big from "big.js";
 import { In, Repository } from "typeorm";
 import { ds } from "../config/data-source";
 import { ContactNo } from "../entity/contact-no.entity";

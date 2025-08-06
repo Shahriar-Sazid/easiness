@@ -1,4 +1,4 @@
-import Big from "big.js"
+import * as Big from "big.js"
 import { Type } from "class-transformer"
 import { TxType } from "../entity/tx.entity"
 import { DateRange } from "./dashboard.model"

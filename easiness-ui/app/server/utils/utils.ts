@@ -1,4 +1,4 @@
-import Big from "big.js";
+import * as Big from "big.js";
 
 type CallbackFunction<Type> = (arg: Type) => string | number;
 export const utils = {

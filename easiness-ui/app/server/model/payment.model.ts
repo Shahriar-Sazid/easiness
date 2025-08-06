@@ -1,4 +1,4 @@
-import Big from "big.js";
+import * as Big from "big.js";
 import { Transform, Type } from "class-transformer";
 
 export class Payment {

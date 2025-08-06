@@ -1,4 +1,4 @@
-import Big from "big.js";
+import * as Big from "big.js";
 import { Column } from "typeorm";
 
 export const BigColumn = (nullable: boolean = false) => Column('numeric', {

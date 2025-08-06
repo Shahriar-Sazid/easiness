@@ -1,4 +1,4 @@
-import Big from "big.js";
+import * as Big from "big.js";
 import { Type } from "class-transformer";
 import { DocumentType } from "../entity/document.entity";
 import { DateRange } from "./dashboard.model";

@@ -1,4 +1,4 @@
-import Big from "big.js";
+import * as Big from "big.js";
 import { UnitConversion } from "../entity/unit-conversion.entity";
 import { Unit } from "../entity/unit.entity";
 import { ApiError } from "../errors/api-error";

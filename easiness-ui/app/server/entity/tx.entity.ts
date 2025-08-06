@@ -1,4 +1,4 @@
-import Big from "big.js";
+import * as Big from "big.js";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { BigColumn } from "../utils/decorators";
 import { Account } from "./account.entity";

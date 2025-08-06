@@ -11,7 +11,8 @@ export class PDFService {
 	async loadPDFMaker() {
 		if (!this.pdfMake) {
 			this.pdfMake = await import('pdfmake/build/pdfmake');
-			this.fonts = (await import('pdfmake/build/vfs_fonts')).pdfMake.vfs;
+			const vfsFonts = await import('pdfmake/build/vfs_fonts');
+			this.fonts = (vfsFonts as any).pdfMake.vfs;
 		}
 	}
 
