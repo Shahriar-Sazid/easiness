@@ -5,6 +5,7 @@ import (
 
 	"github.com/easiness/easiness-wails/internal/dto"
 	"github.com/easiness/easiness-wails/internal/service"
+	internalsync "github.com/easiness/easiness-wails/internal/sync"
 	"gorm.io/gorm"
 )
 
@@ -25,6 +26,7 @@ type App struct {
 	bizSvc      *service.BusinessService
 	authSvc     *service.AuthService
 	licenseSvc  *service.LicenseService
+	syncClient  *internalsync.Client  // nil until configured via SetSyncServer
 }
 
 func NewApp(db *gorm.DB) *App {
@@ -47,6 +49,30 @@ func NewApp(db *gorm.DB) *App {
 
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
+}
+
+// ── Sync ─────────────────────────────────────────────────────────────────────
+
+// ConfigureSync sets the remote server URL and device ID for background sync.
+// Call this once the user has provided their server URL in settings.
+func (a *App) ConfigureSync(serverURL, deviceID string) {
+	a.syncClient = internalsync.NewClient(a.db, serverURL, deviceID)
+}
+
+// SyncNow performs a push-then-pull cycle. Returns the sync status.
+func (a *App) SyncNow() (*internalsync.SyncStatusResponse, error) {
+	if a.syncClient == nil {
+		return &internalsync.SyncStatusResponse{IsOnline: false}, nil
+	}
+	return a.syncClient.Sync()
+}
+
+// GetSyncStatus returns the current sync state without making network calls.
+func (a *App) GetSyncStatus() (*internalsync.SyncStatusResponse, error) {
+	if a.syncClient == nil {
+		return &internalsync.SyncStatusResponse{IsOnline: false}, nil
+	}
+	return a.syncClient.Status()
 }
 
 // ── License ───────────────────────────────────────────────────────────────────

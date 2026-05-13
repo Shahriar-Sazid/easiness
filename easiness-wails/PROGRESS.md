@@ -1,8 +1,8 @@
 # Migration Progress Tracker
 
 **Last updated:** 2026-05-13  
-**Current phase:** All phases complete — ready for first build  
-**Last completed checkpoint:** Licensing system (Phase 11)
+**Current phase:** All remote phases complete  
+**Last completed checkpoint:** Phase 3.4 — Docker + self-hosting + sync tests
 
 ---
 
@@ -99,9 +99,68 @@
 
 ---
 
+### Phase 3.0 — ULID Sync Foundation ✅
+- [x] `github.com/oklog/ulid/v2` added to go.mod
+- [x] `internal/models/base.go` — SyncID (ULID) field + BeforeCreate hook
+- [x] `internal/models/sync.go` — SyncLog + DeviceRegistration models
+- [x] `internal/sync/ulid.go` — thread-safe monotonic ULID generator
+- [x] `internal/sync/hooks.go` — GORM callbacks: AfterCreate/Update/Delete → SyncLog
+- [x] `internal/db/database.go` — SyncLog + DeviceRegistration added to AutoMigrate
+
+### Phase 3.1 — HTTP API Server ✅
+- [x] `github.com/golang-jwt/jwt/v5`, `gorm.io/driver/postgres` added to go.mod
+- [x] `internal/db/postgres.go` — PostgreSQL initializer
+- [x] `internal/api/middleware/auth.go` — JWT bearer middleware + IssueToken
+- [x] `internal/api/middleware/errors.go` — service error → HTTP status
+- [x] `internal/api/handlers/` — all domain handlers (auth, account, people, product, business, sync)
+- [x] `internal/api/router.go` — all routes registered on Echo
+- [x] `cmd/server/main.go` + `cmd/server/config.go` — server entry point
+
+### Phase 3.2 — Sync Protocol ✅
+- [x] `internal/sync/protocol.go` — push/pull request-response types
+- [x] `internal/sync/service.go` — server-side Push + Pull with ULID cursor
+- [x] `internal/sync/applier.go` — upsert received entries into local DB
+- [x] `internal/sync/client.go` — desktop push-then-pull cycle
+- [x] `app.go` — SyncNow, GetSyncStatus, ConfigureSync wired
+- [x] `main.go` — RegisterCallbacks called on startup
+
+### Phase 3.3 — Web Frontend ✅
+- [x] `frontend/src/wailsjs/go/main/App.js` — HTTP fallback in call() for all methods
+- [x] `frontend/src/stores/sync.ts` — sync status store + polling
+- [x] `frontend/src/components/shared/Topbar.svelte` — sync indicator button + pending badge
+- [x] `frontend/src/App.svelte` — startPolling on login
+- [x] `frontend/src/wailsjs/go/models.ts` — sync_SyncStatusResponse, sync_ConfigureSyncRequest
+- [x] `frontend/src/wailsjs/go/main/App.d.ts` — SyncNow, GetSyncStatus, ConfigureSync stubs
+
+### Phase 3.4 — Docker + Self-Hosting ✅
+- [x] `Dockerfile` — multi-stage (Node → Go → alpine), no CGo, pure-Go postgres driver
+- [x] `docker-compose.yml` — server + PostgreSQL 16 with healthcheck dependency
+- [x] `.dockerignore` — excludes private keys, node_modules, build outputs
+- [x] `.env.example` — template for required env vars
+- [x] `Makefile` — build-server, docker-build, docker-up, docker-down, docker-logs targets
+- [x] `.github/workflows/build.yml` — `docker` job pushes to GHCR on tag; release waits for docker
+- [x] `docs/self-hosting.md` — setup guide with HTTPS, backup, health check
+
+### Sync Integration Tests ✅
+- [x] `tests/sync/sync_test.go` — 6 tests:
+  - `TestSync_AccountRoundTrip` — push from A, pull to B, verify data present
+  - `TestSync_SyncIDPreserved` — ULID identity survives the push/pull/apply cycle
+  - `TestSync_IdempotentPush` — pushing same entries twice produces no duplicates
+  - `TestSync_PullExcludesOwnDevice` — device never receives its own entries back
+  - `TestSync_CursorPagination` — cursor pages return all entries without duplicates
+  - `TestSync_TwoDevicesBidirectional` — A and B both see each other's changes after sync
+
+### Circular Import Fix ✅
+- [x] Created `internal/uid/uid.go` — leaf package with ULID generator (no internal imports)
+- [x] `internal/models/base.go` now imports `internal/uid` (not `internal/sync`)
+- [x] `internal/sync/ulid.go` wraps `internal/uid`
+- [x] `internal/sync/applier.go` — added `clearIntID()` to zero integer PKs before upsert
+
+---
+
 ## In-Progress Task
 
-None — all implementation complete.
+None — all phases complete. Run `docker compose up -d` to deploy, or `make test-all` to verify.
 
 ---
 

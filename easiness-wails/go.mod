@@ -3,9 +3,13 @@ module github.com/easiness/easiness-wails
 go 1.21
 
 require (
+	github.com/golang-jwt/jwt/v5 v5.2.1
+	github.com/labstack/echo/v4 v4.11.4
+	github.com/oklog/ulid/v2 v2.1.0
 	github.com/shopspring/decimal v1.3.1
 	github.com/wailsapp/wails/v2 v2.8.0
 	golang.org/x/crypto v0.17.0
+	gorm.io/driver/postgres v1.5.7
 	gorm.io/driver/sqlite v1.5.4
 	gorm.io/gorm v1.25.5
 )
@@ -15,7 +19,7 @@ require (
 	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/jchv/go-winloader v0.0.0-20210711035445-715c2860da7e // indirect
-	github.com/labstack/echo/v4 v4.11.4 // indirect
+	github.com/labstack/echo/v4 v4.11.4
 	github.com/labstack/gommon v0.4.2 // indirect
 	github.com/leaanthony/go-ansi-parser v1.6.0 // indirect
 	github.com/leaanthony/gosod v1.0.3 // indirect

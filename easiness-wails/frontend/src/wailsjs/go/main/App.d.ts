@@ -6,6 +6,8 @@ import type {
   dto_AccountResponse,
   dto_AccountSearchRequest,
   dto_ActivateLicenseRequest,
+  sync_SyncStatusResponse,
+  sync_ConfigureSyncRequest,
   dto_AuthResponse,
   dto_ChangePasswordRequest,
   dto_DashboardRequest,
@@ -37,6 +39,10 @@ import type {
   dto_TxSearchRequest,
   dto_UnitDataResponse,
 } from '../../models'
+
+export function SyncNow(): Promise<sync_SyncStatusResponse>
+export function GetSyncStatus(): Promise<sync_SyncStatusResponse>
+export function ConfigureSync(req: sync_ConfigureSyncRequest): Promise<void>
 
 export function GetLicenseStatus(): Promise<dto_LicenseStatusResponse>
 export function ActivateLicense(req: dto_ActivateLicenseRequest): Promise<dto_LicenseStatusResponse>

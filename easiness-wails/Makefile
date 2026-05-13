@@ -4,7 +4,8 @@
 # NOTE: Cross-compilation is NOT supported because SQLite uses CGo.
 # Build each platform on its own native machine or use GitHub Actions (see .github/workflows/build.yml).
 
-.PHONY: dev build build-prod test test-frontend clean help
+.PHONY: dev build build-prod build-server test test-frontend test-sync clean \
+        docker-build docker-up docker-down docker-logs help
 
 # ── Development ──────────────────────────────────────────────────────────────
 
@@ -24,9 +25,13 @@ test-cover:   ## Run tests with coverage report
 test-frontend: ## Run Vitest frontend tests
 	cd frontend && npm test
 
-test-all:     ## Run all tests (backend + frontend)
+test-sync:    ## Run sync integration tests only
+	go test ./tests/sync/... -v -count=1
+
+test-all:     ## Run all tests (backend + frontend + sync)
 	$(MAKE) test
 	$(MAKE) test-frontend
+	$(MAKE) test-sync
 
 # ── Building ──────────────────────────────────────────────────────────────────
 
@@ -35,6 +40,10 @@ build:        ## Development build for current platform
 
 build-prod:   ## Production build (no devtools, optimised)
 	wails build -production
+
+build-server: ## Build the HTTP server binary (no CGo — any platform)
+	CGO_ENABLED=0 go build -ldflags="-s -w" -o build/bin/easiness-server ./cmd/server
+	@echo "Output: build/bin/easiness-server"
 
 # ── Platform-specific builds (run on the matching native OS) ─────────────────
 
@@ -76,6 +85,23 @@ package-linux-appimage: ## [Linux only] Build AppImage (requires appimagetool)
 	cp build/linux/easiness.desktop build/AppDir/usr/share/applications/ || true
 	ARCH=x86_64 appimagetool build/AppDir build/bin/Easiness-x86_64.AppImage
 	@echo "Output: build/bin/Easiness-x86_64.AppImage"
+
+# ── Housekeeping ──────────────────────────────────────────────────────────────
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+
+docker-build: ## Build the Docker image
+	docker build -t easiness-server .
+
+docker-up:    ## Start server + PostgreSQL via docker-compose
+	docker compose up -d
+	@echo "Server running at http://localhost:$${PORT:-8080}"
+
+docker-down:  ## Stop containers (data is preserved in postgres_data volume)
+	docker compose down
+
+docker-logs:  ## Follow server logs
+	docker compose logs -f server
 
 # ── Housekeeping ──────────────────────────────────────────────────────────────
 

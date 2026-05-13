@@ -1,56 +1,96 @@
 // AUTO-GENERATED stub — replaced by `wails generate module`.
-// In production this file calls the real Wails Go-JS bridge.
-// During frontend-only development it calls the window.go bridge if present,
-// or returns mock data if running in a plain browser.
+// When running inside the Wails desktop shell, calls the Go-JS bridge directly.
+// When running in a plain browser (web mode), falls back to the HTTP API.
 
-const call = (method, ...args) => {
-  if (window?.go?.main?.App?.[method]) {
-    return window.go.main.App[method](...args)
+// ---------- HTTP fallback -------------------------------------------------- //
+
+const API_BASE = (() => {
+  if (typeof window !== 'undefined' && window.__EASINESS_API__) return window.__EASINESS_API__
+  if (typeof window !== 'undefined' && window.location.hostname !== '') {
+    return `${window.location.origin}/api`
   }
-  console.warn(`[wailsjs stub] ${method} called but Wails runtime not available`)
-  return Promise.resolve(null)
+  return 'http://localhost:8080/api'
+})()
+
+function getToken() {
+  return typeof localStorage !== 'undefined' ? (localStorage.getItem('easiness_token') ?? '') : ''
 }
 
-export const GetLicenseStatus = () => call('GetLicenseStatus')
-export const ActivateLicense = (req) => call('ActivateLicense', req)
+async function httpCall(path, body) {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: body !== undefined ? 'POST' : 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getToken()}`,
+    },
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+  })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ message: res.statusText }))
+    throw err
+  }
+  if (res.status === 204) return undefined
+  return res.json()
+}
 
-export const IsSetupRequired = () => call('IsSetupRequired')
-export const SetupAuth = (req) => call('SetupAuth', req)
-export const Login = (req) => call('Login', req)
-export const ChangePassword = (req) => call('ChangePassword', req)
+// ---------- Transport dispatcher ------------------------------------------- //
 
-export const CreateAccount = (req) => call('CreateAccount', req)
-export const UpdateAccount = (req) => call('UpdateAccount', req)
-export const SearchAccounts = (req) => call('SearchAccounts', req)
-export const GetAllAccounts = () => call('GetAllAccounts')
+const call = (wailsMethod, httpPath, body) => {
+  if (window?.go?.main?.App?.[wailsMethod]) {
+    return body !== undefined
+      ? window.go.main.App[wailsMethod](body)
+      : window.go.main.App[wailsMethod]()
+  }
+  console.debug(`[web mode] ${wailsMethod} → ${httpPath}`)
+  return httpCall(httpPath, body)
+}
 
-export const CreatePeople = (req) => call('CreatePeople', req)
-export const UpdatePeople = (req) => call('UpdatePeople', req)
-export const SearchPeople = (req) => call('SearchPeople', req)
-export const GetAllCustomers = () => call('GetAllCustomers')
-export const GetAllSuppliers = () => call('GetAllSuppliers')
-export const GetAllPeople = () => call('GetAllPeople')
-export const GetPeopleDetails = (id) => call('GetPeopleDetails', id)
+// ---------- Exports -------------------------------------------------------- //
 
-export const CreateProduct = (req) => call('CreateProduct', req)
-export const UpdateProduct = (req) => call('UpdateProduct', req)
-export const SearchProduct = (req) => call('SearchProduct', req)
-export const MoveProduct = (req) => call('MoveProduct', req)
+export const GetLicenseStatus  = ()    => call('GetLicenseStatus',  '/license/status')
+export const ActivateLicense   = (req) => call('ActivateLicense',   '/license/activate',    req)
 
-export const SearchTransactions = (req) => call('SearchTransactions', req)
-export const GetUnitData = () => call('GetUnitData')
+export const IsSetupRequired   = ()    => call('IsSetupRequired',   '/auth/setup-required')
+export const SetupAuth         = (req) => call('SetupAuth',         '/auth/setup',          req)
+export const Login             = (req) => call('Login',             '/auth/login',          req)
+export const ChangePassword    = (req) => call('ChangePassword',    '/auth/change-password', req)
 
-export const CreatePlace = (req) => call('CreatePlace', req)
-export const UpdatePlace = (req) => call('UpdatePlace', req)
-export const GetAllPlaces = () => call('GetAllPlaces')
+export const CreateAccount     = (req) => call('CreateAccount',     '/accounts/create',     req)
+export const UpdateAccount     = (req) => call('UpdateAccount',     '/accounts/update',     req)
+export const SearchAccounts    = (req) => call('SearchAccounts',    '/accounts/search',     req)
+export const GetAllAccounts    = ()    => call('GetAllAccounts',    '/accounts')
 
-export const GetStock = (req) => call('GetStock', req)
-export const AddInitialStock = (req) => call('AddInitialStock', req)
+export const CreatePeople      = (req) => call('CreatePeople',      '/people/create',       req)
+export const UpdatePeople      = (req) => call('UpdatePeople',      '/people/update',       req)
+export const SearchPeople      = (req) => call('SearchPeople',      '/people/search',       req)
+export const GetAllCustomers   = ()    => call('GetAllCustomers',   '/people/customers')
+export const GetAllSuppliers   = ()    => call('GetAllSuppliers',   '/people/suppliers')
+export const GetAllPeople      = ()    => call('GetAllPeople',      '/people')
+export const GetPeopleDetails  = (id)  => call('GetPeopleDetails',  `/people/${id}`)
 
-export const SavePurchaseOrder = (req) => call('SavePurchaseOrder', req)
-export const SaveInvoice = (req) => call('SaveInvoice', req)
+export const CreateProduct     = (req) => call('CreateProduct',     '/products/create',     req)
+export const UpdateProduct     = (req) => call('UpdateProduct',     '/products/update',     req)
+export const SearchProduct     = (req) => call('SearchProduct',     '/products/search',     req)
+export const MoveProduct       = (req) => call('MoveProduct',       '/products/move',       req)
 
-export const SearchDocuments = (req) => call('SearchDocuments', req)
-export const GetDocumentDetails = (id) => call('GetDocumentDetails', id)
+export const SearchTransactions = (req) => call('SearchTransactions', '/transactions/search', req)
+export const GetUnitData        = ()    => call('GetUnitData',        '/units')
 
-export const GetDashboard = (req) => call('GetDashboard', req)
+export const CreatePlace        = (req) => call('CreatePlace',        '/places/create',       req)
+export const UpdatePlace        = (req) => call('UpdatePlace',        '/places/update',       req)
+export const GetAllPlaces       = ()    => call('GetAllPlaces',       '/places')
+
+export const GetStock           = (req) => call('GetStock',           '/stock/search',        req)
+export const AddInitialStock    = (req) => call('AddInitialStock',    '/stock/add-initial',   req)
+
+export const SavePurchaseOrder  = (req) => call('SavePurchaseOrder',  '/business/purchase',   req)
+export const SaveInvoice        = (req) => call('SaveInvoice',        '/business/invoice',    req)
+
+export const SearchDocuments    = (req) => call('SearchDocuments',    '/documents/search',    req)
+export const GetDocumentDetails = (id)  => call('GetDocumentDetails', `/documents/${id}`)
+
+export const GetDashboard       = (req) => call('GetDashboard',       '/dashboard',           req)
+
+export const SyncNow            = ()    => call('SyncNow',            '/sync/trigger')
+export const GetSyncStatus      = ()    => call('GetSyncStatus',      '/sync/status')
+export const ConfigureSync      = (req) => call('ConfigureSync',      '/sync/configure',      req)

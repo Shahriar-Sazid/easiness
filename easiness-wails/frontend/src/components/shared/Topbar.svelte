@@ -1,5 +1,6 @@
 <script lang="ts">
   import { authStore } from '../../stores/auth'
+  import { syncStore } from '../../stores/sync'
   import type { dto_LicenseStatusResponse } from '../../wailsjs/go/models'
 
   export let licenseStatus: dto_LicenseStatusResponse | null = null
@@ -10,10 +11,26 @@
 
   $: daysLeft = licenseStatus?.daysRemaining ?? 9999
   $: isExpiringSoon = daysLeft >= 0 && daysLeft <= 30
-  $: licenseLabel = licenseStatus?.status === 'valid'
-    ? `License: ${daysLeft}d left`
-    : ''
+  $: licenseLabel = licenseStatus?.status === 'valid' ? `License: ${daysLeft}d left` : ''
+
+  $: syncIcon = $syncStore.status === 'syncing'  ? 'bi-arrow-repeat spin'
+              : $syncStore.status === 'error'    ? 'bi-exclamation-circle-fill text-danger'
+              : $syncStore.status === 'offline'  ? 'bi-cloud-slash'
+              : 'bi-cloud-check'
+
+  $: syncTitle = $syncStore.status === 'syncing' ? 'Syncing…'
+               : $syncStore.status === 'error'   ? `Sync error: ${$syncStore.error}`
+               : $syncStore.status === 'offline' ? 'Offline — sync unavailable'
+               : $syncStore.lastSyncAt           ? `Last synced ${$syncStore.lastSyncAt.toLocaleTimeString()}`
+               : 'Not yet synced'
+
+  $: hasPending = $syncStore.pendingPush > 0
 </script>
+
+<style>
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spin { display: inline-block; animation: spin 1s linear infinite; }
+</style>
 
 <header class="topbar">
   <div class="flex-grow-1"></div>
@@ -27,6 +44,22 @@
       <i class="bi bi-shield-exclamation me-1"></i>{licenseLabel}
     </span>
   {/if}
+
+  <!-- Sync indicator -->
+  <button
+    class="btn btn-sm btn-outline-secondary me-2 position-relative"
+    title={syncTitle}
+    on:click={() => syncStore.sync()}
+    disabled={$syncStore.status === 'syncing'}
+  >
+    <i class="bi {syncIcon}"></i>
+    {#if hasPending}
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark"
+            style="font-size:0.6rem;">
+        {$syncStore.pendingPush}
+      </span>
+    {/if}
+  </button>
 
   <div class="dropdown">
     <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">

@@ -1,0 +1,25 @@
+# Git
+.git
+.gitignore
+
+# Build outputs
+build/bin/
+frontend/dist/
+frontend/node_modules/
+
+# Go test artifacts
+coverage.out
+coverage.html
+
+# Private keys — NEVER include in Docker image
+private.key
+*.key
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp

@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/easiness/easiness-wails/internal/db"
+	internalsync "github.com/easiness/easiness-wails/internal/sync"
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
@@ -18,6 +19,10 @@ func main() {
 	if err != nil {
 		log.Fatal("database init failed:", err)
 	}
+
+	// Register sync hooks so every local write is logged.
+	// The device ID is loaded from settings (empty string = sync not yet configured).
+	internalsync.RegisterCallbacks(database, "")
 
 	app := NewApp(database)
 

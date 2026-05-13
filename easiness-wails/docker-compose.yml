@@ -1,0 +1,35 @@
+services:
+
+  # ── PostgreSQL ───────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       easiness
+      POSTGRES_USER:     easiness
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U easiness"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Easiness API + Web ────────────────────────────────────────────────────────
+  server:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8080}:8080"
+    environment:
+      DATABASE_URL: >-
+        postgres://easiness:${POSTGRES_PASSWORD:-changeme}@postgres:5432/easiness?sslmode=disable
+      JWT_SECRET:   ${JWT_SECRET:?JWT_SECRET env var is required}
+      PORT:         8080
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

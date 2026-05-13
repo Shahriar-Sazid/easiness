@@ -13,6 +13,7 @@
   import LicensePage from './routes/license/LicensePage.svelte'
   import { GetLicenseStatus } from './wailsjs/go/main/App'
   import type { dto_LicenseStatusResponse } from './wailsjs/go/models'
+  import { syncStore } from './stores/sync'
 
   import Dashboard from './routes/dashboard/Dashboard.svelte'
   import ProductList from './routes/product/ProductList.svelte'
@@ -75,6 +76,7 @@
 
   $: if (isLoggedIn) {
     unitsStore.load()
+    syncStore.startPolling()
   }
 
   function handleLicenseActivated(e: CustomEvent<dto_LicenseStatusResponse>) {

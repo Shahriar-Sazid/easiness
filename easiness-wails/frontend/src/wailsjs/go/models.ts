@@ -297,6 +297,18 @@ export interface dto_ChangePasswordRequest {
 
 export type dto_AuthResponse = dto_LoginResponse
 
+export interface sync_SyncStatusResponse {
+  deviceId: string
+  lastCursor: string
+  pendingPush: number
+  isOnline: boolean
+}
+
+export interface sync_ConfigureSyncRequest {
+  serverURL: string
+  deviceId: string
+}
+
 export interface dto_ActivateLicenseRequest {
   key: string
 }
