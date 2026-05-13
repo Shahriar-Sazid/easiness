@@ -5,6 +5,7 @@
 import type {
   dto_AccountResponse,
   dto_AccountSearchRequest,
+  dto_ActivateLicenseRequest,
   dto_AuthResponse,
   dto_ChangePasswordRequest,
   dto_DashboardRequest,
@@ -13,6 +14,7 @@ import type {
   dto_DocumentResponse,
   dto_DocumentSearchRequest,
   dto_InitialStockRequest,
+  dto_LicenseStatusResponse,
   dto_LoginRequest,
   dto_LoginResponse,
   dto_MoveProductRequest,
@@ -35,6 +37,9 @@ import type {
   dto_TxSearchRequest,
   dto_UnitDataResponse,
 } from '../../models'
+
+export function GetLicenseStatus(): Promise<dto_LicenseStatusResponse>
+export function ActivateLicense(req: dto_ActivateLicenseRequest): Promise<dto_LicenseStatusResponse>
 
 export function IsSetupRequired(): Promise<boolean>
 export function SetupAuth(req: dto_SetupAuthRequest): Promise<void>

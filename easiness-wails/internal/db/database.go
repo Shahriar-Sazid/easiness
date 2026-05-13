@@ -66,6 +66,7 @@ func migrate(db *gorm.DB) error {
 		&models.DocumentItem{},
 		&models.Tx{},
 		&models.LocalAuth{},
+		&models.StoredLicense{},
 	)
 }
 

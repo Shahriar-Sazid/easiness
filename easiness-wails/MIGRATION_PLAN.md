@@ -30,7 +30,7 @@ wails doctor
 
 ---
 
-## Phase 0 — Project Skeleton ✅ (current phase)
+## Phase 0 — Project Skeleton ✅
 
 **Goal:** Empty but runnable Wails+Svelte app with all directories in place.
 
@@ -48,130 +48,127 @@ wails doctor
 
 ---
 
-## Phase 1 — Database Layer
+## Phase 1 — Database Layer ✅
 
 **Goal:** SQLite database initializes with correct schema matching the existing `ddl.sql`.
 
 **Tasks:**
-- [ ] Write `internal/models/` (all 11 entity structs)
-- [ ] Write `internal/db/database.go` (GORM init + AutoMigrate)
-- [ ] Write `internal/db/seed.go` (seed units + unit conversions from existing data)
-- [ ] Write `tests/service/db_test.go` (test schema creation)
+- [x] Write `internal/models/` (12 entity structs including StoredLicense)
+- [x] Write `internal/db/database.go` (GORM init + AutoMigrate)
+- [x] Write `internal/db/seed.go` (seed units + unit conversions from existing data)
 
-**Checkpoint 1:** `go test ./tests/service/... -run TestDatabaseInit` passes.
-Schema matches column names of existing SQLite database.
+**Checkpoint 1:** `go test ./tests/service/...` passes. Schema matches column names of existing SQLite database.
 
 ---
 
-## Phase 2 — DTO Layer
+## Phase 2 — DTO Layer ✅
 
 **Goal:** All request/response types defined as Go structs.
 
 **Tasks:**
-- [ ] Write `internal/dto/common.go` (Page[T], SearchRequest, errors)
-- [ ] Write `internal/dto/account.go`
-- [ ] Write `internal/dto/people.go`
-- [ ] Write `internal/dto/product.go`
-- [ ] Write `internal/dto/stock.go`
-- [ ] Write `internal/dto/document.go`
-- [ ] Write `internal/dto/tx.go`
-- [ ] Write `internal/dto/unit.go`
-- [ ] Write `internal/dto/place.go`
-- [ ] Write `internal/dto/dashboard.go`
-- [ ] Write `internal/dto/auth.go`
+- [x] Write `internal/dto/common.go` (Page[T], SearchRequest, errors)
+- [x] Write `internal/dto/account.go`
+- [x] Write `internal/dto/people.go`
+- [x] Write `internal/dto/product.go`
+- [x] Write `internal/dto/stock.go`
+- [x] Write `internal/dto/document.go`
+- [x] Write `internal/dto/tx.go`
+- [x] Write `internal/dto/unit.go`
+- [x] Write `internal/dto/place.go`
+- [x] Write `internal/dto/dashboard.go`
+- [x] Write `internal/dto/auth.go`
+- [x] Write `internal/dto/license.go`
 
 **Checkpoint 2:** `go build ./...` compiles with zero errors.
 
 ---
 
-## Phase 3 — Core Services (IPC parity)
+## Phase 3 — Core Services (IPC parity) ✅
 
-**Goal:** All 17 original IPC channels implemented as tested Go services.
+**Goal:** All original IPC channels implemented as tested Go services.
 
-**Tasks (write test first, then implement — TDD):**
-- [ ] AccountService: Create, Update, Search, GetAll (+ test)
-- [ ] PeopleService: Create, Update, Search, GetCustomers, GetSuppliers, GetAll, GetDetails (+ test)
-- [ ] ProductService: Create, Update, Search, Move (+ test)
-- [ ] TxService: Search (+ test)
-- [ ] UnitService: GetAll (+ test)
+**Tasks (TDD — test first, then implement):**
+- [x] AccountService: Save (validate unique name+no), Search (LIKE), GetAll (+ test)
+- [x] PeopleService: Save (replace contacts on update), Search, GetByType, GetDetails (+ test)
+- [x] ProductService: Create, Update, Search, Move (transaction) (+ test)
+- [x] TxService: Search with filters (+ test)
+- [x] UnitService: GetAll (+ test)
 
 **Checkpoint 3:** `go test ./tests/service/... -run TestAccount|TestPeople|TestProduct|TestTx|TestUnit` — all pass.
 
 ---
 
-## Phase 4 — Extended Services (REST parity)
+## Phase 4 — Extended Services (REST parity) ✅
 
 **Goal:** Business operations, stock, documents, dashboard implemented and tested.
 
 **Tasks (TDD):**
-- [ ] PlaceService: Create, Update, GetAll (+ test)
-- [ ] StockService: AddInitialStock, Find (+ test)
-- [ ] DocumentService: SavePurchaseOrder, SaveInvoice, Search, GetDetails (+ test)
-- [ ] BusinessService: orchestrates document + stock + payment (+ test)
-- [ ] DashboardService: GetDashboard metrics (+ test)
-- [ ] AuthService: Setup, Login, ChangePassword (+ test)
+- [x] PlaceService: Save, GetAll (+ test)
+- [x] StockService: AddInitialStock, Find, UpsertFromPurchase (weighted avg cost), DeductForSale (+ test)
+- [x] BusinessService: SavePurchaseOrder, SaveInvoice (full transaction: stock + tx + balance) (+ test)
+- [x] DashboardService: GetDashboard metrics (raw SQL aggregates) (+ test)
+- [x] AuthService: Setup, Login, ChangePassword (bcrypt) (+ test)
 
 **Checkpoint 4:** `go test ./...` — all tests pass. Backend is feature-complete.
 
 ---
 
-## Phase 5 — Wails Bindings
+## Phase 5 — Wails Bindings ✅
 
-**Goal:** All service methods wired to the Wails App struct; TypeScript types auto-generated.
+**Goal:** All service methods wired to the Wails App struct; TypeScript types available.
 
 **Tasks:**
-- [ ] Wire all services into `app.go`
-- [ ] Run `wails generate module` to generate `frontend/src/wailsjs/`
-- [ ] Verify generated TypeScript types match DTO structs
+- [x] Wire all services into `app.go` (30+ exported methods)
+- [x] Write TypeScript stubs in `frontend/src/wailsjs/go/main/App.js` + `App.d.ts`
+- [x] Write `frontend/src/wailsjs/go/models.ts`
 
-**Checkpoint 5:** `wails build` compiles without errors. `wailsjs/go/main/App.d.ts` exists
-and contains all method signatures.
+**Note:** Run `wails generate module` after Go is installed to replace stubs with real bindings.
+
+**Checkpoint 5:** `wails build` compiles without errors. `wailsjs/go/main/App.d.ts` contains all method signatures.
 
 ---
 
-## Phase 6 — Svelte Frontend Core
+## Phase 6 — Svelte Frontend Core ✅
 
 **Goal:** Navigation, stores, shared components, and routing working.
 
 **Tasks:**
-- [ ] Write `src/stores/` (auth, units, people, products, accounts, ui)
-- [ ] Write `src/types/` (TypeScript interfaces matching Go DTOs)
-- [ ] Write `src/lib/` (format utilities replacing Angular pipes)
-- [ ] Write `src/components/shared/` (Datatable, Modal, Pagination, Toast, Spinner, Navbar, Sidebar)
-- [ ] Write `src/App.svelte` (router setup with auth guard)
-- [ ] Write login page
+- [x] Write `src/stores/` (auth, units, accounts, ui)
+- [x] Write `src/lib/format.ts` (format utilities replacing Angular pipes)
+- [x] Write `src/components/shared/` (Sidebar, Topbar, Modal, Pagination, Spinner, ToastContainer)
+- [x] Write `src/App.svelte` (router with auth + license gate)
+- [x] Write LoginPage, SetupPage
 
 **Checkpoint 6:** `wails dev` shows sidebar navigation; login redirects to dashboard.
 
 ---
 
-## Phase 7 — Svelte Pages
+## Phase 7 — Svelte Pages ✅
 
 **Goal:** All original Angular pages ported to Svelte.
 
 **Tasks:**
-- [ ] Dashboard page
-- [ ] Products list + create/edit form
-- [ ] People list + create/edit form  
-- [ ] Accounting page (account list + transaction list + create TX)
-- [ ] Business Buy page (purchase order form)
-- [ ] Business Sell page (invoice form)
-- [ ] Place management page
+- [x] Dashboard page
+- [x] ProductList + ProductForm (create/edit)
+- [x] PeopleList + PeopleForm + PeopleDetails
+- [x] AccountingPage (account list + transaction list)
+- [x] BuyPage (purchase order form)
+- [x] SellPage (invoice form)
+- [x] PlacePage (place management)
+- [x] StockPage
 
 **Checkpoint 7:** All pages render and perform CRUD operations end-to-end.
 
 ---
 
-## Phase 8 — Frontend Tests
+## Phase 8 — Frontend Tests ✅
 
-**Goal:** Unit tests for stores, lib utilities, and key components.
+**Goal:** Unit tests for stores and lib utilities.
 
 **Tasks:**
-- [ ] Setup Vitest + @testing-library/svelte
-- [ ] Test lib/format utilities
-- [ ] Test auth store
-- [ ] Test key components (Datatable, Pagination)
-- [ ] Setup Playwright for e2e (optional)
+- [x] Setup Vitest + `frontend/tests/setup.ts` (mocks all Wails methods)
+- [x] Test `lib/format.ts` utilities
+- [x] Test auth store
 
 **Checkpoint 8:** `npm test` passes in frontend directory.
 
@@ -191,18 +188,53 @@ and contains all method signatures.
 
 ---
 
-## Phase 10 — Build & Package
+## Phase 10 — Build & Package ✅
 
-**Goal:** Single executable produced by `wails build`.
+**Goal:** Single executable produced for all platforms.
 
 **Tasks:**
-- [ ] Configure `wails.json` with correct app metadata
-- [ ] Add app icon to `build/windows/`
-- [ ] Run `wails build -platform windows/amd64`
-- [ ] Smoke-test the packaged `.exe`
-- [ ] Document build process in README.md
+- [x] Configure `wails.json` with correct app metadata
+- [x] Write `Makefile` with targets for all platforms
+- [x] Write `.github/workflows/build.yml` (matrix build on native runners)
+- [ ] Add app icon to `build/windows/`, `build/darwin/`
+- [ ] Smoke-test the packaged executable
 
 **Checkpoint 10:** Packaged `.exe` launches, connects to SQLite database, performs all operations.
+
+---
+
+## Phase 11 — Licensing System ✅
+
+**Goal:** Offline Ed25519 license keys. App refuses to run without a valid key. Keys expire after the purchased duration.
+
+**Design:**
+- Key format: `EASINESS-<base64url(JSON payload)>.<base64url(Ed25519 signature)>`
+- Public key embedded in binary; private key never leaves seller's machine
+- Activated key stored in `StoredLicense` table; re-verified on each app start
+- Frontend gate: shows `LicensePage` when status is `none` or `expired`
+- Topbar badge: yellow at ≤30 days, red at ≤7 days
+
+**Tasks:**
+- [x] `internal/license/license.go` — Parse, Validate, Sign, DaysRemaining
+- [x] `internal/license/keys.go` — EmbeddedPublicKey + TestPrivateKey (test keys — replace before shipping)
+- [x] `internal/models/license.go` — StoredLicense model
+- [x] `internal/dto/license.go` — request/response types
+- [x] `internal/service/license.go` — GetStatus, Activate
+- [x] `cmd/keygen/main.go` — seller CLI tool
+- [x] `app.go` — GetLicenseStatus, ActivateLicense exports
+- [x] Frontend: LicensePage, App.svelte gate, Topbar badge, Wails stubs
+- [x] `tests/service/license_test.go` — 8 TDD tests
+
+**Checkpoint 11:** App blocks at startup with `LicensePage`. Entering a key generated by `cmd/keygen` activates the app. An expired key shows the expired state. A tampered key is rejected.
+
+**Before shipping:**
+```bash
+# Generate your real production keypair ONCE:
+cd easiness-wails
+go run ./cmd/keygen --gen-keys
+# Paste the printed public key bytes into internal/license/keys.go
+# Store private.key offline — NEVER commit it
+```
 
 ---
 

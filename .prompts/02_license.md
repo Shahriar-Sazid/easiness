@@ -1,0 +1,1 @@
+Next phase, I want to have licensing using secret key for 1 year. My plan is to sell this desktop app to users via marketplace, then users can buy it and run for 1 year or x years. But the license will expire and the system will stop working until new license is bought. Can we implement this in the system?

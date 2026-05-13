@@ -11,6 +11,9 @@ const call = (method, ...args) => {
   return Promise.resolve(null)
 }
 
+export const GetLicenseStatus = () => call('GetLicenseStatus')
+export const ActivateLicense = (req) => call('ActivateLicense', req)
+
 export const IsSetupRequired = () => call('IsSetupRequired')
 export const SetupAuth = (req) => call('SetupAuth', req)
 export const Login = (req) => call('Login', req)

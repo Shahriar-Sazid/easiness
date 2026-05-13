@@ -296,3 +296,16 @@ export interface dto_ChangePasswordRequest {
 }
 
 export type dto_AuthResponse = dto_LoginResponse
+
+export interface dto_ActivateLicenseRequest {
+  key: string
+}
+
+export interface dto_LicenseStatusResponse {
+  status: string        // "none" | "valid" | "expired"
+  type: string          // "standard" | "professional" | "enterprise"
+  seats: number
+  expiresAt: string     // ISO date string
+  daysRemaining: number // negative = already expired
+  key: string           // masked key for display
+}

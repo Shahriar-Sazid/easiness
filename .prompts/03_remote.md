@@ -1,0 +1,3 @@
+My third phase will be to establish remote connectivity, allowing web version to work. To do so, there are some fundamental requirements.
+- Firstly, we must have remote setup, My plan is to setup postgres for database, frontend with svelte and backend with golang
+- We need to solve the sync issue. We have to device mechanism to take in the data in the local machine when necessary, resolving two separate workthreads like working on online and offline. We must resolve these cases, if someone working online and again offline, and synced at a later stage, we have to resolve that.

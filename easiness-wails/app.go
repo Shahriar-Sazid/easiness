@@ -24,6 +24,7 @@ type App struct {
 	dashSvc     *service.DashboardService
 	bizSvc      *service.BusinessService
 	authSvc     *service.AuthService
+	licenseSvc  *service.LicenseService
 }
 
 func NewApp(db *gorm.DB) *App {
@@ -40,11 +41,22 @@ func NewApp(db *gorm.DB) *App {
 		dashSvc:     service.NewDashboardService(db),
 		bizSvc:      service.NewBusinessService(db),
 		authSvc:     service.NewAuthService(db),
+		licenseSvc:  service.NewLicenseService(db),
 	}
 }
 
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
+}
+
+// ── License ───────────────────────────────────────────────────────────────────
+
+func (a *App) GetLicenseStatus() (*dto.LicenseStatusResponse, error) {
+	return a.licenseSvc.GetStatus()
+}
+
+func (a *App) ActivateLicense(req dto.ActivateLicenseRequest) (*dto.LicenseStatusResponse, error) {
+	return a.licenseSvc.Activate(req)
 }
 
 // ── Auth ─────────────────────────────────────────────────────────────────────
