@@ -1,0 +1,19 @@
+# Go
+build/bin/
+go.sum
+
+# Frontend build
+frontend/dist/
+frontend/node_modules/
+
+# Wails auto-generated (regenerate with: wails generate module)
+# frontend/src/wailsjs/  ← keep stubs in version control
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
